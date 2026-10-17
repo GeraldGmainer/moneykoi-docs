@@ -1,15 +1,15 @@
 items:
   - id: E-SCN-01
     group: Reading
-    title: A misread total
-    when: OCR misreads `SUMME`.
-    then: The total is editable in review; the magic wand snaps it to the items' sum.
+    title: Misread total
+    when: OCR misreads `SUMME`
+    then: editable in review · magic wand → items' sum
     risk: medium
   - id: E-SCN-02
     group: Reading
-    title: A web-link QR
-    when: The receipt's QR is a link, not RKSV data.
-    then: Resolved online once, then step 1 locks.
+    title: Web-link QR
+    when: QR is a link, not RKSV data
+    then: resolved online once → step 1 locks
     risk: low
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
@@ -17,29 +17,39 @@ items:
   - id: E-SCN-03
     group: Reading
     title: ADEG multiplier rows
-    when: '"2 x 1,29" printed above the item.'
-    then: The multiplier row is skipped; the item keeps its total.
+    when: '"2 x 1,29" above the item'
+    then: row skipped · item keeps its total
     risk: medium
     tests:
       - file: test/features/receipt/domain/parsers/adeg_parser_strategy_test.dart
         name: a multiplier row above is skipped; the item below keeps its total
+  - id: E-SCN-07
+    group: Reading
+    title: German receipt late evening
+    when: TSE time after 23:00 UTC
+    then: booked on the printed local day
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/receipt/domain/parsers/tse_parser_test.dart
+        name: a sale after 23:00 UTC lands on the next local day
   - id: E-SCN-04
     group: Saving
-    title: A category that no longer exists
-    when: A keyword resolves to a bucket the book has no category for.
-    then: Save refuses (*category not found*) — the Categories page hint exists to prevent it.
+    title: Category doesn't exist
+    when: keyword resolves to a missing bucket
+    then: Save refuses *category not found* · Categories hint prevents it
     risk: medium
   - id: E-SCN-05
     group: Saving
-    title: Long receipts and retakes
-    when: The same part of a receipt is photographed twice.
-    then: Seam overlaps are stripped, a full retake adds nothing, and the sum never overshoots the locked total.
+    title: Long receipts + retakes
+    when: same part photographed twice
+    then: seams stripped · retake adds nothing · never over the total
     risk: medium
   - id: E-SCN-06
     group: Web
-    title: The web's manual split
-    when: A receipt is split on `/add-receipt`.
-    then: No receipt record, merchant not saved, lines not written atomically; a failed item re-books the others on retry. Open.
+    title: Web manual split
+    when: receipt split on `/add-receipt`
+    then: no receipt record · merchant lost · not atomic · retry re-books · open
     status: known-issue
     risk: medium
     related: [E-BKG-23]

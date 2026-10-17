@@ -1,0 +1,29 @@
+# Source: SCANNER_AI_CONTEXT.md §4.36, USAGE_STATS_AI_CONTEXT.md §4.
+items:
+  - id: T-SCN-01
+    title: Try German TSE QR for real
+    owner: gerald
+    detail: |
+      - scan 3–5 German receipts with a QR (C-SCN-006)
+      - no lock → send a photo or the QR text → parser fix
+      - R-SCN-11 is spec-only so far
+  - id: T-SCN-02
+    title: Collect German + Austrian receipts
+    owner: gerald
+    detail: |
+      - ask friends: REWE, EDEKA, ALDI, Lidl DE, Kaufland · MPreis, Penny, Unimarkt
+      - file via `scanner-corpus-round` · a parser needs a handful per chain
+  - id: T-SCN-03
+    title: Scan quality from usage stats
+    owner: gerald
+    detail: |
+      - scans carry `parser` · `code` · `total_edited` · `items_edited`
+      - admin doesn't chart them yet → run the SQL in Supabase
+    command: |
+      select props->>'parser' as parser, props->>'code' as code, count(*) as scans,
+             round(avg((props->>'total_edited')::boolean::int), 2) as total_edited,
+             round(avg((props->>'items_edited')::boolean::int), 2) as items_edited
+      from public.usage_event
+      where name = 'scan_saved' and props ? 'parser'
+      group by 1, 2
+      order by scans desc;

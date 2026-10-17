@@ -4,79 +4,141 @@ items:
     group: The flow
     title: On the phone, no cloud
     text: |
-      ML Kit OCR on the device; no cloud AI (the on-device LLM engine was removed 2026-09-28). The web has no scanner — it splits a total by hand.
+      - ML Kit OCR on the device · no cloud AI
+      - on-device LLM removed 2026-09-28
+      - web: no scanner · splits a total by hand
     source: SCANNER §1
   - id: R-SCN-02
     group: The flow
-    title: Three steps — total, items, review
+    title: Three steps
     text: |
-      **1. Find the total** — live camera reads merchant, total and date (each locks after two stable readings); an Austrian receipt QR (RKSV) locks total and date exactly. **2. Capture items** — one photo per part of a long receipt, merged at the seams. **3. Review** — fix, merge, categorize, *Save*.
+      1. **Total**: live camera locks merchant, total, date (2 stable reads) · RKSV QR locks exactly
+      2. **Items**: one photo per part · merged at the seams
+      3. **Review**: fix · merge · categorize · *Save*
     source: SCANNER §1
+    related: [R-SCN-11]
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
         name: a receipt QR locks total and date and names the shop from the resolver
   - id: R-SCN-04
     group: The flow
-    title: Shop-specific parsers, a generic one for the rest
+    title: Shop parsers + a generic one
     text: |
-      SPAR / EUROSPAR / INTERSPAR, BILLA / BILLA PLUS, LIDL, ADEG, HOFER, TEDI, Smyths, OBI have their own; any other shop goes through the generic parser. Restaurants become one *Dining* booking; single-category shops (Baumarkt, IKEA, pharmacy, petrol, DM/BIPA) one booking in their category.
+      - own parser: SPAR · BILLA · LIDL · ADEG · HOFER · TEDI · Smyths · OBI
+      - other shops → generic parser
+      - restaurant → one *Dining* booking
+      - one-category shops (Baumarkt, IKEA, pharmacy, petrol, DM/BIPA) → one booking
     source: SCANNER §1, §2
     tests:
       - file: test/features/receipt/domain/constants/merchant_category_registry_test.dart
         name: unknown merchants are itemizable with no default category
   - id: R-SCN-05
     group: The flow
-    title: Skip items = one booking
-    text: |
-      Before the first photo, *Skip* books the total as one uncategorised line with no photo; you pick the category in review.
+    title: "*Skip* items = one booking"
+    text: before the first photo · total as one uncategorized line · pick the category in review
     source: SCANNER §1
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_harvest_capture_test.dart
         name: skipItemCapture books the total as one uncategorised line
   - id: R-SCN-06
     group: The flow
-    title: From gallery photos too
+    title: From gallery photos
     text: |
-      Pick one or more photos (top to bottom); a photo that cannot be read fails alone; no total on any → back to step 1.
+      - one or more, top to bottom
+      - unreadable photo fails alone · no total anywhere → step 1
     source: SCANNER §4.30
+  - id: R-SCN-11
+    group: The flow
+    title: German TSE QR = like RKSV
+    text: |
+      - KassenSichV `V0;…` locks total + date exactly
+      - only sales · training/voided/cancelled ignored
+      - date = local day · shop learned per till from the first fix
+      - built from the spec · untested on real receipts (C-SCN-006)
+    source: SCANNER §4.36
+    tests:
+      - file: test/features/receipt/domain/parsers/tse_parser_test.dart
+        name: sums the gross amounts per rate into the total
+      - file: test/features/receipt/domain/parsers/tse_parser_test.dart
+        name: ignores everything that is not a sale
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: reads a German TSE code as well
+  - id: R-SCN-12
+    group: The flow
+    title: Not in books without cents
+    text: |
+      - currencies without 2 decimals (yen, won, forint, rupiah, dong, CLP, KWD)
+      - → *not available yet* · *Got it* · camera never starts
+      - currency lookup fails → scanner opens as before
+    source: SCANNER §4.36
+    tests:
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: a book in a currency without cents gets
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: a failed currency lookup still opens the scanner
+  - id: R-SCN-13
+    group: The flow
+    title: Beta · first tab says where
+    text: |
+      - *BETA* · *Made for Austrian receipts*
+      - total, date, photo: most receipts
+      - items: tuned for the 8 shops · others a best guess
+      - shown once · help button replays
+    source: SCANNER §4.15g, §4.36
+    related: [D-SCN-01]
+    tests:
+      - file: test/features/receipt/ui/widgets/scanner_onboarding_test.dart
+        name: opens on the coverage step
+      - file: test/features/receipt/domain/parsers/shop_registry_test.dart
+        name: every shop the onboarding lists as itemized has its own parser
   - id: R-SCN-03
     group: Review & save
-    title: Every line needs a category — no silent "Other"
+    title: Every line needs a category
     text: |
-      A line no keyword or merchant resolves stays uncategorised with *Tap to categorise*; Save is disabled until every line has a category, the items add up to the total, and an account is picked. The Categories page warns ahead of time when a receipt bucket has no category.
+      - unresolved → *Tap to categorise* · **no** silent "Other"
+      - Save off until: all categorized + sum = total + account picked
+      - Categories page warns ahead
     source: SCANNER §4.15d, CATEGORY §8a
     related: [R-LED-20]
   - id: R-SCN-07
     group: Review & save
     title: One booking per line
     text: |
-      Save writes one booking per item (description = the item; a merged line = the merchant) plus a receipt record with the line snapshot, then round-ups and the trip tag. The total is editable; a mismatch blocks Save until fixed (add, merge, redo, scan more).
+      - description = item · merged line = merchant
+      - + receipt record · round-ups · trip tag
+      - total editable · mismatch blocks Save
     source: SCANNER §4.17, §4.18, §4.27
   - id: R-SCN-08
     group: Review & save
-    title: Merge all, merge by category, undo
+    title: Merge all · by category · undo
     text: |
-      Merge all → one line named after the shop; merge by category → one line per category (uncategorised untouched); the first merge can be undone.
+      - all → one line, shop's name
+      - by category → one per category
+      - first merge undoable
     source: SCANNER §4.17
   - id: R-SCN-09
     group: Review & save
-    title: Photos — kept, uploaded on Cloud
+    title: Photos kept · uploaded on Cloud
     text: |
-      *Upload photos* (per device, default on). In a book without Cloud the photos stay queued on the phone until the book syncs; with Cloud they go to the book's storage (Cloud feature).
+      - *Upload photos*: per device, default on
+      - no Cloud → queued on the phone · Cloud → book storage
     source: SCANNER §4.17, OFFLINE_TIER §7
     related: [R-MON-14]
   - id: R-SCN-10
     group: Review & save
     title: The scanner learns
     text: |
-      Category corrections in review are remembered on the device (and used by quick booking too); a restaurant venue is learned from its QR.
+      - category fixes remembered on the device · quick booking uses them
+      - restaurant venue learned from its QR
     source: SCANNER §4.21, QUICK_BOOKING §3
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
         name: recategorising a restaurant scan away from Dining learns it is not one
   - id: R-SCN-20
     group: Accuracy
-    title: Measured on a corpus of real receipts
+    title: Measured on real receipts
     text: |
-      152+ receipts (2026-09-26) with reviewed truth; every fix round is measured before and after. Real photos never enter the app repo. New photos are filed and a round run with the `scanner-corpus-round` skill.
+      - 152+ receipts with truth files (2026-09-26)
+      - every fix round measured before + after
+      - photos never in the app repo · `scanner-corpus-round` skill
     source: SCANNER §4.31–§4.35

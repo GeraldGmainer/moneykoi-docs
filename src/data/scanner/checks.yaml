@@ -4,12 +4,18 @@ groups:
     title: Scanner
     items:
       - id: C-SCN-001
-        text: A BILLA / SPAR receipt with a QR — total, date and shop lock from the QR; items in two photos merge without duplicates; uncategorised lines block Save until categorized
+        text: BILLA/SPAR with QR → total, date, shop lock · 2 item photos merge, no doubles · uncategorized blocks Save
       - id: C-SCN-002
-        text: A restaurant bill → one Dining booking; *Without photo* works
+        text: Restaurant → one Dining booking · *Without photo* works
       - id: C-SCN-003
-        text: Gallery import of a long receipt in 3 photos; an unreadable photo fails alone
+        text: "Gallery: long receipt in 3 photos · unreadable one fails alone"
       - id: C-SCN-004
-        text: '*Upload photos* off → bookings and the receipt save, no photos; a book without Cloud keeps photos queued and shows them'
+        text: "*Upload photos* off → saved without photos · no Cloud → photos queued + shown"
       - id: C-SCN-005
-        text: iOS clean build → text and barcode recognition work (see Platform C-PLAT-001)
+        text: iOS clean build → text + barcode recognition (C-PLAT-001)
+      - id: C-SCN-006
+        text: German TSE receipt (REWE, ALDI, Lidl DE, dm) → total + date lock · late evening keeps printed date
+      - id: C-SCN-007
+        text: Yen book → *not available yet*, no camera · *Got it* closes
+      - id: C-SCN-008
+        text: Fresh install → *BETA* tab first, 8 shops · *How it works* replays it

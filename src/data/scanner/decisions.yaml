@@ -1,0 +1,19 @@
+# Source: Gerald, 2026-10-17 (scanner coverage before the Nov 1 launch).
+items:
+  - id: D-SCN-01
+    question: Untrained shops and countries at launch?
+    status: decided
+    date: 2026-10-17
+    answer: |
+      - release everywhere · no region lock, no big banner
+      - first onboarding tab: *BETA* + what works where (R-SCN-13)
+  - id: D-SCN-02
+    question: "Unknown shops: items or one line?"
+    status: decided
+    date: 2026-10-17
+    answer: Best-effort items via the generic parser
+  - id: D-SCN-03
+    question: "Yen books: hide or show?"
+    status: decided
+    date: 2026-10-17
+    answer: Show *not available yet* · all currencies without 2 decimals (R-SCN-12)
