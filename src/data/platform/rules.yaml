@@ -3,62 +3,77 @@
 items:
   - id: R-PLAT-10
     group: Tests
-    title: About 10,000 app tests, 8+ minutes locally
+    title: ~10,000 app tests · 8+ min
     text: |
-      Run the narrowest scope that covers a change; a full run after cross-cutting changes. CI runs everything on every push. Tests assume `TZ=Europe/Vienna` — a date test failing on another machine is the time zone first.
+      - run the narrowest scope · full run after cross-cutting changes
+      - CI runs all on every push
+      - `TZ=Europe/Vienna` · a date test failing elsewhere → check the zone
     source: app CLAUDE.md
   - id: R-PLAT-11
     group: Tests
-    title: Web — unit, widget, e2e; no CI
-    text: |
-      ~100 unit files, 210 widget files (~3,800 tests), 23 e2e specs against an in-memory Supabase fake. The suites run locally only.
+    title: "Web: unit, widget, e2e · no CI"
+    text: ~100 unit · 210 widget (~3,800 tests) · 23 e2e on a Supabase fake · local only
     source: TESTING_WEB §1
   - id: R-PLAT-12
     group: Tests
-    title: Known bugs are pinned as failing tests
-    text: |
-      The web marks a reproduced bug `it.fails` with its source; remove the marker when fixed.
+    title: Known bugs = failing tests
+    text: web pins a bug with `it.fails` + source · remove when fixed
     source: web docs (Known issues sections)
   - id: R-PLAT-20
     group: Code rules enforced by CI
-    title: No hardcoded colours, sizes or paddings
+    title: No hardcoded colors or sizes
     text: |
-      Tokens from `lib/core/constants/`; `tool/check_theme.sh` fails a new raw `Colors.*`, `Color(0x…)`, `fontSize:`, `Radius.circular()` or numeric `EdgeInsets` under `lib/`.
+      - tokens from `lib/core/constants/`
+      - `tool/check_theme.sh` fails new raw `Colors.*`, `fontSize:`, `EdgeInsets` numbers
     source: app CLAUDE.md
   - id: R-PLAT-21
     group: Code rules enforced by CI
     title: No new doc comments
     text: |
-      `tool/check_comments.sh` fails a new `///` under `lib/` (constants exempt). Reasoning belongs in the context docs — and now on this site.
+      - `tool/check_comments.sh` fails new `///` under `lib/`
+      - reasoning → context docs + this site
     source: app CLAUDE.md
   - id: R-PLAT-22
     group: Code rules enforced by CI
-    title: Three languages, every key
-    text: |
-      Every key in `en.json` exists in `de.json` and `ja.json`, placeholders identical; Japanese plurals carry `one` and `other`.
+    title: Every key in three languages
+    text: en = de = ja · same placeholders · JA plurals `one` + `other`
     source: app CLAUDE.md
   - id: R-PLAT-23
     group: Code rules enforced by CI
-    title: Migrations are append-only
+    title: Migrations append-only
     text: |
-      Never edit an applied migration — local `migration_vN.sql` bumps the DB version (now 24); server files go through `moneykoi-supabase` and Gerald runs every CLI step. `supabase db reset` is never an option.
+      - never edit an applied one
+      - local `migration_vN.sql` bumps DB version (24)
+      - Gerald runs every CLI step · **never** `supabase db reset`
+    source: app CLAUDE.md
+  - id: R-PLAT-24
+    group: Copy
+    title: The app never addresses the user
+    text: |
+      - decided 2026-10-17 · all three languages read like Japanese UI
+      - en: no *you / your* · de: no *du / dein*, never *Sie* · ja: no あなた
+      - name the thing or the outcome: *Current plan*, *this phone*, *Delete this booking?*
+      - buttons stay verbs: *Save goal* / *Ziel speichern* / *保存する*
+      - existing copy: ≈570 en / ≈440 de strings still address the user · converted when touched
     source: app CLAUDE.md
   - id: R-PLAT-30
     group: Releases
-    title: A release is a version bump, store notes and one changelog migration
+    title: A release
     text: |
-      `prepare-release` asks whether the web ships too, bumps `pubspec.yaml`, writes the store notes (en/de/ja) and one Supabase migration with the `changelog` rows for the app (and the web). Commits are Gerald's, one per feature (`split-commits`).
+      - `prepare-release`: web too? · `pubspec.yaml` · store notes en/de/ja
+      - one migration with `changelog` rows
+      - commits are Gerald's, one per feature
     source: skills/prepare-release, skills/split-commits
   - id: R-PLAT-01
     group: Builds
     title: iOS 15.5 minimum
-    text: |
-      Since 1.17.0, with CocoaPods. iOS 15.0–15.4 users can no longer update.
+    text: since 1.17.0, CocoaPods · iOS 15.0–15.4 can't update
     source: Trello item 13
   - id: R-PLAT-02
     group: Builds
-    title: Android OS backup carries only the database and preferences
+    title: "Android backup: DB + prefs"
     text: |
-      Photos are left out (the 25 MB quota would skip the whole backup), secure storage too (its key does not travel).
+      - no photos · 25 MB quota would skip all
+      - no secure storage · its key doesn't travel
     source: OFFLINE_TIER §11
     related: [E-ACC-41]
