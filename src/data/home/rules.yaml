@@ -3,15 +3,19 @@ items:
   # Home cards
   - id: R-HOM-01
     group: Home cards
-    title: Your layout says what you want; the data decides what shows
+    title: Layout = wish · data = what shows
     text: |
-      Cards you removed stay removed; cards with nothing to show (no budgets this month) hide by themselves and the editor says so. The total balance header is always there.
+      - removed cards stay removed
+      - cards without data hide · editor says so
+      - total balance header always there
     source: HOME_CARDS §1, §13 D1
   - id: R-HOM-02
     group: Home cards
-    title: The editor and presets are Pro; the default Home is free
+    title: "Editor + presets: Pro"
     text: |
-      Reorder, add (repeatable cards: *Add another*), remove, configure, and four presets — *Everyday*, *Minimal*, *Planner*, *Investor*. The free default holds only free cards; Pro cards show locked in the gallery.
+      - reorder · add (*Add another*) · remove · configure
+      - presets: *Everyday* · *Minimal* · *Planner* · *Investor*
+      - free default: free cards only · Pro cards locked in gallery
     source: HOME_CARDS §7, §13 D4
     tests:
       - file: test/features/home/ui/widgets/home_card_gallery_test.dart
@@ -19,33 +23,36 @@ items:
     related: [R-MON-12]
   - id: R-HOM-03
     group: Home cards
-    title: Every change saves at once, with Undo
+    title: Saves at once, with Undo
     text: |
-      No Save button and no discard dialog; a remove or a preset offers Undo that restores the exact previous layout.
+      - no Save, no discard dialog
+      - remove or preset → Undo restores the exact layout
     source: HOME_CARDS §7
     tests:
       - file: test/features/home/bloc/home_edit_cubit_test.dart
         name: undo restores the exact prior layout, order included
   - id: R-HOM-04
     group: Home cards
-    title: A new default card appears once
-    text: |
-      An update adds a new default card only to layouts written before it existed — never brings back one you removed.
+    title: New default card appears once
+    text: only on layouts older than the card · never revives a removed one
     source: HOME_CARDS §2
     tests:
       - file: test/features/home/domain/home_layout_test.dart
         name: appends a default card introduced after the blob was written, once
   - id: R-HOM-05
     group: Home cards
-    title: The layout is per person, synced
+    title: Layout per person, synced
     text: |
-      Stored on your profile, with a device copy for the first frame. The web has its own Home layout.
+      - on your profile + device copy for the first frame
+      - web has its own layout
     source: HOME_CARDS §3, §13 D6
   - id: R-HOM-06
     group: Home cards
     title: One quick-entry row
     text: |
-      Your chosen actions (scan, quick booking, search, shopping list, add investment…), then category tiles from favorites, most used or a hand-picked list. Pro destinations wear the lock.
+      - your actions: scan, quick booking, search, shopping, add investment
+      - then category tiles: favorites · most used · hand-picked
+      - Pro ones wear the lock
     source: HOME_CARDS §8, MONETIZATION §3a
     tests:
       - file: test/features/home/ui/widgets/quick_actions_test.dart
@@ -54,9 +61,11 @@ items:
   # Bottom bar & drawer
   - id: R-HOM-10
     group: Bottom bar & drawer
-    title: Every destination is both a tab and a page
+    title: "Every page: tab or page"
     text: |
-      The bar holds 1, 2 or 4 tabs (the + needs the middle slot); everything else is in the drawer, and every deep link works whatever the bar holds. One tab = no bar.
+      - bar: 1, 2 or 4 tabs · + needs the middle
+      - rest in the drawer · deep links always work
+      - 1 tab = no bar
     source: NAVIGATION §1–§2
     tests:
       - file: test/core/navigation/nav_layout_test.dart
@@ -65,21 +74,23 @@ items:
         name: one tab has no bar
   - id: R-HOM-11
     group: Bottom bar & drawer
-    title: The default bar follows the plan
+    title: Default bar follows the plan
     text: |
-      Free: Home · + · Budget Book. Pro / Cloud: Home · Book · + · Stats · Goals — at once on purchase. A saved bar always wins, on any plan. Editing the bar is Pro.
+      - Free: Home · + · Budget Book
+      - Pro/Cloud: Home · Book · + · Stats · Goals, at once
+      - saved bar always wins · editing the bar = Pro
     source: NAVIGATION §6 (decided 2026-10-16)
   - id: R-HOM-12
     group: Bottom bar & drawer
-    title: A bar per book, stored on your profile
+    title: A bar per book
     text: |
-      Each member has their own bar for a shared book; you can run a different bar in each book. Nothing is written automatically.
+      - on your profile · each member their own
+      - nothing written automatically
     source: NAVIGATION §6
   - id: R-HOM-13
     group: Bottom bar & drawer
-    title: Locked pages come last in the drawer
-    text: |
-      On Free, Analytics and Shopping list are listed with a lock, last, right above *Get Pro*.
+    title: Locked pages last in the drawer
+    text: "Free: Analytics, Shopping list, Investments, Forecast locked, above *Get Pro*"
     source: MONETIZATION §3a, §7
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart
@@ -88,34 +99,45 @@ items:
   # Android widgets
   - id: R-HOM-20
     group: Android widgets
-    title: Eight widgets
+    title: Eight Android widgets
     text: |
-      Category booking, new booking, quick booking, scan receipt, total balance, budget, goal / loan, shopping list. iOS widgets are planned.
+      - category booking · new booking · quick booking · scan
+      - total balance · budget · goal/loan · shopping list
+      - iOS planned
     source: HOME_WIDGET §13
   - id: R-HOM-21
     group: Android widgets
-    title: A tap opens the app, never saves in the background
+    title: Tap opens the app
     text: |
-      A booking needs the whole app (sync, balances, validation), so the widget opens the real form. A category that is archived or gone shows a placeholder; its tap reconfigures.
+      - **never** saves in the background · needs sync, balances, validation
+      - archived/gone category → placeholder · tap reconfigures
     source: HOME_WIDGET §2, §12
   - id: R-HOM-22
     group: Android widgets
-    title: Widgets follow privacy and sign-in
+    title: Widgets follow privacy + sign-in
     text: |
-      Amounts are masked when hiding is on; signed out, the balance widget reads *Open MoneyKoi to sign in*; the shopping widget keeps its list read-only after the plan ends.
+      - hide amounts → masked
+      - signed out → *Open MoneyKoi to sign in*
+      - shopping widget read-only after the plan
     source: AMOUNT_PRIVACY §4, MONETIZATION §9a, HOME_WIDGET §13
     related: [R-PRIV-14]
 
   # Web
   - id: R-HOM-30
     group: Web shell
-    title: Sidebar, ⌘K and the floating +
+    title: "Web: sidebar, ⌘K, +"
     text: |
-      A fixed sidebar (a drawer on phones) with every page; ⌘K finds pages, actions and records; a long press on the mobile + opens quick entry. Dark only; no offline.
-    source: APP_SHELL_WEB §1, web 02_FEATURES
+      - sidebar (drawer on phones) · ⌘K: pages, actions, records
+      - sidebar footer: *Add Booking* full width · *Quick entry* · *Enter Receipt*
+      - keys **N** · **Q** · **R**, shown on the buttons and in ⌘K · not while typing
+      - long press mobile + → quick entry
+      - dark only · no offline
+    source: APP_SHELL_WEB §1, §4.7, web 02_FEATURES
   - id: R-HOM-31
     group: Web shell
-    title: The web dashboard has all 17 card types
+    title: "Web dashboard: 17 card types"
     text: |
-      Its own layout, edited in *Customize* (settings from the editor only); no cash-flow breakdown sheet. Cash flow, month net and savings rate need a server migration.
-    source: web 02_FEATURES (DASHBOARD)
+      - own layout · *Customize* · settings only in the editor
+      - default = the app's without quick add · add it from *Customize* · it sits in a column
+      - no cash-flow sheet · 3 cards need a server migration
+    source: web 02_FEATURES (DASHBOARD §1, §4.11)
