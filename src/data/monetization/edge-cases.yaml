@@ -4,9 +4,12 @@ items:
   # Paywall & store
   - id: E-MON-01
     group: Paywall & store
-    title: Restore finds Pro while the Pro card is picked
-    when: The user taps *Restore purchases* with Pro (or Cloud lifetime) selected, and the store holds Pro.
-    then: The pick moves to **Cloud yearly**, the Pro owner's opening pick, so *Continue* stays usable. The page never buys a plan that is not on screen.
+    title: Restore finds Pro, Pro card picked
+    when: "*Restore purchases* with Pro picked · store holds Pro"
+    then: |
+      - pick moves to **Cloud yearly**
+      - the buy button stays usable
+      - never buys a plan not on screen
     risk: medium
     tests:
       - file: test/features/monetization/bloc/paywall_cubit_test.dart
@@ -15,18 +18,18 @@ items:
         name: a restore that finds Pro while Pro was picked picks Cloud yearly, and Continue stays usable
   - id: E-MON-02
     group: Paywall & store
-    title: Pro lands while the paywall is open
-    when: An entitlement arrives (store push, another device) while the paywall is on screen.
-    then: The page shows it and moves the pick the same way as a restore.
+    title: Pro arrives while paywall is open
+    when: plan arrives from the store or another device
+    then: shown at once · pick moves like a restore
     risk: low
     tests:
       - file: test/features/monetization/bloc/paywall_cubit_test.dart
         name: Pro that lands while the paywall is open moves the pick the same way
   - id: E-MON-03
     group: Paywall & store
-    title: The store does not answer
-    when: Products cannot be loaded (offline, store down).
-    then: An error with a retry, never an empty list; the tier the user owns is still shown.
+    title: Store does not answer
+    when: products don't load · offline, store down
+    then: error + retry, never an empty list · own plan still shown
     risk: medium
     tests:
       - file: test/features/monetization/bloc/paywall_cubit_test.dart
@@ -35,9 +38,9 @@ items:
         name: a store that will not answer still shows the tier the user owns
   - id: E-MON-04
     group: Paywall & store
-    title: The store drops out mid-purchase
-    when: The connection to the store fails during a purchase.
-    then: Reported as store unavailable; the buy button is usable again.
+    title: Store drops mid-purchase
+    when: connection fails during a purchase
+    then: "*store unavailable* · buy button usable again"
     risk: medium
     tests:
       - file: test/features/monetization/bloc/paywall_cubit_test.dart
@@ -45,8 +48,10 @@ items:
   - id: E-MON-05
     group: Paywall & store
     title: Pending purchase
-    when: The store accepts the purchase but still has to confirm it (e.g. a parent approves, a slow payment method).
-    then: The paywall stays open and says the store still has to confirm it. Nothing is granted yet; not an error.
+    when: store must still confirm · parent approval, slow payment
+    then: |
+      - paywall stays open, says *waiting for the store*
+      - nothing granted yet · not an error
     risk: medium
     tests:
       - file: test/features/monetization/ui/paywall_page_test.dart
@@ -56,26 +61,26 @@ items:
   - id: E-MON-06
     group: Paywall & store
     title: Cancelled purchase
-    when: The user cancels the store sheet.
-    then: Stays on the paywall without a message.
+    when: store sheet cancelled
+    then: stays on the paywall · no message
     risk: low
     tests:
       - file: test/features/monetization/ui/paywall_page_test.dart
         name: a cancelled purchase stays on the paywall without a message
   - id: E-MON-07
     group: Paywall & store
-    title: Buying a product the account already owns
-    when: The store answers *already owned*.
-    then: Treated as a restore, not a failure.
+    title: Buying what is owned
+    when: store answers *already owned*
+    then: treated as a restore, not a failure
     risk: low
     tests:
       - file: test/features/monetization/data/revenue_cat_purchase_gateway_test.dart
         name: a product the account already owns is restored, not failed
   - id: E-MON-08
     group: Paywall & store
-    title: A restore that finds nothing
-    when: The store holds nothing for this store account.
-    then: '*No purchase found*. Pro already on the phone is never taken away by it.'
+    title: Restore finds nothing
+    when: store holds nothing for this store account
+    then: "*No purchase found* · Pro on the phone **stays**"
     risk: high
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
@@ -84,9 +89,12 @@ items:
         name: a restore that finds nothing says so
   - id: E-MON-09
     group: Paywall & store
-    title: Launch window boundaries
-    when: The last day of the launch price, and the day after.
-    then: The last day counts to its final minute; the day after closes the window, so no launch line outlives the price. With no end date set (today) there is no window.
+    title: Launch window edges
+    when: last day of the launch price, and the day after
+    then: |
+      - last day counts to its last minute
+      - day after → window closed
+      - no end date set → no window
     risk: medium
     tests:
       - file: test/features/monetization/domain/launch_window_test.dart
@@ -97,9 +105,9 @@ items:
   # Entitlement cache
   - id: E-MON-10
     group: Entitlement cache
-    title: Billing issue — grace window
-    when: A Cloud payment fails and the store grants a grace period.
-    then: Still entitled while the grace window is open; lapsed once it has closed.
+    title: Billing issue · grace window
+    when: Cloud payment fails, store grants grace
+    then: entitled while grace is open · lapsed after
     risk: high
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
@@ -109,8 +117,8 @@ items:
   - id: E-MON-11
     group: Entitlement cache
     title: Stale check timestamp
-    when: The app has not reached the store for a long time.
-    then: A stale timestamp alone never takes an entitlement away (Pro must work offline).
+    when: app hasn't reached the store for long
+    then: "**never** takes a plan away · Pro works offline"
     risk: high
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
@@ -118,17 +126,17 @@ items:
   - id: E-MON-12
     group: Entitlement cache
     title: Unreadable cache
-    when: The cached entitlement JSON is corrupt or from an unknown version.
-    then: Degrades to Free instead of crashing; an unknown enum value reads as the default.
+    when: cached plan JSON corrupt or unknown version
+    then: falls back to Free, no crash · unknown value → default
     risk: low
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
         name: unreadable cached JSON degrades to free rather than throwing
   - id: E-MON-13
     group: Entitlement cache
-    title: Cache from before the Plus → Pro rename
-    when: A phone cached Pro under its old name `plus`.
-    then: Pro is kept and the cache is rewritten once as `pro`.
+    title: Cache from Plus → Pro rename
+    when: phone cached Pro as `plus`
+    then: Pro kept · cache rewritten once as `pro`
     risk: low
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
@@ -137,75 +145,83 @@ items:
   # Downgrade & lapse
   - id: E-MON-20
     group: Downgrade & lapse
-    title: Data made with a higher tier after a downgrade
-    when: Pro or Cloud ends while the user has investments, forecast items, a custom Home layout or Pro cards on Home.
-    then: All stay visible. Only creating or editing locks.
+    title: Paid data after a downgrade
+    when: plan ends · investments, forecast items, custom Home exist
+    then: all stay visible · only create + edit lock
     risk: high
     tests:
       - file: test/features/investment/ui/pages/investment_detail_page_test.dart
         name: after the plan ends the position stays readable, but cannot be changed
   - id: E-MON-21
     group: Downgrade & lapse
-    title: Forecast made with Pro, now on Free
-    when: The overdue review asks about a planned item.
-    then: '*Confirm*, *it didn''t happen* and *book it now* still work — they close what the user already planned. Only *move* opens the paywall (D7).'
+    title: Forecast review on Free
+    when: overdue review asks about a planned item
+    then: |
+      - *Confirm* · *it didn't happen* · *book it now* still work
+      - only *move* opens the paywall (D7)
     status: by-design
     risk: low
   - id: E-MON-22
     group: Downgrade & lapse
-    title: Shopping list page with no lists after the plan ends
-    when: The plan ended and the user never made a list.
-    then: The locked panel shows instead of an empty state that invites a first list.
+    title: No lists after the plan ends
+    when: plan ended, user never made a list
+    then: locked panel, not an empty state
     risk: low
   # Accounts & claim
   - id: E-MON-35
     group: Accounts & claim
-    title: Delete account with an active store subscription
-    when: A Cloud subscriber deletes the MoneyKoi account.
-    then: The store keeps billing until cancelled in the store; the delete screen says so, with *Manage subscription*.
+    title: Delete account, store subscription active
+    when: Cloud subscriber deletes the account
+    then: |
+      - store **keeps billing** until cancelled there
+      - delete screen says so + *Manage subscription*
     risk: high
   - id: E-MON-37
     group: Accounts & claim
-    title: Testing free accounts before Jan 17
-    when: You need a free account to test with.
-    then: Every new account is an early adopter with Cloud until Jan 17 — use the plan simulator's *Simulate an ended subscription* or `admin_set_cloud_entitlement`.
+    title: Free accounts before Jan 17
+    when: you need a free account to test
+    then: |
+      - every new account = early adopter with Cloud
+      - use *Simulate an ended subscription* or `admin_set_cloud_entitlement`
     status: by-design
     risk: low
 
   # Prices & privacy
   - id: E-MON-40
     group: Prices & privacy
-    title: Book without an account and price history
-    when: A Pro user without an account opens an investment.
-    then: Today's quote, no chart history; a past buy date prefills nothing (D6).
+    title: No account · price history
+    when: Pro user without account opens an investment
+    then: today's quote, no chart · past buy date prefills nothing (D6)
     status: by-design
     risk: low
   - id: E-MON-41
     group: Prices & privacy
-    title: Two currency id sets on one phone
-    when: A member holds their own local book (bundled ids) next to a shared Cloud book (server ids).
-    then: Quotes and FX meet by ISO code, so both books still price (B2).
+    title: Two currency id sets
+    when: local book (bundled ids) + shared Cloud book (server ids)
+    then: matched by ISO code → both books price (B2)
     risk: medium
   - id: E-MON-42
     group: Prices & privacy
-    title: Live prices switched off
-    when: The user turns off *Live prices*.
-    then: The anonymous request stops; the last prices are kept.
+    title: Live prices off
+    when: "*Live prices* switched off"
+    then: request stops · last prices kept
     risk: low
 
   # Gates
   - id: E-MON-50
     group: Gates
-    title: A gate that reads the plan only at build
-    when: A surface reads `Feature.x.isActive` in `build` without `FeatureGateBuilder`, and the plan, sign-in or active book changes later.
-    then: It goes stale (B9 — the book switcher stayed hidden after a late first sync). Every gated surface uses `FeatureGateBuilder`.
+    title: Gate read only at build
+    when: "`Feature.x.isActive` in `build` without `FeatureGateBuilder`"
+    then: |
+      - goes stale when plan, sign-in or book changes (B9)
+      - every gated surface → `FeatureGateBuilder`
     status: fixed
     risk: medium
   - id: E-MON-51
     group: Gates
     title: Developer mode in a store build
-    when: Someone taps the version 7 times in a release build.
-    then: Developer mode opens, but *Plan* and test purchases cannot raise a plan; enforcing and the lapse only take features away.
+    when: version tapped 7 times in a release build
+    then: opens · *Plan* + test purchases can't raise a plan
     risk: high
     tests:
       - file: test/features/monetization/service/plan_simulator_test.dart

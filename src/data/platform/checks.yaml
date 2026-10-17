@@ -3,4 +3,10 @@ groups:
     title: iOS
     items:
       - id: C-PLAT-001
-        text: Clean iOS build (CocoaPods) → the scanner reads text and barcodes
+        text: Clean iOS build (CocoaPods) → scanner reads text + barcodes
+
+  - id: look
+    title: Shared look
+    items:
+      - id: C-PLAT-002
+        text: Every full-width orange button (*Save*, *Apply*, *Continue*) reads **dark** text · disabled stays grey
