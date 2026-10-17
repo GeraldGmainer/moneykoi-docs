@@ -5,89 +5,89 @@ groups:
   - id: setup
     title: Before you start
     setup: |
-      Run the **dev** flavor. Keep one device with an existing cloud account and one fresh.
-
-      Developer mode: About → tap the version 7 times. Its *Plan simulator* has *Enforce plans*, a fake *Plan* (Real · Free · Pro · Cloud), *Test purchases succeed*, *Forget test purchases* and *Simulate an ended subscription*. After switching a plan, use *Reopen the app*.
-
-      Before Jan 17 every new account is an early adopter with Cloud, so a **free account** needs *Simulate an ended subscription* or a manual revoke (`admin_set_cloud_entitlement`).
+      - **dev** flavor · one device with a cloud account, one fresh
+      - developer mode: About → tap the version 7×
+      - *Plan simulator*: *Enforce plans* · *Plan* · *Test purchases succeed* · *Forget test purchases* · *Simulate an ended subscription*
+      - after switching a plan → *Reopen the app*
+      - *Enforce plans* on = the app after Jan 17 (paywall, prices) · off = today's free app, *Get Cloud free*
+      - before Jan 17 every new account has Cloud → free account = *Simulate an ended subscription* or `admin_set_cloud_entitlement`
     items:
       - id: C-MON-001
-        text: Dev build installed on both devices, developer mode on, *Enforce plans* on
+        text: Dev build on both devices · developer mode on · *Enforce plans* on
       - id: C-MON-002
-        text: Dev Supabase has the server files of task T-MON-01 applied
+        text: Dev Supabase has the T-MON-01 server files
       - id: C-MON-003
-        text: '`.env.dev` has `REVENUECAT_API_KEY_ANDROID` / `_IOS` for real store tests — empty means the fake store, where *Buy* fails unless *Test purchases succeed* is on'
+        text: "`.env.dev` has `REVENUECAT_API_KEY_ANDROID` / `_IOS` · empty = fake store, needs *Test purchases succeed*"
 
   - id: locks
-    title: Locks & paywall (plan simulator, Free)
+    title: Locks & paywall · Free
     items:
       - id: C-MON-009
-        text: '*Enforce plans* + *Free* → *Reopen the app* → locks on: Analytics cards, Home edit and the card gallery, the Home cards and Navigation settings chevrons, Forecast (read-only), Investments, export icons, *Create backup* and *Export bookings*, Books'
+        text: "*Free* → *Reopen the app* → locked: Analytics · Home edit · card gallery · Forecast · Investments · exports · *Create backup* · Books"
       - id: C-MON-010
-        text: Drawer lists **Analytics** and **Shopping list** with a lock, last, right above *Get Pro*; a tap opens the paywall with that feature's details
+        text: "Drawer: **Analytics**, **Shopping list**, **Investments**, **Forecast** locked, last, above *Get Pro* → tap opens the paywall"
       - id: C-MON-011
-        text: A saved bottom bar that still holds Analytics shows the locked page with *See plans* instead of the tab
+        text: Saved bar with Analytics → locked page + *See plans*
       - id: C-MON-012
-        text: Home quick actions *Shopping list* and *Add investment* wear the lock and open the paywall
+        text: Quick actions *Shopping list*, *Add investment* → lock → paywall
       - id: C-MON-013
-        text: '*Edit home* wears the lock; the editor lists Pro cards locked; the free default Home shows only free cards'
+        text: "*Edit home* locked · Pro cards locked in editor · default Home only free cards"
       - id: C-MON-014
-        text: Budget Book ⋮ → *Export* wears the lock and opens the paywall, never the export sheet
+        text: Budget Book ⋮ → *Export* → paywall, never the export sheet
       - id: C-MON-015
-        text: '*Create backup* opens the paywall; *Restore from a backup file* works without paying'
+        text: "*Create backup* → paywall · *Restore from a backup file* → free"
       - id: C-MON-016
-        text: Forecast page and Home card open the paywall; with an account, *Use on computer* is listed locked and opens the paywall at the web dashboard
+        text: "Forecast page + card → paywall · with account: *Use on computer* locked → paywall"
       - id: C-MON-017
-        text: The Home nudge appears once (after the booking or age threshold), *Not now* hides it for good; plan simulator → *Show the Pro nudge again* brings it back
+        text: Home nudge once → *Not now* hides it · simulator *Show the Pro nudge again* brings it back
       - id: C-MON-018
-        text: Buying from a locked feature (test purchases on) closes the paywall and continues to the feature; backing out stays put
+        text: Buy from a lock → paywall closes → feature opens · back → stays put
       - id: C-MON-019
-        text: Settings → *Your plan* reads Free · Pro · Cloud · *Cloud through {book}* · *Early adopter* · *Cloud ended, sync is paused* as the state changes
+        text: "*Your plan* follows: Free · Pro · Cloud · *Cloud through {book}* · *Early adopter* · *Cloud ended*"
       - id: C-MON-021
-        text: Plan simulator *Pro* → the drawer shows *Get Cloud*; *Test purchases succeed* → buy → the lock clears in place, without leaving the screen; *Restore purchases* reports what the store holds
+        text: Simulator *Pro* → drawer *Get Cloud* · buy → lock clears in place · *Restore purchases* reports the store
       - id: C-MON-022
-        text: Paywall — Free · Pro · Cloud cards, the monthly / yearly / lifetime picker on Cloud; opened from a locked feature it starts with that feature's details
+        text: "Paywall: Free · Pro · Cloud cards · Cloud monthly/yearly/lifetime · from a lock → that feature's details"
       - id: C-MON-020
-        text: Paywall as Pro owner — no Pro price, Cloud card shows the lifetime **upgrade**; as Cloud owner — *Manage subscription*, no buy button, no bottom bar
+        text: "Pro owner: no Pro price, Cloud **upgrade** · Cloud owner: *Manage subscription*, no buy button"
+      - id: C-MON-061
+        text: "Paywall look: Free a slim row · color only on the picked plan's ring, radio and button · feature rows grey · no glow under the card · button text dark on orange and blue"
 
   - id: lapse-readable
-    title: Records stay readable after the plan ends (D9)
-    setup: |
-      Make investments and a shopping list on Pro or Cloud, then switch the plan simulator to Free.
+    title: Readable after the plan ends · D9
+    setup: Investments + a shopping list on Pro or Cloud → simulator *Free*
     items:
       - id: C-MON-030
-        text: Investments open **read-only** with the banner and *See plans*; no add card, no FAB, no per-position menu
+        text: Investments **read-only** + banner + *See plans* · no add, no FAB, no menu
       - id: C-MON-031
-        text: Shopping lists open read-only; ⋮ → *Edit list* / *Remove all* open the paywall; quick add is hidden
+        text: Shopping read-only · *Edit list*, *Remove all* → paywall · quick add hidden
       - id: C-MON-032
-        text: The Android shopping widget still opens its list, read-only; its list picker shows the locked panel
+        text: Android shopping widget opens its list read-only · its picker → locked panel
       - id: C-MON-033
-        text: With no lists at all, the shopping page shows the locked panel instead of an empty state
+        text: No lists at all → locked panel, not an empty state
       - id: C-MON-034
-        text: A forecast made with Pro — the overdue review's *confirm* / *it didn't happen* / *book it now* still work; *move* opens the paywall (D7)
+        text: "Pro forecast on Free: *confirm* · *it didn't happen* · *book it now* work · *move* → paywall (D7)"
 
   - id: store
-    title: Store sandbox (real products)
-    setup: |
-      Needs tasks T-MON-02 … T-MON-04 (Apple, Google, RevenueCat) done and a build with the RevenueCat keys.
+    title: Store sandbox · real products
+    setup: Needs T-MON-02 … T-MON-04 done + a build with RevenueCat keys
     items:
       - id: C-MON-050
-        text: Sandbox purchase of every product on each store — `pro.lifetime`, `cloud.monthly`, `cloud.yearly` (1-month trial), `cloud.lifetime`, `cloud.lifetime.upgrade`
+        text: "Buy each product on each store: `pro.lifetime` · `cloud.monthly` · `cloud.yearly` (trial) · `cloud.lifetime` · `cloud.lifetime.upgrade`"
       - id: C-MON-051
-        text: Restore on a fresh install finds the purchase
+        text: Fresh install → restore finds the purchase
       - id: C-MON-052
-        text: '*I already use MoneyKoi* → *Restore Pro purchase* on Welcome back restores Pro with no MoneyKoi login'
+        text: "*I already use MoneyKoi* → *Restore Pro purchase* → Pro, no login"
       - id: C-MON-053
-        text: Cloud purchase from a local book — claim intro → sign in → *See plans* → purchase → the upload continues by itself
+        text: Local book → claim → sign in → *See plans* → buy → upload continues by itself
       - id: C-MON-054
-        text: A cancelled subscription lapses after the store's grace (webhook expires the grant), and a renewal brings sync back
+        text: Cancelled subscription → lapses after grace · renewal → sync back
       - id: C-MON-055
-        text: A pending purchase says the store still has to confirm it; a cancelled one stays on the paywall without a message
+        text: Pending purchase → *waiting for the store* · cancelled → stays on paywall, no message
 
   - id: launch
     title: Launch price
-    setup: |
-      No visible change until `launchWindowEnd` is set (T-MON-21, D4).
+    setup: Nothing visible until `launchWindowEnd` is set (T-MON-21, D4)
     items:
       - id: C-MON-060
-        text: With the date set — Cloud lifetime and the upgrade show *Launch price until {date}* and *then {regular}* (when the store reports it) until the last day; the day after both are gone
+        text: Date set → *Launch price until {date}* + *then {regular}* until the last day · day after → gone
