@@ -1,0 +1,28 @@
+---
+title: Overview
+description: 'The Budget Book tab: filter and period scopes, Summary, Transactions, Calendar, category activity.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+The Budget Book tab: filter and period scopes, Summary, Transactions, Calendar, category activity.
+
+| | |
+|---|---|
+| **Scopes** | which bookings (the filter) and which slice of time (the period); a count always names its scope |
+| **Month** | starts on any day 1–28 (Settings → Start of month) |
+| **Views** | Summary (categorised money only), Transactions (grouped by day), Calendar (net per day) |
+| **Export** | what you see |
+
+## Features
+
+<AreaFeatures area="budget-book" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/budget_book/` — `BUDGET_BOOK_AI_CONTEXT.md`, `BUDGET_CALENDAR_AI_CONTEXT.md` |
+| Web | `BOOKINGS_WEB_AI_CONTEXT.md` (the ledger) |

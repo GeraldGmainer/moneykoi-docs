@@ -1,0 +1,41 @@
+items:
+  - id: J-BB-01
+    group: Reading
+    title: Checks the month
+    from: Budget Book tab
+    steps:
+      - Summary — income, expenses, balance, the donut
+      - swipe to the previous month
+      - tap a category → its activity
+    result: where the money went
+    checks: [C-BB-001]
+  - id: J-BB-02
+    group: Reading
+    title: Finds a booking
+    from: Budget Book → filter
+    steps:
+      - search "billa" (description or merchant)
+      - "\"3 in June — 41 more elsewhere\" → *Search all time*"
+      - '*Back to June 2026*'
+    result: the matches, then the month as it was
+    tests:
+      - file: test/features/budget_book/ui/widgets/budget_book_widgets_more_test.dart
+        name: a filter with matches elsewhere offers to search all time without closing anything
+    checks: [C-BB-002]
+  - id: J-BB-03
+    group: Reading
+    title: Reads the calendar
+    from: Budget Book → Calendar
+    steps:
+      - month grid shaded by net
+      - tap a day → its bookings
+    result: the good and the bad days at a glance
+    checks: [C-BB-003]
+  - id: J-BB-04
+    group: Export
+    title: Exports a period
+    from: Budget Book ⋮ → *Export* (Pro)
+    steps:
+      - summary (CSV / PDF), this period or all matches (CSV)
+    result: a file that matches the screen
+    checks: [C-BB-004]

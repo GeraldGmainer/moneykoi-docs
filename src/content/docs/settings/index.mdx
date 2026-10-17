@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'Display formats, language, onboarding, profile, feedback, changelog, developer mode and copy rules.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Display formats, language, onboarding, profile, feedback, changelog, developer mode and copy rules.
+
+| | |
+|---|---|
+| **Rows** | shared (formats, language), app-only (Home, bars, notifications), web-only (web Home) |
+| **Currency** | the book's, never a setting |
+| **Language** | per device in the app, per account on the web |
+| **Onboarding** | language, currency, starter accounts and categories; offline without an account |
+| **Support** | feedback, changelog, developer mode |
+
+## Features
+
+<AreaFeatures area="settings" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/settings/`, `profile/`, `onboarding/`, `feedback/` — `PROFILE_SETTINGS_AI_CONTEXT.md` |
+| Web | `SETTINGS_FORMATTING_WEB`, `ONBOARDING_WEB`, `AUTH_PROFILE_WEB` context docs |

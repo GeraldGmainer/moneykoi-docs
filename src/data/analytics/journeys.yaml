@@ -1,0 +1,28 @@
+items:
+  - id: J-ANL-01
+    group: Reading
+    title: Reviews the month
+    from: Analytics (Pro)
+    steps:
+      - Overview — KPIs, *What stands out*, budgets, income vs. expenses, waterfall
+      - Spending — categories, tags, fixed & variable, merchants, receipts
+      - tap a donut row → subcategories → category activity
+    result: where the money went, and what changed
+    checks: [C-ANL-001]
+  - id: J-ANL-02
+    group: Reading
+    title: Changes the period and baseline
+    from: the period selector
+    steps:
+      - this month · last month · last 3/6/12 · this year · all
+      - period comparison → previous period or same period last year
+    result: every scoped card reloads; all time compares nothing
+    checks: [C-ANL-002]
+  - id: J-ANL-03
+    group: Export
+    title: Exports the period
+    from: app bar → export
+    steps:
+      - share image, CSV or PDF
+    result: the period report
+    checks: [C-ANL-003]

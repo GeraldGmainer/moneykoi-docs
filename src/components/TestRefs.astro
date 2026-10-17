@@ -1,0 +1,23 @@
+---
+import { checkTest, testStatusLabel, type TestRef } from '../lib/tests';
+
+interface Props {
+  tests: TestRef[];
+}
+const checked = Astro.props.tests.map(checkTest);
+const mark = { ok: '✓', 'no-file': '✗', 'no-name': '✗', 'no-repo': '?' } as const;
+---
+
+{
+  checked.length > 0 && (
+    <ul class="mk-tests">
+      {checked.map((t) => (
+        <li class={`mk-test mk-test-${t.status}`} title={testStatusLabel[t.status]}>
+          <span class="mk-test-mark">{mark[t.status]}</span>
+          <a href={t.url}>{t.file.split('/').pop()}</a>
+          {t.name && <span class="mk-test-name">{t.name}</span>}
+        </li>
+      ))}
+    </ul>
+  )
+}

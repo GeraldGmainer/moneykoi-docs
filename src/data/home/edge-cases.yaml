@@ -1,0 +1,34 @@
+items:
+  - id: E-HOM-01
+    group: Home
+    title: A layout from a newer build
+    when: An older app opens a layout with cards or settings it does not know.
+    then: Unknown cards are dropped from the view, unknown settings kept — a newer build's settings survive an older build editing the card.
+    risk: medium
+  - id: E-HOM-02
+    group: Home
+    title: An empty Home
+    when: Every card is removed.
+    then: Legal — an empty-Home card invites you back to the editor.
+    status: by-design
+    risk: low
+  - id: E-HOM-03
+    group: Bar
+    title: Free after Pro
+    when: A user with a saved 4-tab bar goes back to Free.
+    then: The saved bar stays; locked destinations show their locked page with *See plans*.
+    risk: medium
+    related: [R-MON-17]
+  - id: E-HOM-04
+    group: Widgets
+    title: The tap and a resume
+    when: The user taps a widget, backgrounds the app, and resumes without tapping.
+    then: The page must not open again.
+    risk: medium
+  - id: E-HOM-05
+    group: Web
+    title: A render error on the web
+    when: A page throws during render.
+    then: There is no error page — the screen goes blank with no recovery.
+    status: known-issue
+    risk: medium

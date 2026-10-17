@@ -1,0 +1,31 @@
+---
+import Md from './Md.astro';
+import Pill from './Pill.astro';
+import Refs from './Refs.astro';
+import { areaDecisions } from '../lib/data';
+
+interface Props {
+  area: string;
+  status: 'open' | 'decided' | 'dropped';
+}
+const { area, status } = Astro.props;
+const items = (await areaDecisions(area)).filter((d) => d.status === status);
+const label = { open: 'Recommendation', decided: 'Decision', dropped: 'Why not' } as const;
+---
+
+{
+  items.map((d) => (
+    <article class="mk-item" id={d.id}>
+      <header>
+        <a class="mk-id" href={`#${d.id}`}>{d.id}</a>
+        <strong><Md text={d.question} inline /></strong>
+        {d.date && <Pill>{d.date}</Pill>}
+      </header>
+      <dl class="mk-wt">
+        <dt>{label[status]}</dt>
+        <dd><Md text={d.answer} /></dd>
+      </dl>
+      <Refs ids={d.related} label="See also" />
+    </article>
+  ))
+}

@@ -1,0 +1,53 @@
+items:
+  - id: J-LED-01
+    group: Categories
+    title: Adds a first subcategory
+    from: a category with bookings
+    steps:
+      - '*Add subcategory*'
+      - the dialog — move bookings, rules and planned payments into it?
+      - '*Move* (or *Cancel* — nothing is saved)'
+    result: the parent becomes a container; nothing changed in the numbers
+    tests:
+      - file: test/features/category/ui/pages/category_sub_save_page_test.dart
+        name: cancelling the required dialog writes nothing and stays on the page
+    checks: [C-LED-001]
+  - id: J-LED-02
+    group: Categories
+    title: Deletes a category in use
+    from: edit page ⋮ → *Delete*
+    steps:
+      - '*Hide instead* (with Undo), or *Delete with bookings…*'
+      - the second dialog names the count, total and that balances change
+    result: hidden, or gone with its bookings, rules, planned payments and budgets
+    checks: [C-LED-002]
+  - id: J-LED-03
+    group: Categories
+    title: Moves a category
+    from: edit page ⋮ → *Move to…*
+    steps:
+      - pick a top-level category of the same type, or *None*
+    result: moved at once, Undo in the snackbar
+    checks: [C-LED-003]
+  - id: J-LED-04
+    group: Categories
+    title: Fixes a scanner gap
+    from: Categories → Expense tab
+    steps:
+      - a hint like *No category for Snacks*
+      - '*Create "Snacks"*, pre-filled — or dismiss for 7 days'
+    result: the next scan files snacks there
+    checks: [C-LED-004]
+  - id: J-LED-10
+    group: Accounts
+    title: Adds an account with a starting balance
+    from: Accounts → +
+    steps:
+      - name, type, icon, colour
+      - starting balance and its date (both)
+      - '*Save* — Undo offered'
+    result: the account with its current balance
+    tests:
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: naming it and saving creates it, closes the page and offers undo
+    checks: [C-LED-010]

@@ -1,0 +1,11 @@
+---
+import type { Tier } from '../lib/features';
+import { tierNames } from '../lib/catalog';
+
+interface Props {
+  tier: Tier;
+}
+const { tier } = Astro.props;
+---
+
+<span class={`mk-pill mk-tier-${tier}`}>{tierNames[tier]}</span>

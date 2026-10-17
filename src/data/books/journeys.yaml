@@ -1,0 +1,214 @@
+# Source: BOOK_AI_CONTEXT.md, FAMILY_ACCOUNTS_AI_CONTEXT.md, OFFLINE_TIER_AI_CONTEXT.md §9–§10,
+# MONETIZATION §9b, BOOKS_WEB_AI_CONTEXT.md §5.
+items:
+  # Books
+  - id: J-BOOK-01
+    group: Your books
+    title: Creates another book
+    from: Cloud account
+    steps:
+      - Book page → *New book*
+      - name + currency
+      - private or shared
+      - starter set or empty
+    result: the new book opens with a confirmation
+    tests:
+      - file: test/features/book/ui/pages/create_book_page_test.dart
+        name: a created book lands home with a confirmation
+      - file: test/features/book/use_cases/book_use_cases_test.dart
+        name: creating a book seeds it before switching into it
+    checks: [C-BOOK-010]
+  - id: J-BOOK-02
+    group: Your books
+    title: Switches books
+    from: two or more books
+    steps:
+      - Home avatar tap → switcher (or the drawer's book chip)
+      - double-tap the avatar → the previous book
+    result: the other book, re-pulled; nothing wiped
+    tests:
+      - file: test/features/book/domain/service/previous_book_selector_test.dart
+        name: with exactly two books it is always the other one, whatever was remembered
+      - file: test/features/book/bloc/book_flow_blocs_test.dart
+        name: switching to another book records where it went
+    checks: [C-BOOK-010, C-BOOK-019]
+  - id: J-BOOK-03
+    group: Your books
+    title: Changes the book currency
+    from: owner
+    steps:
+      - Settings → currency
+      - confirm (a shared book's dialog says everyone sees it)
+    result: amounts relabelled, not converted; partners' phones rebuild after their next sync
+    tests:
+      - file: test/features/book/data/data_sources/book_remote_source_test.dart
+        name: updateBookCurrency patches the currency and reads the row back
+    checks: [C-BOOK-015]
+  - id: J-BOOK-04
+    group: Your books
+    title: Deletes a book
+    from: owner with another owned book
+    steps:
+      - Book page → card menu → *Delete*
+    result: lands in the book the server picks, or stays where it was if the deleted one was not active
+    tests:
+      - file: test/features/book/data/data_sources/book_remote_source_test.dart
+        name: deleteBook returns the server fallback, which may be null
+
+  # Sharing
+  - id: J-BOOK-10
+    group: Sharing
+    title: Shares a book and invites
+    from: owner or admin
+    steps:
+      - Book page → share pitch, or invite straight away (inviting shares it)
+      - email + role (member or admin)
+      - email sent, or the link to copy
+    result: a pending invite, valid 7 days
+    tests:
+      - file: test/features/book/data/data_sources/book_remote_source_test.dart
+        name: createInvite sends the tenant, email and role and returns the token
+    checks: [C-BOOK-011]
+  - id: J-BOOK-11
+    group: Sharing
+    title: Accepts an invite, has the app
+    from: invite email
+    steps:
+      - link opens the web `/invite` page
+      - sign in → *Join*
+      - '*Open in the MoneyKoi app*'
+    result: the book list; the joined book is not auto-selected
+    checks: [C-BOOK-012]
+  - id: J-BOOK-12
+    group: Sharing
+    title: Invited partner, no app yet
+    from: invite link
+    steps:
+      - install
+      - sign in (an account is required, free)
+      - setup for an account
+    result: the shared book opens with every feature
+  - id: J-BOOK-13
+    group: Sharing
+    title: Invited partner with a local book
+    from: Local Free or Pro + invite
+    steps:
+      - '*Join {book}* (names the book and who invited)'
+      - sign in
+      - the shared book syncs
+    result: shared book = Cloud; own book stays local at their tier, no upload (with a Cloud account it uploads too)
+    status: waiting
+    note: |
+      Behind developer mode since 2026-10-16 (the Trello note says it is not — outdated). How an https invite reaches the app on such a phone is open: Q-BOOK-1.
+    tests:
+      - file: test/features/book/ui/widgets/book_deep_link_listener_test.dart
+        name: in developer mode opens the Join page
+      - file: test/features/cloud_tier/claim_book_use_case_test.dart
+        name: a join into an account without Cloud moves the book under it without a push, and opens the invite
+      - file: test/features/cloud_tier/join_book_page_test.dart
+        name: names the book and who invited, and says joining is free
+    checks: [C-BOOK-001, C-BOOK-002, C-BOOK-005]
+    related: [Q-BOOK-1]
+  - id: J-BOOK-14
+    group: Sharing
+    title: Invite opened while signed out
+    from: invite on a phone with a signed-out account
+    steps:
+      - '*Sign in to join*'
+      - sign in
+    result: the invite opens once
+    tests:
+      - file: test/features/book/ui/pages/accept_invite_page_test.dart
+        name: offers sign-in instead of a join that would fail, and keeps the invite for after it
+      - file: test/features/book/ui/service/invite_after_sign_in_test.dart
+        name: a kept invite opens once the user is in, then is forgotten
+  - id: J-BOOK-15
+    group: Sharing
+    title: Pastes an invite link in the app
+    from: account, Book page
+    steps:
+      - '*Join* → paste the link'
+    result: the accept page
+    tests:
+      - file: test/features/book/service/book_link_builder_test.dart
+        name: extracts the token from a valid HTTPS invite URI
+
+  # Members
+  - id: J-BOOK-20
+    group: Members
+    title: Changes a role or removes a member
+    from: owner (roles), owner or admin (remove)
+    steps:
+      - Book page → member → role / remove
+    result: applied at once on this phone; the removed member's phone drops the book and lands in their own
+    tests:
+      - file: test/features/book/bloc/book_management_bloc_test.dart
+        name: a role change is applied optimistically, re-sorted, and flagged once
+      - file: test/features/book/bloc/book_management_bloc_test.dart
+        name: a removed member disappears at once, before the refresh lands
+    checks: [C-BOOK-014, C-BOOK-016]
+  - id: J-BOOK-21
+    group: Members
+    title: Leaves a book
+    from: member or admin
+    steps:
+      - card menu → *Leave*
+    result: lands in the server's fallback book; the left book leaves the phone
+    tests:
+      - file: test/features/book/use_cases/book_use_cases_test.dart
+        name: leaving lands in the server fallback book
+    checks: [C-BOOK-017]
+  - id: J-BOOK-22
+    group: Members
+    title: Stops sharing
+    from: owner of a shared book
+    steps:
+      - card menu → *Stop sharing*
+    result: every other member removed; the book is private again
+    tests:
+      - file: test/features/book/use_cases/book_use_cases_test.dart
+        name: dissolving stays in the (now private) book
+    checks: [C-BOOK-017]
+    related: [E-BOOK-13]
+
+  # When a book stops syncing
+  - id: J-BOOK-30
+    group: When a book stops syncing
+    title: The owner's plan ends — a member's view
+    from: member of a Cloud book
+    steps:
+      - owner's Cloud ends
+      - notification + inbox row *{book} no longer syncs*
+      - the + becomes a grey cloud-slash button (tablet rail too); its sheet leads to *Export*
+    result: readable, not writable; reopens with *syncs again* when the owner renews
+    tests:
+      - file: test/features/cloud_tier/book_level_cloud_test.dart
+        name: the shared book syncs while its owner pays; the own book stays local
+    checks: [C-BOOK-003, C-BOOK-006]
+    related: [J-MON-52]
+  - id: J-BOOK-31
+    group: When a book stops syncing
+    title: The owner deletes the book
+    from: member
+    steps:
+      - '*{book} was deleted*'
+      - Settings → *Books that stopped syncing*
+      - '*Export* · *Remove from this phone*'
+    result: the member keeps a read-only copy until they remove it
+    tests:
+      - file: test/features/cloud_tier/lapse_review_page_test.dart
+        name: a book deleted on the server waits among the lost ones, to export or remove
+      - file: test/features/cloud_tier/cloud_status_notices_test.dart
+        name: a deleted book is told once, and forgotten once it is removed from the phone
+    checks: [C-BOOK-004]
+  - id: J-BOOK-32
+    group: When a book stops syncing
+    title: The owner deletes the account
+    from: owner of shared books
+    steps:
+      - confirm screen names the shared books and their members
+      - books are deleted for everyone
+      - members' phones — read-only with *Export*, then *Remove from this phone*
+    result: shared books gone
+    checks: [C-BOOK-004]
+    related: [J-ACC-40]

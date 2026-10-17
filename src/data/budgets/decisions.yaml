@@ -1,0 +1,10 @@
+items:
+  - id: D-BUD-13
+    question: Which plan does the budget calculator need?
+    status: decided
+    date: 2026-10-16
+    answer: Free (the release note's "your call" is settled).
+  - id: D-BUD-14
+    question: The website's deep link into the in-app calculator
+    status: open
+    answer: Still open (BUDGET_GOALS §5b, D14). No recommendation recorded.

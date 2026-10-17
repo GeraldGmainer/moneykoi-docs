@@ -1,0 +1,13 @@
+# Derived from the context docs (and C-MON-030…033 for the read-only state).
+groups:
+  - id: shopping
+    title: Shopping list
+    items:
+      - id: C-SHP-001
+        text: Quick-add `3x Äpfel`, `Milch 3,5%`, `Chips 2026`, `りんご3個` → quantities only where expected; grouping on/off per list; drag between groups recategorizes; check off with Undo
+      - id: C-SHP-002
+        text: Swipe right → booking form with name and an expense category; back out → the item stays; save → the item is gone
+      - id: C-SHP-003
+        text: Two phones in a shared book — add on one, check off on the other, live; a member can do everything
+      - id: C-SHP-004
+        text: Pin a list in Settings → Navigation → the tab opens it; delete that list → the tab falls back to all lists

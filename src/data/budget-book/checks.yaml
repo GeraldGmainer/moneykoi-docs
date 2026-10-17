@@ -1,0 +1,15 @@
+# Derived from the context docs, not from an earlier checklist.
+groups:
+  - id: book
+    title: Budget Book
+    items:
+      - id: C-BB-001
+        text: Summary — transfers and balance corrections are not in income / expenses / balance but are listed under Transactions; grouped / flat; a row opens the category's activity
+      - id: C-BB-002
+        text: Filter by search → the count says "in this period"; *Search all time* → *Back to …* chip; reopening the app keeps the old period
+      - id: C-BB-003
+        text: Calendar — month, year and all-years; today ringed; future days outlined; an anchored month (start on the 25th) shows two partial grids
+      - id: C-BB-004
+        text: Export on Free → lock and paywall; on Pro → summary PDF and CSVs match the screen
+      - id: C-BB-005
+        text: Week start Sunday and month start 25 → periods, labels and paging agree; test over the late-October DST change

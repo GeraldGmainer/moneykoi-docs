@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'The daily balance line, safe to spend, planned payments and alerts.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+The daily balance line, safe to spend, planned payments and alerts.
+
+| | |
+|---|---|
+| **Invariant** | a forecast is a derivation, never a booking; a skip is a forecast item |
+| **Plan** | Pro; read-only after the plan ends |
+| **Line** | each euro claimed once, by the most specific source |
+| **Numbers** | safe to spend, the lowest point, one per-day figure everywhere |
+| **Web** | the same engine |
+
+## Features
+
+<AreaFeatures area="forecast" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/forecast/` — `FORECAST_AI_CONTEXT.md` |
+| Web | `FORECAST_WEB_AI_CONTEXT.md` |

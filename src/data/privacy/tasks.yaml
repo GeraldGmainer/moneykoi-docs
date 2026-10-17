@@ -1,0 +1,31 @@
+# Source: USAGE_STATS_AI_CONTEXT.md §8, MONETIZATION_AI_CONTEXT.md §8 item 5a,
+# moneykoi-web AUTH_PROFILE_WEB §8 and DATA_EXPORT_WEB §9.
+items:
+  - id: T-PRIV-01
+    title: Usage stats — migration and the purge schedule
+    owner: gerald
+    detail: |
+      Apply `20261013200000_usage_stats.sql` through the usual branch push, then schedule the purge once on each project.
+    command: |
+      select cron.schedule('usage-purge-daily', '17 3 * * *', 'select internal.usage_purge()');
+  - id: T-PRIV-02
+    title: Privacy policy
+    owner: gerald
+    detail: |
+      `moneykoi-site` `privacy.sections.eight` still says "anonymous analytics… no personally identifiable information". Replace with: opt-in usage statistics, a random install id, the event kinds, MoneyKoi's own server (Supabase, EU), kept 13 months, withdrawing in the settings erases them. Also name Sentry (opt-out), RevenueCat and the anonymous price fetch. Same lawyer hour as T-MON-05.
+  - id: T-PRIV-03
+    title: Store privacy forms
+    owner: gerald
+    detail: |
+      - Play Data safety: "App activity: app interactions", optional, not shared
+      - Apple privacy label: "Usage Data: product interaction", not linked to identity, not tracking
+  - id: T-PRIV-04
+    title: Sentry DPA
+    owner: gerald
+    detail: |
+      Still open from the opt-out risk call: a signed DPA with Sentry, the privacy policy naming it, and the lawyer's view.
+  - id: T-PRIV-05
+    title: Web security fixes
+    owner: ai
+    detail: |
+      From the web review-2026-09: #5 open redirect after sign-in, #21 any URL as `avatar_url`, #20 committed `DEV_USERS`. Read moneykoi-web `AUTH_PROFILE_WEB_AI_CONTEXT.md` §8 first; no prompt written yet.

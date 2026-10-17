@@ -1,0 +1,96 @@
+# Source: app PROFILE_SETTINGS_AI_CONTEXT.md, 02_FEATURES, onboarding / settings / feedback tests;
+# web SETTINGS_FORMATTING_WEB, ONBOARDING_WEB, AUTH_PROFILE_WEB, APP_SHELL_WEB §6a.
+items:
+  - id: R-SET-01
+    group: Settings
+    title: Three settings rows per person
+    text: |
+      **Shared** (app + web): money format, date format, start of week, start of month, summary view, goal settings, language. **App only**: Home cards, notifications, bottom bars. **Web only**: the web's Home. The currency is the **book's**, never a setting.
+    source: PROFILE_SETTINGS §1
+    related: [R-BOOK-03]
+  - id: R-SET-02
+    group: Settings
+    title: Language is per device in the app, per account on the web
+    text: |
+      The app keeps its language on the phone; the web saves the account's. Neither follows the other (an open decision).
+    source: PROFILE_SETTINGS §1, §4
+    tests:
+      - file: test/features/settings/config/app_locales_test.dart
+        name: falls back to English for unsupported languages
+    related: [D-SET-1]
+  - id: R-SET-03
+    group: Settings
+    title: Start of month 1–28
+    text: |
+      *My month starts on the 25th* moves every monthly period in the app and (once its migrations are applied) the web; the app confirms the change in a dialog, the web saves on pick.
+    source: BUDGET_BOOK §6.1, SETTINGS_FORMATTING_WEB §1
+    related: [R-BB-05]
+  - id: R-SET-04
+    group: Settings
+    title: A setting saves the moment it changes
+    text: |
+      No Save button in settings sheets; a confirmation (toast / snackbar), and an error instead when it failed.
+    source: SETTINGS_FORMATTING_WEB §1, settings tests
+    tests:
+      - file: test/features/settings/ui/pages/notification_settings_page_test.dart
+        name: a failing save shows an error instead of the confirmation
+  - id: R-SET-10
+    group: Onboarding
+    title: Language, currency, starter accounts and categories
+    text: |
+      The app suggests the currency from the language (English → USD); starter categories arrive classified fixed / variable. A book without an account onboards entirely offline. An invitee skips onboarding and lands in the shared book.
+    source: OFFLINE_TIER §3, ONBOARDING_WEB §1
+    tests:
+      - file: test/features/onboarding/domain/service/onboarding_initial_state_factory_test.dart
+        name: maps an English locale to USD
+      - file: test/features/onboarding/domain/service/category_generation_service_test.dart
+        name: classifies the starter book as fixed or variable at the parent level
+  - id: R-SET-11
+    group: Onboarding
+    title: The web's onboarding is shorter
+    text: |
+      Currency, four starter accounts (all on), 44 starter categories (all or nothing) — no starting balances, no personalised path, no variability.
+    source: ONBOARDING_WEB §1, web 02_FEATURES
+  - id: R-SET-20
+    group: Profile
+    title: Name and avatar
+    text: |
+      The app compresses an avatar and deletes the old one; the web uploads the crop as is. Not for a book without an account.
+    source: AUTH_PROFILE_WEB §6, OFFLINE_TIER §7
+  - id: R-SET-21
+    group: Profile
+    title: Set password
+    text: |
+      Twice, at least 6 characters, no current password asked — app and web.
+    source: AUTH_PROFILE_WEB §1
+  - id: R-SET-30
+    group: Support
+    title: Feedback instead of community voting
+    text: |
+      Feedback, bug or idea with an optional contact consent; needs an account. Lands in the admin inbox. Community voting was removed 2026-10-02.
+    source: 02_FEATURES, USAGE_STATS / admin README
+    tests:
+      - file: test/features/feedback/bloc/feedback_cubit_test.dart
+        name: an untouched form has no change and cannot be sent
+  - id: R-SET-31
+    group: Support
+    title: Changelog in your language
+    text: |
+      Release notes from the server, the app's and the web's, highest version first, in the user's language with English as the fallback; readable without an account and cached for offline.
+    source: OFFLINE_TIER §7, APP_SHELL_WEB §6a
+    tests:
+      - file: test/features/settings/domain/changelog_test.dart
+        name: reads the language the release was written in
+  - id: R-SET-32
+    group: Support
+    title: Developer mode
+    text: |
+      About → tap the version 7 times. App: the plan simulator, debug tools, the claim. Web: only *Simulate an ended subscription*.
+    source: MONETIZATION §3b, APP_SHELL_WEB §6a
+    related: [R-MON-53]
+  - id: R-SET-40
+    group: Copy
+    title: Three languages, one voice
+    text: |
+      EN (en-US, "you"), DE (informal *du*), JA (no pronoun, です/ます). Fixed terms: *Sicherung* (never "Backup"), *Sparziel*, *Ausgabenlimit*, 帳簿 for a book. Labels and buttons end without a period; two-sentence copy ends every sentence with one.
+    source: CLAUDE.md (UX copy)

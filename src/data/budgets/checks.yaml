@@ -1,0 +1,46 @@
+# Trello release notes 1.17.0, item 15; the other groups derived from the context docs.
+groups:
+  - id: budgets
+    title: Budgets
+    items:
+      - id: C-BUD-020
+        text: New budget opens with no scope (no red duplicate error); pick Groceries → the suggestion shows; a second Groceries monthly cap is refused, weekly is fine
+      - id: C-BUD-021
+        text: Whole book 2000 + Food 600 + Dining 200 → nested under each other with assigned / unassigned; a transfer counts only toward the whole book
+  - id: goals
+    title: Goals
+    items:
+      - id: C-BUD-030
+        text: Deposit with *also record a booking* (with and without a linked account) → the account moves, the goal moves; delete the booking → the deposit stays
+      - id: C-BUD-031
+        text: Cross 25 % → celebrated once; withdraw below and deposit again → celebrated again, never the drop; offline deposit to target → *reached* at once
+      - id: C-BUD-032
+        text: Round-ups on → a new expense contributes the rest to the unit; an edit adds nothing; a booking made on the web rounds up there, not twice
+  - id: loans
+    title: Loans
+    items:
+      - id: C-BUD-040
+        text: Payment with a principal / interest split reduces the balance by the principal; over-payment reads settled; two debts → strategy page avalanche / snowball
+  - id: planner
+    title: Budget calculator
+    items:
+      - id: C-BUD-001
+        text: Goals & Budgets → Budgets → *Plan with the budget calculator* (also on the empty state); hidden for a member who cannot set the book up
+      - id: C-BUD-002
+        text: Income prefill — an active income goal wins, otherwise history, otherwise empty; the line under the field says which
+      - id: C-BUD-003
+        text: Matching with the EN, DE and JA starter names and renames ("Miete" → Housing); an unmatched row shows *No matching category* and a picker limited to top-level categories
+      - id: C-BUD-004
+        text: A preset follows income, adults and kids until you type a row by hand
+      - id: C-BUD-005
+        text: Summary — *Left to plan*, the over-income warning in red, per day, savings rate
+      - id: C-BUD-006
+        text: Same category on two rows → Save is blocked
+      - id: C-BUD-007
+        text: '*Replace existing budgets* → destructive confirm → caps no row keeps are deleted (weekly, yearly, sub-category); income goals and archived caps stay; the Home Budgets card and the Android budget widget keep their budget'
+      - id: C-BUD-008
+        text: A paused monthly cap on a planned row says *Turns your paused budget back on* and is active after Save
+      - id: C-BUD-009
+        text: '*?* opens the help dialog; check de and ja copy'
+      - id: C-BUD-010
+        text: Loose guesses from the release notes — a row next to categories called "Childcare", "Haushalt", "Funds" — check the *Car*, *Haus* and *Fun* rows do not land there

@@ -1,0 +1,71 @@
+# Source: app NOTIFICATIONS_AI_CONTEXT.md (and the channel notes in FORECAST, RECONCILIATION,
+# BACKUP_RESTORE, OFFLINE_TIER). The web sends no notifications.
+items:
+  - id: R-NTF-01
+    group: The five rules
+    title: Opt-in, per channel, off by default
+    text: |
+      Turning a channel on is when the OS asks for permission — so the ask comes with a reason. A refusal leaves the switch off; a banner explains how to allow it in system settings.
+    source: NOTIFICATIONS §2
+    tests:
+      - file: test/core/notifications/notification_service_test.dart
+        name: a permission request is refused without asking
+  - id: R-NTF-02
+    group: The five rules
+    title: Everything is local
+    text: |
+      Scheduled on the phone, re-armed after each sync and resume; no push server. A reminder for a rule deleted meanwhile disappears, because every pass cancels its channel and rebuilds.
+    source: NOTIFICATIONS §2
+  - id: R-NTF-03
+    group: The five rules
+    title: Each scheduled channel has its own time
+    text: |
+      Picked in its sheet (bills 9:00, the entry nudge 20:00 by default).
+    source: NOTIFICATIONS §10 (2026-10-10)
+  - id: R-NTF-04
+    group: The five rules
+    title: Settings sync; history does not
+    text: |
+      The switches and times are on your profile. The inbox is per phone and per account; signed out, only rows from before a sign-in show.
+    source: NOTIFICATIONS §3, §9
+  - id: R-NTF-10
+    group: Channels
+    title: Bill reminders
+    text: |
+      For each recurring rule (transfers too), its next occurrence only, a lead before (per rule or the default 1 day); several due on one day are one notification ("Rent, Phone and 2 more"). Only occurrences within 90 days are armed.
+    source: NOTIFICATIONS §5
+    tests:
+      - file: test/core/notifications/notification_names_test.dart
+        name: one name past the cap is still listed, never "and 1 more"
+    related: [R-REC-13]
+  - id: R-NTF-11
+    group: Channels
+    title: Over budget
+    text: |
+      When a cap is crossed — also by a partner's synced spending — once per budget and period. Never at the warning level.
+    source: NOTIFICATIONS §5
+    tests:
+      - file: test/features/budget_goals/use_cases/budget_over_watcher_test.dart
+        name: notifies each newly-over cap once and remembers its window
+  - id: R-NTF-12
+    group: Channels
+    title: Entry nudge
+    text: |
+      Off / daily / weekly "log your spending"; skips a day already logged (a partner's booking counts) and goes quiet by itself after two weeks without opening the app.
+    source: NOTIFICATIONS §5
+  - id: R-NTF-13
+    group: Channels
+    title: The other channels
+    text: |
+      Goal contribution and loan due (one goal notification per day), balance-check month start, forecast below buffer / zero (date, never amount), backup reminder (Pro; the only one whose tap opens a page), shared book stopped / resumed / deleted.
+    source: NOTIFICATIONS §1, §5
+    related: [R-FC-31, R-BC-09, R-BOOK-35]
+  - id: R-NTF-20
+    group: Inbox
+    title: The bell keeps what has been shown
+    text: |
+      Rows appear once their time has passed; opening the page marks them read. Rows are not tappable; no grouping, no filters.
+    source: NOTIFICATIONS §9
+    tests:
+      - file: test/core/notifications/notification_log_store_test.dart
+        name: cancelling a channel drops its pending rows and leaves what already fired

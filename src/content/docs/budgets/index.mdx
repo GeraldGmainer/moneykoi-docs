@@ -1,0 +1,30 @@
+---
+title: Overview
+description: 'Budgets (spending caps), income goals, savings goals, loans and the budget calculator.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Budgets (spending caps), income goals, savings goals, loans and the budget calculator.
+
+| | |
+|---|---|
+| **Model** | one tab, three kinds; a deposit and its booking are separate facts |
+| **Budgets** | a budget is its scope — no name; no two on one scope; nested caps |
+| **Goals** | pace, milestones, streaks, round-ups, auto-contributions (app) |
+| **Loans** | payments split principal and interest; payoff strategy |
+| **Calculator** | free; the same income plans the same month in app and web |
+| **Who** | owners and admins plan; members read |
+
+## Features
+
+<AreaFeatures area="budgets" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/budget_goals/` — `BUDGET_GOALS_AI_CONTEXT.md` |
+| Web | `BUDGETS_WEB`, `GOALS_WEB`, `LOANS_WEB` context docs |

@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'Home cards, the bottom bar and drawer, Android widgets, and the web shell.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Home cards, the bottom bar and drawer, Android widgets, and the web shell.
+
+| | |
+|---|---|
+| **Home** | your cards in your order; the data hides empty ones |
+| **Editor** | Pro — reorder, add, configure, four presets; every change saves with Undo |
+| **Bar** | 1, 2 or 4 tabs; the default follows the plan; one bar per book |
+| **Widgets** | eight Android widgets; a tap opens the app |
+| **Web** | sidebar, ⌘K, its own dashboard layout |
+
+## Features
+
+<AreaFeatures area="home" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/home/`, `home_widget/`, `lib/core/navigation/` — `HOME_CARDS`, `NAVIGATION`, `HOME_WIDGET` context docs |
+| Web | `DASHBOARD_WEB`, `APP_SHELL_WEB` context docs |

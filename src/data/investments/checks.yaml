@@ -1,0 +1,42 @@
+# Trello release notes 1.17.0 (items 17–19); "Everyday" derived from the context docs.
+groups:
+  - id: everyday
+    title: Everyday
+    items:
+      - id: C-INV-030
+        text: Buy, partial sell (realized gain shown before saving), transfer between two places (no gain), staking income, a fee; booking the cash leg moves the depot or the account
+      - id: C-INV-031
+        text: Prices arrive daily with "as of" time; a custom asset with a manual price; a manual price on a feed-priced asset is flagged as ignored; chart 1M / 3M / 1Y / 5Y / All
+      - id: C-INV-032
+        text: As a member — every position visible, nothing editable
+  - id: currencies
+    title: Currency positions
+    setup: |
+      Needs `currency_assets.sql` pushed, then `is_active` flipped (T-INV-01) — hidden until both are done.
+    items:
+      - id: C-INV-001
+        text: Add → a *Currencies* group; the book's own currency is hidden; search by localized name
+      - id: C-INV-002
+        text: JPY — 0 decimals, unit label "JPY"
+      - id: C-INV-003
+        text: The price row is *Exchange rate*, prefilled from the market rate; detail shows *Avg. rate paid* / *Current rate*; prices read "1 EUR = 175.42 JPY"
+      - id: C-INV-004
+        text: Buy / Sell and Transfer use the ISO code
+
+  - id: grid
+    title: Asset grid "Show more"
+    items:
+      - id: C-INV-010
+        text: A class with more than 9 assets shows 8 plus *Show more · N more* (crypto today); a search shows every match
+      - id: C-INV-011
+        text: Picking from the hidden tail and going back reopens the group expanded
+
+  - id: wizard
+    title: Investment wizard steps
+    items:
+      - id: C-INV-020
+        text: '"Step N of 3" in the app bar, no tabs; on steps 2–3 a back arrow goes one step back'
+      - id: C-INV-021
+        text: The arrow, Android back and the iOS swipe each go back one step; with the keypad open, back closes the keypad first
+      - id: C-INV-022
+        text: Step 1 with changes → discard dialog; editing an existing position still shows ×

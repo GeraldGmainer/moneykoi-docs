@@ -1,0 +1,20 @@
+---
+title: Features by tier
+description: What Free, Pro and Cloud include, and the feature table exactly as the code has it.
+tableOfContents: false
+sidebar:
+  order: 2
+---
+
+import TierSummary from '../../../components/TierSummary.astro';
+import CodeFeatures from '../../../components/CodeFeatures.astro';
+
+<TierSummary />
+
+All rows by area, with filters: [All features](/features/).
+
+## As the code says
+
+Every gated feature in `feature.dart`. A free feature is listed only when it needs something (an account or sync); one that needs nothing is not in the enum at all.
+
+<CodeFeatures />

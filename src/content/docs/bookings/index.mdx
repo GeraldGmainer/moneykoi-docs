@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'The booking form, quick booking, tags, the trash and search.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+The booking form, quick booking, tags, the trash and search.
+
+| | |
+|---|---|
+| **Shapes** | expense, income, transfer; Balance check adds corrections (no category, no destination) |
+| **Entry** | the form (app keypad, Save at the bottom) or one line of quick booking |
+| **Tags** | per book; trip mode tags new bookings |
+| **Trash** | bookings only, per device, local; a restore is a new booking |
+| **Search** | accounts, categories, goals, loans and bookings in one field |
+
+## Features
+
+<AreaFeatures area="bookings" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/booking/`, `quick_add/`, `tag/`, `trash/`, `search/` — `FORMS`, `QUICK_BOOKING`, `TRASH` context docs |
+| Web | `BOOKING_ENTRY_WEB`, `BOOKINGS_WEB`, `TAGS_WEB` context docs |

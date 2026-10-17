@@ -1,0 +1,16 @@
+items:
+  - id: T-ACC-01
+    title: Confirm the B1 sync fix is on prod
+    owner: gerald
+    detail: |
+      `moneykoi-supabase/supabase/migrations/20261005130000_sync_all_deletes_ignore_exclude.sql` is committed; the app's `OFFLINE_FIRST_AI_CONTEXT.md` §6 step 2 still calls it "parked, not applied". Check the prod project has it.
+    command: |
+      psql "$PROD_DATABASE_URL" -c "select version from supabase_migrations.schema_migrations where version = '20261005130000';"
+  - id: T-ACC-02
+    title: Fix the stale "parked" note in the engine doc
+    owner: ai
+    waitsFor: [T-ACC-01]
+    detail: |
+      Doc drift found while building this site.
+    prompt: |
+      In moneykoi-app/.agents/references/OFFLINE_FIRST_AI_CONTEXT.md §6 step 2, the deletes half of bug B1 is fixed by moneykoi-supabase 20261005130000_sync_all_deletes_ignore_exclude.sql (in migrations/, not migrations_later/). Rewrite the sentence to say it is applied and keep the warning not to put the filter back. The upserts half (O4) stays open.

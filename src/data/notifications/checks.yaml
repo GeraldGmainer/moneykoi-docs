@@ -1,0 +1,13 @@
+# Derived from the context docs.
+groups:
+  - id: channels
+    title: Notifications
+    items:
+      - id: C-NTF-001
+        text: Each channel off by default; switching one on asks for permission once; refuse → the switch stays off and the banner shows
+      - id: C-NTF-002
+        text: Three rules due on the 1st → one notification on the 31st naming them; a partner's synced spending over a cap → one alert
+      - id: C-NTF-003
+        text: The bell lists what fired, not what is armed; opening it clears the badge; log out → the reminders stop; sign in → re-armed
+      - id: C-NTF-004
+        text: Entry nudge daily → skipped on a day with a booking (also a partner's)

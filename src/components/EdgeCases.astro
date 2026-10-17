@@ -1,0 +1,41 @@
+---
+import Md from './Md.astro';
+import TestRefs from './TestRefs.astro';
+import Pill from './Pill.astro';
+import Refs from './Refs.astro';
+import { areaEdgeCases, groupBy } from '../lib/data';
+
+interface Props {
+  area: string;
+}
+const cases = await areaEdgeCases(Astro.props.area);
+const statusTone = { handled: 'ok', fixed: 'ok', 'known-issue': 'bad', 'by-design': 'muted' } as const;
+const riskTone = { high: 'bad', medium: 'warn', low: 'muted' } as const;
+---
+
+{
+  groupBy(cases, (c) => c.group).map(([group, items]) => (
+    <section>
+      <h2>{group}</h2>
+      {items.map((c) => (
+        <article class="mk-item" id={c.id}>
+          <header>
+            <a class="mk-id" href={`#${c.id}`}>{c.id}</a>
+            <strong>{c.title}</strong>
+            <Pill tone={statusTone[c.status]}>{c.status}</Pill>
+            <Pill tone={riskTone[c.risk]}>{c.risk} risk</Pill>
+            {c.tests.length > 0 ? <Pill tone="ok">automated</Pill> : <Pill tone="warn">manual</Pill>}
+          </header>
+          <dl class="mk-wt">
+            <dt>When</dt>
+            <dd><Md text={c.when} /></dd>
+            <dt>Then</dt>
+            <dd><Md text={c.then} /></dd>
+          </dl>
+          <TestRefs tests={c.tests} />
+          <Refs ids={c.related} label="See also" />
+        </article>
+      ))}
+    </section>
+  ))
+}

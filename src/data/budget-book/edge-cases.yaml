@@ -1,0 +1,52 @@
+items:
+  - id: E-BB-01
+    group: Periods
+    title: Weeks across daylight saving
+    when: A Sunday-start week over the autumn change.
+    then: Week bounds step by calendar day — no week reads Oct 25 – Oct 30, no booking falls between pages (fixed 2026-10-14).
+    status: fixed
+    risk: high
+  - id: E-BB-02
+    group: Periods
+    title: An anchored month and grouping
+    when: The month starts on the 25th.
+    then: Bookings group by the period's own start; the old (year, month) key dropped them into no page.
+    status: fixed
+    risk: high
+  - id: E-BB-03
+    group: Periods
+    title: Midnight passes while the tab is open
+    when: The page showing today is open past midnight.
+    then: It moves to the period holding the new today; a page the user paged to stays.
+    risk: low
+    tests:
+      - file: test/features/budget_book/bloc/budget_book_bloc_test.dart
+        name: moves a page that showed today onto the week holding the new today
+  - id: E-BB-04
+    group: Counts
+    title: Counts differ between tabs
+    when: Summary and Transactions show different counts for one month.
+    then: Expected — Summary counts categorised bookings only (no transfers, no corrections).
+    status: by-design
+    risk: low
+  - id: E-BB-05
+    group: Export
+    title: Export on Free
+    when: A Free user taps ⋮ → *Export*.
+    then: The row wears the lock and opens the paywall (it used to open the sheet and fail silently, B5).
+    status: fixed
+    risk: medium
+  - id: E-BB-06
+    group: Web
+    title: Web calendar and list gaps
+    when: Using the ledger on the web.
+    then: No day grouping and no day / week calendar layouts; the calendar's outcome total is tinted (open).
+    status: known-issue
+    risk: low
+  - id: E-BB-07
+    group: Web
+    title: Web dates west of UTC
+    when: A browser west of UTC asks for a range.
+    then: Local midnights sent through `toISOString()` shift a day — latent, only the dashboard shows it today.
+    status: known-issue
+    risk: medium

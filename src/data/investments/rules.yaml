@@ -1,0 +1,140 @@
+# Source: app INVESTMENTS_AI_CONTEXT.md, SERIES_REPLICA_AI_CONTEXT.md; supabase
+# INVESTMENT_PRICES_AI_CONTEXT.md; web INVESTMENTS_WEB_AI_CONTEXT.md; Trello items 17–19.
+items:
+  # What you hold
+  - id: R-INV-10
+    group: What you hold
+    title: A position is one asset in one place
+    text: |
+      "Gold in the home safe" and "gold at the vault" are two positions. Metals (gold, silver, platinum, palladium), 23 cryptocurrencies, 29 currencies, or a custom asset with a manual price. No name — the asset is the identity.
+    source: INVESTMENTS §1 (D6), §3.1
+  - id: R-INV-11
+    group: What you hold
+    title: Average cost, not lots
+    text: |
+      A sell realizes proceeds − average cost × quantity; a back-dated sell uses the average of its own day. Buy, sell, transfer between places (moves quantity and cost, realizes nothing), in-kind income (staking, airdrops), cash income, fees, adjustments, gifts.
+    source: INVESTMENTS §1 (D3), §3.1
+    tests:
+      - file: test/features/investment/domain/services/investment_math_test.dart
+        name: a back-dated sell realizes against the average of its own day
+      - file: test/features/investment/domain/services/portfolio_series_test.dart
+        name: a transfer out removes basis at average cost, in-kind income adds it, a fee and cash income do not
+  - id: R-INV-12
+    group: What you hold
+    title: Eight decimals survive
+    text: |
+      Every investment number is stored as text on the phone — crypto quantities and prices keep 8 decimals through every step; a value rounds once, at the end.
+    source: INVESTMENTS §0.2, §4.2
+    tests:
+      - file: test/features/investment/domain/services/investment_math_test.dart
+        name: keeps eight decimals of quantity through a partial sell
+      - file: test/features/investment/data/investment_precision_test.dart
+        name: round-trips an 8-decimal manual price
+  - id: R-INV-13
+    group: What you hold
+    title: Metals by fineness and weight
+    text: |
+      999 / 916 / 585 ‰, grams / kilograms / troy ounces, valued as pure metal; a weight position can be shown in another weight unit.
+    source: INVESTMENTS §3.1, §0.2
+    tests:
+      - file: test/features/investment/domain/entities/investment_test.dart
+        name: a weight position can be shown in another weight unit
+  - id: R-INV-14
+    group: What you hold
+    title: Owners and admins write; everyone in the book sees
+    text: |
+      Members see every position and location and change nothing. Private positions are an open option (Q1-C).
+    source: INVESTMENTS §1 (D9), §10 Q1
+    related: [D-INV-4]
+
+  # What it's worth
+  - id: R-INV-20
+    group: What it's worth
+    title: Prices come from the server, once a day
+    text: |
+      Fetched server-side (no keys in the app), stored in the native currency, converted at read time; staleness shown ("as of 30 Jul, 06:10"). Metals from gold-api.com, currencies from the ECB, crypto from CoinGecko (Coinranking planned).
+    source: INVESTMENTS §1 (D1, D4), supabase §13.1
+  - id: R-INV-21
+    group: What it's worth
+    title: The feed beats a manual price; nothing beats "no price"
+    text: |
+      A manual price values a position only while no feed prices it — the app says when it is ignored. A missing exchange rate is *no price*, never parity; cost basis is never shown as market value.
+    source: INVESTMENTS §0.2, §3.5
+    tests:
+      - file: test/features/investment/domain/entities/investment_test.dart
+        name: the feed wins over a stale manual price, and the ignored price is flagged
+      - file: test/features/investment/domain/entities/investment_test.dart
+        name: no price at all is the no-price state, never cost dressed up as value
+      - file: test/features/investment/domain/services/fx_service_test.dart
+        name: an unknown source currency yields null, not parity
+  - id: R-INV-22
+    group: What it's worth
+    title: Returns net of money in and out
+    text: |
+      Gain, realized gain, XIRR, yield, simple ROI. A period's change on a position is its return on the capital at work — a second buy is not a +48 % "return"; a sell keeps its realized gain.
+    source: INVESTMENTS §3.3
+    tests:
+      - file: test/features/investment/domain/services/period_change_test.dart
+        name: a price rise is measured on the capital at work, a buy weighted by how long it was invested
+      - file: test/features/investment/domain/services/period_change_test.dart
+        name: a sell inside the period keeps its realized gain instead of reading as a loss
+  - id: R-INV-23
+    group: What it's worth
+    title: Price history is downloaded once and kept
+    text: |
+      The phone keeps a replica of the daily price series — newest first, then only new days; screens read only from it. Account-only: a book without an account shows today's price and no chart (D6).
+    source: SERIES_REPLICA, MONETIZATION §5
+    related: [R-MON-52]
+  - id: R-INV-24
+    group: What it's worth
+    title: Allocation, targets and rebalancing
+    text: |
+      Allocation by class, asset and location; a target allocation shows drift and suggests what to buy — targets need not sum to 100 %.
+    source: INVESTMENTS §3.3, §3.5
+
+  # Money & the book
+  - id: R-INV-30
+    group: Money & the book
+    title: A buy or sell can book its cash leg
+    text: |
+      Opt-in per transaction: a transfer to or from the depot account, or a categorized booking when there is none. Investment bookings never show as spending in analytics.
+    source: INVESTMENTS §3.4, §3.5
+  - id: R-INV-31
+    group: Money & the book
+    title: Part of net worth
+    text: |
+      Positions count in net worth (app) — at market value, unpriced at cost, without double-counting depot cash.
+    source: ANALYTICS §2
+    related: [R-ANL-04]
+
+  - id: R-INV-01
+    group: Currency positions
+    title: 29 currencies, as cash positions
+    text: |
+      The currencies the ECB publishes a daily rate for (decided 2026-10-14), held like a coin: "100,000 JPY". The book's own currency is hidden in the picker. The group opens on the eight most traded.
+    source: INVESTMENTS §11, §14
+  - id: R-INV-02
+    group: Currency positions
+    title: A currency's price reads as an exchange rate
+    text: |
+      Everywhere it shows — "1 EUR = 175.42 JPY" — and the forms take a typed rate. The stored row keeps the per-unit price; only display and input invert. The web reads the same.
+    source: INVESTMENTS §11, §14
+    tests:
+      - file: test/features/investment/domain/services/exchange_rate_display_test.dart
+        name: a held currency worth less than one book unit reads as 1 BOOK = r HELD
+      - file: test/features/investment/ui/widgets/exchange_rate_tile_test.dart
+        name: a weaker currency is quoted per one book unit, and the label says so
+  - id: R-INV-03
+    group: Currency positions
+    title: Hidden until the server is ready
+    text: |
+      The 29 rows are seeded inactive; they appear once the migration is pushed **and** Gerald flips them on.
+    source: INVESTMENTS §14
+    related: [T-INV-01]
+  - id: R-INV-04
+    group: Investments
+    title: Pro, readable after the plan ends
+    text: |
+      Positions stay readable with a banner; adding and editing open the paywall.
+    source: MONETIZATION §3a (D9)
+    related: [R-MON-20]

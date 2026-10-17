@@ -1,0 +1,123 @@
+# Source: app FORECAST_AI_CONTEXT.md; web FORECAST_WEB_AI_CONTEXT.md; Trello item 16; MONETIZATION D7, D9.
+items:
+  - id: R-FC-01
+    group: The one invariant
+    title: A forecast is a derivation, never a booking
+    text: |
+      Never stored as a booking, never in a balance, never counted by analytics or budgets. A planned payment is retired by the review when you book the real thing — it never *turns into* the booking. Skipping one projected occurrence writes a forecast item, never an exception on the rule (that would stop a real bill).
+    source: FORECAST §1, CLAUDE.md
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a skip removes the occurrence and leaves the rule byte-identical
+  - id: R-FC-02
+    group: The one invariant
+    title: Pro; read-only after the plan ends
+    text: |
+      Page, Home card and Analytics card are Pro. After the plan ends the page opens read-only; the overdue review's *confirm* / *it didn't happen* / *book it now* still work, *move* opens the paywall (D7).
+    source: MONETIZATION §3a, §12 D7, FORECAST §9
+    related: [E-MON-21, D7]
+  - id: R-FC-10
+    group: The line
+    title: Each euro is claimed once, by the most specific source
+    text: |
+      1. future-dated bookings → 2. planned payments → 3. recurring rules (and loan installments) → 4. what budgets leave open, spread per day → 5. an everyday estimate from your history for whatever is not budgeted. A rule inside a budget uses up the cap instead of stacking on it.
+    source: FORECAST §5
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a materialised future booking and its rule are counted once
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a recurring rule inside a budget consumes the cap instead of stacking on it
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a budgeted category contributes nothing to the baseline residual
+  - id: R-FC-03
+    group: The line
+    title: Nested budgets count once
+    text: |
+      Whole-book 2000 + Food 600 + Dining 200 → a future month's Budgets row shows 2000 (it showed 1800 before 1.17.0).
+    source: FORECAST §5.2, Trello item 16
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: 'three nested budgets still spread the whole-book cap once: the outer subtracts what the inner ones emit, not their raw rates'
+  - id: R-FC-11
+    group: The line
+    title: '"Skip this one" and "it''s €X this time"'
+    text: |
+      Change one occurrence without touching the rule. Once the rule has booked that date for real, the change stops counting.
+    source: FORECAST §5.4
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: an amount override stops counting once the rule materialised that occurrence
+  - id: R-FC-12
+    group: The line
+    title: A loan installment is charged once
+    text: |
+      A recurring rule that already books the installment wins; borrowed loans pull the line down, lent ones push it up.
+    source: FORECAST §5.3
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a recurring rule that already books the installment wins; the loan is not charged twice
+  - id: R-FC-13
+    group: The line
+    title: The horizon follows your history
+    text: |
+      3 to 24 months; with under 2 complete months of history 24 draws 12, and a horizon over 4× your history is marked speculative. The band widens with distance from today.
+    source: FORECAST §6, §9
+  - id: R-FC-20
+    group: The numbers
+    title: Safe to spend
+    text: |
+      Today's balance minus what is due until payday (or month end — the hero says which) minus the everyday spread minus your buffer. A negative value shows as a shortfall in red, never a zero.
+    source: FORECAST §6
+    tests:
+      - file: test/features/forecast/domain/forecast_entities_test.dart
+        name: safe to spend clamps the display amount and flags a shortfall
+  - id: R-FC-21
+    group: The numbers
+    title: The lowest point is never smoothed away
+    text: |
+      Low point, first day below zero and first day below the buffer come from the due-date line, even when *spread evenly* is on.
+    source: FORECAST §6
+  - id: R-FC-04
+    group: The numbers
+    title: One "per day" figure everywhere
+    text: |
+      The assumptions row, the sheet's *Every day in <month>*, the month page and the collapsed day-feed rows show the same number; today carries no share. The assumptions sheet averages complete months only.
+    source: FORECAST §6, §9, Trello item 16
+    tests:
+      - file: test/features/forecast/domain/forecast_month_rate_test.dart
+        name: per-day figures split the spread into budgets and the estimate over the days that carry a share
+  - id: R-FC-22
+    group: The numbers
+    title: The month page adds up
+    text: |
+      Income, each outflow source, net change, per day — the net equals the month tile.
+    source: FORECAST §9
+  - id: R-FC-30
+    group: Review
+    title: Booked early or never happened — you decide
+    text: |
+      A booking within ±5 days and 15 % of a planned payment is suggested as its match; a planned date up to 30 days back with no match asks *did it happen?*. Never automatic. Transfers, corrections and rule bookings are never candidates.
+    source: FORECAST §5.6
+    tests:
+      - file: test/features/forecast/domain/item_matcher_test.dart
+        name: rule-generated bookings, transfers and balance corrections are never candidates
+      - file: test/features/forecast/domain/item_matcher_test.dart
+        name: a date before the item was created was never awaited
+  - id: R-FC-31
+    group: Alerts
+    title: Low-balance and below-zero alerts
+    text: |
+      Opt-in. Raised even when the app is closed (a partner's synced spending can trigger it), once per dip, at your chosen time, never later than the day itself. The text carries a date, never an amount. A line that already starts below zero never "drops" below it.
+    source: FORECAST §8.1
+    tests:
+      - file: test/features/forecast/domain/forecast_alert_plan_test.dart
+        name: a line that already starts below the floor never "drops" below it
+      - file: test/features/forecast/domain/forecast_alert_plan_test.dart
+        name: a dip that moves earlier than the one announced alerts again
+    related: [R-NTF-01]
+  - id: R-FC-40
+    group: Web
+    title: The web runs the same engine
+    text: |
+      A port in integer thousandths; settings in a sheet (owners and admins); the current budget period from the server's clock; a rule with a deleted account is still projected.
+    source: FORECAST_WEB §7

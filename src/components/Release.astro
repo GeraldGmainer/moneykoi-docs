@@ -1,0 +1,77 @@
+---
+import { getEntry } from 'astro:content';
+import Md from './Md.astro';
+import Pill from './Pill.astro';
+import Refs from './Refs.astro';
+import ChecklistScript from './ChecklistScript.astro';
+import { idIndex } from '../lib/ids';
+import { areas } from '../areas.mjs';
+
+interface Props {
+  id: string;
+}
+const release = await getEntry('releases', Astro.props.id);
+if (!release) throw new Error(`release ${Astro.props.id} not found in src/data/releases/`);
+const { items, source } = release.data;
+const index = await idIndex();
+const areaName = new Map(areas.map((a) => [a.id, a.name]));
+const total = items.reduce((n, i) => n + i.checks.length, 0);
+const noteTone = { open: 'warn', fixed: 'ok', changed: 'info', decided: 'ok' } as const;
+const noteLabel = { open: 'still open', fixed: 'fixed since', changed: 'changed since', decided: 'decided' } as const;
+---
+
+<p class="mk-muted"><Md text={source} inline /></p>
+
+<div class="mk-checklist" data-checklist={`release-${Astro.props.id}`}>
+  <div class="mk-checklist-bar not-content">
+    <span><strong data-total-done>0</strong> / {total} done</span>
+    <label><input type="checkbox" data-hide-done /> Hide done</label>
+    <button type="button" data-reset-all>Reset all</button>
+  </div>
+
+  {
+    items.map((item) => (
+      <section data-check-group class="mk-release-item" id={`item-${item.n}`}>
+        <h2>
+          <span class="mk-release-n">{item.n}</span> {item.title} <span class="mk-progress" data-progress />
+        </h2>
+        <p class="mk-row-pills">
+          <a href={`/${item.area}/`}><Pill tone="accent">{areaName.get(item.area) ?? item.area}</Pill></a>
+        </p>
+        <Md text={item.what} />
+        {item.notes.length > 0 && (
+          <ul class="mk-release-notes">
+            {item.notes.map((n) => (
+              <li>
+                <Pill tone={noteTone[n.status]}>{noteLabel[n.status]}</Pill> <Md text={n.text} inline />
+                {n.now && <span class="mk-note"><Md text={n.now} inline /></span>}
+              </li>
+            ))}
+          </ul>
+        )}
+        {item.screens.length > 0 && (
+          <p class="mk-screens">
+            {item.screens.map((s) => <code>{s}</code>)}
+          </p>
+        )}
+        <ul class="mk-checks-list not-content">
+          {item.checks.map((c) => {
+            const ref = index.get(c);
+            return (
+              <li>
+                <label>
+                  <input type="checkbox" data-check={c} />
+                  <a class="mk-id" href={ref?.href}>{c}</a>
+                  <span class="mk-check-text">{ref ? <Md text={ref.title} inline /> : <span class="mk-broken">unknown check</span>}</span>
+                </label>
+              </li>
+            );
+          })}
+        </ul>
+        <Refs ids={item.related} label="See also" />
+      </section>
+    ))
+  }
+</div>
+
+<ChecklistScript />

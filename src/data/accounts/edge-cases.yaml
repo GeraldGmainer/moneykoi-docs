@@ -1,0 +1,247 @@
+# Source: OFFLINE_FIRST_AI_CONTEXT.md §3a, §6, §12; OFFLINE_TIER_AI_CONTEXT.md §6, §9, §10, §13;
+# MONETIZATION_AI_CONTEXT.md §9, §9b traps.
+items:
+  # Claim
+  - id: E-ACC-01
+    group: Claim
+    title: Another account signs in mid-claim
+    when: A claim started with account A; B signs in after the rows moved.
+    then: Mismatch screen that can only log out; the pending claim keeps the logout from wiping; the local book is still there.
+    risk: high
+    tests:
+      - file: test/features/cloud_tier/claim_progress_page_test.dart
+        name: a different account than the one that started the claim can only log out
+  - id: E-ACC-02
+    group: Claim
+    title: Google sign-in never starts
+    when: Offline, or no browser, when the user taps Google on *Back up this book*.
+    then: The error shows, the page stays, and leaving drops the claim (it never started).
+    risk: low
+    tests:
+      - file: test/features/cloud_tier/claim_intro_page_test.dart
+        name: a Google sign-in that never started shows why, and leaving then drops the claim
+  - id: E-ACC-03
+    group: Claim
+    title: The email link arrives later
+    when: The user starts an email sign-in, leaves the page, taps the link minutes later.
+    then: The claim is kept, so the session lands in the claim instead of opening the account's empty book (W4).
+    risk: high
+    tests:
+      - file: test/features/cloud_tier/claim_intro_page_test.dart
+        name: after an email sign-in started, leaving keeps the claim for the link that may still arrive
+  - id: E-ACC-04
+    group: Claim
+    title: Account at its book limit
+    when: The account already owns 3 books.
+    then: Its own message (*Try again*, *Log out*); nothing is uploaded or moved.
+    risk: medium
+    tests:
+      - file: test/features/cloud_tier/claim_book_use_case_test.dart
+        name: an account at its book limit gets its own refusal, and nothing is moved or stored
+      - file: test/features/cloud_tier/claim_progress_page_test.dart
+        name: an account at its book limit is told so, with Try again and Log out
+  - id: E-ACC-05
+    group: Claim
+    title: A kept account book is never claimed
+    when: A signed-out account's book is still on the phone and that account signs in.
+    then: Not a claim — the account continues from the kept rows and cursors. A claim would upload it a second time.
+    risk: high
+  - id: E-ACC-06
+    group: Claim
+    title: Free account that already owns a book
+    when: A local book signs into an account without Cloud that already has a book on the server.
+    then: The phone's book stays open (it is the one in use); the older one is listed *Locked until Cloud*, swappable in Settings.
+    risk: medium
+  - id: E-ACC-07
+    group: Claim
+    title: Children of a deleted parent
+    when: A book written before the cascade existed holds rows whose parent is gone.
+    then: Repaired before the first row is pushed, by the server's own rules; no parent is ever invented.
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/cloud_tier/claim_book_use_case_test.dart
+        name: repairs the orphans an older build left behind before the first row is pushed
+  - id: E-ACC-08
+    group: Claim
+    title: Claimed rows keep their creation time
+    when: A book with years of history is uploaded.
+    then: Each row keeps its original `created_at`, not the upload moment (H6).
+    status: fixed
+    risk: low
+
+  # Pause & renewal
+  - id: E-ACC-20
+    group: Pause & renewal
+    title: One account on two phones while paused
+    when: Both phones generate recurring bookings while paused, then the account renews.
+    then: No duplicates after the renewal — the occurrences meet on the server's ids (H4).
+    status: fixed
+    risk: high
+  - id: E-ACC-21
+    group: Pause & renewal
+    title: A re-grant races the server's generator
+    when: Cloud comes back and the server generates from the rule's stale cursor before the phone resumes.
+    then: The phone's copies of those dates take the server's ids instead of colliding; the server generator skips unentitled books meanwhile.
+    status: fixed
+    risk: medium
+  - id: E-ACC-22
+    group: Pause & renewal
+    title: The pause marker across a logout
+    when: A paused user logs out and signs in again.
+    then: The marker is parked with the account and given back. Cleared, the next sign-in would tear down with a new time and the changes in between would be lost for good.
+    risk: high
+  - id: E-ACC-23
+    group: Pause & renewal
+    title: A revoke noticed days late
+    when: The phone learns of the pause long after it happened.
+    then: The pause starts at the earlier of now and the term's end, and the renewal asks the server for occurrences from the earliest one it will push (L1).
+    risk: medium
+    tests:
+      - file: test/features/cloud_tier/occurrence_reconciler_test.dart
+        name: asks the server from the earliest occurrence the push will send, however long before the lapse (L1)
+  - id: E-ACC-24
+    group: Pause & renewal
+    title: The teardown fails the first time
+    when: The first attempt to pause fails part-way (offline).
+    then: Its start time is kept, so writes made before a later success are still pushed on renewal (L2).
+    risk: medium
+    tests:
+      - file: test/features/cloud_tier/lapse_test.dart
+        name: a failed attempt keeps its start, so the writes made before a later success are still pushed (L2)
+  - id: E-ACC-25
+    group: Pause & renewal
+    title: A fresh sign-up without a grant
+    when: A new account is created after Jan 17 (no early-adopter grant).
+    then: It lands paused straight after onboarding — the local tier with an account. Onboarding's pull runs past the gate, or the new book would exist only on the server.
+    status: by-design
+    risk: medium
+  - id: E-ACC-26
+    group: Pause & renewal
+    title: Unconfirmed account
+    when: A phone updates offline and has never heard the server's verdict.
+    then: It counts as entitled; only a confirmed lapse pauses sync.
+    status: by-design
+    risk: high
+    tests:
+      - file: test/features/cloud_tier/server_sync_entitlement_test.dart
+        name: a cached verdict that cannot be read counts as unconfirmed, not as a lapse
+
+  # Sync engine
+  - id: E-ACC-30
+    group: Sync engine
+    title: A peer's delete of a row this phone just pushed
+    when: Phone 1 pushes an edit; phone 2 deletes the same row before phone 1's next pull.
+    then: Fixed on the server (`20261005130000_sync_all_deletes_ignore_exclude.sql`, bug B1) — deletes are no longer filtered. The app's engine doc still calls the fix "parked"; check it is on prod (T-ACC-01).
+    status: fixed
+    risk: high
+    related: [T-ACC-01]
+  - id: E-ACC-31
+    group: Sync engine
+    title: A peer's edit of a row this phone just pushed
+    when: Phone 1 pushes an edit; phone 2 edits the same row before phone 1's next pull.
+    then: Phone 1 can skip phone 2's edit until the row changes again — the upserts half of B1, open (O4).
+    status: known-issue
+    risk: medium
+    related: [D-ACC-2]
+  - id: E-ACC-32
+    group: Sync engine
+    title: A cursor passes a row that commits late
+    when: Two overlapping server writes and a pull within milliseconds.
+    then: The later-committed row is never delivered by a delta. Rare; the fix is server-side.
+    status: known-issue
+    risk: low
+    related: [D-ACC-1]
+  - id: E-ACC-33
+    group: Sync engine
+    title: Hard-delete echo gap
+    when: A partner deletes a shopping item within 4 s of this phone's push of the same item.
+    then: The delete arrives with the next pull, not live (EC-SYNC-4).
+    status: known-issue
+    risk: low
+  - id: E-ACC-34
+    group: Sync engine
+    title: Two quick changes from a partner
+    when: A partner adds two shopping items within 5 s.
+    then: Both arrive — a realtime event queues one forced pull behind a running one, never joins an old one.
+    status: fixed
+    risk: medium
+  - id: E-ACC-35
+    group: Sync engine
+    title: Slow network on the first sync
+    when: A fresh install over a weak mobile connection; the first page keeps failing.
+    then: Retries 2 s and 5 s, then the resume ladder (30 s → 60 s → 2 min → 5 min) — no longer five minutes of skeletons waiting for an unrelated trigger (B8).
+    status: fixed
+    risk: medium
+  - id: E-ACC-36
+    group: Sync engine
+    title: Midway through a big first sync
+    when: The user opens a screen after the first pages landed.
+    then: The screen shows the partial book until the walk finishes; balances can be wrong for those seconds — accepted, instead of blocking every read.
+    status: by-design
+    risk: low
+  - id: E-ACC-37
+    group: Sync engine
+    title: Concurrent edits on two phones
+    when: Both phones edit the same booking offline, then sync.
+    then: Last write wins, no field merge.
+    status: by-design
+    risk: medium
+
+  # Local books
+  - id: E-ACC-40
+    group: Local books
+    title: Deleting a bank account without sync
+    when: An account (bank account) with recurring rules is deleted in a local book.
+    then: Its recurring rules are deleted with it (the server's cascade). With sync the server only soft-deletes the account and pauses the rules. Gerald kept the cascade (2026-10-07).
+    status: by-design
+    risk: medium
+  - id: E-ACC-41
+    group: Local books
+    title: Android OS backup
+    when: A phone is restored from Google's backup.
+    then: The database and preferences come back; receipt photos and secure storage do not — so an app-lock PIN fails open.
+    status: by-design
+    risk: medium
+    related: [R-PRIV-03]
+  - id: E-ACC-42
+    group: Local books
+    title: Signed out — widgets and reminders
+    when: The user is signed out with books kept on the phone.
+    then: Reminders are cancelled and re-armed on sign-in; the balance widget reads *Open MoneyKoi to sign in*.
+    risk: low
+    tests:
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: a sign-in after a sign-out re-arms the account
+  - id: E-ACC-50
+    group: On the web
+    title: Open redirect after sign-in
+    when: '`?next=/\evil.example` is in a sign-in link.'
+    then: It passes the guard and the browser resolves it off-origin. Open; pinned as a failing test (review #5).
+    status: known-issue
+    risk: high
+    tests:
+      - file: src/app/login/page.test.tsx
+        repo: web
+        name: ignores a backslash-prefixed ?next= that browsers resolve off-origin
+  - id: E-ACC-51
+    group: On the web
+    title: Profile without a display name
+    when: A user with no display name opens `/profile`.
+    then: The card says "Loading..." forever, and saving writes an empty name. Open (review #26).
+    status: known-issue
+    risk: low
+  - id: E-ACC-52
+    group: On the web
+    title: Any URL as an avatar
+    when: A client writes any URL into `profile.avatar_url`.
+    then: Co-members are shown it. Open (review #21). A large crop can also be refused by the 2 MiB bucket limit (not reproduced).
+    status: known-issue
+    risk: medium
+  - id: E-ACC-53
+    group: On the web
+    title: Dev logins committed in source
+    when: —
+    then: The one-click dev users' credentials are in `login/page.tsx` (shown only in development). Open (review #20).
+    status: known-issue
+    risk: medium

@@ -1,0 +1,58 @@
+---
+title: Pricing
+description: Prices, products, launch price, early adopters and the market check.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Store prices in EUR, VAT included. **Net** = after 20 % Austrian VAT and the 15 % store commission (× 0.708).
+
+| Product | Store id | Price | Net | Notes |
+|---|---|---|---|---|
+| **Pro** (once) | `pro.lifetime` | €24.99 | €17.70 | deliberately = one year of Cloud |
+| **Cloud monthly** | `cloud.monthly` | €2.99 | €2.12 / month | 12 × €2.99 = €35.88, so yearly saves 30 % |
+| **Cloud yearly** | `cloud.yearly` | €24.99 | €17.70 / year | **1-month free trial** |
+| **Cloud lifetime** | `cloud.lifetime` | €69.99 | €49.56 | **launch price €49.99 for 90 days** (€35.40 net) |
+| **Pro → Cloud lifetime upgrade** | `cloud.lifetime.upgrade` | €44.99 (launch €24.99) | €31.86 | shown **only to Pro owners**, so nobody pays for Pro twice |
+| **Early adopters** | — | free | — | Cloud for life for every account created before Jan 17 |
+
+**The paywall line:** own it on your phone for €24.99, or get everything plus sync for €24.99 a year.
+
+<Aside type="caution" title="Product ids are permanent">
+All five products sit in one RevenueCat offering with the entitlements `pro` and `cloud`; every Cloud product grants both. Never rename an id.
+</Aside>
+
+## Launch price
+
+- Cloud lifetime €49.99 and the upgrade €24.99 for **90 days** after the paywall ships.
+- The paywall shows *Launch price until \{date\}* under the plan and *then \{regular\}* under the price — never a strikethrough or "was". See [Legal](/monetization/legal/).
+- The end date is not set yet (D4); *then \{regular\}* stays off until the regular price has a source (D8). See [Open work](/monetization/open/).
+
+## Early adopters
+
+- **Cloud for life** for every **account** created before the paywall cutover (Jan 17).
+- Account creation, not install date: the server cannot see local installs, so the launch copy says "create an account before Jan 17".
+- Mechanism: a server backfill with a literal cutover timestamp (`20261007120000_early_adopter_grant.sql`), open-ended, its own `source`.
+- "For life" must be defined in the Terms.
+
+## Why lifetime at €69.99 is not a giveaway
+
+Finance-app subscribers stay about 10.5 months on average, so a typical yearly subscriber renews once or twice (€26–35 net). A lifetime sale nets €49.56. A higher price would lose the subscription-averse buyers lifetime exists for.
+
+## Target
+
+€2,000 / month net ≈ 40 Pro sales per month + 700 active yearly subscribers + 6 lifetime sales per month.
+
+After the launch, watch three thresholds in RevenueCat and the store consoles: download-to-paid below 1.5 %, annual → lifetime attach, Y1 retention.
+
+## Market check (2026-10-06)
+
+| App | Monthly | Yearly | Lifetime |
+|---|---|---|---|
+| Finanzguru Plus | €4.29 | €35.88 | — |
+| Wallet (BudgetBakers) | €5.99 | €29.99 | €49.99 |
+| Spendee Premium | — | $35.99 | — |
+| Toshl Pro | — | $19.99 | — |
+| RevenueCat median (all apps) | — | $34.80 | — |

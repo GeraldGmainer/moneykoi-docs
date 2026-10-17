@@ -1,0 +1,42 @@
+---
+import TierBadge from './TierBadge.astro';
+import Md from './Md.astro';
+import { areas, resolvedCatalog, tierNames } from '../lib/catalog';
+
+const rows = await resolvedCatalog();
+const tagline = {
+  free: 'The full budgeting app on one phone, no account needed',
+  pro: 'One-time purchase. Free + the power features, works offline',
+  cloud: 'Monthly, yearly or lifetime. Pro + sync, devices, shared books, web',
+} as const;
+---
+
+<div class="mk-tier-grid">
+  {
+    (['free', 'pro', 'cloud'] as const).map((tier) => {
+      const live = rows.filter((r) => r.tier === tier && r.status === 'live');
+      const planned = rows.filter((r) => r.tier === tier && r.status === 'planned');
+      return (
+        <section class={`mk-tier-card mk-tier-card-${tier}`}>
+          <h3>
+            <TierBadge tier={tier} /> {tier !== 'free' && <span class="mk-muted">everything in {tier === 'pro' ? 'Free' : 'Pro'}, plus</span>}
+          </h3>
+          <p class="mk-muted">{tagline[tier]}</p>
+          <ul>
+            {live.map((r) => (
+              <li>
+                {r.name}
+                {r.note && <span class="mk-note"><Md text={r.note} inline /></span>}
+              </li>
+            ))}
+          </ul>
+          {planned.length > 0 && (
+            <p class="mk-muted">
+              Planned: {planned.map((r) => r.name).join(' · ')}
+            </p>
+          )}
+        </section>
+      );
+    })
+  }
+</div>

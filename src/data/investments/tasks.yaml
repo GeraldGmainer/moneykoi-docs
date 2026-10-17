@@ -1,0 +1,56 @@
+# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-10-05).
+items:
+  - id: T-INV-02
+    title: Purge World Bank
+    owner: gerald
+    detail: Nothing reads it since the metals cutover. Dry run first (≈ 465 rows).
+    command: |
+      select public.price_purge_provider('worldbank');
+      select public.price_purge_provider('worldbank', true);
+  - id: T-INV-03
+    title: Check the recurring-bookings cron
+    owner: gerald
+    detail: 401 means the job still lacks `x-cron-secret` (`materialize-recurring/README.md`). Done when the :05 rows are 200.
+    command: |
+      select status_code, left(content::text, 200), created from net._http_response order by created desc limit 5;
+  - id: T-INV-04
+    title: GoldAPI keys
+    owner: gerald
+    detail: Delete the unused GoldAPI.io account; regenerate the gold-api.com key if its dashboard allows.
+    command: |
+      supabase secrets set GOLDAPI_API_KEY="$(pbpaste)" --project-ref cwheprirreyscppmbybp && pbcopy < /dev/null
+  - id: T-INV-05
+    title: Deploy the admin (allowlist fix)
+    owner: gerald
+    detail: '`moneykoi-admin/reports/security-2026-09.md` #1. Test locally first: a non-admin on `/dashboard/audit` must land on `/login?error=forbidden`.'
+  - id: T-INV-06
+    title: FX cutover to the ECB (≈ 2026-10-19)
+    owner: gerald
+    detail: When the admin Versions page shows most active users on ≥ 1.15.0. Its last query must show 29 live `ecb` rows. Rollback `rollback_fx.sql`. The morning after, check the log shows `coingecko` rows only; after 3 days purge metals.dev and Frankfurter (dry run first) and unset their secrets.
+    command: |
+      psql "$PROD_DATABASE_URL" -f scripts/price-cutover/cutover_fx.sql
+      select source, quotes_written, rates_written, finished_at from public.quote_refresh_log order by finished_at desc limit 4;
+  - id: T-INV-07
+    title: Max rows back to 1000
+    owner: gerald
+    detail: Once most users run ≥ 1.15.2, if Max rows was raised to 50000 (Project Settings → API), set it back to 1000.
+  - id: T-INV-08
+    title: Crypto → Coinranking (Phase 2)
+    owner: gerald
+    detail: Decide on Coinranking's terms and history depth (free 1 year or the 30-day trial), make a free account and run the read-only probe an agent provides (key via clipboard). Then an agent builds Phase 2; deploy, backfill, compare, release with the credit, cut over, purge CoinGecko / Binance / Bitfinex after 3 days.
+  - id: T-INV-09
+    title: Data-source credits in the legal pages
+    owner: gerald
+    detail: Third-party-data paragraph on `moneykoi.app/legal/terms` — ECB, gold-api.com, later Coinranking. Also NBU — keep the blocked provider or drop it.
+  - id: T-INV-10
+    title: About → data sources entry in the app
+    owner: ai
+    detail: ECB, gold-api.com, later Coinranking; en/de/ja. After the open translation work in the app is committed.
+  - id: T-INV-01
+    title: Turn currency positions on
+    owner: gerald
+    detail: |
+      After CI applied `20261014120000_currency_assets.sql`, check the mirror (29 rows, USD = 1, EUR > 1); once the app and web release with currency positions is out, switch the catalog on (older builds would list them under "other").
+    command: |
+      select a.symbol, q.price, q.source from public.asset_quote q join public.asset a on a.id = q.asset_id where a.asset_class = 'currency' order by a.sort_order;
+      update public.asset set is_active = true where asset_class = 'currency';

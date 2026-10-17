@@ -1,0 +1,228 @@
+# Source: MONETIZATION_AI_CONTEXT.md §9 (transitions), §9a, §9b (journeys).
+items:
+  # Start
+  - id: J-MON-01
+    group: Start
+    title: New user
+    from: fresh install
+    steps:
+      - Welcome → **Get started**
+      - local setup, no sign-up anywhere
+    result: Local Free
+    tests:
+      - file: test/app/navigation/app_entry_gate_test.dart
+        name: a first ever launch lands on welcome
+    checks: [C-ACC-001]
+    related: [J-ACC-01]
+  - id: J-MON-02
+    group: Start
+    title: Opens a locked feature
+    from: Local Free
+    steps:
+      - taps a lock (drawer, tab, quick action, *Edit home*, export)
+      - paywall opens with that feature's details, its plan preselected
+      - buys
+    result: lands on the feature
+    note: |
+      Backing out of the paywall stays where the user was.
+    tests:
+      - file: test/app/navigation/destination_navigator_widget_test.dart
+        name: goes on to it once the paywall closes on a purchase
+      - file: test/features/monetization/ui/paywall_launcher_test.dart
+        name: require on a locked feature opens the paywall naming it and stays locked when the user backs out
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: opening from a locked feature explains it and preselects its tier
+    checks: [C-MON-010, C-MON-012, C-MON-018]
+
+  # Buy
+  - id: J-MON-10
+    group: Buy
+    title: Buys Pro
+    from: Local Free
+    steps:
+      - locked affordance / drawer *Get Pro* / paywall
+      - store purchase
+    result: Local Pro, no account
+    note: |
+      A purchase switches the bottom bar to the 4-tab default at once (adds Analytics and Goals).
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a completed purchase closes the paywall and reports success to its opener
+    checks: [C-MON-050]
+  - id: J-MON-11
+    group: Buy
+    title: Buys Cloud (after Jan 17)
+    from: Local Free or Local Pro
+    steps:
+      - drawer *Get Cloud*
+      - claim intro → sign in
+      - paywall (yearly has a 1-month trial)
+      - purchase → webhook writes the grant
+      - the local book uploads (the claim)
+    result: Cloud
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: buying Cloud without an account goes to the claim first
+    checks: [C-MON-053, C-ACC-010]
+    related: [J-ACC-10]
+  - id: J-MON-12
+    group: Buy
+    title: Early adopter (until Jan 17)
+    from: Local book, Nov 1 → Jan 17
+    steps:
+      - drawer *Get Cloud free*
+      - sign in
+      - the local book uploads
+    result: Cloud for life
+    status: waiting
+    note: |
+      Eligibility is **account creation** before the cutover, not install date. Server backfill `20261007120000_early_adopter_grant.sql` is written; Gerald applies it (T-MON-01).
+  - id: J-MON-13
+    group: Buy
+    title: Pro → Cloud lifetime upgrade
+    from: Local Pro
+    steps:
+      - opens the paywall
+      - Cloud card shows the **upgrade** (€44.99, launch €24.99) in place of the lifetime
+      - purchase
+    result: Cloud, nobody paid for Pro twice
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a Pro owner is offered the lifetime upgrade instead of paying for Pro twice
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a Pro owner cannot buy the full Cloud lifetime the page no longer shows
+    checks: [C-MON-020, C-MON-050]
+  - id: J-MON-14
+    group: Buy
+    title: Account without Cloud runs into the claim
+    from: Local book, signs in with a free account
+    steps:
+      - claim → *This account doesn't have a Cloud plan yet*
+      - '*See plans* → Cloud purchase'
+      - the claim continues on its own
+    result: Cloud
+    note: |
+      Or *Keep it on this phone*: the book becomes the account's own, stays local. An account that already owned a book lands on the review with that one *Locked* until Cloud.
+    checks: [C-ACC-014]
+    related: [J-ACC-11, J-ACC-13]
+  - id: J-MON-15
+    group: Buy
+    title: Paused account renews
+    from: Paused (former subscriber)
+    steps:
+      - purchase
+      - grant
+      - resume pushes what changed while paused
+    result: Cloud again
+    checks: [C-ACC-020, C-ACC-022]
+    related: [J-ACC-31]
+
+  # Restore & move
+  - id: J-MON-20
+    group: Restore & move
+    title: Pro on a new phone, same platform
+    from: new phone
+    steps:
+      - '*I already use MoneyKoi*'
+      - '*Restore Pro purchase* (the store account is the proof, no MoneyKoi login)'
+      - '*Restore from a backup file* if they kept one'
+    result: Local Pro with their data
+    checks: [C-MON-052]
+    related: [J-DATA-04]
+  - id: J-MON-21
+    group: Restore & move
+    title: Pro to the other platform
+    from: Pro on iPhone (or Android)
+    steps:
+      - backup file moves the data
+      - Pro is not carried over
+    result: new Pro purchase, or Cloud
+    status: by-design
+    note: |
+      Decided 2026-10-10 (D-C1).
+  # Accounts
+  - id: J-MON-33
+    group: Accounts
+    title: Two MoneyKoi accounts, one store account
+    from: account A bought Cloud
+    steps:
+      - account B signs in on the same store account
+    result: the purchase stays with A
+    status: waiting
+    note: |
+      RevenueCat *Restore Behavior* = keep with the original App User ID (T-MON-04).
+  # Sharing
+  - id: J-MON-43
+    group: Sharing
+    title: Family
+    from: household
+    steps:
+      - Pro through store family sharing (on)
+      - Cloud through shared books (store sharing off)
+    result: everyone covered, one payer per book
+    status: by-design
+
+  # Lapse & downgrade
+  - id: J-MON-50
+    group: Lapse & downgrade
+    title: Cloud ends
+    from: Cloud
+    steps:
+      - cancel, failed payment, trial end or refund
+      - store grace runs out → webhook expires the grant
+      - next reconcile tears down sync
+      - lapse review opens; with several own books one stays open
+    result: Paused — the phone keeps everything and works at Free (or Pro if owned)
+    note: |
+      Renewing pushes what changed while paused.
+    tests:
+      - file: test/app/ui/supabase_container_test.dart
+        name: a teardown opens the lapse review on top of the app
+    checks: [C-ACC-020, C-ACC-021]
+    related: [J-ACC-30]
+  - id: J-MON-51
+    group: Lapse & downgrade
+    title: Cloud lapses without Pro — records stay readable
+    from: Cloud with investments and shopping lists
+    steps:
+      - plan ends
+      - investments and shopping lists open read-only with a banner and *See plans*
+      - adding and editing open the paywall
+    result: nothing hidden, nothing new
+    note: |
+      Decided 2026-10-17 (D9). Without records the paywall opens as before.
+    tests:
+      - file: test/features/investment/ui/pages/investments_page_test.dart
+        name: after the plan ends the positions stay readable
+      - file: test/app/ui/supabase_container_widget_launch_test.dart
+        name: after the plan ends, a list widget still opens its list
+    checks: [C-MON-030, C-MON-031, C-MON-032, C-MON-033]
+  - id: J-MON-52
+    group: Lapse & downgrade
+    title: The owner of a shared book stops paying
+    from: member of a Cloud book
+    steps:
+      - owner's Cloud ends
+      - notice *{book} no longer syncs*
+      - book turns read-only with *Export*
+    result: reopens when the owner renews
+    checks: [C-BOOK-003]
+    related: [J-BOOK-30]
+  - id: J-MON-53
+    group: Lapse & downgrade
+    title: Pro refunded
+    from: Local Pro
+    steps:
+      - the store revokes it
+      - the next store read (or the webhook) clears Pro
+    result: creating Pro records locks; existing ones stay readable
+  - id: J-MON-55
+    group: Lapse & downgrade
+    title: Long lapse
+    from: Paused
+    steps:
+      - days pass
+    result: the server copy is kept as long as the account exists
+    status: by-design
+    note: |
+      No retention job, no 7/30/60-day warnings (D-C6).

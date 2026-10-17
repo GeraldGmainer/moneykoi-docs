@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'Recurring rules, the bookings the server makes from them, skips and reminders.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Recurring rules, the bookings the server makes from them, skips and reminders.
+
+| | |
+|---|---|
+| **Model** | a rule; the server materializes its bookings (the phone does it for a book without an account) |
+| **Future** | a projection, never a booking |
+| **Expansion** | app and server produce the same dates; *Last day* instead of 31 |
+| **Skips** | a deleted or skipped occurrence never comes back |
+| **Who** | owners and admins write rules |
+
+## Features
+
+<AreaFeatures area="recurring" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/recurring_booking/` — `RECURRING_BOOKINGS_AI_CONTEXT.md` |
+| Web | `RECURRING_WEB_AI_CONTEXT.md` |

@@ -1,0 +1,111 @@
+---
+import TierBadge from './TierBadge.astro';
+import Pill from './Pill.astro';
+import Md from './Md.astro';
+import { areas, resolvedCatalog, tierRank } from '../lib/catalog';
+import { groupBy } from '../lib/data';
+
+const rows = await resolvedCatalog();
+const byArea = groupBy(rows, (r) => r.area).sort(([a], [b]) => Object.keys(areas).indexOf(a) - Object.keys(areas).indexOf(b));
+const webTone = { parity: 'ok', partial: 'warn', missing: 'bad', 'app-only': 'muted', 'web-only': 'info' } as const;
+const webLabel = { parity: 'parity', partial: 'partial', missing: 'missing', 'app-only': 'app only', 'web-only': 'web only' } as const;
+const filters = [
+  ['all', 'All'],
+  ['free', 'Free'],
+  ['pro', 'Pro'],
+  ['cloud', 'Cloud'],
+  ['planned', 'Planned'],
+  ['web-gap', 'Web gaps'],
+] as const;
+const counts = {
+  all: rows.length,
+  free: rows.filter((r) => r.tier === 'free').length,
+  pro: rows.filter((r) => r.tier === 'pro').length,
+  cloud: rows.filter((r) => r.tier === 'cloud').length,
+  planned: rows.filter((r) => r.status === 'planned').length,
+  'web-gap': rows.filter((r) => r.web === 'partial' || r.web === 'missing').length,
+};
+---
+
+<div class="mk-filters not-content" data-catalog-filters>
+  {filters.map(([key, label]) => (
+    <button type="button" data-filter={key} aria-pressed={key === 'all' ? 'true' : 'false'}>
+      {label} <span>{counts[key]}</span>
+    </button>
+  ))}
+</div>
+
+{
+  byArea.map(([area, items]) => (
+    <section class="mk-area" data-area>
+      <h2 id={`area-${area}`}>{areas[area] ?? area}</h2>
+      <table class="mk-matrix">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="mk-col">Free</th>
+            <th class="mk-col">Pro</th>
+            <th class="mk-col">Cloud</th>
+            <th>Web</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items
+            .sort((a, b) => tierRank[a.tier] - tierRank[b.tier] || Number(a.status === 'planned') - Number(b.status === 'planned'))
+            .map((r) => (
+              <tr data-tier={r.tier} data-status={r.status} data-web={r.web ?? ''} class={r.status === 'planned' ? 'mk-planned' : ''}>
+                <td>
+                  {r.docs ? <a href={`/${r.docs}/`}><strong>{r.name}</strong></a> : <strong>{r.name}</strong>}
+                  {r.code && <code class="mk-code-id" title="Feature enum value in feature.dart">{r.code.id}</code>}
+                </td>
+                {(['free', 'pro', 'cloud'] as const).map((col) => (
+                  <td class="mk-col">{tierRank[r.tier] <= tierRank[col] ? (r.status === 'planned' ? '○' : '●') : '–'}</td>
+                ))}
+                <td>
+                  {r.web && <Pill tone={webTone[r.web]}>{webLabel[r.web]}</Pill>}
+                  {r.webNote && <span class="mk-note">{r.webNote}</span>}
+                </td>
+                <td>
+                  <span class="mk-row-pills">
+                    {r.tier !== 'free' && <TierBadge tier={r.tier} />}
+                    {r.status === 'planned' && <Pill tone="info">planned</Pill>}
+                    {r.needs !== 'nothing' && <Pill tone="warn">needs {r.needs}</Pill>}
+                  </span>
+                  {r.note && <span class="mk-note"><Md text={r.note} inline /></span>}
+                  {r.since && <span class="mk-note">{r.since}</span>}
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </section>
+  ))
+}
+
+<p class="mk-legend">● included · ○ planned, not built · – not included · a code id means the tier is read from <code>feature.dart</code> · Web compares the web dashboard with the app</p>
+
+<script>
+  const bar = document.querySelector('[data-catalog-filters]');
+  bar?.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement).closest('button');
+    if (!button) return;
+    const filter = button.dataset.filter;
+    bar.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+    document.querySelectorAll<HTMLElement>('[data-area]').forEach((section) => {
+      let visible = 0;
+      section.querySelectorAll<HTMLElement>('tbody tr').forEach((row) => {
+        const show =
+          filter === 'all' ||
+          (filter === 'planned'
+            ? row.dataset.status === 'planned'
+            : filter === 'web-gap'
+              ? row.dataset.web === 'partial' || row.dataset.web === 'missing'
+              : row.dataset.tier === filter);
+        row.hidden = !show;
+        if (show) visible++;
+      });
+      section.hidden = visible === 0;
+    });
+  });
+</script>

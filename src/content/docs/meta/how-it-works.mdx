@@ -1,0 +1,60 @@
+---
+title: How this site works
+description: Where the data lives, what is read from code, and how to add an area.
+sidebar:
+  order: 2
+---
+
+## Run it
+
+```sh
+cd moneykoi-docs
+nvm use            # Node 24
+npm install        # once
+npm run dev        # http://localhost:4321, live reload
+npm run check      # build + fail on any health problem
+```
+
+Search works in `npm run build && npm run preview`, not in `dev`.
+
+## Three sources, one rule each
+
+| Source | Holds | Rule |
+|---|---|---|
+| **Code** (`moneykoi-app`) | tier, needs and live/planned of every gated feature (`feature.dart`), paywall names and details (`en.json`), the tests | never copied by hand — read on every build |
+| **Data** (`src/data/`) | feature catalog, rules, journeys, edge cases, checks, tasks, decisions, releases | YAML, validated by a schema; a wrong field fails the build |
+| **Pages** (`src/content/docs/`) | prose: overviews, pricing, legal | MDX; tables and lists, no walls of text |
+
+## What is checked
+
+- Every catalog row with `feature:` must exist in `feature.dart`; every `Feature` must have a catalog row. A row with `feature:` must not carry its own tier or status.
+- Every test link must point to an existing file that contains the test's name.
+- Every id is unique. Every *See also*, every check a journey or a release names, and every task or decision a task waits for exists — across areas.
+
+## Ids
+
+| Prefix | Kind | Example |
+|---|---|---|
+| `R-<AREA>-nn` | business rule | `R-MON-14` |
+| `J-<AREA>-nn` | journey | `J-MON-50` |
+| `E-<AREA>-nn` | edge case | `E-MON-08` |
+| `C-<AREA>-nnn` | manual check | `C-MON-030` |
+| `T-<AREA>-nn` | task | `T-MON-04` |
+| `D…`, `Q-…` | decision, open question | `D4`, `D-ACC-1`, `Q-BOOK-1` |
+
+Ids are permanent: Trello cards, commits and chats may cite them. Never renumber; retire an id by deleting its entry.
+
+## Releases
+
+`src/data/releases/<version>.yaml` lists a release's items in order. Each item names its area and the **check ids** it needs; the release page renders those checks with the same ticks as the area pages. A note on an item carries a status — *still open*, *fixed since*, *changed since*, *decided* — so outdated release notes stay visible as outdated.
+
+## Linking across areas
+
+Every entry may carry `related: [ids]`; it renders as *See also* links, resolved across all areas. A journey's `checks:` and a task's `waitsFor:` work the same way.
+
+## Add an area
+
+1. A line in `src/areas.mjs` (the sidebar and the home table read it)
+2. `src/data/<area>/` with any of `rules.yaml`, `journeys.yaml`, `edge-cases.yaml`, `checks.yaml`, `tasks.yaml`, `decisions.yaml`
+3. `src/content/docs/<area>/` — an `index.mdx` overview (facts table, `<AreaFeatures area="…" />` for the catalog rows whose `docs:` is this area, where it lives) plus one page per kind (a heading and one component, like `accounts/`); an area without `tasks.yaml` gets a decisions-only `open.mdx`
+4. `npm run check`

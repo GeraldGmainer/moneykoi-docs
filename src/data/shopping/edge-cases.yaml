@@ -1,0 +1,29 @@
+items:
+  - id: E-SHP-01
+    group: Items
+    title: An income category of the same name
+    when: '"Lebensmittel" exists as both income and expense.'
+    then: The item and its booking use the expense one (an item used to open as income, fixed 2026-10-16).
+    status: fixed
+    risk: medium
+  - id: E-SHP-02
+    group: Items
+    title: Quantity stepper on a decimal
+    when: − on `0,5 kg`.
+    then: Gives `1,5 kg` — only a leading integer is parsed (review #26), in the app and the web. Open.
+    status: known-issue
+    risk: low
+  - id: E-SHP-03
+    group: Items
+    title: A partner edits an item you just checked off
+    when: Offline edits arrive after the check-off.
+    then: Dropped silently — the delete wins.
+    status: by-design
+    risk: low
+  - id: E-SHP-04
+    group: Web
+    title: A failed read on the web
+    when: The shopping request fails.
+    then: Shown as an empty board or "list not found" (review #14). Open.
+    status: known-issue
+    risk: low

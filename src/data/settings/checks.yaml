@@ -1,0 +1,13 @@
+# Derived from the context docs.
+groups:
+  - id: settings
+    title: Settings & profile
+    items:
+      - id: C-SET-001
+        text: Change money format, date format, start of week (Sunday) and start of month (25, with the confirm) → Budget Book, budgets and analytics follow; sign in on the web → the same formats
+      - id: C-SET-002
+        text: Feedback with and without contact consent → the admin inbox shows it (email only with consent)
+      - id: C-SET-003
+        text: Changelog offline after one online open; in German and Japanese
+      - id: C-SET-004
+        text: Onboarding in Japanese → JPY suggested, starter names in Japanese; English → USD

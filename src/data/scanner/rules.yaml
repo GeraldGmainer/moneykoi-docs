@@ -1,0 +1,82 @@
+# Source: app SCANNER_AI_CONTEXT.md, CATEGORY §8a, skills/scanner-corpus-round; web BOOKING_ENTRY §4.9.
+items:
+  - id: R-SCN-01
+    group: The flow
+    title: On the phone, no cloud
+    text: |
+      ML Kit OCR on the device; no cloud AI (the on-device LLM engine was removed 2026-09-28). The web has no scanner — it splits a total by hand.
+    source: SCANNER §1
+  - id: R-SCN-02
+    group: The flow
+    title: Three steps — total, items, review
+    text: |
+      **1. Find the total** — live camera reads merchant, total and date (each locks after two stable readings); an Austrian receipt QR (RKSV) locks total and date exactly. **2. Capture items** — one photo per part of a long receipt, merged at the seams. **3. Review** — fix, merge, categorize, *Save*.
+    source: SCANNER §1
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+        name: a receipt QR locks total and date and names the shop from the resolver
+  - id: R-SCN-04
+    group: The flow
+    title: Shop-specific parsers, a generic one for the rest
+    text: |
+      SPAR / EUROSPAR / INTERSPAR, BILLA / BILLA PLUS, LIDL, ADEG, HOFER, TEDI, Smyths, OBI have their own; any other shop goes through the generic parser. Restaurants become one *Dining* booking; single-category shops (Baumarkt, IKEA, pharmacy, petrol, DM/BIPA) one booking in their category.
+    source: SCANNER §1, §2
+    tests:
+      - file: test/features/receipt/domain/constants/merchant_category_registry_test.dart
+        name: unknown merchants are itemizable with no default category
+  - id: R-SCN-05
+    group: The flow
+    title: Skip items = one booking
+    text: |
+      Before the first photo, *Skip* books the total as one uncategorised line with no photo; you pick the category in review.
+    source: SCANNER §1
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_harvest_capture_test.dart
+        name: skipItemCapture books the total as one uncategorised line
+  - id: R-SCN-06
+    group: The flow
+    title: From gallery photos too
+    text: |
+      Pick one or more photos (top to bottom); a photo that cannot be read fails alone; no total on any → back to step 1.
+    source: SCANNER §4.30
+  - id: R-SCN-03
+    group: Review & save
+    title: Every line needs a category — no silent "Other"
+    text: |
+      A line no keyword or merchant resolves stays uncategorised with *Tap to categorise*; Save is disabled until every line has a category, the items add up to the total, and an account is picked. The Categories page warns ahead of time when a receipt bucket has no category.
+    source: SCANNER §4.15d, CATEGORY §8a
+    related: [R-LED-20]
+  - id: R-SCN-07
+    group: Review & save
+    title: One booking per line
+    text: |
+      Save writes one booking per item (description = the item; a merged line = the merchant) plus a receipt record with the line snapshot, then round-ups and the trip tag. The total is editable; a mismatch blocks Save until fixed (add, merge, redo, scan more).
+    source: SCANNER §4.17, §4.18, §4.27
+  - id: R-SCN-08
+    group: Review & save
+    title: Merge all, merge by category, undo
+    text: |
+      Merge all → one line named after the shop; merge by category → one line per category (uncategorised untouched); the first merge can be undone.
+    source: SCANNER §4.17
+  - id: R-SCN-09
+    group: Review & save
+    title: Photos — kept, uploaded on Cloud
+    text: |
+      *Upload photos* (per device, default on). In a book without Cloud the photos stay queued on the phone until the book syncs; with Cloud they go to the book's storage (Cloud feature).
+    source: SCANNER §4.17, OFFLINE_TIER §7
+    related: [R-MON-14]
+  - id: R-SCN-10
+    group: Review & save
+    title: The scanner learns
+    text: |
+      Category corrections in review are remembered on the device (and used by quick booking too); a restaurant venue is learned from its QR.
+    source: SCANNER §4.21, QUICK_BOOKING §3
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+        name: recategorising a restaurant scan away from Dining learns it is not one
+  - id: R-SCN-20
+    group: Accuracy
+    title: Measured on a corpus of real receipts
+    text: |
+      152+ receipts (2026-09-26) with reviewed truth; every fix round is measured before and after. Real photos never enter the app repo. New photos are filed and a round run with the `scanner-corpus-round` skill.
+    source: SCANNER §4.31–§4.35

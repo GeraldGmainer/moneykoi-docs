@@ -1,0 +1,31 @@
+items:
+  - id: D-INV-1
+    question: May a currency position transfer to a non-currency one (JPY → BTC)?
+    status: open
+    answer: Allowed today. Release-note "your call"; no decision recorded.
+  - id: D-INV-2
+    question: Which currencies can be held?
+    status: decided
+    date: 2026-10-14
+    answer: The 29 the ECB publishes daily — the other 18 lose their rate at the ECB cutover.
+  - id: D-INV-3
+    question: How does a currency's price read?
+    status: decided
+    date: 2026-10-14
+    answer: As an exchange rate everywhere ("1 EUR = 175.42 JPY"); the web reads the same.
+  - id: D-INV-4
+    question: Should everyone in a shared book see everyone's investments?
+    status: open
+    answer: Writes are owner/admin (decided 2026-08-10), but every member still sees every position and location. Only a per-position *private* flag (option C) solves the privacy half — not decided.
+  - id: D-INV-5
+    question: A "refresh prices now" button?
+    status: open
+    answer: Recommendation in the doc — none for now ("as of" is shown); a throttled server refresh later if staleness bothers you. It would hand every user a lever on the shared quota.
+  - id: D-INV-6
+    question: Price alerts and a portfolio-moved digest
+    status: decided
+    answer: Not built, on purpose — needs push infrastructure.
+  - id: D-INV-7
+    question: Tax reporting
+    status: open
+    answer: Out of scope so far (INVESTMENTS §10 Q4).

@@ -1,0 +1,348 @@
+# Source: moneykoi-app/.agents/references/MONETIZATION_AI_CONTEXT.md (§ in each rule's source).
+items:
+  # Tiers & books
+  - id: R-MON-01
+    group: Tiers & books
+    title: Each higher tier contains everything below it
+    text: |
+      Free ⊂ Pro ⊂ Cloud. **Every Cloud plan includes Pro**, the subscriptions too. Cloud monthly, yearly and lifetime unlock exactly the same thing.
+    source: §1
+    tests:
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: every plan unlocks Pro
+  - id: R-MON-02
+    group: Tiers & books
+    title: Cloud belongs to the book
+    text: |
+      Features in the open book = the higher of what I bought and what the book's **owner** pays for. The owner pays; invited members get every feature, but only inside that book. Back in their own book they are on their own tier again.
+    source: §2
+    tests:
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: a free member of a Cloud book has every live feature inside it
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: back in their own book the same member is free again
+      - file: test/features/monetization/ui/tiles/tier_settings_tile_test.dart
+        name: a free member inside a Cloud book reads Cloud through that book
+  - id: R-MON-03
+    group: Tiers & books
+    title: Pro never travels through a book
+    text: |
+      Books without Cloud cannot be shared or created anyway. Sharing books and owning more than one is Cloud by construction: a local install has exactly one book and no invites.
+    source: §2
+  - id: R-MON-04
+    group: Tiers & books
+    title: An account is not a tier
+    text: |
+      Free and Pro never need an account. An account exists for Cloud, for joining a shared book and for the web dashboard. An account without a plan is a **free account**.
+    source: §9a
+
+  # Gates
+  - id: R-MON-10
+    group: Gates
+    title: A lock is visible, not hidden
+    text: |
+      The locked Analytics entry and tab, the locked *Edit home*, the locked export actions and quick actions are the paywall's marketing surface.
+    source: §3 rule 1
+    tests:
+      - file: test/app/navigation/destination_builder_test.dart
+        name: a locked tab shows what its feature includes
+      - file: test/features/home/ui/widgets/quick_actions_test.dart
+        name: wears the lock; the free ones do not
+      - file: test/features/budget_book/ui/screens/budget_book_tab_test.dart
+        name: export on a plan without filtered export wears the lock and opens the paywall
+      - file: test/features/home/ui/widgets/home_card_gallery_test.dart
+        name: a card the plan does not cover wears the lock and says why
+  - id: R-MON-11
+    group: Gates
+    title: Gate the surface and the use case, never a calculation
+    text: |
+      No entitlement read in a repo, a data source or an analytics fold. Analytics locks the whole tab; the numbers behind it are computed the same for everyone.
+    source: §3 rule 2
+    tests:
+      - file: test/features/monetization/gate_placement_test.dart
+        name: no fold, repo or data source reads entitlement
+  - id: R-MON-12
+    group: Gates
+    title: The free default Home holds only free cards
+    text: |
+      Pro cards appear locked in the editor; the Home resolver drops a locked card.
+    source: §3 rule 3
+    tests:
+      - file: test/features/home/domain/home_card_catalog_test.dart
+        name: a locked one stays listed but is never resolved onto Home
+  - id: R-MON-13
+    group: Gates
+    title: The paywall lists only built features
+    text: |
+      A planned feature (`isLive: false`) is off everywhere and joins the paywall the release it ships. Every live paid feature needs its paywall details in all three languages.
+    source: §3 rule 4
+    tests:
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: only built features are live
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: lists every live paid feature, nothing free and nothing that has not shipped
+      - file: test/features/monetization/monetization_copy_test.dart
+        name: every live paid Feature has its details in all three locales
+  - id: R-MON-14
+    group: Gates
+    title: One table decides — feature.dart
+    text: |
+      One line per feature: plan, `needs`, `isLive`. Code asks `Feature.x.isActive`, never a tier, the store flag or `SyncGate.isLocalMode`. Moving a feature between plans is one edit of its line.
+    source: §3a
+    tests:
+      - file: test/features/monetization/feature_gate_rules_test.dart
+        name: no code outside monetization decides by plan
+      - file: test/features/monetization/feature_gate_rules_test.dart
+        name: no code outside monetization reads the store flag
+      - file: test/features/monetization/feature_gate_rules_test.dart
+        name: features and shared widgets ask the feature, not the sync mode
+  - id: R-MON-15
+    group: Gates
+    title: The matrix is code, never server data
+    text: |
+      An installed version keeps the matrix it shipped with, and a Pro purchase must work offline.
+    source: §3a, decided 2026-10-07
+  - id: R-MON-16
+    group: Gates
+    title: A feature whose needs are unmet is absent, not locked
+    text: |
+      No upgrade can fix a missing account or sync, so nothing shows a lock it cannot keep. Example: *Use on computer* is absent without an account, locked on Free and Pro with one.
+    source: §3a
+    tests:
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: without an account nothing that needs one is on, and nothing shows a lock it cannot keep
+  - id: R-MON-17
+    group: Gates
+    title: A gated destination opens the paywall first, every way in
+    text: |
+      `DestinationNavigator.open` opens the paywall and goes on to the destination after a purchase, so the drawer, Home quick actions and every other entry are covered at once. Backing out stays put.
+    source: §3a
+    tests:
+      - file: test/app/navigation/destination_navigator_widget_test.dart
+        name: opens the paywall at its feature instead
+      - file: test/app/navigation/destination_navigator_widget_test.dart
+        name: goes on to it once the paywall closes on a purchase
+      - file: test/app/navigation/destination_navigator_widget_test.dart
+        name: stays put when the paywall closes without one
+      - file: test/features/monetization/ui/paywall_launcher_test.dart
+        name: require goes ahead when the user buys while the paywall is open
+  - id: R-MON-18
+    group: Gates
+    title: Until the public launch a feature may move up; after it only down
+    text: |
+      Zero users today, so a shipped feature can still move up a tier (Analytics and shopping lists did on 2026-10-17). After the launch a feature only ever moves **down**: Cloud → Pro → Free.
+    source: §3 rule 6
+
+  # Data stays yours
+  - id: R-MON-20
+    group: Data stays yours
+    title: Data a user created is never hidden
+    text: |
+      If a tier lapses, records stay readable; only creating and editing lock. Investments and shopping lists open **read-only** with a banner and *See plans* when records exist (D9).
+    source: §3 rule 5, §3a
+    tests:
+      - file: test/features/investment/ui/pages/investments_page_test.dart
+        name: after the plan ends the positions stay readable, with a banner and no add card
+      - file: test/features/investment/ui/pages/investment_detail_page_test.dart
+        name: after the plan ends the position stays readable, but cannot be changed
+      - file: test/app/ui/supabase_container_widget_launch_test.dart
+        name: after the plan ends, a list widget still opens its list
+  - id: R-MON-21
+    group: Data stays yours
+    title: Restoring is never paid; creating a backup file is Pro
+    text: |
+      *Download all your data* and the whole-book export stay free too: access to your own data is never paid.
+    source: §3 rule 5, §9b rule 6
+  # Store & purchases
+  - id: R-MON-30
+    group: Store & purchases
+    title: A subscription never sets the sticky Pro
+    text: |
+      Only a one-time purchase sets `Entitlement.pro`, so Pro ends with a lapsed subscription. RevenueCat reports `pro` active for every Cloud subscriber; the mapper takes only a non-expiring `pro`, the webhook only a one-time product.
+    source: §11
+    tests:
+      - file: test/features/monetization/data/revenue_cat_mapper_test.dart
+        name: a Cloud subscription unlocks Cloud but never sets the sticky Pro
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: only a one-time purchase owns Pro outright
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a Cloud subscription that lapses takes Pro with it
+  - id: R-MON-31
+    group: Store & purchases
+    title: The server outranks the receipt for Cloud
+    text: |
+      Once the server has spoken, a lapse it confirmed wins over a cached store term. After a Cloud purchase the app refreshes the verdict once; the webhook is usually ahead of it.
+    source: §3a, §11
+  - id: R-MON-32
+    group: Store & purchases
+    title: A restore reports what the store holds, not what changed
+    text: |
+      *Restored* whenever the store grants Pro or a live Cloud term, also when the phone already had it. *No purchase found* only when the store holds nothing (B6).
+    source: §11
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a purchase this phone already holds is still found
+  - id: R-MON-33
+    group: Store & purchases
+    title: Prices only ever come from the store
+    text: |
+      `StoreProduct.priceString`, never a translation file or a constant.
+    source: §7, §11
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: every price comes from the store, never from a translation file
+  - id: R-MON-34
+    group: Store & purchases
+    title: Store product ids are permanent
+    text: |
+      `pro.lifetime`, `cloud.monthly`, `cloud.yearly`, `cloud.lifetime`, `cloud.lifetime.upgrade` — one offering, entitlements `pro` and `cloud` (every Cloud product grants both).
+    source: §11
+    tests:
+      - file: test/features/monetization/data/revenue_cat_mapper_test.dart
+        name: every permanent product id maps to its plan
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: every plan maps to its permanent product id
+  - id: R-MON-35
+    group: Store & purchases
+    title: A pure-free install makes no RevenueCat call
+    text: |
+      The SDK is configured lazily, on the first paywall open or restore, never at app start.
+    source: §11
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a fresh install is free and asks the store nothing
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: the store SDK is configured lazily, once, and only on demand
+  - id: R-MON-36
+    group: Store & purchases
+    title: The store's app user id is the profile id
+    text: |
+      A purchase made signed in is booked under the profile the webhook can find. RevenueCat *Restore Behavior* = keep with the original App User ID, so a second MoneyKoi account on the same store account never silently takes over Cloud.
+    source: §9a, §11
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: sign-in and sign-out hand the profile id to the store
+  - id: R-MON-37
+    group: Store & purchases
+    title: Nothing but the gateway touches the store SDK
+    text: |
+      `PurchaseGateway` is the seam; nothing else in `lib/` imports `purchases_flutter`. Without a RevenueCat key the fake gateway is used.
+    source: §11
+    tests:
+      - file: test/features/monetization/gate_placement_test.dart
+        name: the store SDK is reached through the one gateway and its mapper only
+  - id: R-MON-38
+    group: Store & purchases
+    title: Pro does not cross platforms
+    text: |
+      A store purchase belongs to one store. iPhone ↔ Android with Pro features needs Cloud, or a second Pro purchase (D-C1).
+    source: §9, §9a
+  - id: R-MON-39
+    group: Store & purchases
+    title: 'Store family sharing: on for Pro, off for Cloud'
+    text: |
+      Cloud is shared through books already (D-C7). Apple's switch is one-way.
+    source: §9a
+
+  # Paywall
+  - id: R-MON-40
+    group: Paywall
+    title: The paywall never sells what the user owns
+    text: |
+      An owned plan is never drawn selected and never offers its own price. A Pro owner sees the **upgrade** (€44.99) in place of the Cloud lifetime. A Cloud owner gets *Manage subscription* and no buy button.
+    source: §7
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a Pro owner sees no Pro price and cannot pick Pro again
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a Pro owner is offered the lifetime upgrade instead of paying for Pro twice
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a Cloud subscriber sees Manage subscription instead of the prices, and buys nothing
+  - id: R-MON-41
+    group: Paywall
+    title: Copy promises budgeting, never "every feature"
+    text: |
+      Subtitle *Budgeting stays free. Always.* Free card *The full budgeting app on your phone. Yours forever, at no cost.*
+    source: §7, 2026-10-17
+  - id: R-MON-42
+    group: Paywall
+    title: Launch price wording is legal wording
+    text: |
+      *Launch price €49.99 until {date}, then €69.99* — both figures and the date. Never a strikethrough, "was €69.99" or "€20 off". The launch caption disappears the day after its last day.
+    source: §7, §8 item 1
+    tests:
+      - file: test/features/monetization/domain/launch_window_test.dart
+        name: the day after the last day closes it, so no pill or launch line outlives the price
+  - id: R-MON-43
+    group: Paywall
+    title: App Review requirements on the purchase screen
+    text: |
+      Subscription name, length and price per period, what the trial costs afterwards, links to Terms and Privacy, and *Restore purchases* without buying.
+    source: §8 item 4
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: shows restore and the legal links App Review requires
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: the yearly plan says what the trial costs afterwards
+  - id: R-MON-44
+    group: Paywall
+    title: Buying Cloud needs an account first
+    text: |
+      Without one the paywall opens the claim intro (sign in) first, because the receipt is booked under the profile id.
+    source: §7
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: buying Cloud without an account goes to the claim first
+  - id: R-MON-45
+    group: Paywall
+    title: The drawer's upgrade entry follows the active book
+    text: |
+      Free: *Get Pro*. Pro with only sync locked: *Get Cloud*. Cloud, or inside a Cloud book: no entry. Nov 1 → Jan 17: *Get Cloud free* (early adopter) takes precedence.
+    source: §7, §9a
+    tests:
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: 'Free: Get Pro, which opens the paywall at a Pro feature'
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: 'Pro: only sync is locked, so Get Cloud'
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: 'Cloud, or a Cloud book someone else pays for: nothing locked, no entry'
+  - id: R-MON-46
+    group: Paywall
+    title: The Home nudge's booking threshold is latched
+    text: |
+      Once crossed it stays crossed across reloads, relaunches, a smaller book and deleted rows. A dismissed nudge stays hidden forever.
+    source: §11 (B11)
+    tests:
+      - file: test/features/monetization/service/pro_nudge_service_test.dart
+        name: a crossed booking threshold survives a relaunch, in a smaller book or after deleting rows
+      - file: test/features/monetization/service/pro_nudge_service_test.dart
+        name: stays hidden forever once dismissed
+
+  # Privacy & server
+  - id: R-MON-50
+    group: Privacy & server
+    title: Pro reads the server, never writes to it
+    text: |
+      A book without an account fetches investment prices and FX rates anonymously — **always the whole list**, never only the assets a user holds (a request for "BTC + gold" would reveal holdings).
+    source: §5
+  - id: R-MON-51
+    group: Privacy & server
+    title: Live prices is the one request a book without an account makes
+    text: |
+      Settings → Privacy & Legal → *Live prices*, on by default. Only the request itself leaves the device (the server sees the IP). Purchases go to the store and RevenueCat, never to Supabase.
+    source: §5
+  - id: R-MON-52
+    group: Privacy & server
+    title: Price history stays account-only
+    text: |
+      A book without an account shows today's quote and no chart history; a past buy date prefills nothing (D6).
+    source: §5
+  - id: R-MON-53
+    group: Privacy & server
+    title: A raised plan never in a store build
+    text: |
+      Developer mode unlocks in any release by tapping the version, so the plan simulator's *Plan* and test purchases only work in debug and the dev flavor. Enforcing and the lapse only ever take features away.
+    source: §3b
+    tests:
+      - file: test/features/monetization/service/plan_simulator_test.dart
+        name: a store build never raises a plan or lets the test store grant, but may still enforce

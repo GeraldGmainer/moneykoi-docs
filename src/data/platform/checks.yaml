@@ -1,0 +1,6 @@
+groups:
+  - id: ios
+    title: iOS
+    items:
+      - id: C-PLAT-001
+        text: Clean iOS build (CocoaPods) → the scanner reads text and barcodes

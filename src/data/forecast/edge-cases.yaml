@@ -1,0 +1,51 @@
+items:
+  - id: E-FC-10
+    group: Line
+    title: A rule occurrence dated today
+    when: The server already booked today's occurrence.
+    then: Projected only if no booking exists for it — never counted twice.
+    risk: high
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a rule occurrence dated today is projected unless a booking already exists for it
+  - id: E-FC-11
+    group: Line
+    title: A whole-book budget zeroes the estimate
+    when: An active whole-book budget exists.
+    then: The everyday estimate is zero by construction; the sheet says the budget covers it instead of "0 a day".
+    status: by-design
+    risk: low
+  - id: E-FC-12
+    group: Line
+    title: Home total vs. the forecast anchor
+    when: Bookings are dated in the future.
+    then: The Home total contains them, the forecast starts from today and adds them on their days — the sheet states the difference; do not "fix" the Home total.
+    status: by-design
+    risk: medium
+  - id: E-FC-13
+    group: Web
+    title: A member's settings change on the web
+    when: A member with an existing setting row changes forecast settings on the web.
+    then: Nothing saves and no message shows; the value snaps back. Unreported until this doc.
+    status: known-issue
+    risk: low
+  - id: E-FC-01
+    group: Forecast
+    title: Day feed and month card disagree with an income goal
+    when: An active monthly income goal exists.
+    then: The day feed shows a net, the month card outflow only — they can disagree (release-note risk).
+    status: known-issue
+    risk: medium
+  - id: E-FC-02
+    group: Forecast
+    title: An exact-zero net is tinted green
+    when: A month's net change is exactly 0.
+    then: Shown green (release-note "minor"). The money-sign rule says an exact zero stays bare.
+    status: known-issue
+    risk: low
+  - id: E-FC-03
+    group: Forecast
+    title: Last day of a month
+    when: The per-day figure is read on the month's last day.
+    then: All four places still agree (C-FC-003).
+    risk: medium

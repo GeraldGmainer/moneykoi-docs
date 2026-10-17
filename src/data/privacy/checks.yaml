@@ -1,0 +1,48 @@
+# Source: Trello release notes 1.17.0 (item 20). The other groups are derived from the
+# APP_LOCK / AMOUNT_PRIVACY / WEB_SIGN_IN context docs, not from an earlier checklist.
+groups:
+  - id: app-lock
+    title: App lock
+    items:
+      - id: C-PRIV-001
+        text: PIN on → kill the app → reopen → locked from the first frame, no flash of content
+      - id: C-PRIV-002
+        text: Biometrics only → the lock screen shows *Unlock*; cancel the prompt → *Unlock* asks again
+      - id: C-PRIV-003
+        text: Pull the notification shade, open a permission dialog → no lock; the app switcher shows the shield
+      - id: C-PRIV-004
+        text: 5 wrong PINs → 30 s cooldown with a countdown; kill the app → still cooling down; biometrics work during it
+      - id: C-PRIV-005
+        text: Log out → the lock stays on; *Delete all data* on a phone with nothing else → the lock is off
+
+  - id: hide-amounts
+    title: Hide amounts
+    items:
+      - id: C-PRIV-010
+        text: '*Always* → Home, Budget Book, analytics (axes and tooltips), the Android widget are all hidden; the booking form''s amount stays readable'
+      - id: C-PRIV-011
+        text: '*Tap to reveal* → tap a figure → all visible for a few seconds; background → hidden on return'
+      - id: C-PRIV-012
+        text: TalkBack / VoiceOver read a hidden figure as hidden, not the number
+
+  - id: usage
+    title: Usage statistics
+    setup: |
+      To see the prompt again: Debug → Prefs → reset `usage_stats_consent` and `usage_stats_eligible_since`, then move the device date forward 2 days.
+    items:
+      - id: C-PRIV-020
+        text: After ≥ 3 bookings and 2 days the consent sheet shows once; *No* (or a swipe away) → never again by itself
+      - id: C-PRIV-021
+        text: Privacy & Legal → *Usage statistics* on → events in admin `/dashboard/usage` (or `select * from public.usage_event order by received_at desc limit 50`); off → every row of this install is deleted
+      - id: C-PRIV-022
+        text: Events carry no amounts, names or ids — check a few rows' props
+
+  - id: web-sign-in
+    title: Use on computer
+    items:
+      - id: C-PRIV-030
+        text: Release build + production web — drawer → *Use on computer* → open the site → *Scan code* → the browser is named → *Sign in* → the computer opens the dashboard; the phone stays signed in; log out on the computer → the phone is still signed in
+      - id: C-PRIV-031
+        text: '*Cancel* on the phone → the browser says declined; wait 3 minutes → *Expired*'
+      - id: C-PRIV-032
+        text: Scan the QR with the camera app instead → a web page that says where to scan, not the app

@@ -1,0 +1,29 @@
+items:
+  - id: D-PRIV-1
+    question: Crash reports — opt-in or opt-out?
+    status: decided
+    date: 2026-10-14
+    answer: Opt-out, Gerald's risk call. No regulator exempts crash reporting from device-access consent; what lowers the risk is done (EU region, no PII, no replay, scrubbing). Still open — DPA, policy, lawyer (T-PRIV-04).
+  - id: D-PRIV-2
+    question: Usage statistics — opt-in or default on?
+    status: decided
+    date: 2026-10-14
+    answer: Opt-in. The EU Digital Omnibus may exempt aggregated first-party measurement (proposed Art. 88a, not law as of 2026-10); the design already fits it, so the default could flip then — never before.
+  - id: D-PRIV-3
+    question: An analytics SDK?
+    status: decided
+    answer: None — the store listing says "no ads, no advertising or analytics SDKs", and Exodus shows Sentry only.
+    related: [X7]
+  - id: D-PRIV-4
+    question: Hide amounts — synced setting or per device?
+    status: decided
+    answer: Per device, read before the first frame.
+  - id: D-PRIV-5
+    question: A quick toggle outside Settings?
+    status: decided
+    date: 2026-09-14
+    answer: Removed (a Home eye button was built and taken out). A comeback needs a "last hidden mode" memo so off/on does not downgrade *Tap to reveal* to *Always*.
+  - id: D-PRIV-6
+    question: Re-ask usage consent when its text changes?
+    status: decided
+    answer: The consent text has a version (1). Asking existing users again after a bump is a decision each time, never automatic.

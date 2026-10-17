@@ -1,0 +1,45 @@
+---
+import Md from './Md.astro';
+import { areaChecks } from '../lib/data';
+import ChecklistScript from './ChecklistScript.astro';
+
+interface Props {
+  area: string;
+}
+const { area } = Astro.props;
+const groups = await areaChecks(area);
+const total = groups.reduce((n, g) => n + g.items.length, 0);
+---
+
+<div class="mk-checklist" data-checklist={area}>
+  <div class="mk-checklist-bar not-content">
+    <span><strong data-total-done>0</strong> / {total} done</span>
+    <label><input type="checkbox" data-hide-done /> Hide done</label>
+    <button type="button" data-reset-all>Reset all</button>
+  </div>
+
+  {
+    groups.map((g) => (
+      <section data-check-group id={g.id}>
+        <h2>
+          {g.title} <span class="mk-progress" data-progress />
+        </h2>
+        {g.setup && <div class="mk-note-block"><Md text={g.setup} /></div>}
+        <ul class="mk-checks-list not-content">
+          {g.items.map((item) => (
+            <li id={item.id}>
+              <label>
+                <input type="checkbox" data-check={item.id} />
+                <span class="mk-id">{item.id}</span>
+                <span class="mk-check-text"><Md text={item.text} inline /></span>
+              </label>
+            </li>
+          ))}
+        </ul>
+        <button type="button" class="mk-reset" data-reset-group>Reset this group</button>
+      </section>
+    ))
+  }
+</div>
+
+<ChecklistScript />

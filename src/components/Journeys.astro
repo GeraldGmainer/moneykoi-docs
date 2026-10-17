@@ -1,0 +1,41 @@
+---
+import Md from './Md.astro';
+import TestRefs from './TestRefs.astro';
+import Pill from './Pill.astro';
+import Refs from './Refs.astro';
+import { areaJourneys, groupBy } from '../lib/data';
+
+interface Props {
+  area: string;
+}
+const { area } = Astro.props;
+const journeys = await areaJourneys(area);
+const statusTone = { built: 'ok', waiting: 'warn', 'by-design': 'muted' } as const;
+const statusLabel = { built: 'built', waiting: 'waits for Gerald', 'by-design': 'by design' } as const;
+---
+
+{
+  groupBy(journeys, (j) => j.group).map(([group, items]) => (
+    <section>
+      <h2>{group}</h2>
+      {items.map((j) => (
+        <article class="mk-item mk-journey" id={j.id}>
+          <header>
+            <a class="mk-id" href={`#${j.id}`}>{j.id}</a>
+            <strong>{j.title}</strong>
+            <Pill tone={statusTone[j.status]}>{statusLabel[j.status]}</Pill>
+          </header>
+          <ol class="mk-flow">
+            <li class="mk-flow-start"><Md text={j.from} inline /></li>
+            {j.steps.map((s) => <li><Md text={s} inline /></li>)}
+            <li class="mk-flow-end"><Md text={j.result} inline /></li>
+          </ol>
+          {j.note && <div class="mk-note-block"><Md text={j.note} /></div>}
+          <TestRefs tests={j.tests} />
+          <Refs ids={j.checks} label="Test by hand" />
+          <Refs ids={j.related} label="See also" />
+        </article>
+      ))}
+    </section>
+  ))
+}

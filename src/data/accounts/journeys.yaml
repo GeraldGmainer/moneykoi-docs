@@ -1,0 +1,235 @@
+# Source: MONETIZATION_AI_CONTEXT.md §9b journeys, OFFLINE_TIER_AI_CONTEXT.md §2, §9, §10.
+items:
+  # Start
+  - id: J-ACC-01
+    group: Start
+    title: First run, no account
+    from: fresh install
+    steps:
+      - Welcome → **Get started**
+      - onboarding, offline, full currency list
+    result: Local Free book
+    tests:
+      - file: test/features/auth/ui/pages/welcome_page_test.dart
+        name: mints the local book, then pushes onboarding over the welcome screen
+      - file: test/app/navigation/app_entry_gate_test.dart
+        name: a local book that finished onboarding opens straight into the app
+    checks: [C-ACC-001]
+    related: [J-MON-01]
+  - id: J-ACC-02
+    group: Start
+    title: Backs out of onboarding
+    from: Welcome → *Get started*
+    steps:
+      - back on onboarding's first step (arrow or system back)
+    result: Welcome again, nothing kept
+    note: |
+      Android's back never closes the app there. Once onboarding finished, the book can no longer be undone this way.
+    tests:
+      - file: test/features/auth/ui/pages/welcome_page_test.dart
+        name: coming back from onboarding leaves Get started ready again
+
+  # Into an account
+  - id: J-ACC-10
+    group: Into an account
+    title: Back up & sync with a Cloud account
+    from: Local book
+    steps:
+      - Settings → *Back up & sync* → *Back up this book*
+      - Google or email sign-in
+      - progress with counts
+    result: the book syncs; the web shows everything
+    status: waiting
+    note: |
+      Behind developer mode until the claim's device test (T-MON-07, then T-MON-20).
+    tests:
+      - file: test/features/cloud_tier/claim_book_use_case_test.dart
+        name: a full run checks the plan, adopts by currency code, re-tenants, pushes, then hands over to sync
+      - file: test/features/cloud_tier/claim_progress_page_test.dart
+        name: a finished claim confirms it and opens the app on a fresh stack
+    checks: [C-ACC-010, C-ACC-011]
+    related: [J-MON-11, J-MON-12]
+  - id: J-ACC-11
+    group: Into an account
+    title: Back up & sync with a free account
+    from: Local book
+    steps:
+      - '*Back up & sync* → sign in'
+      - '*This account doesn''t have a Cloud plan yet*'
+      - '*See plans* · *Keep it on this phone* · *Try again*'
+    result: Cloud after a purchase, or the book under the account, local
+    status: waiting
+    tests:
+      - file: test/features/cloud_tier/claim_progress_page_test.dart
+        name: an account without a Cloud plan is offered the plans, keeping the book on the phone and Try again
+    checks: [C-ACC-014]
+    related: [J-MON-14]
+  - id: J-ACC-12
+    group: Into an account
+    title: Claim interrupted
+    from: claim uploading
+    steps:
+      - airplane mode, or a kill
+      - '*Try again*, or *Continue offline* → Settings → *Finish backup*'
+    result: finished without duplicates
+    tests:
+      - file: test/features/cloud_tier/claim_progress_page_test.dart
+        name: Continue offline after the re-tenant defers the claim and opens the app
+    checks: [C-ACC-012]
+  - id: J-ACC-13
+    group: Into an account
+    title: Cloud later uploads a kept book
+    from: book kept on the phone under a free account
+    steps:
+      - Cloud bought or granted
+      - relaunch
+    result: the upload starts by itself
+    tests:
+      - file: test/features/cloud_tier/claim_book_use_case_test.dart
+        name: Cloud later uploads a moved book from `retenanted`, and its local stretch ends with it
+    checks: [C-ACC-015]
+  - id: J-ACC-14
+    group: Into an account
+    title: Signs in from Profile (not a claim)
+    from: Local book
+    steps:
+      - Profile → *Sign in* / *Sign back in*
+      - the local book is set aside, hidden
+      - '*Log out* → Welcome → *Continue without an account*'
+    result: the local book is back, untouched
+    note: |
+      Behavior change against 1.16.1, where the local book came back by itself on logout.
+    tests:
+      - file: test/core/offline_first/wiper_test.dart
+        name: is set aside without a row deleted
+    checks: [C-ACC-033, C-ACC-044]
+
+  # Accounts on the phone
+  - id: J-ACC-20
+    group: Accounts on the phone
+    title: Logs out, logs back in
+    from: Cloud or free account
+    steps:
+      - '*Log out* → Welcome with *Sign back in* and the address under it'
+      - '*Sign back in* (a fresh sign-in)'
+    result: the same books, a delta sync from the kept cursors
+    tests:
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: a logout detaches the account under its id and silences its reminders, deleting nothing
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: a sign-in restores that account and remembers it for Sign back in
+    checks: [C-ACC-030]
+  - id: J-ACC-21
+    group: Accounts on the phone
+    title: Another person signs in
+    from: a phone holding account A's books, signed out
+    steps:
+      - '*Use another account* → Welcome back'
+      - B signs in
+    result: only B's books are visible; A's stay hidden
+    checks: [C-ACC-030]
+  - id: J-ACC-22
+    group: Accounts on the phone
+    title: Session lost
+    from: signed in
+    steps:
+      - revoked token or password changed elsewhere
+      - exactly a logout — Welcome
+    result: nothing deleted; unsent changes wait in the outbox for the same account
+    checks: [C-ACC-040]
+  - id: J-ACC-23
+    group: Accounts on the phone
+    title: Cloud user on a new phone
+    from: new phone
+    steps:
+      - '*I already use MoneyKoi*'
+      - sign in
+      - books download
+    result: Cloud
+  - id: J-ACC-24
+    group: Accounts on the phone
+    title: Free account on a second phone
+    from: free account, second phone
+    steps:
+      - '*I already use MoneyKoi* → sign in'
+      - the own book does not sync
+    result: Home reads *Your book is on your other phone — get Cloud to sync it*
+    note: |
+      The card goes away after the first booking or once the book is on Cloud. Copies edited on both phones merge on upgrade, the device winning per row.
+    checks: [C-ACC-023, C-ACC-026]
+
+  # Pause & renewal
+  - id: J-ACC-30
+    group: Pause & renewal
+    title: Sync pauses
+    from: Cloud
+    steps:
+      - grant ends (store, admin revoke, simulator)
+      - next start, sign-in or resume asks the server
+      - outbox drains, last pull, realtime off
+      - the review page opens once
+    result: '*Sync paused* — everything stays and works on the phone'
+    tests:
+      - file: test/features/cloud_tier/lapse_test.dart
+        name: drains the outbox first, then marks the open book and stops realtime — no wipe, no sign-out
+      - file: test/app/ui/supabase_container_test.dart
+        name: a teardown opens the lapse review on top of the app
+    checks: [C-ACC-020, C-ACC-021]
+    related: [J-MON-50]
+  - id: J-ACC-31
+    group: Pause & renewal
+    title: Sync resumes
+    from: Paused
+    steps:
+      - grant back
+      - the phone generates first, then meets the server's recurring bookings
+      - pushes in passes, replays deletes
+    result: syncing again, nothing lost, nothing doubled
+    tests:
+      - file: test/features/cloud_tier/occurrence_reconciler_test.dart
+        name: 'server first: an untouched device copy takes the server id and the server version, its tags follow'
+      - file: test/features/cloud_tier/lapse_delete_replay_test.dart
+        name: deletes in two books survive Empty trash, and each reaches the server under its own book
+    checks: [C-ACC-020, C-ACC-022]
+    related: [J-MON-15]
+  - id: J-ACC-32
+    group: Pause & renewal
+    title: Lost a book while paused
+    from: Paused, removed from a shared book meanwhile
+    steps:
+      - renewal finds the book gone
+      - review lists it under *Books you lost access to* — *Export* · *Remove from this phone*
+      - '*Done*'
+    result: the resume goes on without that book; its rows stay on the phone
+    tests:
+      - file: test/features/cloud_tier/lapse_review_page_test.dart
+        name: a book lost while lapsed gets its own section, out of the shared one
+      - file: test/features/cloud_tier/lapse_review_page_test.dart
+        name: Done marks the lost books reviewed and lets the resume go on
+    checks: [C-ACC-022]
+
+  # Leaving
+  - id: J-ACC-40
+    group: Leaving
+    title: Deletes the account
+    from: account
+    steps:
+      - Profile → *Delete account*
+      - the screen names shared books it takes and says the store keeps billing until cancelled
+    result: server — everything; phone — wiped, or only its own books next to another account's
+    tests:
+      - file: test/core/offline_first/wiper_test.dart
+        name: removes the books the account owned, its rows and cursors, and drops its prefs instead of parking them
+    checks: [C-ACC-031, C-ACC-032, C-ACC-042]
+    related: [J-BOOK-32]
+  - id: J-ACC-41
+    group: Leaving
+    title: Deletes the local book
+    from: Local book
+    steps:
+      - Profile → *Delete all data* (or *Delete this book* next to kept books)
+    result: Welcome; next to kept books only the local book went
+    tests:
+      - file: test/core/offline_first/wiper_test.dart
+        name: removes the local book
+    checks: [C-ACC-005, C-ACC-043]

@@ -1,0 +1,13 @@
+# Derived from the context docs, not from an earlier checklist.
+groups:
+  - id: check
+    title: Balance check
+    items:
+      - id: C-BC-001
+        text: Count two accounts (one a credit card, typed as amount owed), leave one blank → corrections only for the two; the blank one has no line
+      - id: C-BC-002
+        text: All into one with +10 / −10 → "the differences cancel out"; per account → two corrections; the Home cash-flow breakdown shows *Untracked*, the Budget Book totals do not
+      - id: C-BC-003
+        text: Delete the check → balances back; a correction row opens its check, never the booking form
+      - id: C-BC-004
+        text: First days of the month (anchored) → the Home card for owners/admins only; dismiss → gone for this period; the reminder fires on the anchor day

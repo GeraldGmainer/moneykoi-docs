@@ -1,0 +1,121 @@
+# Source: OFFLINE_TIER_AI_CONTEXT.md §14 (device checklist), MONETIZATION §12 (not device-tested),
+# Trello release notes for 1.17.0 (items 1, 2, 4, 10, 11, 12). "Sync basics" is derived from
+# OFFLINE_FIRST_AI_CONTEXT.md, not from an existing checklist.
+groups:
+  - id: setup
+    title: Before you start
+    setup: |
+      Dev flavor; one device with an existing cloud account, one fresh. Developer mode (About → tap the version 7 times) opens the claim, *Sign in* and *Join*. Plan simulator: see [Monetization → What to test](/monetization/testing/).
+    items:
+      - id: C-ACC-000
+        text: The offline-tier, early-adopter and cloud-tenants migrations are on the dev project (task T-MON-01)
+
+  - id: fresh
+    title: Fresh install, no account
+    items:
+      - id: C-ACC-001
+        text: Welcome shows *Get started*; onboarding runs offline with the full currency list; kill and relaunch → straight into main
+      - id: C-ACC-002
+        text: Add, edit, delete bookings; trash and restore; nothing shows a pending badge
+      - id: C-ACC-003
+        text: A recurring rule two months back creates its past occurrences at once; relaunch / resume creates nothing twice; a future one appears on its day; deleting its category pauses the rule
+      - id: C-ACC-004
+        text: Investments open (locked without Pro, live with it); prices arrive once online with *Live prices* on; switching the setting off stops the request
+      - id: C-ACC-005
+        text: Budget-over and reminder notifications fire; the widgets configure; Profile → *Delete all data* → Welcome
+      - id: C-ACC-006
+        text: A new book's **first** booking switches Home off the onboarding card at once (not only after the second)
+
+  - id: claim
+    title: Back up & sync (the claim)
+    items:
+      - id: C-ACC-010
+        text: Local book → *Back up & sync* → sign in → progress with counts → main; the web shows everything
+      - id: C-ACC-011
+        text: A brand-new account adopts the personal book (no second book, no default categories); an account that already has a book gets the device's as a new one; at the 3-book cap — its own message, nothing uploaded
+      - id: C-ACC-012
+        text: Airplane mode mid-upload → *Try again* resumes without duplicates; *Continue offline* → Settings → *Finish backup* completes; a kill mid-upload resumes on relaunch
+      - id: C-ACC-013
+        text: Start with account A, interrupt, sign in as B → mismatch screen → sign out → the local book is still there
+      - id: C-ACC-014
+        text: An account **without** Cloud → *This account doesn't have a Cloud plan yet* → *See plans* → a Cloud purchase → the claim continues; *Keep it on this phone* → main, the book is the account's and local; an account that already owned a book lands on the review with that one *Locked*
+      - id: C-ACC-015
+        text: Book kept on the phone without Cloud → grant Cloud → relaunch → the upload starts by itself
+      - id: C-ACC-016
+        text: '*Back up this book* page: koi on top, sign-in buttons at the bottom; airplane mode → Google → error snackbar, the page stays'
+      - id: C-ACC-017
+        text: Drawer (developer mode, before Jan 17) — *Get Free Cloud* is a plain row above Settings
+
+  - id: per-book
+    title: Cloud per book
+    items:
+      - id: C-ACC-024
+        text: A (Cloud) → plan simulator → *Simulate an ended subscription* → A's own books go local; a book shared by a paying owner keeps syncing
+      - id: C-ACC-025
+        text: '**Risk** — a device whose sync was paused under 1.16.1 → update → still paused (the old single timestamp now covers every book); renewing pushes everything changed since'
+
+  - id: lapse
+    title: Grant, revoke, pause, renew
+    items:
+      - id: C-ACC-020
+        text: Grant by email (`admin_set_cloud_entitlement`) → *Try again* → upload runs. Revoke → relaunch → *Sync paused* in Settings, the review page opens once, edits and recurring bookings keep working on the device, the web gets nothing new. Re-grant → relaunch → the edits reach the server
+      - id: C-ACC-021
+        text: '*Simulate an ended subscription* — sync and realtime stop, the device keeps working; the review lists owned books (one stays open) and shared books (*Export* / *Remove from this phone*); switching it off pushes the edits and deletes; a removed shared book re-downloads'
+      - id: C-ACC-022
+        text: While paused — delete → *Empty trash* → renew → gone on the web too; a restored booking replaces the old one on the web; two owned books with a delete each both reach the server; a daily rule on a second phone makes no duplicate after the renewal; a member removed while paused sees *Books you lost access to* with a working *Export*
+
+  - id: accounts
+    title: Accounts on the phone
+    items:
+      - id: C-ACC-030
+        text: Log out keeps every book; *Sign back in* continues with a delta sync; another account sees only its own books; reminders are cancelled on logout and re-armed on sign-in; the balance widget reads *Open MoneyKoi to sign in* while signed out
+      - id: C-ACC-031
+        text: '*Delete account* wipes the phone — only that account''s books when another account keeps books here — and names the shared books it takes with it'
+      - id: C-ACC-032
+        text: Buy Cloud (test purchase) → Profile → *Delete account* → "keeps billing until cancelled in the store" + *Manage subscription* (the button shows only with real RevenueCat keys)
+      - id: C-ACC-033
+        text: Local book → Profile → *Sign in* → only the account's books are visible; *Log out* → Welcome → *Continue without an account* → the original book and its data are back (1.16.1 brought it back by itself — behavior change)
+      - id: C-ACC-023
+        text: Free account, second phone → *I already use MoneyKoi* → sign in → Home shows only *Your book is on your other phone* with *Get Cloud*
+      - id: C-ACC-026
+        text: That card goes away after the first booking on this phone, or once the book is on Cloud
+
+  - id: sync-basics
+    title: Sync basics (two phones, one Cloud book)
+    setup: |
+      Derived from how the engine is documented, not from an earlier checklist.
+    items:
+      - id: C-ACC-050
+        text: A booking added on phone 1 (app open) appears on phone 2 (app open) within seconds
+      - id: C-ACC-051
+        text: Airplane mode on phone 1 — add, edit, delete; the pending dot shows; back online → the changes reach phone 2 and the dot clears
+      - id: C-ACC-052
+        text: Phone 2 in the background while phone 1 edits; bring phone 2 back → the changes appear
+      - id: C-ACC-053
+        text: Fresh install of a big book over a slow connection → the first sync finishes; kill the app halfway → it continues on relaunch
+
+  - id: untested
+    title: Never run on a device yet
+    setup: |
+      MONETIZATION §12 — on top of everything above, which is also untested since 2026-10-13.
+    items:
+      - id: C-ACC-040
+        text: A lost session (server-side revoke) lands on Welcome and deletes nothing
+      - id: C-ACC-041
+        text: '*Sign back in* is not offered right after deleting that account'
+      - id: C-ACC-042
+        text: '*Delete account* next to another account''s books takes only its own'
+      - id: C-ACC-043
+        text: '*Delete this book* next to kept books deletes only the local book'
+      - id: C-ACC-044
+        text: Profile's *Sign in* sets the local book aside, and the logout leaves it closed until *Continue without an account*
+
+  - id: web
+    title: On the web
+    items:
+      - id: C-ACC-070
+        text: Magic link — the email's link and its 6-digit code both sign in; password; Google; a new address lands in onboarding
+      - id: C-ACC-071
+        text: Log out on the web → the phone stays signed in
+      - id: C-ACC-072
+        text: Set password on the web → sign in with it in the app; delete account on the web → the app lands on Welcome at its next start

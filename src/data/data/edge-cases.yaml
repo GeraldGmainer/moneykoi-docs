@@ -1,0 +1,288 @@
+# Source: BACKUP_RESTORE_AI_CONTEXT.md §4–§9, BOOKING_IMPORT §3–§13, BOOKING_EXPORT §4–§7,
+# DATA_PORTABILITY §5–§6.
+items:
+  # Backup & restore
+  - id: E-DATA-01
+    group: Backup & restore
+    title: Wrong passphrase or damaged file
+    when: A protected file opens with the wrong passphrase.
+    then: The first encrypted entry failing in any way means *wrong passphrase* — the sheet asks again with the error. Later failures read as *damaged*. (The Trello risk "detected by archive's error text" is fixed.)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/backup/backup_archive_extras_test.dart
+        name: a first entry that does not decrypt reads as a wrong passphrase, whatever archive says
+  - id: E-DATA-02
+    group: Backup & restore
+    title: A passphrase with umlauts
+    when: The user protects a file with "Käse-Brot1".
+    then: It opens in 7-Zip and Keka with the same passphrase.
+    risk: medium
+  - id: E-DATA-03
+    group: Backup & restore
+    title: Backup offline, with photos
+    when: Photos are on and the phone is offline.
+    then: Uploaded photos are missing, counted and named ("N photos could not be included"); queued ones still come; the backup is made.
+    risk: low
+    tests:
+      - file: test/features/backup/data/backup_photo_collector_test.dart
+        name: offline, uploaded photos are missing and nothing is downloaded; queued ones still come
+  - id: E-DATA-04
+    group: Backup & restore
+    title: Sign-out mid-restore
+    when: The user signs out while a server restore uploads.
+    then: The restore stops; it never applies for the next session or switches it into the book.
+    risk: high
+    tests:
+      - file: test/features/backup/restore_backup_use_case_test.dart
+        name: a sign-out mid-upload stops the restore instead of applying it for the next session
+  - id: E-DATA-05
+    group: Backup & restore
+    title: App killed during a phone restore
+    when: The app dies halfway through replacing the local book.
+    then: The book is untouched; the staged rows sit under a scratch id no screen sees and are swept next time.
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
+        name: 'an app killed part-way: the staged rows are never the book'
+  - id: E-DATA-06
+    group: Backup & restore
+    title: An old or hand-made file
+    when: The file lacks columns the phone needs (icon, kind, time zone).
+    then: Filled the way the server would; a row that still cannot be read is skipped and counted, never the whole restore.
+    status: fixed
+    risk: medium
+  - id: E-DATA-07
+    group: Backup & restore
+    title: Not a backup at all
+    when: Another binary file is opened with MoneyKoi (Android offers it for every unknown file).
+    then: Refused by content as *damaged*, never by name.
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a file the app could not read says so instead of nothing happening
+  - id: E-DATA-08
+    group: Backup & restore
+    title: A second file while a preview is open
+    when: The user taps another `.moneykoi` while one is on screen.
+    then: It replaces the page and sheet, never stacks; a running restore or a dirty form keeps its page and the new file opens on top.
+    risk: low
+    tests:
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a second file replaces the open page and the sheet on it, never stacks another
+  - id: E-DATA-09
+    group: Backup & restore
+    title: Open-with from Gmail or WhatsApp
+    when: The sending app starts MoneyKoi inside its own task.
+    then: A trampoline hands the file to the one app instance — no second instance, one recents card. (The Trello `singleTask` question is settled.)
+    status: fixed
+    risk: high
+  - id: E-DATA-10
+    group: Backup & restore
+    title: The native copy of an opened file fails
+    when: The phone cannot copy the shared file into the app.
+    then: A *damaged* snackbar — no longer a silent log line (the Trello risk is fixed).
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/backup/data/opened_backup_files_test.dart
+        name: a file the platform could not copy is a damaged file, not silence
+  - id: E-DATA-11
+    group: Backup & restore
+    title: Undo in place with unsent changes
+    when: The book still has writes waiting to sync.
+    then: Refused — a queued write would land after the undo and redo part of it.
+    risk: medium
+    tests:
+      - file: test/features/backup/use_cases/rewind_backup_use_case_test.dart
+        name: pending outbox items of this book block the rewind
+  - id: E-DATA-12
+    group: Backup & restore
+    title: A revived name is taken
+    when: Bringing back an account or category whose name a live one uses now.
+    then: The revived one gets " (2)"; counted in the result.
+    risk: low
+  - id: E-DATA-13
+    group: Backup & restore
+    title: Restored book not on the phone yet
+    when: The pull after a restore did not bring the new book's row.
+    then: "\"Restored, not opened\" — the book appears after the next sync."
+    risk: low
+    tests:
+      - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
+        name: a book the pull has not brought yet is restored, not opened
+  - id: E-DATA-14
+    group: Backup & restore
+    title: The bottom bar is keyed by book
+    when: Settings from a file are applied on a new phone.
+    then: The file's bottom-bar layout moves to the restored book's id instead of getting lost.
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/backup/data/backup_settings_store_test.dart
+        name: apply writes the rebased layout
+  - id: E-DATA-15
+    group: Backup & restore
+    title: The reminder tap while a form is open
+    when: The backup reminder is tapped while an unsaved form is on screen.
+    then: No book switch, nothing pushed over it — only the app opens. (The Trello "gap — tap opens the app, not Backup & restore" is fixed; the tap now opens Backup & restore.)
+    risk: medium
+    tests:
+      - file: test/features/backup/ui/backup_reminder_tap_test.dart
+        name: 'a dirty form keeps the open book: no switch, nothing pushed over it'
+  - id: E-DATA-16
+    group: Backup & restore
+    title: An overdue reminder
+    when: The user ignores the reminder for weeks.
+    then: It repeats once per interval, never every day the app opens; a month step lands on the last day of a short month.
+    risk: low
+    tests:
+      - file: test/features/backup/backup_reminder_slot_test.dart
+        name: an overdue backup repeats once per interval, never every day the app opens
+  - id: E-DATA-17
+    group: Backup & restore
+    title: All data with a book that does not sync
+    when: An account's other book is local (free, paused, kept without upload).
+    then: Read from the phone, where its real rows are — not the stale server copy. (The Trello bug at `export_all_data_use_case.dart:139` is fixed.)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
+        name: another book that does not sync comes from the phone, offline too
+
+  # Import
+  - id: E-DATA-30
+    group: CSV import
+    title: German file that looks Japanese
+    when: A Windows-1252 CSV whose umlaut bytes are also valid Shift_JIS.
+    then: Read as Windows-1252 — the detector counts which byte ranges a real Japanese file uses.
+    risk: medium
+  - id: E-DATA-31
+    group: CSV import
+    title: Ambiguous dates
+    when: Every date fits both day-first and month-first (03/04/2026).
+    then: Flagged in red; the user picks the order, shown as the file's own date read both ways.
+    risk: medium
+  - id: E-DATA-32
+    group: CSV import
+    title: Two identical coffees
+    when: The file has two equal rows, the book has one.
+    then: One stays ticked — duplicates are counted pairwise.
+    risk: low
+  - id: E-DATA-33
+    group: CSV import
+    title: A refund under an expense category
+    when: '"Groceries" appears on both sides in a file with direction.'
+    then: Two categories, one per side.
+    risk: low
+  - id: E-DATA-34
+    group: CSV import
+    title: A multi-currency export
+    when: Rows in several currencies.
+    then: All imported at face value in the book's currency — nothing converted, nothing flagged.
+    status: by-design
+    risk: medium
+  - id: E-DATA-35
+    group: CSV import
+    title: Import stops part-way
+    when: A write fails in the middle of an import.
+    then: The result says it stopped and still offers *Undo* for what may have landed.
+    risk: medium
+    tests:
+      - file: test/features/data_import/use_cases/commit_import_use_case_test.dart
+        name: a failure partway still reports everything that may have landed
+  - id: E-DATA-36
+    group: CSV import
+    title: Demoted mid-wizard
+    when: The owner makes the importing admin a member while the wizard is open.
+    then: Told, and nothing moves on.
+    risk: low
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
+        name: a member demoted while the wizard was open is told, and nothing moves on
+  - id: E-DATA-37
+    group: CSV import
+    title: The first and last day of the file
+    when: Duplicate lookup at day boundaries (stored dates are local, compared with UTC).
+    then: The lookup window is padded a day each way, so no boundary day is lost (EC-PER-2).
+    status: fixed
+    risk: low
+  - id: E-DATA-38
+    group: CSV import
+    title: A big import syncs for minutes
+    when: Thousands of rows are imported.
+    then: On screen at once; the outbox sends one row at a time in the background, and the page says so from 2,000 rows.
+    status: by-design
+    risk: medium
+
+  # Export & erase
+  - id: E-DATA-50
+    group: Export & erase
+    title: The 1st of the budget month
+    when: The export opens on This month and nothing is booked yet.
+    then: The button is disabled with a note right above it; an empty book says the book is empty instead.
+    risk: low
+    tests:
+      - file: test/features/booking_export/ui/booking_export_page_test.dart
+        name: an empty book says so instead of blaming the filters
+  - id: E-DATA-51
+    group: Export & erase
+    title: 10,000 bookings in the review
+    when: A wide export.
+    then: Rows build a page at a time; the count stays the full one.
+    risk: low
+    tests:
+      - file: test/features/booking_export/ui/booking_export_page_test.dart
+        name: 10 000 bookings build one page at a time, and the count stays the full one
+  - id: E-DATA-52
+    group: Export & erase
+    title: Opening balances and transfers
+    when: A category filter is set.
+    then: They are left out (no category); with no category filter they are exported as `opening_balance` / `transfer`.
+    risk: low
+    tests:
+      - file: test/features/booking_export/domain/booking_export_matcher_test.dart
+        name: the stand-in category of an opening balance never matches, even by its own id
+  - id: E-DATA-53
+    group: Export & erase
+    title: Erase leaves no trash
+    when: The owner erases a book whose bookings are in the trash.
+    then: Trash rows are purged too — nothing can be restored into the emptied book. Other phones empty over minutes of background sync.
+    risk: medium
+  - id: E-DATA-60
+    group: On the web
+    title: A cancelled download counts as a backup
+    when: The user cancels the browser's Save As dialog.
+    then: The *last backup* stamp is already set — a page cannot see the cancel. The app stamps only on a confirmed save.
+    status: known-issue
+    risk: low
+  - id: E-DATA-61
+    group: On the web
+    title: Connection drops during a web restore
+    when: The network goes mid-restore with photos.
+    then: The remaining photos are left out (counted); restore the file again into the book to fill them in. The app retries by itself.
+    status: by-design
+    risk: medium
+  - id: E-DATA-62
+    group: On the web
+    title: A very large backup on the web
+    when: A big book is packed, or a file is over 4 GiB.
+    then: The tab freezes briefly while packing (not measured); a ZIP64 file is refused as damaged.
+    status: known-issue
+    risk: low
+  - id: E-DATA-63
+    group: On the web
+    title: Tiny crypto quantities in the export
+    when: A quantity below 1e-6 is exported on the web.
+    then: Written as `5e-7` where the app writes `0.0000005` (from reading the code; not reproduced).
+    status: known-issue
+    risk: low
+  - id: E-DATA-64
+    group: On the web
+    title: Web starter category names the importer does not know
+    when: A file in German or Japanese is imported into a book the web onboarded.
+    then: '"Gifts & Donations", "Internet & Phone", "Streaming Services" are matched only by exact name. Fix belongs in the app vocabulary first.'
+    status: known-issue
+    risk: low

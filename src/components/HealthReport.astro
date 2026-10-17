@@ -1,0 +1,35 @@
+---
+import Pill from './Pill.astro';
+import Md from './Md.astro';
+import { health } from '../lib/health';
+import { groupBy } from '../lib/data';
+
+const { problems, tests } = await health();
+const titles = {
+  repo: 'Repos',
+  catalog: 'Catalog vs. feature.dart',
+  test: 'Test links',
+  link: 'Broken references',
+  duplicate: 'Duplicate ids',
+} as const;
+---
+
+<p>
+  {problems.length === 0 ? <Pill tone="ok">all good</Pill> : <Pill tone="bad">{problems.length} problems</Pill>}
+  <Pill tone={tests.ok === tests.total ? 'ok' : 'warn'}>{tests.ok} / {tests.total} test links found</Pill>
+</p>
+
+{
+  groupBy(problems, (p) => p.kind).map(([kind, items]) => (
+    <section>
+      <h2>{titles[kind as keyof typeof titles]}</h2>
+      <ul>
+        {items.map((p) => (
+          <li>
+            <code>{p.where}</code> — <Md text={p.message} inline />
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))
+}

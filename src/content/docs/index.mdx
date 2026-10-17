@@ -1,0 +1,30 @@
+---
+title: MoneyKoi Docs
+description: What MoneyKoi does — features, tiers, rules, journeys, edge cases and what to test.
+template: splash
+hero:
+  tagline: What the app does, written for people. Tiers and tests are read from the code on every build, so this page can't drift silently.
+  image:
+    file: ../../assets/logo.png
+  actions:
+    - text: Release 1.17.0
+      link: /releases/1-17-0/
+      icon: right-arrow
+    - text: All features
+      link: /features/
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import Stats from '../../components/Stats.astro';
+
+<Stats />
+
+## Also here
+
+<CardGrid>
+  <LinkCard title="Release 1.17.0" href="/releases/1-17-0/" description="Your Trello items as one test plan — checks shared with the areas, outdated notes marked" />
+  <LinkCard title="All features" href="/features/" description="Every feature by area and tier, planned ones included" />
+  <LinkCard title="Health" href="/meta/health/" description="Drift between these pages and the code, broken test links" />
+  <LinkCard title="How this site works" href="/meta/how-it-works/" description="Where the data lives, what is generated, how to add an area" />
+</CardGrid>

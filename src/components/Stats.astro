@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import { resolvedCatalog } from '../lib/catalog';
+import { health } from '../lib/health';
+import { areas } from '../areas.mjs';
+
+const rows = await resolvedCatalog();
+const { problems, tests } = await health();
+
+const byArea = async (kind: 'rules' | 'journeys' | 'edgeCases') =>
+  new Map((await getCollection(kind)).map((e) => [e.id, e.data.items.length]));
+const rules = await byArea('rules');
+const journeys = await byArea('journeys');
+const edgeCases = await byArea('edgeCases');
+const checks = new Map(
+  (await getCollection('checks')).map((e) => [e.id, e.data.groups.reduce((n, g) => n + g.items.length, 0)]),
+);
+const open = new Map<string, number>();
+for (const e of await getCollection('tasks')) open.set(e.id, (open.get(e.id) ?? 0) + e.data.items.filter((t) => t.status !== 'done').length);
+for (const e of await getCollection('decisions')) open.set(e.id, (open.get(e.id) ?? 0) + e.data.items.filter((d) => d.status === 'open').length);
+
+const sum = (m: Map<string, number>) => [...m.values()].reduce((a, b) => a + b, 0);
+const tiles = [
+  { value: rows.filter((r) => r.status === 'live').length, label: 'features live', href: '/features/' },
+  { value: rows.filter((r) => r.status === 'planned').length, label: 'planned', href: '/features/' },
+  { value: sum(rules), label: 'business rules' },
+  { value: sum(journeys), label: 'journeys' },
+  { value: sum(edgeCases), label: 'edge cases' },
+  { value: sum(checks), label: 'manual checks' },
+  { value: `${tests.ok}/${tests.total}`, label: 'test links found', href: '/meta/health/' },
+  { value: problems.length, label: 'health problems', href: '/meta/health/', bad: problems.length > 0 },
+];
+const cell = (area: string, m: Map<string, number>, slug: string) => ({ n: m.get(area) ?? 0, href: `/${area}/${slug}/` });
+---
+
+<div class="mk-stats not-content">
+  {
+    tiles.map((s) =>
+      s.href ? (
+        <a class={`mk-stat ${s.bad ? 'mk-stat-bad' : ''}`} href={s.href}>
+          <span class="mk-stat-value">{s.value}</span>
+          <span class="mk-stat-label">{s.label}</span>
+        </a>
+      ) : (
+        <div class="mk-stat">
+          <span class="mk-stat-value">{s.value}</span>
+          <span class="mk-stat-label">{s.label}</span>
+        </div>
+      ),
+    )
+  }
+</div>
+
+<table class="mk-area-table">
+  <thead>
+    <tr>
+      <th>Area</th>
+      <th class="mk-col">Rules</th>
+      <th class="mk-col">Journeys</th>
+      <th class="mk-col">Edge cases</th>
+      <th class="mk-col">Checks</th>
+      <th class="mk-col">Open</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      areas.map((a) => {
+        const cols = [
+          cell(a.id, rules, 'rules'),
+          cell(a.id, journeys, 'journeys'),
+          cell(a.id, edgeCases, 'edge-cases'),
+          cell(a.id, checks, 'testing'),
+          cell(a.id, open, 'open'),
+        ];
+        return (
+          <tr>
+            <td>
+              <a href={`/${a.id}/`}><strong>{a.name}</strong></a>
+              <span class="mk-note">{a.blurb}</span>
+            </td>
+            {cols.map((c) => (
+              <td class="mk-col">{c.n > 0 ? <a href={c.href}>{c.n}</a> : <span class="mk-muted">–</span>}</td>
+            ))}
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>

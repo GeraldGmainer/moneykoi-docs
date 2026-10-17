@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'Tests, the code rules CI enforces, releases and builds.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Tests, the code rules CI enforces, releases and builds.
+
+| | |
+|---|---|
+| **App tests** | about 10,000; run the narrowest scope; `TZ=Europe/Vienna` |
+| **Web tests** | unit, widget, e2e — local only, no CI |
+| **CI gates** | theme tokens, no new `///`, i18n parity, append-only migrations |
+| **Releases** | `prepare-release` skill — version, store notes, one changelog migration |
+| **Builds** | iOS 15.5 minimum; Android backup carries database and preferences only |
+
+## Features
+
+<AreaFeatures area="platform" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `CLAUDE.md`, `.agents/skills/`, `tool/check_theme.sh`, `tool/check_comments.sh` |
+| Web | `TESTING_WEB_AI_CONTEXT.md` |

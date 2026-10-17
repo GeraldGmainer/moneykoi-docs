@@ -1,0 +1,28 @@
+---
+title: Overview
+description: 'Local reminders per channel and the in-app inbox.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Local reminders per channel and the in-app inbox.
+
+| | |
+|---|---|
+| **Where** | scheduled on the phone; no push server |
+| **Opt-in** | each channel off until switched on; the OS asks then |
+| **Channels** | bills, over budget, entry nudge, goals and loans, balance check, forecast, backup, shared-book status |
+| **Inbox** | the bell lists what has been shown, per phone and account |
+| **Web** | sends none |
+
+## Features
+
+<AreaFeatures area="notifications" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/core/notifications/`, `lib/features/notifications/` — `NOTIFICATIONS_AI_CONTEXT.md` |

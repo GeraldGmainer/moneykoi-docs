@@ -1,0 +1,36 @@
+---
+import { Code } from '@astrojs/starlight/components';
+import Md from './Md.astro';
+import Pill from './Pill.astro';
+import Refs from './Refs.astro';
+import { areaTasks } from '../lib/data';
+
+interface Props {
+  area: string;
+  owner: 'gerald' | 'ai';
+}
+const { area, owner } = Astro.props;
+const tasks = (await areaTasks(area)).filter((t) => t.owner === owner);
+const statusTone = { open: 'warn', blocked: 'bad', done: 'ok' } as const;
+---
+
+{
+  tasks.map((t) => (
+    <article class="mk-item" id={t.id}>
+      <header>
+        <a class="mk-id" href={`#${t.id}`}>{t.id}</a>
+        <strong>{t.title}</strong>
+        <Pill tone={statusTone[t.status]}>{t.status}</Pill>
+      </header>
+      <Refs ids={t.waitsFor} label="Waits for" />
+      <Md text={t.detail} />
+      {t.command && <Code code={t.command.trim()} lang="sh" />}
+      {t.prompt && (
+        <>
+          <p class="mk-muted">Prompt for the AI pass:</p>
+          <Code code={t.prompt.trim()} lang="txt" wrap />
+        </>
+      )}
+    </article>
+  ))
+}

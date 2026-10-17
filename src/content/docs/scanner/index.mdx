@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'The on-device receipt scanner: total, items, review, photos.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+The on-device receipt scanner: total, items, review, photos.
+
+| | |
+|---|---|
+| **Where** | on the phone with ML Kit; nothing goes to a cloud OCR |
+| **Flow** | total → items → review; skip items for one booking |
+| **Parsers** | per shop, plus a generic one |
+| **Save** | one booking per line, every line categorised; merge and undo |
+| **Accuracy** | measured on a corpus of real receipts (`scanner-corpus-round` skill) |
+
+## Features
+
+<AreaFeatures area="scanner" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/receipt/` — `SCANNER_AI_CONTEXT.md` |
+| Web | no scanner; `/add-receipt` splits a total by hand |

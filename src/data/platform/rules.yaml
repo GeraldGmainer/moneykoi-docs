@@ -1,0 +1,64 @@
+# Source: app CLAUDE.md (tests, theme, comments, i18n, migrations), skills/, OFFLINE_TIER §11;
+# web TESTING_WEB_AI_CONTEXT.md; Trello item 13.
+items:
+  - id: R-PLAT-10
+    group: Tests
+    title: About 10,000 app tests, 8+ minutes locally
+    text: |
+      Run the narrowest scope that covers a change; a full run after cross-cutting changes. CI runs everything on every push. Tests assume `TZ=Europe/Vienna` — a date test failing on another machine is the time zone first.
+    source: app CLAUDE.md
+  - id: R-PLAT-11
+    group: Tests
+    title: Web — unit, widget, e2e; no CI
+    text: |
+      ~100 unit files, 210 widget files (~3,800 tests), 23 e2e specs against an in-memory Supabase fake. The suites run locally only.
+    source: TESTING_WEB §1
+  - id: R-PLAT-12
+    group: Tests
+    title: Known bugs are pinned as failing tests
+    text: |
+      The web marks a reproduced bug `it.fails` with its source; remove the marker when fixed.
+    source: web docs (Known issues sections)
+  - id: R-PLAT-20
+    group: Code rules enforced by CI
+    title: No hardcoded colours, sizes or paddings
+    text: |
+      Tokens from `lib/core/constants/`; `tool/check_theme.sh` fails a new raw `Colors.*`, `Color(0x…)`, `fontSize:`, `Radius.circular()` or numeric `EdgeInsets` under `lib/`.
+    source: app CLAUDE.md
+  - id: R-PLAT-21
+    group: Code rules enforced by CI
+    title: No new doc comments
+    text: |
+      `tool/check_comments.sh` fails a new `///` under `lib/` (constants exempt). Reasoning belongs in the context docs — and now on this site.
+    source: app CLAUDE.md
+  - id: R-PLAT-22
+    group: Code rules enforced by CI
+    title: Three languages, every key
+    text: |
+      Every key in `en.json` exists in `de.json` and `ja.json`, placeholders identical; Japanese plurals carry `one` and `other`.
+    source: app CLAUDE.md
+  - id: R-PLAT-23
+    group: Code rules enforced by CI
+    title: Migrations are append-only
+    text: |
+      Never edit an applied migration — local `migration_vN.sql` bumps the DB version (now 24); server files go through `moneykoi-supabase` and Gerald runs every CLI step. `supabase db reset` is never an option.
+    source: app CLAUDE.md
+  - id: R-PLAT-30
+    group: Releases
+    title: A release is a version bump, store notes and one changelog migration
+    text: |
+      `prepare-release` asks whether the web ships too, bumps `pubspec.yaml`, writes the store notes (en/de/ja) and one Supabase migration with the `changelog` rows for the app (and the web). Commits are Gerald's, one per feature (`split-commits`).
+    source: skills/prepare-release, skills/split-commits
+  - id: R-PLAT-01
+    group: Builds
+    title: iOS 15.5 minimum
+    text: |
+      Since 1.17.0, with CocoaPods. iOS 15.0–15.4 users can no longer update.
+    source: Trello item 13
+  - id: R-PLAT-02
+    group: Builds
+    title: Android OS backup carries only the database and preferences
+    text: |
+      Photos are left out (the 25 MB quota would skip the whole backup), secure storage too (its key does not travel).
+    source: OFFLINE_TIER §11
+    related: [E-ACC-41]

@@ -1,0 +1,36 @@
+items:
+  - id: E-ANL-01
+    group: Numbers
+    title: All-time averages (app)
+    when: An average over *All*.
+    then: The app divides by days since 1970 (a known app bug); the web by days since the first booking.
+    status: known-issue
+    risk: medium
+  - id: E-ANL-02
+    group: Numbers
+    title: Leap day in the baseline
+    when: A comparison window ends on 29 February.
+    then: The baseline overflows into 1 March — pinned as failing on the web; the Dart original has the same bug. Fix both together.
+    status: known-issue
+    risk: low
+  - id: E-ANL-03
+    group: Numbers
+    title: No income, no ratio
+    when: A period with expenses and no income.
+    then: The fixed-cost ratio shows "record your income", not 0 %.
+    risk: low
+  - id: E-ANL-04
+    group: Web
+    title: '"All" shows only this month in the fixed & variable group (web)'
+    when: '`range=all` on the web.'
+    then: Those four cards cover the current month while the rest covers all history. From reading the code.
+    status: known-issue
+    risk: medium
+  - id: E-ANL-05
+    group: Web
+    title: Web waiting for migrations
+    when: The analytics month-anchor and corrections migrations are not applied.
+    then: Calendar months and the server's day; corrections missing from net worth and the waterfall; no *Untracked* bar.
+    status: known-issue
+    risk: medium
+    related: [T-ANL-01]

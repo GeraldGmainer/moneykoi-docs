@@ -1,0 +1,30 @@
+---
+title: Overview
+description: 'Metals, crypto and currency positions, their value and price history.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Metals, crypto and currency positions, their value and price history.
+
+| | |
+|---|---|
+| **Plan** | Pro; positions stay readable after the plan ends |
+| **Position** | one asset in one place, average cost, eight decimals |
+| **Prices** | from the server once a day; history downloaded once and kept |
+| **Book** | a buy or sell can book its cash leg; part of net worth |
+| **Server** | the price pipeline is in `moneykoi-supabase` — its §13 is the open-work list |
+
+## Features
+
+<AreaFeatures area="investments" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/investment/`, `lib/core/series_replica/` — `INVESTMENTS`, `SERIES_REPLICA` context docs |
+| Server | `moneykoi-supabase/INVESTMENT_PRICES_AI_CONTEXT.md` |
+| Web | `INVESTMENTS_WEB_AI_CONTEXT.md` |

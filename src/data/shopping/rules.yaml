@@ -1,0 +1,71 @@
+# Source: app SHOPPING_LIST_AI_CONTEXT.md, MONETIZATION §3a; web SHOPPING_WEB_AI_CONTEXT.md.
+items:
+  - id: R-SHP-01
+    group: Lists
+    title: Pro, and readable after the plan ends
+    text: |
+      Pro since 2026-10-17 (free before). With lists made under the plan, the pages open read-only with a banner; with none, the locked panel.
+    source: SHOPPING_LIST §0
+    related: [R-MON-20]
+  - id: R-SHP-02
+    group: Lists
+    title: Shared by design — no owner/admin gate
+    text: |
+      Every member of a book creates, renames, deletes lists and items. Do not "harmonise" with accounts and categories.
+    source: SHOPPING_LIST §1
+  - id: R-SHP-03
+    group: Lists
+    title: A pinned list (app)
+    text: |
+      Settings → Navigation → Shopping slot → pick a list: the tab opens straight into it. A list that no longer exists (or has not synced yet) falls back to the list of lists — the pin is kept.
+    source: SHOPPING_LIST §1c
+    tests:
+      - file: test/features/shopping_list/ui/pages/shopping_list_destination_test.dart
+        name: a pinned list that no longer exists falls back to the list of lists
+  - id: R-SHP-10
+    group: Quick add
+    title: Name and quantity from one field
+    text: |
+      A quantity only at the start or end: `3x Äpfel`, `Milch 1,5 l`, `2 Dosen Tomaten`, `Red Bull 4x250ml`, `Zwei Äpfel`, `りんご3個`. Never: `Milch 3,5%`, `Wein 5€`, `Spax 4x40mm`, `3XL Shirt`, `Vitamin B12`, `Chips 2026`. Nothing safe found → the whole text is the name.
+    source: SHOPPING_LIST §2
+    tests:
+      - file: test/features/shopping_list/domain/services/shopping_quantity_parser_test.dart
+        name: things that must NOT split
+      - file: test/features/shopping_list/domain/services/shopping_quantity_parser_test.dart
+        name: number words
+  - id: R-SHP-11
+    group: Quick add
+    title: Categorized once, when added
+    text: |
+      The name is matched against your expense categories when the item is added; after that its place is yours (drag, edit sheet) — an item dropped into *Uncategorized* stays there.
+    source: SHOPPING_LIST §3
+    tests:
+      - file: test/features/shopping_list/domain/services/shopping_item_categorizer_test.dart
+        name: resolve skips an income category of the same name
+  - id: R-SHP-20
+    group: Order & board
+    title: One order, synced
+    text: |
+      Drag & drop writes only the moved item (midpoint of its neighbours); a full rebalance only when the gaps run out. Grouped by category (per list, per device) or flat — the same order either way.
+    source: SHOPPING_LIST §4, §5
+    tests:
+      - file: test/features/shopping_list/domain/services/shopping_position_test.dart
+        name: exhausted gap rebalances to clean multiples with the moved item slotted in
+  - id: R-SHP-21
+    group: Order & board
+    title: Checking off deletes for good
+    text: |
+      Items are hard-deleted (Undo is a fresh item); a partner's queued edit of an item you checked off never brings it back.
+    source: SHOPPING_LIST §9
+  - id: R-SHP-30
+    group: Booking
+    title: Book an item as an expense
+    text: |
+      Swipe right (or *Book as expense*): the booking form opens with the name (cut to 20) and a category guessed from the full name, expense side only. The item is removed only when the booking is saved; backing out keeps it.
+    source: SHOPPING_LIST §7b
+  - id: R-SHP-40
+    group: Web
+    title: The board (web only)
+    text: |
+      From 1024 px every list is a column; drag between lists, press **C** to check off. Narrower: a list of lists and a check button per row. No pinned list, swipes, trash bar, widget or realtime.
+    source: SHOPPING_WEB §1

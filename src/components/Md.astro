@@ -1,0 +1,11 @@
+---
+import { md, mdInline } from '../lib/inline';
+
+interface Props {
+  text?: string;
+  inline?: boolean;
+}
+const { text, inline = false } = Astro.props;
+---
+
+{inline ? <Fragment set:html={mdInline(text)} /> : <Fragment set:html={md(text)} />}

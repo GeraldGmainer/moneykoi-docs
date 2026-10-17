@@ -1,0 +1,53 @@
+# Source: BACKUP_RESTORE_AI_CONTEXT.md §0, §4c–§4h, §6, §10; BOOKING_IMPORT §16; BOOKING_EXPORT §10.
+items:
+  - id: D-DATA-1
+    question: Who may create a backup — owner and admin, or any member?
+    status: open
+    answer: Shipped as owner/admin (the plan said any member). The backup doc calls it a product decision for Gerald, not a bug to fix either way.
+  - id: D-DATA-2
+    question: '*Download all your data* — free, although each book inside restores like a Pro backup?'
+    status: decided
+    date: 2026-10-16
+    answer: Free. Access to your own data is never paid.
+  - id: D-DATA-3
+    question: Restore target
+    status: decided
+    answer: A new book, never a merge or an overwrite — except applying a file to the book it came from, behind a red dialog.
+  - id: D-DATA-4
+    question: Backup destination
+    status: decided
+    date: 2026-10-03
+    answer: A file the user holds, through the save dialog or the share sheet. No MoneyKoi-hosted snapshots, no automatic Drive/iCloud uploads.
+  - id: D-DATA-5
+    question: Account without Cloud — restore into a new server book?
+    status: decided
+    date: 2026-10-14
+    answer: No — it would open empty here. It replaces one of its own books (the user picks, 2026-10-16), or makes a new own book kept on the phone.
+  - id: D-DATA-6
+    question: iOS strong-password autofill on the passphrase
+    status: decided
+    date: 2026-10-16
+    answer: Keep it — create offers a strong password and saves it to the Keychain.
+  - id: D-DATA-7
+    question: Android claims every `application/octet-stream` file
+    status: decided
+    date: 2026-10-16
+    answer: Keep it — mail and chat apps send `.moneykoi` that way. Other binary files offer MoneyKoi too and read as *damaged*.
+  - id: D-DATA-8
+    question: Bank CSV without categories
+    status: decided
+    date: 2026-09-28
+    answer: Cannot be imported. The statement import (planned) has to revisit this rule rather than inherit it.
+  - id: D-DATA-9
+    question: Booking export default period
+    status: decided
+    date: 2026-10-02
+    answer: This month (was all time) — the page should not invite exporting the whole book.
+  - id: D-DATA-10
+    question: Renaming the restored book inline
+    status: dropped
+    answer: Dropped 2026-10-03 — it is always "… (restored)".
+  - id: D-DATA-11
+    question: Import presets, QIF, remembered mappings, a bulk upload lane
+    status: dropped
+    answer: Dropped from planning 2026-10-03. No preset without a real sample file.

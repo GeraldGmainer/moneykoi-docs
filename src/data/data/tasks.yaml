@@ -1,0 +1,20 @@
+items:
+  - id: T-DATA-01
+    title: Fix two stale statements in the data docs
+    owner: ai
+    detail: |
+      Doc drift found while building this site: the code gates *Export bookings* as Pro, the export doc says free; the import's decision table contradicts its own §5.
+    prompt: |
+      In moneykoi-app/.agents/references: (1) BOOKING_EXPORT_AI_CONTEXT.md §1 and D12 say the booking export is free; since 2026-10-12 it is Pro through Feature.exportFiltered (backup_restore_page.dart opens it through PaywallLauncher.require). Update both. (2) BOOKING_IMPORT_AI_CONTEXT.md D14 says rows in another currency are skipped; §5 says since 2026-09-30 currency is not read at all. Update D14 to the current rule with its date.
+  - id: T-DATA-02
+    title: BACKUP_FORMAT.md — commit the photos / passphrase / settings update
+    owner: gerald
+    detail: |
+      `moneykoi-supabase/BACKUP_FORMAT.md` has an uncommitted change that covers `settings.json`, `photos/` and the passphrase (the web doc warned it was missing). Review and commit it in the backend repo.
+  - id: T-DATA-03
+    title: CSV formula injection
+    owner: ai
+    detail: |
+      Open in the web (`csv.ts` `field()`) and the app's encoder (review-2026-09 #10).
+    prompt: |
+      Prefix every text cell that starts with =, +, -, @, a tab or a CR with ' in the app's CsvEncoder and in moneykoi-web src/lib/export/csv.ts field(); leave numeric columns untouched. Add tests on both sides, including that bookings.csv still re-imports through the booking import (booking_export_round_trip_test.dart).

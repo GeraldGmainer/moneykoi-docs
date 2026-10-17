@@ -1,0 +1,15 @@
+# Derived from the context docs, not from an earlier checklist.
+groups:
+  - id: analytics
+    title: Analytics
+    items:
+      - id: C-ANL-001
+        text: A month with a transfer and a balance correction — neither is income or expense; the waterfall shows an *Untracked* bar and closes on the real balance
+      - id: C-ANL-002
+        text: '*All time* → comparison cards and comparative insights go quiet; month start 25 → monthly bars and tooltips use 25 → 24'
+      - id: C-ANL-003
+        text: Export → share image, CSV and PDF (iPad too)
+      - id: C-ANL-004
+        text: With investments — net worth says *incl. investments*; a depot-funded buy is not counted twice
+      - id: C-ANL-005
+        text: Free → the whole tab is locked with the paywall

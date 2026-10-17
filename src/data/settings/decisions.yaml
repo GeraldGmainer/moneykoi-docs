@@ -1,0 +1,6 @@
+items:
+  - id: D-SET-1
+    question: Should the app follow the account's language?
+    status: open
+    answer: |
+      Three options in PROFILE_SETTINGS §4 — (1) the app also writes its pick, (2) the app follows a pick made on the web and writes its own, (3) leave the column the web's. No decision recorded.

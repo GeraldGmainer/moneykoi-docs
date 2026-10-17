@@ -1,0 +1,17 @@
+items:
+  - id: D-HOM-1
+    question: Arrange cards in place on Home (long-press → drag)?
+    status: open
+    answer: Not built — ship the editor first, measure the ask (D9). The only open follow-up of Home cards.
+  - id: D-HOM-2
+    question: A net-worth card
+    status: open
+    answer: Unblocked (net worth counts investments); build it on the Analytics series so the two cannot disagree. Name reserved.
+  - id: D-HOM-3
+    question: Bar sizes 3 or 5
+    status: decided
+    answer: No — the + needs the middle slot; that would be a bar redesign.
+  - id: D-HOM-4
+    question: iOS widgets
+    status: open
+    answer: Planned (`plans/IOS_WIDGET_PLAN.md`); the bundled icon assets port directly.

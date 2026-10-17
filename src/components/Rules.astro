@@ -1,0 +1,33 @@
+---
+import Md from './Md.astro';
+import TestRefs from './TestRefs.astro';
+import Pill from './Pill.astro';
+import Refs from './Refs.astro';
+import { areaRules, groupBy } from '../lib/data';
+
+interface Props {
+  area: string;
+}
+const rules = await areaRules(Astro.props.area);
+---
+
+{
+  groupBy(rules, (r) => r.group).map(([group, items]) => (
+    <section>
+      <h2>{group}</h2>
+      {items.map((r) => (
+        <article class="mk-item" id={r.id}>
+          <header>
+            <a class="mk-id" href={`#${r.id}`}>{r.id}</a>
+            <strong>{r.title}</strong>
+            {r.tests.length > 0 ? <Pill tone="ok">tested</Pill> : <Pill>no test</Pill>}
+          </header>
+          <Md text={r.text} />
+          {r.source && <p class="mk-source">{r.source}</p>}
+          <TestRefs tests={r.tests} />
+          <Refs ids={r.related} label="See also" />
+        </article>
+      ))}
+    </section>
+  ))
+}

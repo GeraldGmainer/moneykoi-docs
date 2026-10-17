@@ -1,0 +1,43 @@
+items:
+  - id: J-REC-01
+    group: Rules
+    title: Creates a monthly bill
+    from: Recurring → +
+    steps:
+      - amount, category, account
+      - '*Repeat* → monthly, on the 1st (or *last day*)'
+      - '*Ends* → never / on a date / after N'
+      - preview chips show the next dates → *Save*
+    result: the rule; the server makes each booking on its day
+    tests:
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: opens the keypad by itself, hiding Save; the typed amount and defaults are what get saved
+    checks: [C-REC-001]
+  - id: J-REC-02
+    group: Rules
+    title: Makes a booking recurring
+    from: a booking ⋮ → *Make recurring*
+    steps:
+      - the rule opens prefilled (monthly on that day)
+      - '*Save*'
+    result: the rule; the booking itself is not made twice
+    checks: [C-REC-002]
+  - id: J-REC-03
+    group: Rules
+    title: Skips one date / pauses / deletes
+    from: the rule's editor (web — the row menu)
+    steps:
+      - skip a date from the preview, or pause, or delete
+    result: no booking for that date / none until resumed / none ever again; existing bookings stay
+    checks: [C-REC-003]
+  - id: J-REC-04
+    group: Upcoming
+    title: Sees what is coming
+    from: Recurring → *Upcoming* (or Home's Upcoming card)
+    steps:
+      - month cards with a net
+    result: the next 13 months of active rules
+    tests:
+      - file: test/features/recurring_booking/ui/screens/upcoming_bookings_view_test.dart
+        name: paused rules project nothing, leaving the empty state with an add action
+    checks: [C-REC-004]

@@ -1,0 +1,44 @@
+---
+title: Overview
+description: Backup files, restore, CSV import and export, the whole-book archive, all your data, erase.
+sidebar:
+  order: 1
+---
+
+Sync is not a backup — it copies deletions too. Three things users mean by "backup", and the answer to each:
+
+| The user means | The answer |
+|---|---|
+| *Put my data on my new phone* | signing in (an account) — or, without one, a backup file |
+| *Give me my data* | the `.moneykoi` file (JSONL + a plain CSV, readable without MoneyKoi), *Download all your data* |
+| *Undo what I broke* | partly — a file rewinds to the last backup; the reminder is what makes one exist |
+
+## The tools
+
+| Tool | Who | Plan | Where |
+|---|---|---|---|
+| **Create a backup** (`.moneykoi`) | owner, admin | Pro | Settings → Backup & restore |
+| **Restore from a backup** | everyone | free | Backup & restore, *Welcome back*, or tap the file |
+| **Undo changes in this book** | owner, admin; a syncing book | free | the restore preview of a file from this book |
+| **Backup reminder** | owner, admin | Pro | Settings → Notifications |
+| **Download all your data** | every member | free | Backup & restore → *Your data* |
+| **Import bookings** (CSV) | owner, admin | free | Backup & restore, Book card menu |
+| **Export bookings** (filtered CSV) | every member | Pro | Backup & restore |
+| **Export data** (whole-book ZIP of CSVs) | owner, admin | free | Book card menu |
+| **Erase data** | owner | free | Book card menu |
+
+## The file
+
+- `MoneyKoi-<Book>-YYYY-MM-DD.moneykoi` — a zip of JSONL per record type, a manifest with checksums, a plain `bookings.csv`, a README; optionally receipt photos, `settings.json`, AES-256 passphrase.
+- One book per file. Format version 1; older files always restore, newer ones are refused by name.
+- The spec is `moneykoi-supabase/BACKUP_FORMAT.md` — a contract between the app, the web and the server.
+
+## Where it lives in code
+
+| Piece | Where (moneykoi-app) |
+|---|---|
+| Backup & restore | `lib/features/backup/` — `BACKUP_RESTORE_AI_CONTEXT.md` |
+| CSV import | `lib/features/data_import/` — `BOOKING_IMPORT_AI_CONTEXT.md` |
+| CSV export | `lib/features/booking_export/` — `BOOKING_EXPORT_AI_CONTEXT.md` |
+| Whole-book ZIP, erase | `lib/features/data_export/`, `lib/features/book/` — `DATA_PORTABILITY_AI_CONTEXT.md` |
+| Server restore | `moneykoi-supabase` `restore_begin` / `restore_stage` / `restore_book_apply`, `rewind_*` |

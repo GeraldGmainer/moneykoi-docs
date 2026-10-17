@@ -1,0 +1,26 @@
+# HOME_WIDGET §12 (manual QA the tests cannot cover); the rest derived from the context docs.
+groups:
+  - id: home
+    title: Home & bar
+    items:
+      - id: C-HOM-001
+        text: Remove a card → Undo; preset → Undo; add a second *Recent transactions* with another filter; a card with no data shows *hidden* in the editor; Free → editor locked, default Home has only free cards
+      - id: C-HOM-002
+        text: Free default bar Home · + · Budget Book; buy Pro → 4 tabs at once; a 1-tab bar has no bar; a book switch keeps each book's bar
+  - id: widgets
+    title: Android widgets
+    setup: |
+      From HOME_WIDGET §12 — what only a person can judge.
+    items:
+      - id: C-HOM-003
+        text: Each of the eight widgets places and configures; long-press → edit reopens its config (API 31+)
+      - id: C-HOM-004
+        text: A pale and a dark category colour against a light and a dark wallpaper
+      - id: C-HOM-005
+        text: Appearance sliders at 0, 50, 100 with both plate themes; two widgets of one kind keep their own setting
+      - id: C-HOM-006
+        text: Tap cold / warm / deep in another screen → the booking page each time; tap, background, resume without tapping → no re-open
+      - id: C-HOM-007
+        text: Edit the bound category's icon or colour → the widget updates; archive it → placeholder, tap reconfigures; reboot → still rendered
+      - id: C-HOM-008
+        text: '`adb shell bmgr backupnow` + restore → widgets keep their categories; dev and prod side by side → two distinguishable picker entries'

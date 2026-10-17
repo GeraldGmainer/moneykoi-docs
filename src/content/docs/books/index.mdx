@@ -1,0 +1,49 @@
+---
+title: Overview
+description: Books, sharing, roles, invites and what members see when a book stops syncing.
+sidebar:
+  order: 1
+---
+
+A **book** (database: `tenant`) is a household's data: accounts, categories, bookings, budgets, goals. A person can be in several books; one is active at a time.
+
+| | |
+|---|---|
+| **Kinds** | private (`personal`) or shared (`family`) |
+| **Limit** | 3 owned books; memberships unlimited. More than one own book is Cloud |
+| **Currency** | one per book; only the owner changes it |
+| **Roles** | owner (one, fixed) → admin (invite, manage, set up) → member (bookings, receipts, shopping) |
+| **Who pays** | the owner — members of a Cloud book get every feature inside it |
+| **Offline** | reading works; managing (create, invite, roles, leave, delete) needs a connection |
+| **Sync** | only the active book's data is pulled; switching re-pulls, never wipes |
+
+## What each role can do
+
+| | Owner | Admin | Member |
+|---|---|---|---|
+| Bookings, receipts, shopping | ✓ | ✓ | ✓ |
+| Accounts, categories, goals, loans, investments, recurring rules | ✓ | ✓ | read only |
+| Invite, remove plain members | ✓ | ✓ | – |
+| Change roles, remove an admin | ✓ | – | – |
+| Change the currency | ✓ | – | – |
+| Export / import / back up the whole book | ✓ | ✓ | – |
+| Export bookings (CSV, Pro), download own data | ✓ | ✓ | ✓ |
+| Erase data, rename, stop sharing, delete | ✓ | – | – |
+| Leave | – | ✓ | ✓ |
+
+## App and web
+
+| | App | Web |
+|---|---|---|
+| Manage | any book, swipe to preview | the active book only |
+| Book avatars, rename | ✓ | – |
+| Live updates | realtime | on the next refetch |
+| Which books open | all | only Cloud books; others listed locked |
+
+## Where it lives in code
+
+| Piece | Where |
+|---|---|
+| App feature | `moneykoi-app/lib/features/book/` — `BOOK_AI_CONTEXT.md`, `FAMILY_ACCOUNTS_AI_CONTEXT.md` |
+| Server | `moneykoi-supabase` `20260710090000_books.sql` and later (RPCs `create_book`, `create_book_invite`, `accept_book_invite`, …) |
+| Web | `moneykoi-web/src/lib/books/`, `src/app/invite/` — `BOOKS_WEB_AI_CONTEXT.md` |

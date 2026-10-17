@@ -1,0 +1,109 @@
+# Source: app BUDGET_BOOK_AI_CONTEXT.md, BUDGET_CALENDAR_AI_CONTEXT.md; web BOOKINGS_WEB §4.11, §4.13.
+items:
+  - id: R-BB-01
+    group: Scope
+    title: Two scopes — which bookings, and which slice of time
+    text: |
+      The **filter** (account, category, member, tag, type, fixed/variable, search) chooses which bookings qualify; the **period** (all · year · month · week · day · custom) chooses the slice on screen. Only the period mode is remembered; a filter is not.
+    source: BUDGET_BOOK §3
+  - id: R-BB-02
+    group: Scope
+    title: A count always says its scope
+    text: |
+      Never "42 transactions" next to a month showing 1: the filter shows the matches in this period, and offers *Search all time* only when there are matches elsewhere.
+    source: BUDGET_BOOK §4
+    tests:
+      - file: test/features/budget_book/ui/modal/booking_count_test.dart
+        name: a whole-book count is never shown bare while a period is paged
+      - file: test/features/budget_book/ui/modal/booking_count_test.dart
+        name: offers no widen action when every match is already on screen
+  - id: R-BB-03
+    group: Scope
+    title: '*Search all time* is a temporary widen'
+    text: |
+      It does not change what the tab opens on tomorrow; a *Back to June 2026* chip, *Reset* or clearing the last filter returns to where you were.
+    source: BUDGET_BOOK §5
+    tests:
+      - file: test/features/budget_book/ui/modal/booking_count_test.dart
+        name: tapping the widen action switches to all time without persisting it
+      - file: test/features/budget_book/ui/widgets/active_filter_bar_test.dart
+        name: offers a return chip only while a temporary widen is active
+  - id: R-BB-04
+    group: Scope
+    title: Switching periods keeps your place
+    text: |
+      June → year lands on that year, and back on June. A custom range (*1 Mar – 15 Aug*) is never remembered.
+    source: BUDGET_BOOK §6, §8
+  - id: R-BB-05
+    group: Scope
+    title: The budget month can start on any day 1–28
+    text: |
+      *My month starts on the 25th* moves every month period — Budget Book, budgets, analytics, the budget widget, streaks. Weeks follow the start-of-week setting.
+    source: BUDGET_BOOK §6.1
+    tests:
+      - file: test/features/budget_book/service/budget_book_initial_state_factory_test.dart
+        name: 'PeriodMode.week: calculates week based on StartOfWeek preference (Sunday)'
+    related: [R-SET-03]
+  - id: R-BB-06
+    group: Scope
+    title: Search finds description or merchant
+    text: |
+      One field, two places: the booking's description and its scanned receipt's merchant. The search page uses the same rule.
+    source: BUDGET_BOOK §1
+    related: [R-BKG-40]
+  - id: R-BB-07
+    group: Scope
+    title: A parent filter covers its subs; a sub is exact
+    source: BUDGET_BOOK §1
+    text: |
+      A transfer never matches a category filter, so picking *Transfer* clears the category.
+  - id: R-BB-10
+    group: Views
+    title: Summary counts categorised money only
+    text: |
+      Income, expenses and the signed balance leave out transfers (they net to zero) and balance corrections (they restate a balance). Both still show under Transactions and still move account balances.
+    source: BUDGET_BOOK §9 (decided 2026-10-04)
+    related: [R-BC-04]
+  - id: R-BB-11
+    group: Views
+    title: Summary — a donut and the ranked categories in one card
+    text: |
+      Grouped under parents or flat (no choice when the book has no subcategories). Tapping a row opens that category's activity for the period. The balance is the one signed figure.
+    source: BUDGET_BOOK §9
+    tests:
+      - file: test/features/budget_book/ui/summary/category_summary_tile_test.dart
+        name: a sub tap hands the sub summary to onOpen, not its parent
+  - id: R-BB-12
+    group: Views
+    title: Transactions — newest first, grouped by day (by month for year, all, custom)
+    source: BUDGET_BOOK §9
+    text: |
+      A booking edited just now floats to the top of its day.
+  - id: R-BB-13
+    group: Views
+    title: Calendar — net per day, shaded
+    text: |
+      Green above zero, salmon below, strength by the 90th percentile of the page (a salary day does not flatten the rest); future days outlined; today ringed. Day, week, month, year and all-years layouts. An anchored month is two labelled partial grids.
+    source: BUDGET_CALENDAR §4, §5
+    tests:
+      - file: test/features/budget_book/service/calendar_data_generator_test.dart
+        name: marks days after today as future
+      - file: test/features/budget_book/service/calendar_data_generator_test.dart
+        name: steps across a DST boundary without skipping or repeating a day
+  - id: R-BB-20
+    group: Export
+    title: Export what you see
+    text: |
+      ⋮ → *Export*: this period's summary (CSV, PDF), this period's bookings, or all matches (CSV). Pro (`exportFiltered`); on Free the row wears the lock. The file matches the screen and never needs the network.
+    source: BUDGET_BOOK §14
+    tests:
+      - file: test/features/budget_book/ui/screens/budget_book_tab_test.dart
+        name: export on a plan without filtered export wears the lock and opens the paywall
+      - file: test/features/budget_book/ui/widgets/budget_book_export_run_test.dart
+        name: the all-matches option exports the whole book
+  - id: R-BB-30
+    group: Category activity
+    title: One category over the Budget Book's filter and period
+    text: |
+      Opened from a summary row or search: breakdown or trend and the grouped bookings, inheriting the tab's live filter. The web has its own presets on budget months.
+    source: 02_FEATURES, CATEGORIES_WEB §7

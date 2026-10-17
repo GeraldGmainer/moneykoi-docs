@@ -1,0 +1,215 @@
+# Source: FAMILY_ACCOUNTS_AI_CONTEXT.md, BOOK_AI_CONTEXT.md, OFFLINE_TIER_AI_CONTEXT.md §10,
+# moneykoi-web BOOKS_WEB_AI_CONTEXT.md.
+items:
+  # What a book is
+  - id: R-BOOK-01
+    group: What a book is
+    title: A book is a household's shared data
+    text: |
+      Accounts, categories, bookings, budgets, goals — all belong to the **book**, not to a person. A person can be in several books; one is active at a time. Private (`personal`) or shared (`family`). Scope: households, not businesses.
+    source: FAMILY_ACCOUNTS §1
+  - id: R-BOOK-02
+    group: What a book is
+    title: Data survives a member leaving
+    text: |
+      A row's creator is attribution only. Everyone in a book sees the same data, last-write-wins.
+    source: FAMILY_ACCOUNTS §2
+  - id: R-BOOK-03
+    group: What a book is
+    title: One currency per book
+    text: |
+      The currency lives on the book, never on a profile. Only the **owner** changes it, after a confirmation; amounts are relabelled, never converted. Each person keeps their own money format; only the one who changes the currency gets its default.
+    source: FAMILY_ACCOUNTS §6
+    tests:
+      - file: test/features/book/domain/book_member_test.dart
+        name: only the owner may change the book currency
+      - file: test/features/book/data/data_sources/book_remote_source_test.dart
+        name: updateBookCurrency reports a write RLS refused as owner-only
+  - id: R-BOOK-04
+    group: What a book is
+    title: Up to 3 owned books, unlimited memberships
+    text: |
+      Only owned books count against the limit. Owning more than one is Cloud.
+    source: FAMILY_ACCOUNTS §1, BOOK §5
+    tests:
+      - file: test/features/book/bloc/book_management_bloc_test.dart
+        name: only owned books count against the limit
+    related: [R-MON-03]
+  - id: R-BOOK-05
+    group: What a book is
+    title: The last owned book cannot be deleted
+    text: |
+      The server refuses (`LAST_BOOK`), so the app never offers it.
+    source: BOOK §5
+    tests:
+      - file: test/features/book/bloc/book_management_bloc_test.dart
+        name: the last owned book cannot be deleted, nor a book someone else owns
+
+  # Roles
+  - id: R-BOOK-10
+    group: Roles
+    title: Owner → admin → member
+    text: |
+      - **Owner** — one per book, full control, never transferable; cannot leave (dissolve or delete instead); the only one who changes the currency or erases data
+      - **Admin** — invites, manages members, sets the book up (accounts, categories, goals, loans, investments, recurring rules)
+      - **Member** — records bookings, receipts and shopping; reads everything else
+    source: FAMILY_ACCOUNTS §2, §3
+    tests:
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: every role may record bookings
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: structure is writable in a private book and for an owner or admin of a shared one
+      - file: test/features/book/ui/book_card_menu_test.dart
+        name: an owner of a shared book can rename, stop sharing and delete, but not leave
+  - id: R-BOOK-11
+    group: Roles
+    title: An unknown role writes nothing structural
+    text: |
+      Until the phone knows the book and my role in it, structure edits and the currency stay off; bookings stay open.
+    source: FAMILY_ACCOUNTS §5.4
+    tests:
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: an unknown role in a shared book offers no structure writes and no currency change
+  - id: R-BOOK-12
+    group: Roles
+    title: Role changes only through the server
+    text: |
+      Nobody can set their own role; ownership is never reassigned. Admins remove plain members only, never themselves; removing an admin needs the owner.
+    source: FAMILY_ACCOUNTS §2, §4.2
+
+  # Sharing & invites
+  - id: R-BOOK-20
+    group: Sharing & invites
+    title: Managing a book needs a connection
+    text: |
+      Create, share, invite, change roles, remove, leave, dissolve, delete — all online. Reading works offline from the phone's copy.
+    source: FAMILY_ACCOUNTS §1
+    tests:
+      - file: test/features/book/data/data_sources/book_remote_source_test.dart
+        name: offline fails fast without calling the server
+  - id: R-BOOK-21
+    group: Sharing & invites
+    title: An invite is addressed to one email and accepted on purpose
+    text: |
+      Pending, unexpired (7 days) and for the signed-in email. The web's `/invite` never auto-accepts — link scanners must not join anyone. Accepting twice counts as success.
+    source: FAMILY_ACCOUNTS §4.2, BOOKS_WEB §4.7
+  - id: R-BOOK-22
+    group: Sharing & invites
+    title: Invite links open the browser
+    text: |
+      `https://my.moneykoi.app/invite?token=…` is deliberately not claimed by the app; the web page signs the invitee in, then *Open in the MoneyKoi app* uses the `/open/family` app link. In the app an invite arrives by paste, an old build's link, or the legacy `com.psyren.moneykoi://invite` scheme.
+    source: BOOK §1
+    related: [Q-BOOK-1]
+  - id: R-BOOK-23
+    group: Sharing & invites
+    title: The invite email is best effort
+    text: |
+      Capped at 10 s; on failure the user copies the link. A failed email never blocks the invite.
+    source: BOOK §7
+  - id: R-BOOK-24
+    group: Sharing & invites
+    title: Members of a Cloud book get every feature inside it
+    text: |
+      The owner pays; back in their own book a member is on their own tier.
+    source: MONETIZATION §2
+    related: [R-MON-02]
+
+  # Switching & sync
+  - id: R-BOOK-30
+    group: Switching & sync
+    title: Switching books never wipes
+    text: |
+      Reads, realtime and caches re-target; the other book's unsent writes are held, not dropped. Swiping on the Book page previews a book; tapping a card switches.
+    source: FAMILY_ACCOUNTS §5.2, BOOK §3
+    tests:
+      - file: test/features/book/domain/service/book_session_test.dart
+        name: re-targets the whole offline-first stack at the new book, in order
+  - id: R-BOOK-31
+    group: Switching & sync
+    title: Only the active book's data is pulled
+    text: |
+      Other books on the phone may be stale until opened. That is why exports and comparisons work on the active book only.
+    source: FAMILY_ACCOUNTS §4.3, §6
+  - id: R-BOOK-32
+    group: Switching & sync
+    title: Leaving or deleting removes only that book from the phone
+    source: FAMILY_ACCOUNTS §5.2
+    text: |
+      Other books, their outbox and their cursors stay.
+    tests:
+      - file: test/features/book/domain/service/book_session_test.dart
+        name: a book given up leaves the phone with its cursors, and only that book
+  - id: R-BOOK-33
+    group: Switching & sync
+    title: A removed member lands in their first remaining book
+    text: |
+      Only once the active book's own row is on the phone — a book just created or joined is not mistaken for a revoked one.
+    source: BOOK §5, FAMILY_ACCOUNTS §5.4
+    tests:
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: switches away from a book the user no longer belongs to
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: a book just created or joined is not taken for a revoked one before its pull lands
+  - id: R-BOOK-34
+    group: Switching & sync
+    title: A book that can no longer sync is read-only, never hidden
+    text: |
+      Someone else's book whose owner's plan ended, or a book deleted on the server: readable, *Export* works, writes are refused even if a screen missed it. The + becomes a grey cloud-slash button that explains why.
+    source: OFFLINE_TIER §10 (D-B1, E3)
+    tests:
+      - file: test/core/offline_first/sync_gate_test.dart
+        name: a book deleted on the server is read-only and never Cloud, whoever owned it
+      - file: test/core/offline_first/writer_per_book_test.dart
+        name: refuses a new row, an edit and a delete, and writes nothing
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: a read-only book takes every write away
+    related: [D-B1]
+  - id: R-BOOK-35
+    group: Switching & sync
+    title: Members are told once
+    text: |
+      Notifications and inbox rows: *{book} no longer syncs*, *{book} syncs again* (only after a stop), *{book} was deleted*.
+    source: OFFLINE_TIER §10
+    tests:
+      - file: test/features/cloud_tier/cloud_status_notices_test.dart
+        name: a book that stopped syncing is told once, under its own notification id
+      - file: test/features/cloud_tier/cloud_status_notices_test.dart
+        name: syncing again is told only for a book this phone was told had stopped
+
+  # Data & attribution
+  - id: R-BOOK-40
+    group: Data & attribution
+    title: Only owners and admins export, import or back up the whole book
+    text: |
+      Erase is the owner's alone. Every member may export bookings (filtered CSV) and download their own data.
+    source: DATA_PORTABILITY, BOOK §6
+    tests:
+      - file: test/features/book/domain/book_member_test.dart
+        name: only an owner or admin may export the whole book
+      - file: test/features/book/ui/book_card_menu_test.dart
+        name: an admin of the active book can export and import but not erase
+    related: [R-DATA-02, R-DATA-50]
+  - id: R-BOOK-41
+    group: Data & attribution
+    title: Attribution shows the creator, never who edited
+    text: |
+      In a shared book another member's avatar fills the booking row's mark slot (a recurring or receipt glyph wins), the booking form footer names the creator, shopping items say *added by*. Your own bookings show nothing.
+    source: FAMILY_ACCOUNTS §5.5, §6
+    tests:
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: creator badges only show other people in a shared book with company
+
+  # Web
+  - id: R-BOOK-50
+    group: Web
+    title: The web opens only Cloud books
+    text: |
+      Every book is listed; one without Cloud through its owner is locked with one line (*Get Cloud in the app to use this book here*). A free member of a Cloud book uses the web for that book.
+    source: BOOKS_WEB §4.11
+    related: [R-MON-02]
+  - id: R-BOOK-51
+    group: Web
+    title: The web manages the active book only
+    text: |
+      No book avatars, no rename, no preview pager, no realtime (changes appear on the next refetch).
+    source: BOOKS_WEB §1, §6

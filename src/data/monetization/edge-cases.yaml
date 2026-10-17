@@ -1,0 +1,212 @@
+# Source: MONETIZATION_AI_CONTEXT.md §3a, §5, §7, §9 (cross-cutting traps), §9b (traps), §11, §12;
+# OFFLINE_TIER_AI_CONTEXT.md §13 (hardening H1–H6).
+items:
+  # Paywall & store
+  - id: E-MON-01
+    group: Paywall & store
+    title: Restore finds Pro while the Pro card is picked
+    when: The user taps *Restore purchases* with Pro (or Cloud lifetime) selected, and the store holds Pro.
+    then: The pick moves to **Cloud yearly**, the Pro owner's opening pick, so *Continue* stays usable. The page never buys a plan that is not on screen.
+    risk: medium
+    tests:
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a restore that finds Pro while Pro was picked moves the pick to Cloud yearly
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a restore that finds Pro while Pro was picked picks Cloud yearly, and Continue stays usable
+  - id: E-MON-02
+    group: Paywall & store
+    title: Pro lands while the paywall is open
+    when: An entitlement arrives (store push, another device) while the paywall is on screen.
+    then: The page shows it and moves the pick the same way as a restore.
+    risk: low
+    tests:
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: Pro that lands while the paywall is open moves the pick the same way
+  - id: E-MON-03
+    group: Paywall & store
+    title: The store does not answer
+    when: Products cannot be loaded (offline, store down).
+    then: An error with a retry, never an empty list; the tier the user owns is still shown.
+    risk: medium
+    tests:
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a store that will not answer reports an error instead of an empty list
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a store that will not answer still shows the tier the user owns
+  - id: E-MON-04
+    group: Paywall & store
+    title: The store drops out mid-purchase
+    when: The connection to the store fails during a purchase.
+    then: Reported as store unavailable; the buy button is usable again.
+    risk: medium
+    tests:
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a store that drops out mid-purchase reports it unavailable and frees the buy button
+  - id: E-MON-05
+    group: Paywall & store
+    title: Pending purchase
+    when: The store accepts the purchase but still has to confirm it (e.g. a parent approves, a slow payment method).
+    then: The paywall stays open and says the store still has to confirm it. Nothing is granted yet; not an error.
+    risk: medium
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a pending purchase stays on the paywall and says the store still has to confirm it
+      - file: test/features/monetization/domain/purchase_result_test.dart
+        name: a pending purchase grants nothing yet and is not an error
+  - id: E-MON-06
+    group: Paywall & store
+    title: Cancelled purchase
+    when: The user cancels the store sheet.
+    then: Stays on the paywall without a message.
+    risk: low
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a cancelled purchase stays on the paywall without a message
+  - id: E-MON-07
+    group: Paywall & store
+    title: Buying a product the account already owns
+    when: The store answers *already owned*.
+    then: Treated as a restore, not a failure.
+    risk: low
+    tests:
+      - file: test/features/monetization/data/revenue_cat_purchase_gateway_test.dart
+        name: a product the account already owns is restored, not failed
+  - id: E-MON-08
+    group: Paywall & store
+    title: A restore that finds nothing
+    when: The store holds nothing for this store account.
+    then: '*No purchase found*. Pro already on the phone is never taken away by it.'
+    risk: high
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a restore that finds nothing never takes Pro away
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a restore that finds nothing says so
+  - id: E-MON-09
+    group: Paywall & store
+    title: Launch window boundaries
+    when: The last day of the launch price, and the day after.
+    then: The last day counts to its final minute; the day after closes the window, so no launch line outlives the price. With no end date set (today) there is no window.
+    risk: medium
+    tests:
+      - file: test/features/monetization/domain/launch_window_test.dart
+        name: the last day is still inside the window, to its final minute
+      - file: test/features/monetization/domain/launch_window_test.dart
+        name: the shipped build has no window until Gerald sets the store date
+
+  # Entitlement cache
+  - id: E-MON-10
+    group: Entitlement cache
+    title: Billing issue — grace window
+    when: A Cloud payment fails and the store grants a grace period.
+    then: Still entitled while the grace window is open; lapsed once it has closed.
+    risk: high
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a Cloud grace window that is still open stays entitled
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a Cloud grace window that has closed reads as lapsed
+  - id: E-MON-11
+    group: Entitlement cache
+    title: Stale check timestamp
+    when: The app has not reached the store for a long time.
+    then: A stale timestamp alone never takes an entitlement away (Pro must work offline).
+    risk: high
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a stale check timestamp alone never takes an entitlement away
+  - id: E-MON-12
+    group: Entitlement cache
+    title: Unreadable cache
+    when: The cached entitlement JSON is corrupt or from an unknown version.
+    then: Degrades to Free instead of crashing; an unknown enum value reads as the default.
+    risk: low
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: unreadable cached JSON degrades to free rather than throwing
+  - id: E-MON-13
+    group: Entitlement cache
+    title: Cache from before the Plus → Pro rename
+    when: A phone cached Pro under its old name `plus`.
+    then: Pro is kept and the cache is rewritten once as `pro`.
+    risk: low
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: keeps Pro bought under its old name, and is rewritten once as pro
+
+  # Downgrade & lapse
+  - id: E-MON-20
+    group: Downgrade & lapse
+    title: Data made with a higher tier after a downgrade
+    when: Pro or Cloud ends while the user has investments, forecast items, a custom Home layout or Pro cards on Home.
+    then: All stay visible. Only creating or editing locks.
+    risk: high
+    tests:
+      - file: test/features/investment/ui/pages/investment_detail_page_test.dart
+        name: after the plan ends the position stays readable, but cannot be changed
+  - id: E-MON-21
+    group: Downgrade & lapse
+    title: Forecast made with Pro, now on Free
+    when: The overdue review asks about a planned item.
+    then: '*Confirm*, *it didn''t happen* and *book it now* still work — they close what the user already planned. Only *move* opens the paywall (D7).'
+    status: by-design
+    risk: low
+  - id: E-MON-22
+    group: Downgrade & lapse
+    title: Shopping list page with no lists after the plan ends
+    when: The plan ended and the user never made a list.
+    then: The locked panel shows instead of an empty state that invites a first list.
+    risk: low
+  # Accounts & claim
+  - id: E-MON-35
+    group: Accounts & claim
+    title: Delete account with an active store subscription
+    when: A Cloud subscriber deletes the MoneyKoi account.
+    then: The store keeps billing until cancelled in the store; the delete screen says so, with *Manage subscription*.
+    risk: high
+  - id: E-MON-37
+    group: Accounts & claim
+    title: Testing free accounts before Jan 17
+    when: You need a free account to test with.
+    then: Every new account is an early adopter with Cloud until Jan 17 — use the plan simulator's *Simulate an ended subscription* or `admin_set_cloud_entitlement`.
+    status: by-design
+    risk: low
+
+  # Prices & privacy
+  - id: E-MON-40
+    group: Prices & privacy
+    title: Book without an account and price history
+    when: A Pro user without an account opens an investment.
+    then: Today's quote, no chart history; a past buy date prefills nothing (D6).
+    status: by-design
+    risk: low
+  - id: E-MON-41
+    group: Prices & privacy
+    title: Two currency id sets on one phone
+    when: A member holds their own local book (bundled ids) next to a shared Cloud book (server ids).
+    then: Quotes and FX meet by ISO code, so both books still price (B2).
+    risk: medium
+  - id: E-MON-42
+    group: Prices & privacy
+    title: Live prices switched off
+    when: The user turns off *Live prices*.
+    then: The anonymous request stops; the last prices are kept.
+    risk: low
+
+  # Gates
+  - id: E-MON-50
+    group: Gates
+    title: A gate that reads the plan only at build
+    when: A surface reads `Feature.x.isActive` in `build` without `FeatureGateBuilder`, and the plan, sign-in or active book changes later.
+    then: It goes stale (B9 — the book switcher stayed hidden after a late first sync). Every gated surface uses `FeatureGateBuilder`.
+    status: fixed
+    risk: medium
+  - id: E-MON-51
+    group: Gates
+    title: Developer mode in a store build
+    when: Someone taps the version 7 times in a release build.
+    then: Developer mode opens, but *Plan* and test purchases cannot raise a plan; enforcing and the lapse only take features away.
+    risk: high
+    tests:
+      - file: test/features/monetization/service/plan_simulator_test.dart
+        name: a store build never raises a plan or lets the test store grant, but may still enforce

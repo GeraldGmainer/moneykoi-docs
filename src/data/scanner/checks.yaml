@@ -1,0 +1,15 @@
+# Derived from the context docs; accuracy itself is measured with the scanner-corpus-round skill.
+groups:
+  - id: scan
+    title: Scanner
+    items:
+      - id: C-SCN-001
+        text: A BILLA / SPAR receipt with a QR — total, date and shop lock from the QR; items in two photos merge without duplicates; uncategorised lines block Save until categorized
+      - id: C-SCN-002
+        text: A restaurant bill → one Dining booking; *Without photo* works
+      - id: C-SCN-003
+        text: Gallery import of a long receipt in 3 photos; an unreadable photo fails alone
+      - id: C-SCN-004
+        text: '*Upload photos* off → bookings and the receipt save, no photos; a book without Cloud keeps photos queued and shows them'
+      - id: C-SCN-005
+        text: iOS clean build → text and barcode recognition work (see Platform C-PLAT-001)

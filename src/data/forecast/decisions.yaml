@@ -1,0 +1,9 @@
+items:
+  - id: D-FC-1
+    question: Setup coach, nudges, accuracy scorecard, per-account forecast
+    status: open
+    answer: Not built — parked in `plan_later/FORECAST_PLAN.md` (FORECAST §12). The accuracy data is already recorded daily.
+  - id: D-FC-2
+    question: Match a booked payment automatically?
+    status: decided
+    answer: No — suggest only; a false automatic match would drop a payment the user still counts on.

@@ -1,0 +1,124 @@
+# Source: BOOK_AI_CONTEXT.md, FAMILY_ACCOUNTS_AI_CONTEXT.md §5–§6, BOOKS_WEB_AI_CONTEXT.md §8,
+# OFFLINE_FIRST_AI_CONTEXT.md §7, §9.
+items:
+  # Membership
+  - id: E-BOOK-01
+    group: Membership
+    title: First sign-in as a member
+    when: A member's phone opens the shared book before its membership row arrived.
+    then: No structure edits until the role is known — the book used to read as private, offering a recurring rule the server then refused.
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: an active book whose row has not synced offers no structure writes
+  - id: E-BOOK-02
+    group: Membership
+    title: A book just created or joined
+    when: The new book is active but its row has not been pulled yet.
+    then: It is not taken for a revoked book; no switch away.
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/book/bloc/book_members_cubit_test.dart
+        name: a book just created or joined is not taken for a revoked one before its pull lands
+  - id: E-BOOK-03
+    group: Membership
+    title: A removed member never comes back
+    when: The owner removes someone; the next screen re-reads the phone's copy before the server's change arrives.
+    then: The removed member stays gone — member actions never write the local copy, and a book already loaded is not re-seeded from it.
+    risk: medium
+    tests:
+      - file: test/features/book/bloc/book_management_bloc_test.dart
+        name: a removed member disappears at once, before the refresh lands
+  - id: E-BOOK-04
+    group: Membership
+    title: Book switcher hidden after a late first sync
+    when: The first sync turns the book Cloud only after the drawer was built.
+    then: The switcher appears without a restart (B9).
+    status: fixed
+    risk: low
+
+  # Invites
+  - id: E-BOOK-10
+    group: Invites
+    title: The invite email hangs
+    when: The email function never answers (SMTP).
+    then: After 10 s the sheet stops spinning and shows the link to copy; the invite exists already.
+    risk: medium
+  - id: E-BOOK-11
+    group: Invites
+    title: Wrong account opens the invite
+    when: The invitee is signed in on the web with another email.
+    then: The page warns "wrong account" before the join would fail, and offers to sign in with another account.
+    risk: low
+  - id: E-BOOK-12
+    group: Invites
+    title: Expired, revoked or already used
+    when: The link is opened after 7 days, after a revoke, or a second time.
+    then: Expired and revoked say so before any sign-in; accepted + already a member counts as success.
+    risk: low
+    tests:
+      - file: test/features/cloud_tier/join_book_page_test.dart
+        name: an invite that can no longer be joined says so and offers no sign-in
+  - id: E-BOOK-13
+    group: Invites
+    title: A pending invite survives *Stop sharing*
+    when: The owner dissolves the book while an invite is pending.
+    then: Accepting it later adds a member to a book that is private again. Server issue, from reading the SQL.
+    status: known-issue
+    risk: medium
+  - id: E-BOOK-14
+    group: Invites
+    title: An admin can escalate through an invite
+    when: An admin invites their own address as `owner` and accepts, or invites the owner as `member`.
+    then: The server takes any role and overwrites it on accept — an admin can become owner or demote the owner. Open (review-2026-09 #4).
+    status: known-issue
+    risk: high
+    related: [Q-BOOK-2, T-BOOK-02]
+
+  # Switching & sync
+  - id: E-BOOK-20
+    group: Switching & sync
+    title: Switched books while offline
+    when: The user switches books with no connection.
+    then: The book's data arrives with the reconnect pull (EC-BOOK-5); the server keeps reading the right book because the request header carries it.
+    status: fixed
+    risk: medium
+  - id: E-BOOK-21
+    group: Switching & sync
+    title: Members heard nothing live
+    when: A member's realtime channel for a shared book.
+    then: Silent until `20261016120000_realtime_member_books.sql`; members now get live events for every book they belong to.
+    status: fixed
+    risk: high
+  - id: E-BOOK-22
+    group: Switching & sync
+    title: Currency changed on another phone
+    when: A co-member changes the book currency while this phone has the app open.
+    then: The next sync rebuilds every cached amount, not just the book row.
+    risk: medium
+  - id: E-BOOK-23
+    group: Switching & sync
+    title: Exporting a previewed book
+    when: The Book page shows another book than the active one.
+    then: Export is shown but disabled with "switch to this book" — its rows on the phone may be stale. Never switches behind the user's back.
+    status: by-design
+    risk: low
+
+  # Web
+  - id: E-BOOK-30
+    group: Web
+    title: Writes right after a switch (web)
+    when: The user writes on the web right after switching books.
+    then: The write can land in the previous book (review #7). Create, leave, delete and accept also switch without clearing the old book's data (review #2).
+    status: known-issue
+    risk: high
+    related: [T-BOOK-03]
+  - id: E-BOOK-31
+    group: Web
+    title: Remove offered where the server refuses (web)
+    when: An admin on the web looks at other admins or themselves.
+    then: The web offers *Remove*; the server refuses. The app offers it for plain members only.
+    status: known-issue
+    risk: low

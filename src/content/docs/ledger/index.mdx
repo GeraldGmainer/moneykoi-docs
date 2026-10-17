@@ -1,0 +1,29 @@
+---
+title: Overview
+description: 'Categories, fixed vs. variable, money signs, and accounts.'
+sidebar:
+  order: 1
+---
+
+import AreaFeatures from '../../../components/AreaFeatures.astro';
+
+Categories, fixed vs. variable, money signs, and accounts.
+
+| | |
+|---|---|
+| **Categories** | two levels, only leaves are booked; income and expense |
+| **Fixed / variable** | a property of the category, set from the starter set |
+| **Signs** | by what a figure is — movement, labelled total, net, level |
+| **Accounts** | assets and liabilities; balances maintained by triggers, never summed on screen |
+| **Who** | owner and admin change the structure; members read it |
+
+## Features
+
+<AreaFeatures area="ledger" />
+
+## Where it lives
+
+| | |
+|---|---|
+| App | `lib/features/category/`, `account/`, `category_activity/` — `CATEGORY_AI_CONTEXT.md` |
+| Web | `CATEGORIES_WEB`, `ACCOUNTS_WEB` context docs |

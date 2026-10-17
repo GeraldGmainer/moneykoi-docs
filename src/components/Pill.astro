@@ -1,0 +1,8 @@
+---
+interface Props {
+  tone?: 'ok' | 'warn' | 'bad' | 'muted' | 'accent' | 'info';
+}
+const { tone = 'muted' } = Astro.props;
+---
+
+<span class={`mk-pill mk-tone-${tone}`}><slot /></span>

@@ -1,0 +1,48 @@
+---
+import TierBadge from './TierBadge.astro';
+import Pill from './Pill.astro';
+import Md from './Md.astro';
+import { resolvedCatalog, tierRank } from '../lib/catalog';
+
+interface Props {
+  area: string;
+}
+const rows = (await resolvedCatalog())
+  .filter((r) => r.docs === Astro.props.area)
+  .sort((a, b) => tierRank[a.tier] - tierRank[b.tier]);
+const webTone = { parity: 'ok', partial: 'warn', missing: 'bad', 'app-only': 'muted', 'web-only': 'info' } as const;
+const webLabel = { parity: 'parity', partial: 'partial', missing: 'missing', 'app-only': 'app only', 'web-only': 'web only' } as const;
+---
+
+{
+  rows.length > 0 && (
+    <table class="mk-matrix">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Plan</th>
+          <th>Web</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td>
+              <strong>{r.name}</strong>
+              {r.note && <span class="mk-note"><Md text={r.note} inline /></span>}
+              {r.since && <span class="mk-note">{r.since}</span>}
+            </td>
+            <td>
+              <TierBadge tier={r.tier} />
+              {r.needs !== 'nothing' && <Pill tone="warn">needs {r.needs}</Pill>}
+            </td>
+            <td>
+              {r.web && <Pill tone={webTone[r.web]}>{webLabel[r.web]}</Pill>}
+              {r.webNote && <span class="mk-note">{r.webNote}</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}

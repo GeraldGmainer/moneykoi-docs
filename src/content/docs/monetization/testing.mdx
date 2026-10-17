@@ -1,0 +1,15 @@
+---
+title: What to test
+description: The device checklist for a release that touches tiers. Ticks are saved in this browser.
+tableOfContents: false
+sidebar:
+  order: 8
+---
+
+import Checklist from '../../../components/Checklist.astro';
+
+What the unit tests cannot cover: real devices, the stores, the server. Ticks stay in this browser only; *Reset all* before the next release.
+
+Automated coverage per rule, journey and edge case is on their pages (✓ = the test was found in `moneykoi-app`).
+
+<Checklist area="monetization" />

@@ -1,0 +1,117 @@
+# Source: app ANALYTICS_AI_CONTEXT.md; web ANALYTICS_WEB_AI_CONTEXT.md, BALANCE_WEB_AI_CONTEXT.md.
+items:
+  - id: R-ANL-01
+    group: What it is
+    title: A deep-dive, not a second Home
+    text: |
+      Pro. A period-filtered look at where money goes, how it changes and what patterns exist — 43 cards in four tabs: **Overview**, **Spending**, **Habits**, **Accounts**. Home answers "how am I doing right now"; Analytics compares periods.
+    source: ANALYTICS §1, §8
+    related: [R-MON-11]
+  - id: R-ANL-02
+    group: Numbers
+    title: Period flows are categorised money only
+    text: |
+      Income, expense, savings rate, comparisons, insights and the export leave out transfers (they net to zero) and balance corrections. Levels keep them: balances, net worth, the timeline — and the waterfall shows corrections as its own *Untracked* bar so it closes on the real balance.
+    source: ANALYTICS §2
+    tests:
+      - file: test/features/analytics/transaction_count_series_test.dart
+        name: 'counts what the KPI card counts: no transfers, no balance corrections'
+      - file: test/features/analytics/waterfall_builder_test.dart
+        name: the closing anchor equals opening + income − expenses
+    related: [R-BB-10]
+  - id: R-ANL-03
+    group: Numbers
+    title: Liabilities are presented, never re-signed
+    text: |
+      Credit cards and loans group under liabilities in net worth; their balances are what they are. Net worth = the sum of all balances.
+    source: ANALYTICS §2
+  - id: R-ANL-04
+    group: Numbers
+    title: Net worth includes investments (app)
+    text: |
+      Priced positions at market value, unpriced at cost; a buy transferred into a depot account is not counted twice. The chart stays account history, so with investments the headline and the chart's last point differ. The web leaves investments out.
+    source: ANALYTICS §2, ANALYTICS_WEB §7
+    tests:
+      - file: test/features/analytics/net_worth_portfolio_test.dart
+        name: a buy transferred into a depot is overlap
+  - id: R-ANL-05
+    group: Numbers
+    title: Comparisons degrade to silence
+    text: |
+      The previous period is the equal window right before; *same period last year* is by calendar field (leap days safe). *All time* has no "before", so comparisons and comparative insights say nothing. A change from zero shows no percent, never "+∞ %".
+    source: ANALYTICS §4
+    tests:
+      - file: test/features/analytics/analytics_period_math_test.dart
+        name: has no baseline, for either mode
+      - file: test/features/analytics/analytics_period_math_test.dart
+        name: is null rather than infinite when the base was zero or absent
+  - id: R-ANL-06
+    group: Numbers
+    title: Months follow the budget month
+    text: |
+      *This month*, *last month*, *last 3/6/12 months* and every monthly series run anchor-day to anchor-day; the tooltip names the anchored range.
+    source: ANALYTICS §4
+    tests:
+      - file: test/features/analytics/analytics_period_math_test.dart
+        name: survives a leap day without sliding into the wrong month
+    related: [R-BB-05]
+  - id: R-ANL-07
+    group: Numbers
+    title: Fixed vs. variable is the category's classification
+    text: |
+      Four cards (share of spending, share of income spoken for, the fixed costs ranked, per month) read the same rule as the Budget Book filter; a footnote nudges you to classify the categories that only landed by the fallback.
+    source: ANALYTICS §2, §8
+    tests:
+      - file: test/features/analytics/ui/widgets/fixed_cost_ratio_card_test.dart
+        name: splits income into fixed, variable and left over, under the guideline
+    related: [R-LED-10]
+  - id: R-ANL-08
+    group: Numbers
+    title: Merchants and receipts are scanned spend only
+    text: |
+      "ADEG", "Adeg" and "ADEG Markt" are one shop; every merchant card says how much spend had no merchant — a ranking that hides 70 % would be a lie.
+    source: ANALYTICS §4
+    tests:
+      - file: test/features/analytics/merchant_attribution_test.dart
+        name: counts bookings without a usable merchant as unattributed
+  - id: R-ANL-09
+    group: Numbers
+    title: Tag totals overlap
+    text: |
+      A booking with two tags counts for both, so tag rows never sum to spending and are never a pie. Untagged spend is not a row. The card is the period; the tag page is all time.
+    source: ANALYTICS §8
+  - id: R-ANL-10
+    group: Insights
+    title: '"What stands out" — at most four sentences'
+    text: |
+      18 rules over data the cards already loaded, so an insight can never contradict the chart beside it. Quotas per group keep one observation from filling every slot; a thin book still gets lines. The biggest-expense insight looks at **variable** spending (rent tops every month).
+    source: ANALYTICS §5
+    tests:
+      - file: test/features/analytics/insight_builder_test.dart
+        name: still has something to say with no baseline at all
+      - file: test/features/analytics/insight_builder_test.dart
+        name: leaves a single tagged booking to the biggest-expense rule
+  - id: R-ANL-11
+    group: Cross-feature
+    title: Budgets and forecast are views, not copies
+    text: |
+      Budget-vs-actual calls the budgets' own progress — if Goals says 93 % and this card 91 %, that is a regression. The forecast card shows the Forecast feature's result.
+    source: ANALYTICS §8
+  - id: R-ANL-20
+    group: Export
+    title: Period report — CSV, PDF, share image
+    text: |
+      From the app bar (web: an Export menu beside the period). CSV headers are a frozen contract; the PDF is localized; the app also shares the summary card as an image.
+    source: ANALYTICS §12
+  - id: R-ANL-30
+    group: Web
+    title: '`/balance` (web only)'
+    text: |
+      The whole book's balance per day — 7, 30, 90, 180 days, 1 year or custom; green above zero, red below; start, end and net change. The preset is remembered per browser.
+    source: BALANCE_WEB §1
+  - id: R-ANL-31
+    group: Web
+    title: Web differences
+    text: |
+      One global baseline picker; insights round to whole units; the biggest-expense insight includes fixed costs; the forecast card sits under Accounts; static treemap; no share image.
+    source: ANALYTICS_WEB §7

@@ -1,0 +1,32 @@
+items:
+  - id: J-HOM-01
+    group: Home
+    title: Arranges Home
+    from: Home → *Customize* (or Settings, or the bottom of Home) — Pro
+    steps:
+      - drag to reorder, remove (Undo), add from the gallery
+      - a card's gear → its settings (range, filter, count…)
+      - or *Start over* with a preset
+    result: the Home you want, on every device you sign in to
+    tests:
+      - file: test/features/home/bloc/home_edit_cubit_test.dart
+        name: a preset replaces the whole body in one write
+    checks: [C-HOM-001]
+  - id: J-HOM-02
+    group: Bar
+    title: Configures the bottom bar
+    from: Settings → Navigation (Pro)
+    steps:
+      - 1, 2 or 4 tabs, reorder, the tab it opens on
+      - Shopping slot → pin a list
+    result: this book's bar; other books keep theirs
+    checks: [C-HOM-002]
+  - id: J-HOM-03
+    group: Widgets
+    title: Places a category widget
+    from: Android home screen → widgets → MoneyKoi
+    steps:
+      - pick a category in the config screen
+      - tap the widget
+    result: the booking form with that category
+    checks: [C-HOM-003]

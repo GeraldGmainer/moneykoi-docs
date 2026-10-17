@@ -1,0 +1,186 @@
+# Source: BACKUP_RESTORE_AI_CONTEXT.md, BOOKING_IMPORT / BOOKING_EXPORT / DATA_PORTABILITY context
+# docs, MONETIZATION §9b.
+items:
+  # Backups
+  - id: J-DATA-01
+    group: Backups
+    title: Makes a backup
+    from: Pro, owner or admin
+    steps:
+      - Settings → *Backup & restore* → *Create a backup*
+      - options — receipt photos, passphrase
+      - '*Save to device* (system dialog) or *Share*'
+    result: '`MoneyKoi-<Book>-YYYY-MM-DD.moneykoi`; the *last backup* line updates'
+    tests:
+      - file: test/features/backup/use_cases/create_backup_use_case_test.dart
+        name: builds a readable archive of the whole book and stamps the backup time
+    checks: [C-DATA-001, C-DATA-002]
+  - id: J-DATA-02
+    group: Backups
+    title: Restores into a new book
+    from: account with Cloud
+    steps:
+      - '*Restore from a backup* → pick the file'
+      - preview + comparison with the book
+      - red confirmation
+    result: a new book "… (restored)", switched into; photos follow through the upload queue
+    tests:
+      - file: test/features/backup/restore_backup_use_case_test.dart
+        name: a clean restore stages every row, applies once and opens the new book
+    checks: [C-DATA-003]
+  - id: J-DATA-03
+    group: Backups
+    title: Undoes changes in this book
+    from: a file made from the active, syncing book
+    steps:
+      - comparison shows deleted / edited / new
+      - '*Undo changes in this book*'
+      - '*Bring back* deleted records, or *Undo everything* since the backup'
+      - red confirmation
+    result: the book as it was; other members get it through sync
+    tests:
+      - file: test/features/backup/use_cases/rewind_backup_use_case_test.dart
+        name: stages every row with its original id, applies in the chosen mode and pulls
+    checks: [C-DATA-004]
+  - id: J-DATA-04
+    group: Backups
+    title: New phone, no account
+    from: fresh install
+    steps:
+      - '*I already use MoneyKoi* → *Restore from a backup file*'
+      - the file lands on this phone, with its settings
+      - the store is asked for Pro, silently
+    result: the book back, nothing uploaded; recurring bookings do not double
+    tests:
+      - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
+        name: without an account, a phone with no book restores into a new one
+      - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
+        name: a picked file opens the restore sheet with its preview
+    checks: [C-DATA-005, C-DATA-021]
+    related: [J-MON-20]
+  - id: J-DATA-05
+    group: Backups
+    title: Replaces the local book from a file
+    from: local book
+    steps:
+      - '*Backup & restore* → *Restore from a backup*'
+      - red *Replace this book* confirmation
+    result: the book holds exactly the file
+    tests:
+      - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
+        name: replacing the book swaps its rows for the file
+    checks: [C-DATA-014]
+  - id: J-DATA-06
+    group: Backups
+    title: Restores on an account without Cloud
+    from: free account
+    steps:
+      - several own books → pick which one to replace
+      - no own book → a new own book, kept on the phone
+    result: nothing uploaded; a later Cloud uploads it
+    tests:
+      - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
+        name: with several books of its own, every one is offered with its currency, the open one chosen
+      - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
+        name: the rows land in a new own book, made only once they are all staged, and the book opens
+  - id: J-DATA-07
+    group: Backups
+    title: Opens a backup file from elsewhere
+    from: Files, Gmail, WhatsApp, Drive, AirDrop
+    steps:
+      - tap the `.moneykoi`
+      - (app lock → lock screen first; passphrase → unlock sheet first)
+    result: the restore preview — or *Welcome back* on an empty phone
+    tests:
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: an account or a book on the phone opens the restore preview in Backup & restore
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a phone without an account or a book opens Welcome back, where the local restore lives
+    checks: [C-DATA-006, C-DATA-022, C-DATA-023]
+  - id: J-DATA-08
+    group: Backups
+    title: Is reminded to back up
+    from: Pro, owner or admin
+    steps:
+      - Settings → Notifications → *Backup reminder* — weekly or monthly + a time
+      - '*Time for a backup* (names the book and the last backup)'
+      - tap
+    result: Backup & restore for that book
+    tests:
+      - file: test/features/backup/backup_reminder_slot_test.dart
+        name: a fresh backup moves the reminder one whole interval out, at the reminder time
+    checks: [C-DATA-007, C-DATA-024]
+  - id: J-DATA-09
+    group: Backups
+    title: Uninstalled by accident
+    from: Local Free or Pro
+    steps:
+      - 'Android: a reinstall may bring everything back from Google''s backup'
+      - 'iPhone: only a backup file helps'
+    result: restored, or gone without a file
+    status: by-design
+    note: |
+      The backup reminder (Pro only, like the backup itself) is what makes a file exist.
+
+  # Your data
+  - id: J-DATA-10
+    group: Your data
+    title: Downloads all their data
+    from: any member
+    steps:
+      - '*Backup & restore* → *Your data* → *Download all your data*'
+      - save or share the zip
+    result: profile, settings and a restorable backup per book
+    tests:
+      - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
+        name: lists every book with what of it goes in
+    checks: [C-DATA-008, C-DATA-025]
+  - id: J-DATA-11
+    group: Your data
+    title: Exports a whole book (ZIP)
+    from: owner or admin
+    steps:
+      - Book card menu → *Export data*
+    result: 14 CSVs, the JSON and a README
+    tests:
+      - file: test/features/data_export/data_export_page_test.dart
+        name: 'idle: lists every kind of record and offers the export button'
+    checks: [C-DATA-011]
+  - id: J-DATA-12
+    group: Your data
+    title: Erases a book's data
+    from: owner
+    steps:
+      - Book card menu → *Erase data*
+      - the page says it is irreversible; confirm
+    result: an empty book with its name, members and settings; other phones follow over minutes
+    checks: [C-DATA-012]
+
+  # CSV
+  - id: J-DATA-20
+    group: CSV in & out
+    title: Imports a bank CSV
+    from: owner or admin
+    steps:
+      - File → Columns → Accounts → Categories → Review
+      - '*Import*'
+      - result — *Undo* while still on it
+    result: bookings in the book, skipped rows listed
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
+        name: import writes, then the result step offers undo
+    checks: [C-DATA-009]
+  - id: J-DATA-21
+    group: CSV in & out
+    title: Exports bookings
+    from: Pro, any member
+    steps:
+      - '*Backup & restore* → *Export bookings*'
+      - filters (opens on This month)
+      - '*Preview n bookings*'
+      - '*Save as CSV* or *Share*'
+    result: a plain CSV that the import reads back
+    tests:
+      - file: test/features/booking_export/ui/booking_export_page_test.dart
+        name: a cancelled save dialog stays on the review, silently
+    checks: [C-DATA-010]

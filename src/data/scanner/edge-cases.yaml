@@ -1,0 +1,45 @@
+items:
+  - id: E-SCN-01
+    group: Reading
+    title: A misread total
+    when: OCR misreads `SUMME`.
+    then: The total is editable in review; the magic wand snaps it to the items' sum.
+    risk: medium
+  - id: E-SCN-02
+    group: Reading
+    title: A web-link QR
+    when: The receipt's QR is a link, not RKSV data.
+    then: Resolved online once, then step 1 locks.
+    risk: low
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+        name: a web-link QR is resolved online once and then locks step 1
+  - id: E-SCN-03
+    group: Reading
+    title: ADEG multiplier rows
+    when: '"2 x 1,29" printed above the item.'
+    then: The multiplier row is skipped; the item keeps its total.
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/parsers/adeg_parser_strategy_test.dart
+        name: a multiplier row above is skipped; the item below keeps its total
+  - id: E-SCN-04
+    group: Saving
+    title: A category that no longer exists
+    when: A keyword resolves to a bucket the book has no category for.
+    then: Save refuses (*category not found*) — the Categories page hint exists to prevent it.
+    risk: medium
+  - id: E-SCN-05
+    group: Saving
+    title: Long receipts and retakes
+    when: The same part of a receipt is photographed twice.
+    then: Seam overlaps are stripped, a full retake adds nothing, and the sum never overshoots the locked total.
+    risk: medium
+  - id: E-SCN-06
+    group: Web
+    title: The web's manual split
+    when: A receipt is split on `/add-receipt`.
+    then: No receipt record, merchant not saved, lines not written atomically; a failed item re-books the others on retry. Open.
+    status: known-issue
+    risk: medium
+    related: [E-BKG-23]

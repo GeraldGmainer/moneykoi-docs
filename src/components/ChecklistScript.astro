@@ -1,0 +1,64 @@
+<script>
+  const KEY = 'mk-docs:check:';
+  const read = (id: string) => {
+    try {
+      return localStorage.getItem(KEY + id) === '1';
+    } catch {
+      return false;
+    }
+  };
+  const write = (id: string, done: boolean) => {
+    try {
+      if (done) localStorage.setItem(KEY + id, '1');
+      else localStorage.removeItem(KEY + id);
+    } catch {}
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-checklist]').forEach((root) => {
+    const boxes = () => [...root.querySelectorAll<HTMLInputElement>('input[data-check]')];
+    const hideDone = root.querySelector<HTMLInputElement>('[data-hide-done]');
+
+    const refresh = () => {
+      root.querySelectorAll<HTMLElement>('[data-check-group]').forEach((group) => {
+        const own = [...group.querySelectorAll<HTMLInputElement>('input[data-check]')];
+        const done = own.filter((b) => b.checked).length;
+        const progress = group.querySelector('[data-progress]');
+        if (progress) progress.textContent = `${done} / ${own.length}`;
+        group.classList.toggle('mk-group-done', done === own.length);
+      });
+      const all = boxes();
+      const totalDone = root.querySelector('[data-total-done]');
+      if (totalDone) totalDone.textContent = String(all.filter((b) => b.checked).length);
+      all.forEach((b) => {
+        const li = b.closest('li');
+        if (li) li.hidden = Boolean(hideDone?.checked && b.checked);
+      });
+    };
+
+    boxes().forEach((b) => {
+      b.checked = read(b.dataset.check!);
+      b.addEventListener('change', () => {
+        write(b.dataset.check!, b.checked);
+        boxes()
+          .filter((other) => other.dataset.check === b.dataset.check)
+          .forEach((other) => (other.checked = b.checked));
+        refresh();
+      });
+    });
+    hideDone?.addEventListener('change', refresh);
+
+    const reset = (scope: ParentNode) => {
+      scope.querySelectorAll<HTMLInputElement>('input[data-check]').forEach((b) => {
+        b.checked = false;
+        write(b.dataset.check!, false);
+      });
+      refresh();
+    };
+    root.querySelector('[data-reset-all]')?.addEventListener('click', () => reset(root));
+    root.querySelectorAll<HTMLElement>('[data-reset-group]').forEach((button) =>
+      button.addEventListener('click', () => reset(button.closest('[data-check-group]')!)),
+    );
+
+    refresh();
+  });
+</script>

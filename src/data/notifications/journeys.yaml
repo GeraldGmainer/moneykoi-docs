@@ -1,0 +1,18 @@
+items:
+  - id: J-NTF-01
+    group: Setup
+    title: Turns on bill reminders
+    from: Settings → Notifications → *Bill reminders*
+    steps:
+      - switch on → the OS asks
+      - pick the time
+    result: a reminder before each rule's next date
+    checks: [C-NTF-001]
+  - id: J-NTF-02
+    group: Inbox
+    title: Reads what came in
+    from: Home → bell
+    steps:
+      - the list of shown reminders, newest first
+    result: the badge clears
+    checks: [C-NTF-003]

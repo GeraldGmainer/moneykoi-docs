@@ -1,0 +1,17 @@
+items:
+  - id: J-SET-01
+    group: Setup
+    title: Sets the formats
+    from: Settings → Display formats
+    steps:
+      - money format, date format, start of week, start of month
+    result: every screen follows at once; on every device you sign in to
+    checks: [C-SET-001]
+  - id: J-SET-02
+    group: Support
+    title: Sends feedback
+    from: Settings → Support → Feedback
+    steps:
+      - kind, message, contact consent
+    result: a row in the admin inbox
+    checks: [C-SET-002]

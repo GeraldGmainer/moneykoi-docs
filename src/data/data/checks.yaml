@@ -1,0 +1,94 @@
+# Source: Trello release notes 1.17.0 (items 9, 21–27). The "Import, export, erase" group is
+# derived from the context docs, not from an earlier checklist.
+groups:
+  - id: backup
+    title: Create a backup
+    setup: |
+      Pro (plan simulator) and owner or admin of the active book.
+    items:
+      - id: C-DATA-001
+        text: Create with *Include receipt photos* → progress bar → *Save to device* → the file is in Files; the *last backup* line updates
+      - id: C-DATA-015
+        text: Photos on, offline → "N photos could not be included"; the backup is still made
+      - id: C-DATA-016
+        text: A book with 100+ photos → no out-of-memory crash
+      - id: C-DATA-002
+        text: Passphrase — under 8 characters → error; the two fields differ → error; "Käse-Brot1" → the file opens in 7-Zip or Keka
+      - id: C-DATA-020
+        text: iOS — the passphrase field offers a strong password and saves it to the Keychain
+
+  - id: restore
+    title: Restore
+    items:
+      - id: C-DATA-003
+        text: Cloud account → restore → preview and comparison → red confirm → a new book opens; "N photos restored"
+      - id: C-DATA-017
+        text: Damage one jpg inside the file → only that photo fails, the rest come back
+      - id: C-DATA-019
+        text: A protected file from the picker, from open-with and from *Welcome back* → the unlock sheet; a wrong passphrase → error, the sheet stays; a protected file with photos restores the photos too
+      - id: C-DATA-004
+        text: Undo in place — delete 3 bookings, restore the file → *Bring back*; edit some, restore → *Undo everything*; the partner's phone follows
+      - id: C-DATA-005
+        text: Fresh install → *I already use MoneyKoi* → *Restore from a backup file* → all data back, recurring bookings do not double
+      - id: C-DATA-014
+        text: Local book → *Backup & restore* → *Restore* → red *Replace* confirm → the book holds the file
+      - id: C-DATA-013
+        text: Airplane mode or a kill during a phone restore → the book is untouched
+      - id: C-DATA-026
+        text: An old v1 file restores; a 100 MB+ file restores on both platforms; a non-backup file → *damaged*
+
+  - id: settings
+    title: Settings travel with the file
+    items:
+      - id: C-DATA-021
+        text: Phone A — change settings, back up. Phone B, fresh install → restore → the preview says the settings come along; check the values; B's notification switches stay unchanged
+
+  - id: open-with
+    title: Open-with `.moneykoi`
+    items:
+      - id: C-DATA-006
+        text: Files, Gmail, WhatsApp, Drive, AirDrop → the app opens straight at the restore preview; on Android one recents card only
+      - id: C-DATA-022
+        text: Each source × cold start / warm / app already open × account / local book / fresh install
+      - id: C-DATA-023
+        text: A protected file → the unlock sheet first; app lock on → the lock screen first; relaunch from recents → the preview does not reopen
+
+  - id: reminder
+    title: Backup reminder
+    items:
+      - id: C-DATA-007
+        text: The reminder fires; a tap opens *Backup & restore* for the reminded book
+      - id: C-DATA-024
+        text: Pick *Weekly* → permission prompt; Debug → Notify shows the pending reminder and its fire time; after a backup the time moves; switching books re-arms for the new active book only
+
+  - id: all-data
+    title: Download all your data
+    items:
+      - id: C-DATA-008
+        text: Two books, one shared where you are a member → the zip holds profile.json, a README and a backup per book (only your entries for the shared one)
+      - id: C-DATA-025
+        text: Save and share both work; offline with 2+ syncing books → "needs internet"; unzip → open each inner file with MoneyKoi → it restores
+
+  - id: csv
+    title: Import, export, erase
+    setup: |
+      Derived from the context docs, not from an earlier checklist.
+    items:
+      - id: C-DATA-009
+        text: Import a real bank CSV (Sparkasse, N26, …) → columns detected, accounts, categories, review, import, undo
+      - id: C-DATA-010
+        text: Export bookings filtered by a category and a tag → *Save as CSV* → open in Excel / Numbers → import it into another book
+      - id: C-DATA-011
+        text: Book card menu → *Export data* (ZIP); as a member the item is hidden
+      - id: C-DATA-012
+        text: '*Erase data* as owner → the trash is empty too; the partner''s phone empties'
+
+  - id: web
+    title: On the web
+    items:
+      - id: C-DATA-050
+        text: Back up on the web (with a passphrase) → restore the file in the app; back up in the app → restore on the web; both show the comparison
+      - id: C-DATA-051
+        text: Web book export → 14 CSVs + README; as a member the card offers no export
+      - id: C-DATA-052
+        text: Import the same bank CSV on the web and in the app → the same columns, accounts, categories and duplicates

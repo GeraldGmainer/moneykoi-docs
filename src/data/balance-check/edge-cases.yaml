@@ -1,0 +1,38 @@
+items:
+  - id: E-BC-01
+    group: Counting
+    title: Counting an older month after a newer one
+    when: A check for September is entered after one for October.
+    then: The older correction shifts October's balance, so October's check no longer matches. Open in app and web.
+    status: known-issue
+    risk: medium
+  - id: E-BC-02
+    group: Counting
+    title: A sync lands mid-count
+    when: A partner's booking syncs while you type.
+    then: '"App says" and every difference refresh; your typed counts stay.'
+    risk: medium
+  - id: E-BC-03
+    group: Counting
+    title: A stored target from another book
+    when: All-into-one remembers an account of a different book.
+    then: Falls back to per account.
+    risk: low
+    tests:
+      - file: test/features/reconciliation/reconciliation_cubit_test.dart
+        name: a stored single-mode target from another book falls back to per account
+  - id: E-BC-04
+    group: Web
+    title: Web corrections and past balances
+    when: The book has corrections.
+    then: The web's `/balance` walks to wrong past balances (its join drops corrections). Open.
+    status: known-issue
+    risk: medium
+  - id: E-BC-05
+    group: Web
+    title: Web migration not applied
+    when: '`20261009100000_corrections_out_of_period_flows.sql` is not applied.'
+    then: Web counts corrections as transactions and whole-book budgets count them as spending — and the info sheet's "never against your budgets" is not yet true.
+    status: known-issue
+    risk: medium
+    related: [T-ANL-01]

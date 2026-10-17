@@ -1,0 +1,27 @@
+---
+import { idIndex } from '../lib/ids';
+
+interface Props {
+  ids: string[];
+  label: string;
+}
+const { ids, label } = Astro.props;
+const index = await idIndex();
+const plain = (s: string) => s.replace(/[*`]/g, '');
+---
+
+{
+  ids.length > 0 && (
+    <p class="mk-checks">
+      {label}:{' '}
+      {ids.map((id) => {
+        const ref = index.get(id);
+        return ref ? (
+          <a href={ref.href} title={plain(ref.title)}>{id}</a>
+        ) : (
+          <span class="mk-broken" title="unknown id">{id}</span>
+        );
+      })}
+    </p>
+  )
+}

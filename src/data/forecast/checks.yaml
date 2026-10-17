@@ -1,0 +1,28 @@
+# Trello release notes 1.17.0 (item 16); the "Everyday" group is derived from the context docs.
+groups:
+  - id: everyday
+    title: Everyday
+    items:
+      - id: C-FC-010
+        text: Safe to spend names payday (or says it fell back to month end); a negative value shows as a red shortfall; horizon 24 with little history draws 12
+      - id: C-FC-011
+        text: Plan a payment → the line dips, the Budget Book and balances are unchanged
+      - id: C-FC-012
+        text: Skip a rule's occurrence → gone from the line, the rule unchanged and still books the next one; Undo
+      - id: C-FC-013
+        text: Book a planned payment early → the review suggests it; confirm → counted once; an overdue one → *It didn't happen*
+      - id: C-FC-014
+        text: Alerts on → a planned outflow that takes the line below zero next week raises one notification with the date, not the amount
+  - id: release-1-17
+    title: Forecast fixes and additions
+    items:
+      - id: C-FC-001
+        text: 'Nested budgets: whole-book 2000 + Food 600 + Dining 200 → a future month''s Budgets row shows 2000 (was 1800)'
+      - id: C-FC-002
+        text: The assumptions sheet averages complete months only and shows a signed net with an "X in · Y out" subtitle — test mid-month
+      - id: C-FC-003
+        text: 'One per-day figure in 4 places — assumptions row, the sheet''s *Every day in <month>*, the month page, collapsed rows in the day feed: compare them, toggle *spread evenly*, test on the last day of a month'
+      - id: C-FC-004
+        text: Month page breakdown card — income, each outflow line, net change, per day; the net equals the month tile
+      - id: C-FC-005
+        text: Copy — *How the line is built*, *Covered by your whole-book budget*, *Everyday estimate* (was *Everyday spending*)

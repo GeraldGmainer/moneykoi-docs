@@ -1,0 +1,114 @@
+# Source: APP_LOCK, AMOUNT_PRIVACY, USAGE_STATS, WEB_SIGN_IN context docs.
+items:
+  - id: J-PRIV-01
+    group: App lock
+    title: Turns on the app lock
+    from: Settings → App lock
+    steps:
+      - PIN — type 4 digits, confirm
+      - biometrics switch (when the phone has them)
+      - timeout
+    result: locked on the next return past the timeout
+    tests:
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: enableBiometrics requires a successful prompt
+    checks: [C-PRIV-001, C-PRIV-002]
+  - id: J-PRIV-02
+    group: App lock
+    title: Unlocks
+    from: app back from the background
+    steps:
+      - lock screen; biometrics prompt by themselves
+      - or the PIN
+    result: the app, exactly where it was
+    tests:
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: locks on resume after being backgrounded with an immediate timeout
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: a correct PIN unlocks and resets the attempt counter
+    checks: [C-PRIV-001, C-PRIV-003]
+  - id: J-PRIV-03
+    group: App lock
+    title: Forgets the PIN
+    from: lock screen
+    steps:
+      - 5 wrong PINs → 30 s cooldown with a countdown
+      - biometrics still work
+    result: no reset path besides biometrics — not in v1
+    tests:
+      - file: test/features/app_lock/ui/screens/lock_screen_test.dart
+        name: during a cooldown the pad is off and the remaining seconds count down
+    checks: [C-PRIV-004]
+  - id: J-PRIV-10
+    group: Hide amounts
+    title: Hides amounts in public
+    from: Settings → App preferences → *Hide amounts*
+    steps:
+      - '*Tap to reveal*'
+      - tap any blurred figure → all visible for a few seconds
+      - leave the app → hidden on return
+    result: readable app, unreadable money
+    tests:
+      - file: test/features/amount_privacy/ui/widgets/amount_privacy_scope_test.dart
+        name: in tap-to-reveal, tapping a blurred amount peeks and stops the tap there
+    checks: [C-PRIV-010, C-PRIV-011]
+  - id: J-PRIV-20
+    group: Usage statistics
+    title: Is asked about usage statistics
+    from: ≥ 3 bookings, 2 days in
+    steps:
+      - one sheet on the main page — what, what not, where, how to undo
+      - Yes or No, side by side
+    result: an answer that holds; changeable in Privacy & Legal → *Usage statistics*
+    tests:
+      - file: test/features/usage_stats/domain/usage_prompt_policy_test.dart
+        name: asks once enough bookings and days have passed
+      - file: test/features/usage_stats/use_cases/usage_consent_use_case_test.dart
+        name: a grant mints an install id and sends the consent with a session start
+    checks: [C-PRIV-020]
+  - id: J-PRIV-21
+    group: Usage statistics
+    title: Withdraws
+    from: Privacy & Legal → *Usage statistics* on
+    steps:
+      - switch off
+    result: every event of this install deleted on the server
+    tests:
+      - file: test/features/usage_stats/use_cases/usage_consent_use_case_test.dart
+        name: a withdrawal erases the install on the server
+    checks: [C-PRIV-021]
+  - id: J-PRIV-30
+    group: Web sign-in
+    title: Uses MoneyKoi on a computer
+    from: Cloud account, drawer → *Use on computer*
+    steps:
+      - open `my.moneykoi.app` on the computer (copy / share the address)
+      - '*Scan code* → the browser is named'
+      - '*Sign in*'
+    result: the computer has its own session; the phone stays signed in
+    tests:
+      - file: test/features/web_sign_in/ui/web_sign_in_scan_page_test.dart
+        name: an approval closes the scanner and confirms on the page below
+      - file: test/features/web_sign_in/ui/use_on_computer_sheet_test.dart
+        name: shows the address to open on the computer and the account to sign in with
+    checks: [C-PRIV-030]
+    related: [R-MON-16]
+  - id: J-PRIV-31
+    group: Web sign-in
+    title: Declines on the phone
+    from: a code on screen in the scanner
+    steps:
+      - '*Cancel* or back'
+    result: the browser says "declined on your phone"
+    tests:
+      - file: test/features/web_sign_in/ui/web_sign_in_scan_page_test.dart
+        name: a decline closes the scanner without a message
+    checks: [C-PRIV-031]
+  - id: J-PRIV-40
+    group: What leaves the phone
+    title: Turns live prices off
+    from: Settings → Privacy & Legal
+    steps:
+      - '*Live prices* off'
+    result: no request leaves a book without an account; the last prices stay
+    checks: [C-ACC-004]

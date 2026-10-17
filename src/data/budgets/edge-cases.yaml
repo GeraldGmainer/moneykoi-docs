@@ -1,0 +1,108 @@
+# Release-note risks (Trello item 15) with their status per BUDGET_GOALS §5b; the rest from
+# BUDGET_GOALS and the web docs.
+items:
+  - id: E-BUD-20
+    group: Budgets
+    title: A budget whose category has not synced
+    when: A budget made on the web points at a category this phone does not have yet.
+    then: It reads *Category not available yet*, never *Whole book*, and an edit keeps the real category.
+    risk: high
+  - id: E-BUD-21
+    group: Budgets
+    title: Legacy duplicates
+    when: Two whole-book caps on one period from before the guard.
+    then: Counted once in the overview; the lower cap wins.
+    risk: low
+    tests:
+      - file: test/features/budget_goals/budgets_overview_test.dart
+        name: two legacy whole-book caps on the same period are counted once
+  - id: E-BUD-22
+    group: Budgets
+    title: Web budgets and the server's clock
+    when: A Vienna user opens the web on the 1st before 01:00 / 02:00.
+    then: Still last month's window — the web uses the server's day. Open (review #15a).
+    status: known-issue
+    risk: medium
+  - id: E-BUD-30
+    group: Goals
+    title: An offline deposit reaches the target
+    when: A deposit made offline crosses the target.
+    then: Reached at once on the phone; the server's status catches up on sync.
+    risk: low
+  - id: E-BUD-31
+    group: Goals
+    title: Two phones backfill auto-contributions at once
+    when: Both open the goal in the same instant after a rule booking arrived.
+    then: Can duplicate a deposit — the real fix (a unique index server-side) is not built.
+    status: known-issue
+    risk: medium
+  - id: E-BUD-32
+    group: Goals
+    title: Linking an old rule
+    when: A goal is linked to a rule that has run for five years.
+    then: Only bookings from the link date on are contributed.
+    risk: medium
+  - id: E-BUD-33
+    group: Goals
+    title: The celebrations switch
+    when: The *celebrations* setting is off.
+    then: The web honours it; the app never reads it (and no app screen writes it). Open.
+    status: known-issue
+    risk: low
+  - id: E-BUD-40
+    group: Loans
+    title: Debt-free date a month late
+    when: '290.29 outstanding at 10.01 a month.'
+    then: Float division rounds up to 30 months on both clients (review #23). Open.
+    status: known-issue
+    risk: low
+  - id: E-BUD-41
+    group: Web
+    title: German thousands on the web forms
+    when: '`1.500` typed into a web goal, loan or budget sheet.'
+    then: Saved as 1.5 (review #15b). Open in every web sheet.
+    status: known-issue
+    risk: high
+  - id: E-BUD-01
+    group: Budget calculator
+    title: Replace and the ids Home and the widget hold
+    when: '*Replace existing budgets* rewrites caps.'
+    then: Fixed since the release note — a rewritten cap keeps its id, so the Home Budgets card and the Android budget widget keep their budget.
+    status: fixed
+    risk: high
+  - id: E-BUD-02
+    group: Budget calculator
+    title: A failure part-way through Save
+    when: A write fails while replacing.
+    then: Fixed since the release note — writes go first, deletes last, so a failure leaves a cap too many, never the old caps gone and the plan unwritten.
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/budget_goals/use_cases/budget_plan_use_cases_test.dart
+        name: writes updates and monthly caps in one batch first, deletes last
+  - id: E-BUD-03
+    group: Budget calculator
+    title: An archived cap re-activated silently
+    when: A planned row lands on a category with an archived monthly cap.
+    then: Changed since the release note — archived caps are never touched; the row creates a new cap. A **paused** cap is turned back on, and the row says so.
+    status: fixed
+    risk: medium
+  - id: E-BUD-04
+    group: Budget calculator
+    title: Loose name guesses
+    when: A row has no exact match ("Car" next to "Childcare", "Haus" next to "Haushalt", "Fun" next to "Funds").
+    then: The guess runs only for rows still empty after every exact match, and only "the name contains the term". Re-test the three examples (C-BUD-010).
+    risk: medium
+  - id: E-BUD-05
+    group: Budget calculator
+    title: No undo
+    when: The user saves a plan, then regrets it.
+    then: There is no undo — goals have no trash. Replace asks first with the exact count.
+    status: known-issue
+    risk: medium
+  - id: E-BUD-06
+    group: Budget calculator
+    title: Plan below existing nested caps
+    when: A parent is planned below the sum of its sub-category caps, or a whole-book cap is below the plan's total.
+    then: Shown on the page before Save.
+    risk: low

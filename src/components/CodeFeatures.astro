@@ -1,0 +1,53 @@
+---
+import TierBadge from './TierBadge.astro';
+import Pill from './Pill.astro';
+import { codeFeatures, FEATURE_DART } from '../lib/features';
+import { githubUrl } from '../lib/repos';
+
+const features = codeFeatures();
+---
+
+{
+  features ? (
+    <>
+      <table class="mk-code-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Feature</th>
+            <th>Plan</th>
+            <th>Needs</th>
+            <th>What the paywall says</th>
+          </tr>
+        </thead>
+        <tbody>
+          {features.map((f) => (
+            <tr class={f.isLive ? '' : 'mk-planned'}>
+              <td>{f.order}</td>
+              <td>
+                <strong>{f.name}</strong>
+                <code class="mk-code-id">{f.id}</code>
+                {!f.isLive && <Pill tone="info">not built</Pill>}
+              </td>
+              <td><TierBadge tier={f.tier} /></td>
+              <td>{f.needs === 'nothing' ? '–' : <Pill tone="warn">{f.needs}</Pill>}</td>
+              <td>
+                {f.body ?? <span class="mk-muted">no paywall details</span>}
+                {f.points.length > 0 && (
+                  <ul class="mk-points">
+                    {f.points.map((p) => <li>{p}</li>)}
+                  </ul>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="mk-legend">
+        Read live from <a href={githubUrl('app', FEATURE_DART)}>{FEATURE_DART}</a> and <code>assets/translations/en.json</code>. Order = the paywall's order.
+      </p>
+    </>
+  ) : (
+    <p>moneykoi-app is not checked out next to this repo.</p>
+  )
+}
