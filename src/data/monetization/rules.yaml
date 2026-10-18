@@ -311,12 +311,21 @@ items:
     title: Launch price wording is legal
     text: |
       - *Launch price €49.99 until {date}, then €69.99*
-      - **never** strikethrough, "was €69.99", "€20 off"
-      - caption gone the day after its last day
-    source: §7, §8 item 1
+      - **never** strikethrough, "was €69.99", "€20 off" — €69.99 was never charged before
+      - date + regular price: RevenueCat offering metadata `launch_until`, `regular_prices`
+      - shown only while the store charges **less** than the regular price → a phone clock set back changes nothing
+      - caption gone the day after its last day, or once the store is back at €69.99
+      - currency missing in `regular_prices` → plain price, no caption
+    source: §7, §8 item 1, §11
     tests:
       - file: test/features/monetization/domain/launch_window_test.dart
         name: the day after the last day closes it, so no pill or launch line outlives the price
+      - file: test/features/monetization/data/revenue_cat_mapper_test.dart
+        name: once the store charges the regular price again there is none, whatever the phone clock says
+      - file: test/features/monetization/ui/widgets/paywall_price_option_test.dart
+        name: inside the window but without a regular price above the store price, the lifetime row is a plain price
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: while the store charges the launch price, the lifetime row names its last day and the price after it
   - id: R-MON-43
     group: Paywall
     title: App Review needs on the paywall
@@ -387,6 +396,43 @@ items:
         name: the buy button names the plan and what it charges, per period for a subscription, in the plan tint
       - file: test/features/monetization/ui/paywall_page_test.dart
         name: a yearly trial is what the buy button offers
+  - id: R-MON-48
+    group: Paywall
+    title: Old builds can be stopped from selling
+    text: |
+      - RevenueCat offering metadata `min_app_version`, a string: `"1.20.0"`
+      - build below it → *New version needed* + *Update app* · no plans, no prices, no buy
+      - *Restore purchases* still works · everything bought stays unlocked
+      - Cloud owner → page unchanged, *Manage subscription*
+      - no floor, or one that does not read as a version → sells as before
+      - only builds that carry the check obey it → must ship before the first paywall release
+      - raise it only when an old build would sell something wrong, never per release
+    source: §7, §11
+    tests:
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: a build below the floor asks for an update and buys nothing
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: the paywall asks for an update instead of showing plans, and still restores
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a Cloud subscriber, who buys nothing, keeps Manage subscription
+      - file: test/features/monetization/domain/store_catalog_test.dart
+        name: a build below the floor needs an update, one at or above it does not
+  - id: R-MON-49
+    group: Paywall
+    title: A plan the store leaves out has no row
+    text: |
+      - product removed from the offering → its row is gone
+      - Pro removed → Pro card keeps its features, no price, can't be picked
+      - picked plan missing → pick moves on: opening pick, Pro, Cloud yearly
+      - store not answering → rows stay, price *—*, plus the error line
+    source: §7
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a plan the store leaves out has no row
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: without Pro in the store, the Pro card shows its features but no price and cannot be picked
+      - file: test/features/monetization/bloc/paywall_cubit_test.dart
+        name: "a plan the store leaves out is never the pick: without Pro the page opens on Cloud yearly"
 
   # Privacy & server
   - id: R-MON-50

@@ -94,13 +94,45 @@ items:
     then: |
       - last day counts to its last minute
       - day after → window closed
-      - no end date set → no window
+      - no `launch_until` in the offering → no window
     risk: medium
     tests:
       - file: test/features/monetization/domain/launch_window_test.dart
         name: the last day is still inside the window, to its final minute
       - file: test/features/monetization/domain/launch_window_test.dart
-        name: the shipped build has no window until Gerald sets the store date
+        name: no launch date in the store offering means no window
+  - id: E-MON-14
+    group: Paywall & store
+    title: Version floor typed as a number
+    when: "`min_app_version` entered as a number (`1.10`) instead of a string"
+    then: |
+      - ignored → no floor, every build sells
+      - a number would turn `1.10` into `1.1`
+    risk: medium
+    tests:
+      - file: test/features/monetization/data/revenue_cat_purchase_gateway_test.dart
+        name: no floor, or a floor typed as a number, is no floor
+  - id: E-MON-15
+    group: Paywall & store
+    title: iPhone below the version floor
+    when: an iOS build below `min_app_version`
+    then: |
+      - *New version needed* shows, **no** *Update app* button
+      - button needs the App Store id (T-MON-02)
+    status: known-issue
+    risk: low
+  - id: E-MON-16
+    group: Paywall & store
+    title: Phone clock set back after the launch
+    when: launch window over · phone date set back into it
+    then: |
+      - store charges €69.99 — its server, its clock
+      - no launch line: it needs a store price below the regular one
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/monetization/data/revenue_cat_mapper_test.dart
+        name: once the store charges the regular price again there is none, whatever the phone clock says
 
   # Entitlement cache
   - id: E-MON-10

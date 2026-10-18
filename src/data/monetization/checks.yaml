@@ -84,10 +84,16 @@ groups:
         text: Cancelled subscription → lapses after grace · renewal → sync back
       - id: C-MON-055
         text: Pending purchase → *waiting for the store* · cancelled → stays on paywall, no message
+      - id: C-MON-062
+        text: "RevenueCat offering metadata `{\"min_app_version\": \"99.0.0\"}` → reopen the app → paywall: *New version needed*, no plans · *Update app* opens Play · *Restore purchases* works · metadata removed → plans back"
+      - id: C-MON-063
+        text: "Remove `cloud.monthly` from the offering → its row gone, the others pickable · put it back"
 
   - id: launch
     title: Launch price
-    setup: Nothing visible until `launchWindowEnd` is set (T-MON-21, D4)
+    setup: "Store price change running + offering metadata `launch_until` and `regular_prices` (T-MON-04) · reopen the app after a metadata change"
     items:
       - id: C-MON-060
-        text: Date set → *Launch price until {date}* + *then {regular}* until the last day · day after → gone
+        text: Metadata set → *Launch price until {date}* + *then €69.99* on lifetime and the upgrade · day after → gone
+      - id: C-MON-064
+        text: "After the window: phone date set back → plain €69.99, no launch line · a currency missing in `regular_prices` → plain price"
