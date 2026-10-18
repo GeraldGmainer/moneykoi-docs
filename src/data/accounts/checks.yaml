@@ -1,121 +1,117 @@
 # Source: OFFLINE_TIER_AI_CONTEXT.md §14 (device checklist), MONETIZATION §12 (not device-tested),
-# Trello release notes for 1.17.0 (items 1, 2, 4, 10, 11, 12). "Sync basics" is derived from
-# OFFLINE_FIRST_AI_CONTEXT.md, not from an existing checklist.
+# Trello release notes for 1.17.0 (items 1, 2, 4, 10, 11, 12).
 groups:
   - id: setup
     title: Before you start
     setup: |
-      Dev flavor; one device with an existing cloud account, one fresh. Developer mode (About → tap the version 7 times) opens the claim, *Sign in* and *Join*. Plan simulator: see [Monetization → What to test](/monetization/testing/).
+      - dev flavor · one device with a cloud account, one fresh
+      - developer mode (About → version 7×) opens claim, *Sign in*, *Join*
+      - plan simulator: [Monetization → What to test](/monetization/testing/)
     items:
       - id: C-ACC-000
-        text: The offline-tier, early-adopter and cloud-tenants migrations are on the dev project (task T-MON-01)
+        text: Offline-tier, early-adopter, cloud-tenants migrations on dev (T-MON-01)
 
   - id: fresh
     title: Fresh install, no account
     items:
       - id: C-ACC-001
-        text: Welcome shows *Get started*; onboarding runs offline with the full currency list; kill and relaunch → straight into main
+        text: Welcome *Get started* → onboarding offline, all currencies → kill + relaunch → main
       - id: C-ACC-002
-        text: Add, edit, delete bookings; trash and restore; nothing shows a pending badge
+        text: Add · edit · delete bookings · trash + restore · no pending badge
       - id: C-ACC-003
-        text: A recurring rule two months back creates its past occurrences at once; relaunch / resume creates nothing twice; a future one appears on its day; deleting its category pauses the rule
+        text: Rule 2 months back → past bookings at once · relaunch → no doubles · future one on its day · delete category → rule paused
       - id: C-ACC-004
-        text: Investments open (locked without Pro, live with it); prices arrive once online with *Live prices* on; switching the setting off stops the request
+        text: "Investments: locked without Pro · prices arrive online · *Live prices* off → request stops"
       - id: C-ACC-005
-        text: Budget-over and reminder notifications fire; the widgets configure; Profile → *Delete all data* → Welcome
+        text: Budget-over + reminders fire · widgets configure · *Delete all data* → Welcome
       - id: C-ACC-006
-        text: A new book's **first** booking switches Home off the onboarding card at once (not only after the second)
+        text: New book's **first** booking → onboarding card gone at once
 
   - id: claim
     title: Back up & sync (the claim)
     items:
       - id: C-ACC-010
-        text: Local book → *Back up & sync* → sign in → progress with counts → main; the web shows everything
+        text: "*Back up & sync* → sign in → progress → main · web shows all"
       - id: C-ACC-011
-        text: A brand-new account adopts the personal book (no second book, no default categories); an account that already has a book gets the device's as a new one; at the 3-book cap — its own message, nothing uploaded
+        text: New account adopts the book · account with a book → added as new · 3-book cap → message, nothing uploaded
       - id: C-ACC-012
-        text: Airplane mode mid-upload → *Try again* resumes without duplicates; *Continue offline* → Settings → *Finish backup* completes; a kill mid-upload resumes on relaunch
+        text: Airplane mid-upload → *Try again*, no doubles · *Continue offline* → *Finish backup* · kill → resumes
       - id: C-ACC-013
-        text: Start with account A, interrupt, sign in as B → mismatch screen → sign out → the local book is still there
+        text: Start as A, interrupt, sign in as B → mismatch → sign out → local book still there
       - id: C-ACC-014
-        text: An account **without** Cloud → *This account doesn't have a Cloud plan yet* → *See plans* → a Cloud purchase → the claim continues; *Keep it on this phone* → main, the book is the account's and local; an account that already owned a book lands on the review with that one *Locked*
+        text: Free account → *See plans* → buy → claim continues · *Keep it on this phone* → local · old book *Locked*
       - id: C-ACC-015
-        text: Book kept on the phone without Cloud → grant Cloud → relaunch → the upload starts by itself
+        text: Kept book without Cloud → grant → relaunch → upload starts
       - id: C-ACC-016
-        text: '*Back up this book* page: koi on top, sign-in buttons at the bottom; airplane mode → Google → error snackbar, the page stays'
+        text: "*Back up this book*: koi top, buttons bottom · airplane + Google → error, page stays"
       - id: C-ACC-017
-        text: Drawer (developer mode, before Jan 17) — *Get Free Cloud* is a plain row above Settings
+        text: "Drawer before Jan 17: *Get Free Cloud* row above Settings"
 
   - id: per-book
     title: Cloud per book
     items:
       - id: C-ACC-024
-        text: A (Cloud) → plan simulator → *Simulate an ended subscription* → A's own books go local; a book shared by a paying owner keeps syncing
+        text: A → *Simulate an ended subscription* → own books local · shared paid book keeps syncing
       - id: C-ACC-025
-        text: '**Risk** — a device whose sync was paused under 1.16.1 → update → still paused (the old single timestamp now covers every book); renewing pushes everything changed since'
+        text: "**Risk**: paused under 1.16.1 → update → still paused · renew → pushes all changes"
 
   - id: lapse
     title: Grant, revoke, pause, renew
     items:
       - id: C-ACC-020
-        text: Grant by email (`admin_set_cloud_entitlement`) → *Try again* → upload runs. Revoke → relaunch → *Sync paused* in Settings, the review page opens once, edits and recurring bookings keep working on the device, the web gets nothing new. Re-grant → relaunch → the edits reach the server
+        text: Grant → upload · revoke → *Sync paused*, review once, phone works, web gets nothing · re-grant → edits arrive
       - id: C-ACC-021
-        text: '*Simulate an ended subscription* — sync and realtime stop, the device keeps working; the review lists owned books (one stays open) and shared books (*Export* / *Remove from this phone*); switching it off pushes the edits and deletes; a removed shared book re-downloads'
+        text: "*Simulate an ended subscription* → sync stops · review: own + shared books · off → edits + deletes pushed"
       - id: C-ACC-022
-        text: While paused — delete → *Empty trash* → renew → gone on the web too; a restored booking replaces the old one on the web; two owned books with a delete each both reach the server; a daily rule on a second phone makes no duplicate after the renewal; a member removed while paused sees *Books you lost access to* with a working *Export*
+        text: "Paused: delete + *Empty trash* → renew → gone on web · daily rule on 2nd phone → no duplicate · removed member → *Export* works"
 
   - id: accounts
     title: Accounts on the phone
     items:
       - id: C-ACC-030
-        text: Log out keeps every book; *Sign back in* continues with a delta sync; another account sees only its own books; reminders are cancelled on logout and re-armed on sign-in; the balance widget reads *Open MoneyKoi to sign in* while signed out
+        text: Logout keeps books · *Sign back in* → delta · other account → own books only · reminders off/on · widget *Open MoneyKoi to sign in*
       - id: C-ACC-031
-        text: '*Delete account* wipes the phone — only that account''s books when another account keeps books here — and names the shared books it takes with it'
+        text: "*Delete account* → wipes, or only its books next to others · names shared books"
       - id: C-ACC-032
-        text: Buy Cloud (test purchase) → Profile → *Delete account* → "keeps billing until cancelled in the store" + *Manage subscription* (the button shows only with real RevenueCat keys)
+        text: Test-buy Cloud → *Delete account* → "keeps billing" + *Manage subscription* (real keys only)
       - id: C-ACC-033
-        text: Local book → Profile → *Sign in* → only the account's books are visible; *Log out* → Welcome → *Continue without an account* → the original book and its data are back (1.16.1 brought it back by itself — behavior change)
+        text: Local book → *Sign in* → only account books · *Log out* → *Continue without an account* → book back
       - id: C-ACC-023
-        text: Free account, second phone → *I already use MoneyKoi* → sign in → Home shows only *Your book is on your other phone* with *Get Cloud*
+        text: "Free account, 2nd phone → sign in → Home: *Your book is on your other phone* + *Get Cloud*"
       - id: C-ACC-026
-        text: That card goes away after the first booking on this phone, or once the book is on Cloud
-
-  - id: sync-basics
-    title: Sync basics (two phones, one Cloud book)
-    setup: |
-      Derived from how the engine is documented, not from an earlier checklist.
-    items:
-      - id: C-ACC-050
-        text: A booking added on phone 1 (app open) appears on phone 2 (app open) within seconds
-      - id: C-ACC-051
-        text: Airplane mode on phone 1 — add, edit, delete; the pending dot shows; back online → the changes reach phone 2 and the dot clears
-      - id: C-ACC-052
-        text: Phone 2 in the background while phone 1 edits; bring phone 2 back → the changes appear
-      - id: C-ACC-053
-        text: Fresh install of a big book over a slow connection → the first sync finishes; kill the app halfway → it continues on relaunch
+        text: That card goes after the first booking, or with Cloud
 
   - id: untested
     title: Never run on a device yet
-    setup: |
-      MONETIZATION §12 — on top of everything above, which is also untested since 2026-10-13.
+    setup: MONETIZATION §12 · everything above is untested since 2026-10-13 too
     items:
       - id: C-ACC-040
-        text: A lost session (server-side revoke) lands on Welcome and deletes nothing
+        text: Lost session (server revoke) → Welcome · nothing deleted
       - id: C-ACC-041
-        text: '*Sign back in* is not offered right after deleting that account'
+        text: No *Sign back in* right after deleting that account
       - id: C-ACC-042
-        text: '*Delete account* next to another account''s books takes only its own'
+        text: "*Delete account* next to other books → only its own"
       - id: C-ACC-043
-        text: '*Delete this book* next to kept books deletes only the local book'
+        text: "*Delete this book* next to kept books → only the local book"
       - id: C-ACC-044
-        text: Profile's *Sign in* sets the local book aside, and the logout leaves it closed until *Continue without an account*
+        text: Profile *Sign in* → book aside · logout → closed until *Continue without an account*
 
   - id: web
     title: On the web
     items:
       - id: C-ACC-070
-        text: Magic link — the email's link and its 6-digit code both sign in; password; Google; a new address lands in onboarding
+        text: Magic link + 6-digit code both sign in · password · Google · new address → onboarding
       - id: C-ACC-071
-        text: Log out on the web → the phone stays signed in
+        text: Web logout → phone stays signed in
       - id: C-ACC-072
-        text: Set password on the web → sign in with it in the app; delete account on the web → the app lands on Welcome at its next start
+        text: Set password on web → works in app · delete account on web → app shows Welcome next start
+
+  - id: small
+    title: Small phone (Small_Phone AVD, 360×640 dp)
+    items:
+      - id: C-ACC-080
+        text: Welcome → no key points · *Get started*, *I already use MoneyKoi*, terms visible without scrolling · tall phone keeps key points
+      - id: C-ACC-081
+        text: Signed out, account remembered → small koi · *Sign back in*, *Use another account*, *New here?*, terms on screen
+      - id: C-ACC-082
+        text: Onboarding step 1 → language + currency above *Continue* · step 2 → both choices (en) · largest system font → scrolls, nothing clipped

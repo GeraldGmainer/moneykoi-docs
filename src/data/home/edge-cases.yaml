@@ -1,34 +1,44 @@
 items:
   - id: E-HOM-01
     group: Home
-    title: A layout from a newer build
-    when: An older app opens a layout with cards or settings it does not know.
-    then: Unknown cards are dropped from the view, unknown settings kept — a newer build's settings survive an older build editing the card.
+    title: Layout from a newer build
+    when: older app opens unknown cards/settings
+    then: unknown cards hidden · unknown settings kept
     risk: medium
   - id: E-HOM-02
     group: Home
-    title: An empty Home
-    when: Every card is removed.
-    then: Legal — an empty-Home card invites you back to the editor.
+    title: Empty Home
+    when: every card removed
+    then: allowed · card invites back to the editor
     status: by-design
     risk: low
   - id: E-HOM-03
     group: Bar
     title: Free after Pro
-    when: A user with a saved 4-tab bar goes back to Free.
-    then: The saved bar stays; locked destinations show their locked page with *See plans*.
+    when: saved 4-tab bar, back on Free
+    then: bar stays · locked pages + *See plans*
     risk: medium
     related: [R-MON-17]
   - id: E-HOM-04
     group: Widgets
-    title: The tap and a resume
-    when: The user taps a widget, backgrounds the app, and resumes without tapping.
-    then: The page must not open again.
+    title: Widget tap + resume
+    when: tap widget → background → resume
+    then: page must **not** open again
     risk: medium
+  - id: E-HOM-06
+    group: Home
+    title: First-entry card on a narrow phone
+    when: 360–412 dp phone · German *Erste Buchung*
+    then: button full width under the koi + bubble · label never clipped
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home/ui/widgets/onboarding_cards_test.dart
+        name: on a small phone the button runs the full card width under the koi and its bubble
   - id: E-HOM-05
     group: Web
-    title: A render error on the web
-    when: A page throws during render.
-    then: There is no error page — the screen goes blank with no recovery.
+    title: Web render error
+    when: a page throws while rendering
+    then: no error page · blank screen, no recovery
     status: known-issue
     risk: medium

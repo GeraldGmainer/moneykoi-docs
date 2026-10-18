@@ -4,23 +4,24 @@ groups:
     title: Home & bar
     items:
       - id: C-HOM-001
-        text: Remove a card → Undo; preset → Undo; add a second *Recent transactions* with another filter; a card with no data shows *hidden* in the editor; Free → editor locked, default Home has only free cards
+        text: Remove → Undo · preset → Undo · 2nd *Recent transactions* · no-data card *hidden* · Free → editor locked
       - id: C-HOM-002
-        text: Free default bar Home · + · Budget Book; buy Pro → 4 tabs at once; a 1-tab bar has no bar; a book switch keeps each book's bar
+        text: Free bar Home · + · Book · buy Pro → 4 tabs · 1-tab = no bar · book switch keeps bars
+      - id: C-HOM-009
+        text: New book on Small_Phone, German → first-entry card button full width, *ERSTE BUCHUNG* not clipped
   - id: widgets
     title: Android widgets
-    setup: |
-      From HOME_WIDGET §12 — what only a person can judge.
+    setup: HOME_WIDGET §12 · what only a person can judge
     items:
       - id: C-HOM-003
-        text: Each of the eight widgets places and configures; long-press → edit reopens its config (API 31+)
+        text: All 8 widgets place + configure · long-press edit reopens config (API 31+)
       - id: C-HOM-004
-        text: A pale and a dark category colour against a light and a dark wallpaper
+        text: Pale + dark category color on light + dark wallpaper
       - id: C-HOM-005
-        text: Appearance sliders at 0, 50, 100 with both plate themes; two widgets of one kind keep their own setting
+        text: Sliders 0/50/100 · both plate themes · two of a kind keep their own
       - id: C-HOM-006
-        text: Tap cold / warm / deep in another screen → the booking page each time; tap, background, resume without tapping → no re-open
+        text: Tap cold/warm/deep → booking page · tap, background, resume → no re-open
       - id: C-HOM-007
-        text: Edit the bound category's icon or colour → the widget updates; archive it → placeholder, tap reconfigures; reboot → still rendered
+        text: Change category icon/color → widget updates · archive → placeholder · reboot → still there
       - id: C-HOM-008
-        text: '`adb shell bmgr backupnow` + restore → widgets keep their categories; dev and prod side by side → two distinguishable picker entries'
+        text: "`adb shell bmgr backupnow` + restore → categories kept · dev + prod → two picker entries"
