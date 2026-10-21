@@ -117,7 +117,7 @@ items:
     title: Widgets follow privacy + sign-in
     text: |
       - hide amounts → masked
-      - signed out → *Open MoneyKoi to sign in*
+      - signed out → *Open Money Koi to sign in*
       - shopping widget read-only after the plan
     source: AMOUNT_PRIVACY §4, MONETIZATION §9a, HOME_WIDGET §13
     related: [R-PRIV-14]
@@ -141,3 +141,52 @@ items:
       - default = the app's without quick add · add it from *Customize* · it sits in a column
       - no cash-flow sheet · 3 cards need a server migration
     source: web 02_FEATURES (DASHBOARD §1, §4.11)
+  # New-user layer
+  - id: R-HOM-40
+    group: New users
+    title: Getting started card
+    text: |
+      - only after setup on *this* phone · gone after 14 days, when done, or on ×
+      - 5 items: first entry · scan · regular payment · monthly budget · widget (Android) · ticked from data, also from the web
+      - next open item expanded with its button · *All set* once, then gone · × has Undo
+      - never for a read-only member · an existing account on a new phone never sees it
+    source: GETTING_STARTED §1–§3
+    tests:
+      - file: test/features/getting_started/service/new_user_progress_test.dart
+        name: the layer switches off after the window, whatever was done
+      - file: test/features/getting_started/use_cases/get_checklist_use_case_test.dart
+        name: "ticks come from data: a booking, a scan, an active rule, an active budget, a placed widget"
+      - file: test/features/getting_started/ui/getting_started_card_test.dart
+        name: × dismisses with an undo
+    related: [R-HOM-01, R-SET-12]
+  - id: R-HOM-41
+    group: New users
+    title: Cards earn their place
+    text: |
+      - trend + timeline: only once bookings span 2 days
+      - *Upcoming*: only once a recurring rule exists
+      - zero bookings: *First entry* card (or the checklist) with *Add entry* + *Scan a receipt*
+    source: GETTING_STARTED §3, HOME_CARDS §4
+    tests:
+      - file: test/features/home/use_cases/get_dashboard_layout_use_case_test.dart
+        name: the trend and the timeline wait for a second booking day
+    related: [R-HOM-01]
+  - id: R-HOM-42
+    group: New users
+    title: Just-in-time hints
+    text: |
+      - one sentence + one action · shown once, never twice · each retired by using the feature
+      - quick add: after the 3rd form entry, a bubble above **+** · hold + = quick entry
+      - make recurring: a saved entry in a fixed-cost category (rent, insurance) → snackbar *Make recurring*
+      - scan: 5 form entries and no scan → one line under the amount of a new entry
+      - calendar: 3rd Budget Book open with ≥ 7 entries → chip above the tabs
+      - only in the first 14 days after setup on this phone · at most one hint per screen visit
+    source: GETTING_STARTED §4
+    tests:
+      - file: test/features/getting_started/use_cases/hint_triggers_use_case_test.dart
+        name: is due from the third form save on
+      - file: test/features/getting_started/use_cases/hint_triggers_use_case_test.dart
+        name: a rule already in that category retires it; one elsewhere does not
+      - file: test/main/ui/widgets/shell_create_button_test.dart
+        name: never on the first frame; drawn above the + after a booking lands, and written as shown
+    related: [R-HOM-40]

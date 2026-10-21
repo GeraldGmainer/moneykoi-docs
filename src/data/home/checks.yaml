@@ -9,6 +9,16 @@ groups:
         text: Free bar Home · + · Book · buy Pro → 4 tabs · 1-tab = no bar · book switch keeps bars
       - id: C-HOM-009
         text: New book on Small_Phone, German → first-entry card button full width, *ERSTE BUCHUNG* not clipped
+      - id: C-HOM-010
+        text: Fresh setup → *Getting started* on Home · first booking → tick + confetti · rule, budget, widget tick · all done → *All set* once → gone on next open · × → Undo restores
+      - id: C-HOM-011
+        text: Existing account on a wiped phone → no checklist, no hints · Debug → *Re-arm new-user guidance* brings them back
+      - id: C-HOM-012
+        text: One booking → no trend, no timeline, no *Upcoming* · second day booked → trend + timeline appear · first rule → *Upcoming* appears
+      - id: C-HOM-013
+        text: Fresh setup → 3 typed entries → bubble above **+** on Home · tap elsewhere closes it, tap still lands · *Try it* opens quick entry · never again · a quick entry before the 3rd save → no bubble
+      - id: C-HOM-014
+        text: Budget Book opened 3× with 7 entries → *See the month day by day* above the tabs · tap → Calendar · × → gone for the visit · opening Calendar first → never
   - id: widgets
     title: Android widgets
     setup: HOME_WIDGET §12 · what only a person can judge

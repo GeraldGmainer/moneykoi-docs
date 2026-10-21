@@ -4,24 +4,26 @@ groups:
     title: Entering
     items:
       - id: C-BKG-001
-        text: New expense — keypad amount, **=** goes to the category; the description sheet opens only after you have written descriptions before; Save; back with changes asks *Discard / Keep editing*
+        text: Keypad → **=** → category · description sheet only once learned · back with changes → *Discard / Keep editing*
       - id: C-BKG-002
-        text: Transfer — pick the To account as From → the pair swaps; ⇅ swaps; save → not counted as income or expense anywhere
+        text: "Transfer: pick To's account as From → swaps · ⇅ swaps · not income or expense anywhere"
       - id: C-BKG-010
-        text: Quick booking (long-press +) — `kebap 5,90 gestern`, `kaffee 3.20 cash`, `miete 1.500 monatsanfang`, `apfel 2,5 vor 2 tagen` → the chips read right; fix a chip, keep typing → it stays fixed
+        text: "Long-press +: `kebap 5,90 gestern` · `kaffee 3.20 cash` · `miete 1.500 monatsanfang` · `apfel 2,5 vor 2 tagen` → chips right · fixed chip stays"
       - id: C-BKG-011
-        text: Quick booking from the home-screen widget — the keyboard comes up
+        text: Quick booking widget → keyboard comes up
       - id: C-BKG-012
-        text: '`#italien` creates the tag on Save, `#Italien` later reuses it; trip mode pre-selects it on new bookings only'
+        text: "`#italien` created on Save · `#Italien` reuses it · trip mode → new bookings only"
   - id: fixing
     title: Fixing
     items:
       - id: C-BKG-020
-        text: Delete → *Undo*; delete → Settings → Trash → restore; *Empty trash* asks first; the trash is per device (a second phone does not show it)
+        text: Delete → *Undo* · Trash → restore · *Empty trash* asks · trash per device
       - id: C-BKG-030
-        text: 'Web: select rows across pages, *select all N matching*, bulk tag / edit / delete; a mixed income+expense selection offers no category'
+        text: "Web: select across pages · *select all N* · bulk tag/edit/delete · mixed sides → no category"
   - id: search
     title: Search
     items:
       - id: C-BKG-040
-        text: Search finds an account, a subcategory, a goal, a loan, a booking by merchant; *Show all* on long sections; web ⌘K finds the same
+        text: Search finds account · subcategory · goal · loan · merchant · *Show all* · web ⌘K same
+      - id: C-BKG-041
+        text: Fresh setup → book *Rent* (fixed category) → snackbar *Does this repeat every month?* replaces *saved* · *Make recurring* → rule form prefilled · a rule in that category → no question · 5th typed entry with no scan → *Got a receipt?* line under the amount · after one scan → never

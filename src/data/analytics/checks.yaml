@@ -4,12 +4,16 @@ groups:
     title: Analytics
     items:
       - id: C-ANL-001
-        text: A month with a transfer and a balance correction — neither is income or expense; the waterfall shows an *Untracked* bar and closes on the real balance
+        text: Month with transfer + correction → neither income nor expense · waterfall *Untracked* bar
       - id: C-ANL-002
-        text: '*All time* → comparison cards and comparative insights go quiet; month start 25 → monthly bars and tooltips use 25 → 24'
+        text: "*All time* → comparisons quiet · month start 25 → bars run 25 → 24"
       - id: C-ANL-003
-        text: Export → share image, CSV and PDF (iPad too)
+        text: "Export: image · CSV · PDF · iPad too"
       - id: C-ANL-004
-        text: With investments — net worth says *incl. investments*; a depot-funded buy is not counted twice
+        text: "With investments: *incl. investments* · depot buy not doubled"
       - id: C-ANL-005
-        text: Free → the whole tab is locked with the paywall
+        text: Free → whole tab locked + paywall
+      - id: C-ANL-006
+        text: New book → every Analytics segment = koi + *Add entry* + *Scan a receipt* · one entry → KPI, breakdown, heatmap drawn · Merchants + Receipts headings gone, their cards named in *Unlocks as you record* with *Scan a receipt*
+      - id: C-ANL-007
+        text: Young book on *This week* vs *This year* → the same cards unlock (period never matters) · a card unlocked with nothing in the window says *nothing in this period*, not the unlock reason

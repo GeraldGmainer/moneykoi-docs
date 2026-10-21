@@ -4,14 +4,39 @@ items:
     title: Sets the formats
     from: Settings → Display formats
     steps:
-      - money format, date format, start of week, start of month
-    result: every screen follows at once; on every device you sign in to
+      - money + date format · week + month start
+    result: every screen follows · all devices
     checks: [C-SET-001]
+  - id: J-SET-03
+    group: Setup
+    title: Personalized setup
+    from: Welcome → *Get started* → *Personalize*
+    steps:
+      - accounts on/off · starting balances on the keypad
+      - start of week · start of month · date format
+      - lifestyle questions → *Continue*
+      - "*Sub-categories* switch · preview → *Create budget book*"
+    result: book with the chosen accounts, balances dated today, calendar settings, categories
+    note: |
+      - *Quick Start* skips all of it · step counter reads 2 there, 6 here
+      - back from accounts → method choice, counter back to 2
+    checks: [C-SET-005, C-SET-006, C-SET-007]
+    related: [R-SET-12]
+  - id: J-SET-04
+    group: Support
+    title: Looks up a feature
+    from: Drawer → *Tips & features* (or Settings → Support)
+    steps:
+      - four groups, one line per feature
+      - "*Open* → the feature itself (tab switched or page pushed) · locked → paywall"
+    result: feature opened · used rows ticked
+    checks: [C-SET-008, C-SET-009]
+    related: [R-SET-13]
   - id: J-SET-02
     group: Support
     title: Sends feedback
     from: Settings → Support → Feedback
     steps:
-      - kind, message, contact consent
-    result: a row in the admin inbox
+      - kind · message · consent
+    result: row in the admin inbox
     checks: [C-SET-002]

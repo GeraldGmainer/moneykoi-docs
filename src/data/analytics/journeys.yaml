@@ -4,25 +4,37 @@ items:
     title: Reviews the month
     from: Analytics (Pro)
     steps:
-      - Overview — KPIs, *What stands out*, budgets, income vs. expenses, waterfall
-      - Spending — categories, tags, fixed & variable, merchants, receipts
-      - tap a donut row → subcategories → category activity
-    result: where the money went, and what changed
+      - "Overview: KPIs, *What stands out*, budgets, waterfall"
+      - "Spending: categories, tags, fixed/variable, merchants"
+      - donut row → subs → activity
+    result: where money went + what changed
     checks: [C-ANL-001]
   - id: J-ANL-02
     group: Reading
     title: Changes the period and baseline
     from: the period selector
     steps:
-      - this month · last month · last 3/6/12 · this year · all
-      - period comparison → previous period or same period last year
-    result: every scoped card reloads; all time compares nothing
+      - this month · last · 3/6/12 · year · all
+      - "baseline: previous or last year"
+    result: cards reload · all time compares nothing
     checks: [C-ANL-002]
   - id: J-ANL-03
     group: Export
     title: Exports the period
     from: app bar → export
     steps:
-      - share image, CSV or PDF
-    result: the period report
+      - image, CSV or PDF
+    result: period report
     checks: [C-ANL-003]
+  - id: J-ANL-04
+    group: New users
+    title: Analytics in the first week
+    from: new book → Analytics
+    steps:
+      - day 1, no entry → empty state with *Add entry* + *Scan a receipt*
+      - first entry → the lifetime cards draw · the rest listed in *Unlocks as you record* with reasons
+      - second day, first scan, first rule, first budget → each unlocks its cards
+      - month two → trend, comparison, insights appear
+    result: never a placeholder without a named reason
+    checks: [C-ANL-006, C-ANL-007]
+    related: [R-ANL-40]

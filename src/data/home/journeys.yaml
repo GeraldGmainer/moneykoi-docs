@@ -2,12 +2,12 @@ items:
   - id: J-HOM-01
     group: Home
     title: Arranges Home
-    from: Home → *Customize* (or Settings, or the bottom of Home) — Pro
+    from: Home → *Customize* · Pro
     steps:
-      - drag to reorder, remove (Undo), add from the gallery
-      - a card's gear → its settings (range, filter, count…)
+      - drag · remove + Undo · add from gallery
+      - gear → card settings
       - or *Start over* with a preset
-    result: the Home you want, on every device you sign in to
+    result: your Home, on every device
     tests:
       - file: test/features/home/bloc/home_edit_cubit_test.dart
         name: a preset replaces the whole body in one write
@@ -17,16 +17,45 @@ items:
     title: Configures the bottom bar
     from: Settings → Navigation (Pro)
     steps:
-      - 1, 2 or 4 tabs, reorder, the tab it opens on
+      - 1/2/4 tabs · order · start tab
       - Shopping slot → pin a list
-    result: this book's bar; other books keep theirs
+    result: this book's bar · others keep theirs
     checks: [C-HOM-002]
   - id: J-HOM-03
     group: Widgets
     title: Places a category widget
-    from: Android home screen → widgets → MoneyKoi
+    from: Android home screen → widgets → Money Koi
     steps:
-      - pick a category in the config screen
+      - pick a category
       - tap the widget
-    result: the booking form with that category
+    result: booking form with that category
     checks: [C-HOM-003]
+  - id: J-HOM-04
+    group: New users
+    title: First week with the checklist
+    from: setup done → Home
+    steps:
+      - "*Getting started* leads Home · *Add entry* or *Scan a receipt*"
+      - first booking → tick + confetti · next item opens
+      - regular payment · budget · widget → each ticks from data
+    result: "*All set* once, then the card is gone"
+    note: |
+      - × hides it at once · Undo in the snackbar
+      - after 14 days it is gone whatever was done
+    checks: [C-HOM-010, C-HOM-011]
+    related: [R-HOM-40]
+  - id: J-HOM-05
+    group: New users
+    title: First week hints
+    from: setup done · entries typed by hand
+    steps:
+      - 3rd entry saved → bubble above **+** · *Try it* opens quick entry
+      - rent booked → *Does this repeat every month?* → *Make recurring*
+      - 5th typed entry, never scanned → scan line on the next form
+      - 3rd Budget Book open with 7 entries → *See the month day by day*
+    result: each hint once · gone for good after it showed or the feature was used
+    note: |
+      - a tap anywhere closes the bubble and still does what it was aimed at
+      - the recurring question takes the place of the *saved* toast
+    checks: [C-HOM-013, C-BKG-041]
+    related: [R-HOM-42]

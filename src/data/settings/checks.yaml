@@ -4,10 +4,20 @@ groups:
     title: Settings & profile
     items:
       - id: C-SET-001
-        text: Change money format, date format, start of week (Sunday) and start of month (25, with the confirm) → Budget Book, budgets and analytics follow; sign in on the web → the same formats
+        text: Formats + Sunday week + month start 25 (confirm) → Budget Book, budgets, analytics follow · web same
       - id: C-SET-002
-        text: Feedback with and without contact consent → the admin inbox shows it (email only with consent)
+        text: Feedback with/without consent → admin inbox · email only with consent
       - id: C-SET-003
-        text: Changelog offline after one online open; in German and Japanese
+        text: Changelog offline after one online open · German + Japanese
       - id: C-SET-004
-        text: Onboarding in Japanese → JPY suggested, starter names in Japanese; English → USD
+        text: Japanese onboarding → JPY + Japanese names · English → USD
+      - id: C-SET-005
+        text: Personalize → card off, Cash 120 on the keypad (JPY → no decimals, unit shown) → Home total 120 from the first frame · no *Set starting balances* card · account page shows the balance dated today
+      - id: C-SET-006
+        text: Personalize → Sunday, month start 25, yyyy-MM-dd → Settings → Display formats show them · Budget Book period starts on the 25th · offline and signed-in alike
+      - id: C-SET-007
+        text: Personalize → *Sub-categories* off → preview shrinks to the groups, counter updates → book has no sub-categories · Home quick-add shows Food & Drink, Personal & Shopping, Transportation
+      - id: C-SET-008
+        text: Tips & features → every row's *Open* lands on its feature (calendar tab, budgets tab, recurring page, scanner with the intro again) · back returns to the list
+      - id: C-SET-009
+        text: Tips & features on Free → Forecast, Shared books, Investments wear the lock and open the paywall · after Pro the lock is gone · iOS has no widgets row
