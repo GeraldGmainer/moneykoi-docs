@@ -5,7 +5,9 @@ items:
     group: Identity & the phone
     title: Every new user starts local
     text: |
-      Welcome offers **no sign-up**. *Get started* makes a book on the phone with no account, no email and no server row. An account comes later: Cloud, an invite, the web.
+      - Welcome: **no sign-up**
+      - *Get started* → book on the phone · no account, no email, no server
+      - account later: Cloud · invite · web
     source: MONETIZATION §9a
     tests:
       - file: test/features/auth/ui/pages/welcome_page_test.dart
@@ -15,9 +17,10 @@ items:
     related: [R-MON-04]
   - id: R-ACC-02
     group: Identity & the phone
-    title: The session alone decides local or cloud
+    title: Session alone decides local or cloud
     text: |
-      A signed-in session is always the cloud identity, even with an odd token. If the token's claims decided it, a paying user could silently drop into local mode and stop syncing.
+      - signed in → always cloud, even with an odd token
+      - else a paying user could drop to local, stop syncing
     source: OFFLINE_TIER §2
     tests:
       - file: test/core/identity/identity_resolver_test.dart
@@ -26,9 +29,11 @@ items:
         name: a session wins over a local pair, so an existing user resolves exactly as before
   - id: R-ACC-03
     group: Identity & the phone
-    title: The phone is a cache of books
+    title: The phone caches books
     text: |
-      It holds at most one book without an account plus any number of accounts' books. **Who is signed in decides what is visible**, by membership — never by deleting what is not theirs.
+      - ≤ 1 book without account + any accounts' books
+      - **who is signed in** decides what is visible
+      - hidden by membership, **never** deleted
     source: MONETIZATION §9b rule 2
     tests:
       - file: test/core/identity/identity_resolver_test.dart
@@ -37,30 +42,36 @@ items:
         name: 'deletes no row: the outbox is detached, caches dropped, the cursors kept for the delta sync back'
   - id: R-ACC-04
     group: Identity & the phone
-    title: Only four things delete data on the phone
+    title: Only four things delete data
     text: |
-      *Delete account*, *Delete all data*, uninstalling, and *Remove from this phone* for a book the user lost. Never a logout, a lost session, an account switch, a lapse or a membership change.
+      - *Delete account* · *Delete all data* · uninstall · *Remove from this phone*
+      - **never**: logout, lost session, account switch, lapse, membership change
     source: MONETIZATION §9b rule 1
     tests:
       - file: test/app/lifecycle/session_life_cycle_manager_test.dart
         name: a logout detaches the account under its id and silences its reminders, deleting nothing
   - id: R-ACC-05
     group: Identity & the phone
-    title: '"Same account" means the same profile id'
+    title: Same account = same profile id
     text: |
-      Never the same email: an email can be registered again after a deletion. Welcome's greeting reads the kept profile by profile id too.
+      - **never** the same email · emails can be reused
+      - Welcome greeting reads the profile id too
     source: MONETIZATION §9b rule 5
   - id: R-ACC-06
     group: Identity & the phone
-    title: '*Sign back in* is a fresh sign-in'
+    title: "*Sign back in* = fresh sign-in"
     text: |
-      The old session's refresh token is never kept to make it one tap — a logout that keeps the session is not a logout.
+      - old refresh token **not** kept
+      - a logout that keeps the session isn't a logout
     source: MONETIZATION §9b traps
   - id: R-ACC-07
     group: Identity & the phone
-    title: Profile's *Sign in* is a sign-in, never the claim
+    title: Profile *Sign in* ≠ claim
     text: |
-      It sets the book without an account aside, hidden while signed in **and closed after the sign-out**: the logout lands on Welcome, and *Continue without an account* opens the book again. Moving the book into the account is the separate *Back up & sync* row.
+      - local book set aside · hidden while signed in
+      - logout → Welcome · book stays **closed**
+      - *Continue without an account* → opens it again
+      - move book into account = *Back up & sync*
     source: MONETIZATION §9a, OFFLINE_FIRST §9
     tests:
       - file: test/core/offline_first/wiper_test.dart
@@ -68,59 +79,13 @@ items:
       - file: test/core/identity/identity_resolver_test.dart
         name: 'stays closed after the sign-out: no identity resolves, the pair is still there'
 
-  # Sync, as the user sees it
-  - id: R-ACC-10
-    group: Sync, as the user sees it
-    title: The phone is the truth for reads; writes land on the phone first
-    text: |
-      A screen reads the phone's database, never the network. A save is on screen at once and pushed in the background; the app works fully offline.
-    source: OFFLINE_FIRST §1
-    tests:
-      - file: test/core/offline_first/repo/offline_first_repo_local_mode_test.dart
-        name: a read of an empty table in a local book never waits on the network
-  - id: R-ACC-11
-    group: Sync, as the user sees it
-    title: Writes reach the server in order, one at a time
-    text: |
-      The outbox is strictly serial; rapid edits of one record collapse into the latest. Deletes go first. Three failures pause an item (it shows a failed dot) and an app restart gives it a fresh chance; offline items wake when the connection returns.
-    source: OFFLINE_FIRST §5
-  - id: R-ACC-12
-    group: Sync, as the user sees it
-    title: A pull never overwrites an unpushed edit
-    text: |
-      A row the outbox still owns, or one newer on the phone than the incoming copy, is skipped by the pull. There is **no field merging**: concurrent edits on two devices end last-write-wins.
-    source: OFFLINE_FIRST §6, §12
-  - id: R-ACC-13
-    group: Sync, as the user sees it
-    title: Realtime only says "something changed"
-    text: |
-      A change from another device starts a pull; its payload is never applied directly. No realtime socket while the app is in the background — a resume pulls what changed.
-    source: OFFLINE_FIRST §7
-  - id: R-ACC-14
-    group: Sync, as the user sees it
-    title: A big first sync is paged and resumes where it stopped
-    text: |
-      1,000 rows per entity per call, oldest first, 60 s per call. A failed page is retried after 2 s and 5 s; an interrupted walk resumes after 30 s → 60 s → 2 min → every 5 min until it finishes, and after a kill.
-    source: OFFLINE_FIRST §6.1
-  - id: R-ACC-15
-    group: Sync, as the user sees it
-    title: A row's own book decides how it syncs
-    text: |
-      A write in a Cloud book is queued even while a local book is open; a write in a local book stays on the phone. One phone holds local and Cloud books side by side.
-    source: OFFLINE_TIER §5
-    tests:
-      - file: test/core/offline_first/writer_per_book_test.dart
-        name: a write in the Cloud book is queued under that book, though the open book is local
-      - file: test/core/offline_first/writer_per_book_test.dart
-        name: a write in the local book stays on the device, born synced
-    related: [R-MON-02]
-
   # Books without an account
   - id: R-ACC-20
     group: Books without an account
-    title: A local book never sends its data anywhere
+    title: Local book sends nothing
     text: |
-      Rows are written finished (nothing to push), no outbox, no pull. With an account in a local book, only the membership data (books, members, invites) is pulled.
+      - rows written finished · no outbox · no pull
+      - with an account: only books, members, invites pulled
     source: OFFLINE_TIER §1, §5
     tests:
       - file: test/core/offline_first/writer_local_mode_test.dart
@@ -129,9 +94,10 @@ items:
         name: 'pullsMembershipOnly: an account in a local book, never a book without one, never mid-claim'
   - id: R-ACC-21
     group: Books without an account
-    title: Local deletes cascade like the server's
+    title: Local deletes cascade like the server
     text: |
-      Deleting a goal takes its contributions, a category its subcategories and bookings — exactly what the server would do, in one transaction. Without it a later claim would fail on the server forever (H1).
+      - goal → its contributions · category → subs + bookings
+      - one transaction · else a later claim fails forever (H1)
     source: OFFLINE_TIER §5
     tests:
       - file: test/core/offline_first/delete/local_delete_cascade_test.dart
@@ -140,9 +106,11 @@ items:
         name: a rule covers everything its RPC cascades
   - id: R-ACC-22
     group: Books without an account
-    title: One materializer per book
+    title: One generator per book
     text: |
-      Recurring bookings of a Cloud book are generated by the server, of a local book by the phone — never both, or they collide. An account generates only books it owns. A signed-out book generates nothing.
+      - Cloud book → server makes recurring bookings
+      - local book → the phone · **never** both
+      - account: only books it owns · signed out: none
     source: OFFLINE_TIER §4, §5; MONETIZATION §9b rule 7
     tests:
       - file: test/core/offline_first/sync_gate_test.dart
@@ -153,21 +121,23 @@ items:
     group: Books without an account
     title: What a local book hides
     text: |
-      Settings → Books (sharing, invites, more books), the book switcher, *Use on computer*, profile photo upload, changing the book currency (shown, not tappable), log out / set password / delete account (replaced by *Delete all data* or *Delete this book*).
+      - Books page · book switcher · *Use on computer* · profile photo
+      - book currency: shown, not tappable
+      - logout · set password · delete account → *Delete all data* / *Delete this book*
     source: OFFLINE_TIER §7
 
   # Claim — moving a local book into an account
   - id: R-ACC-30
     group: Claim — moving a local book into an account
-    title: A claim never uploads a book the account already has
-    text: |
-      "Already has" = the server knows the book's id and the signed-in profile is a member; that book continues with a delta sync or a resume.
+    title: Claim never re-uploads a known book
+    text: "- server knows the book + you're a member → delta sync or resume"
     source: MONETIZATION §9b rule 4
   - id: R-ACC-31
     group: Claim — moving a local book into an account
-    title: Without Cloud nothing is uploaded
+    title: No Cloud → nothing uploaded
     text: |
-      The book moves under the account and stays on the phone (*Keep it on this phone*). With Cloud later, the upload starts by itself.
+      - book moves under the account, stays on the phone
+      - Cloud later → upload starts by itself
     source: OFFLINE_TIER §9
     tests:
       - file: test/features/cloud_tier/claim_book_use_case_test.dart
@@ -176,9 +146,11 @@ items:
         name: Cloud later uploads a moved book from `retenanted`, and its local stretch ends with it
   - id: R-ACC-32
     group: Claim — moving a local book into an account
-    title: A claim is resumable and never wipes
+    title: Claim resumes, never wipes
     text: |
-      Every step can be retried; re-sent chunks are no-ops. *Try again* finishes it, *Continue offline* defers it (*Finish backup* in Settings), a failed final pull keeps the claim. Never a half book, never a logout.
+      - every step retryable · re-sent chunks are no-ops
+      - *Try again* · *Continue offline* → *Finish backup* later
+      - **never** a half book, never a logout
     source: OFFLINE_TIER §9 (W1–W2)
     tests:
       - file: test/features/cloud_tier/claim_book_use_case_test.dart
@@ -187,27 +159,30 @@ items:
         name: a push that dies mid-way keeps the claim, and the retry skips adopt and re-tenant
   - id: R-ACC-33
     group: Claim — moving a local book into an account
-    title: An account that already has books gets the phone's as another one
+    title: Account with books → one more
     text: |
-      No discard option. At the 3-book limit: its own message, nothing uploaded.
+      - no discard option
+      - at the 3-book limit → own message, nothing uploaded
     source: MONETIZATION §9a
     tests:
       - file: test/features/cloud_tier/claim_book_use_case_test.dart
         name: an account that already keeps a book gets the device book as a new one
   - id: R-ACC-34
     group: Claim — moving a local book into an account
-    title: Once moved, a different account is refused
+    title: Moved → other accounts refused
     text: |
-      After the book's rows moved to the account's ids, another account signing in gets a mismatch screen that can only log out — the pending claim keeps that logout from wiping.
+      - other account signs in → mismatch screen, only log out
+      - pending claim keeps that logout from wiping
     source: OFFLINE_TIER §9
     tests:
       - file: test/features/cloud_tier/claim_book_use_case_test.dart
         name: once re-tenanted, a different account is refused instead of receiving the book
   - id: R-ACC-35
     group: Claim — moving a local book into an account
-    title: Leaving the intro cancels only a claim that never started
+    title: Leaving the intro cancels only unstarted
     text: |
-      Before any sign-in started, leaving drops it. Once Google or email started, the claim stays — a session or an email link may still arrive (W4).
+      - no sign-in started → claim dropped
+      - Google or email started → claim **stays** (W4)
     source: OFFLINE_TIER §9
     tests:
       - file: test/features/cloud_tier/claim_book_use_case_test.dart
@@ -216,18 +191,26 @@ items:
         name: 'W4: after a Google sign-in started, leaving keeps the claim for the session still on its way'
   - id: R-ACC-36
     group: Claim — moving a local book into an account
-    title: The claim is behind developer mode until its device test
+    title: Claim open on every install
     text: |
-      `ClaimEntry.isOpen` opens *Back up & sync*, the drawer's *Get Cloud free*, Profile's *Sign in* and an invite's *Join {book}* together. Today: developer mode only.
+      - *Back up & sync* · *Get Cloud free* · Profile *Sign in* · *Join {book}* — no switch left
+      - developer mode only 2026-10-08 → 2026-10-21 · opened ahead of the device test (T-MON-07)
     source: OFFLINE_TIER §7, §9
+    tests:
+      - file: test/features/cloud_tier/claim_entry_test.dart
+        name: a local book is offered Cloud free until the cutover, on every install
+      - file: test/features/cloud_tier/cloud_sync_tiles_test.dart
+        name: a device without an account is offered Back up & sync, which opens the claim intro
     related: [T-MON-20, D5]
 
   # Pause & renewal
   - id: R-ACC-40
     group: Pause & renewal
-    title: Only the server's confirmed word pauses sync
+    title: Only the server's word pauses sync
     text: |
-      An account the server has not confirmed yet is entitled; a failed refresh keeps the cached verdict. Nothing is torn down on a guess. A grant or a revoke reaches a phone on its next start, sign-in or resume — not instantly.
+      - not confirmed yet → still entitled
+      - failed refresh → cached verdict stays · no guessing
+      - grant/revoke reaches the phone on start, sign-in or resume
     source: OFFLINE_TIER §12
     tests:
       - file: test/features/cloud_tier/server_sync_entitlement_test.dart
@@ -236,36 +219,41 @@ items:
         name: a failed refresh keeps the cached verdict
   - id: R-ACC-41
     group: Pause & renewal
-    title: A pause never deletes data and never signs out
+    title: Pause never deletes, never signs out
     text: |
-      The outbox drains, one last pull runs, realtime stops — then the phone keeps working locally with everything. *Sync paused* in Settings.
+      - outbox drains → last pull → realtime stops
+      - phone keeps working locally · *Sync paused*
     source: OFFLINE_TIER §10
     tests:
       - file: test/features/cloud_tier/lapse_test.dart
         name: drains the outbox first, then marks the open book and stops realtime — no wipe, no sign-out
   - id: R-ACC-42
     group: Pause & renewal
-    title: Nothing generates before the last pull ran
+    title: Nothing generates before the last pull
     text: |
-      If the teardown's last pull did not run, no pause marker is written and the next check retries — so the phone never generates recurring bookings the server already made.
+      - last pull didn't run → no pause marker → retried
+      - phone never doubles server-made recurring bookings
     source: OFFLINE_TIER §10
     tests:
       - file: test/features/cloud_tier/lapse_test.dart
         name: a last pull that did not run leaves no lapse marker, so nothing generates and the next reconcile retries
   - id: R-ACC-43
     group: Pause & renewal
-    title: Deletes made while paused survive until the renewal
+    title: Paused deletes survive to renewal
     text: |
-      Even *Empty trash* keeps a hidden record of each delete, replayed to the server on renewal, each under its own book.
+      - even *Empty trash* keeps a hidden delete record
+      - replayed on renewal, each in its own book
     source: OFFLINE_TIER §5 (H2), §10
     tests:
       - file: test/features/cloud_tier/lapse_delete_replay_test.dart
         name: deletes in two books survive Empty trash, and each reaches the server under its own book
   - id: R-ACC-44
     group: Pause & renewal
-    title: On renewal the phone wins per row
+    title: "Renewal: phone wins per row"
     text: |
-      Recurring bookings both sides generated meet on the server's ids; one the user edited keeps its content (D-H2). No keep-device / keep-cloud prompt.
+      - double recurring bookings meet on the server's ids
+      - user-edited one keeps its content (D-H2)
+      - no keep-device / keep-cloud prompt
     source: OFFLINE_TIER §10 step 4
     tests:
       - file: test/features/cloud_tier/occurrence_reconciler_test.dart
@@ -273,9 +261,10 @@ items:
     related: [X4]
   - id: R-ACC-45
     group: Pause & renewal
-    title: Pause markers are per book
+    title: Pause markers per book
     text: |
-      A free member's own book can be paused while a shared Cloud book keeps syncing. A pause written by 1.16.1 (one timestamp for the account) covers every book of the account until the phone knows them.
+      - free member's own book paused · shared Cloud book syncs
+      - old 1.16.1 marker covers all books until known
     source: OFFLINE_TIER §5
     tests:
       - file: test/core/offline_first/sync_gate/lapse_markers_test.dart
@@ -284,18 +273,21 @@ items:
         name: a pause written before B1, one timestamp for the account, now pauses every book of the account, a shared one too
   - id: R-ACC-46
     group: Pause & renewal
-    title: A paused account's server copy is kept as long as the account exists
+    title: Paused server copy kept
     text: |
-      No retention job, no 7/30/60-day warnings. An active subscription is never affected, however long the app goes unused.
+      - as long as the account exists
+      - no cleanup job, no 7/30/60-day warnings
     source: MONETIZATION §9a (D-C6)
     related: [D-C6]
 
   # Deleting
   - id: R-ACC-50
     group: Deleting
-    title: '*Delete account* takes only its own books'
+    title: "*Delete account* takes only its own"
     text: |
-      Server: everything, and every book it owned (for every member). Phone: wiped — or, next to another account's books, only the books it owned, its rows, prefs and cursors. Books it only joined stay for the others.
+      - server: everything + every **owned** book, for all members
+      - phone: wiped · or, with other accounts, only its own books and data
+      - joined books stay for the others
     source: OFFLINE_FIRST §9
     tests:
       - file: test/core/offline_first/wiper_test.dart
@@ -304,9 +296,11 @@ items:
         name: keeps the other accounts
   - id: R-ACC-51
     group: Deleting
-    title: Next to kept books, *Delete all data* becomes *Delete this book*
+    title: "*Delete this book* next to kept books"
     text: |
-      Only the local book goes; the signed-out accounts' books, their unsent writes, the remembered account and the app lock stay. With nothing else on the phone it is the full wipe.
+      - only the local book goes
+      - other accounts' books, unsent writes, app lock stay
+      - nothing else on the phone → full wipe
     source: OFFLINE_TIER §6
     tests:
       - file: test/core/offline_first/wiper_test.dart
@@ -317,15 +311,18 @@ items:
     group: Deleting
     title: No "remove all data" on Welcome
     text: |
-      Uninstalling clears the phone. On Android a reinstall may bring it back from Google's backup — by design: only the database and preferences are backed up, never photos or secure storage.
+      - uninstall clears the phone
+      - Android reinstall may restore from Google backup: database + prefs only
     source: MONETIZATION §9a, OFFLINE_TIER §11
 
   # On the web
   - id: R-ACC-60
     group: On the web
-    title: The same sign-in methods, no sign-up page
+    title: "Web: same sign-in, no sign-up page"
     text: |
-      Magic link (the default; the email also carries a 6-digit code that signs in at the sixth digit), password, Google. A new address creates the account and lands in the web's onboarding. From 1024 px a QR card lets the phone approve the browser (see Privacy → Web sign-in).
+      - magic link (default) · email code signs in at the 6th digit
+      - password · Google · new address → web onboarding
+      - ≥ 1024 px: *Sign in with the app* → QR page, the phone approves
     source: AUTH_PROFILE_WEB §1, §5
     tests:
       - file: src/app/login/page.test.tsx
@@ -333,19 +330,24 @@ items:
         name: signs in with the six-digit code as soon as it is complete and honours ?next=
       - file: src/app/login/page.test.tsx
         repo: web
-        name: starts no request and shows no QR code on a phone-sized screen
+        name: links to the QR page without starting a request
+      - file: src/app/login/app/page.test.tsx
+        repo: web
+        name: lands on the ?next= path once the app approves the code
     related: [J-PRIV-30]
   - id: R-ACC-61
     group: On the web
-    title: Logging out of the browser leaves the phone signed in
+    title: Web logout keeps the phone signed in
     text: |
-      Every web sign-out is local — the computer has its own session, so it never revokes the phone's.
+      - computer has its own session
+      - web logout **never** revokes the phone's
     source: AUTH_PROFILE_WEB §4.4
   - id: R-ACC-62
     group: On the web
-    title: '`?next=` returns to the invite after sign-in'
+    title: "`?next=` returns to the invite"
     text: |
-      Only a same-origin path is followed; anything else lands on the dashboard. A backslash path still slips through (E-ACC-50).
+      - only same-origin paths · else → dashboard
+      - backslash path still slips through (E-ACC-50)
     source: AUTH_PROFILE_WEB §4.2
     tests:
       - file: src/app/login/page.test.tsx
@@ -353,9 +355,11 @@ items:
         name: lets the emailed link return to the invite that sent the user here
   - id: R-ACC-63
     group: On the web
-    title: Delete account works the same as in the app
+    title: Web delete account = app's
     text: |
-      The page says what goes (every owned book, shared ones named with their members), warns that a store subscription keeps billing (links both stores; none for a lifetime purchase), and deletes only after a typed confirmation word.
+      - says what goes · owned shared books + members named
+      - store subscription warning · both store links
+      - typed confirmation word
     source: AUTH_PROFILE_WEB §1, §6
     tests:
       - file: src/app/(main)/delete-account/page.test.tsx
@@ -367,7 +371,8 @@ items:
     related: [R-ACC-50]
   - id: R-ACC-64
     group: On the web
-    title: No offline, no local book
+    title: "Web: no offline, no local book"
     text: |
-      The web always needs an account and a connection; *Use without an account*, the claim, pause and the outbox are phone-only.
+      - always account + connection
+      - local book · claim · pause · outbox → phone only
     source: web 01_OVERVIEW, catalog

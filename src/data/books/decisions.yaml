@@ -2,29 +2,32 @@
 # BOOKS_WEB_AI_CONTEXT.md §8. Q-BOOK-1 was found while building this site.
 items:
   - id: Q-BOOK-1
-    question: How does an invite reach *Join {book}* on a phone with a local book?
+    question: How does an invite reach *Join {book}* on a local book?
     status: open
     answer: |
-      The Join page opens when an invite link arrives in the app. But `https://my.moneykoi.app/invite` deliberately opens the browser (the app claims only `/open/book`, `/open/family` and the legacy `com.psyren.moneykoi://invite` scheme), and the paste-a-link flow sits on the Book page, which a local book hides. Check on a device which way in actually works before the claim opens to everyone (D5).
+      - Join opens when an invite link reaches the app
+      - but `/invite` opens the browser · app claims only `/open/book`, `/open/family`, legacy scheme
+      - paste is on the Book page, hidden for local books
+      - test on a device before the claim opens (D5)
     related: [J-BOOK-13, C-BOOK-001, D5]
   - id: Q-BOOK-2
     question: Close the invite role hole on the server?
     status: open
-    answer: Review-2026-09 #4 lists it as open. No decision recorded.
+    answer: Open in review-2026-09 (item 4) · no decision yet
     related: [E-BOOK-14]
   - id: D-BOOK-1
-    question: Book management offline?
+    question: Manage books offline?
     status: decided
-    answer: Online only — create, share, invite, roles, remove, leave, dissolve, delete need a connection. Reads work offline.
+    answer: No · online only · reading works offline
   - id: D-BOOK-2
     question: Ownership transfer?
     status: decided
-    answer: None. The owner is fixed; an owner who wants out dissolves or deletes the book.
+    answer: None · owner dissolves or deletes instead
   - id: D-BOOK-3
-    question: Scope of shared books
+    question: Who are shared books for?
     status: decided
-    answer: Households, not businesses — naming, copy and roles target families.
+    answer: Households, not businesses
   - id: D-BOOK-4
-    question: Export a book that is not the active one?
+    question: Export a non-active book?
     status: decided
-    answer: No — its rows on the phone may be stale. The item shows a "switch to this book" hint; never switch behind the user's back.
+    answer: No · may be stale · hint *switch to this book* · never auto-switch

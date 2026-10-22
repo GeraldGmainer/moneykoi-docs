@@ -111,15 +111,40 @@ items:
     source: AUTH_PROFILE_WEB §1
   - id: R-SET-30
     group: Support
-    title: Feedback
+    title: Feedback for everyone
     text: |
-      - feedback · bug · idea · optional contact consent
-      - needs an account · → admin inbox
-      - community voting removed 2026-10-02
-    source: 02_FEATURES, USAGE_STATS / admin README
+      - feedback · bug · idea · drawer + Settings · **no account needed**
+      - account → *Attach email address* · admin reads it from the profile
+      - no account → *Email for a reply (optional)* · checked, ≤ 254
+      - → admin inbox · community voting removed 2026-10-02
+    source: 02_FEATURES, MONETIZATION §3a, migration 20261021120000
     tests:
       - file: test/features/feedback/bloc/feedback_cubit_test.dart
         name: an untouched form has no change and cannot be sent
+      - file: test/features/feedback/bloc/feedback_cubit_test.dart
+        name: an account replies to its own address; without one the address is asked for
+      - file: test/features/feedback/ui/pages/feedback_page_test.dart
+        name: without an account the form asks for an optional reply address instead of the checkbox
+      - file: test/features/feedback/ui/pages/feedback_page_test.dart
+        name: a malformed reply address says so and keeps Send disabled
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: a book without an account keeps investments (prices come from the public price list) and feedback, and drops the account-bound entries
+    related: [D-SET-2, R-SET-33]
+  - id: R-SET-33
+    group: Support
+    title: Feedback without an account
+    text: |
+      - sent through `submit_feedback` · insert-only · open to anon
+      - ≤ 30 rows without an account per 10 min, whole project
+      - admin shows the typed address, or *no account*
+      - server without the migration → send fails (T-SET-01)
+    source: moneykoi-supabase 20261021120000_feedback_without_account.sql
+    tests:
+      - file: test/features/feedback/bloc/feedback_cubit_test.dart
+        name: sends as no account
+      - file: test/features/feedback/bloc/feedback_cubit_test.dart
+        name: a malformed address is never sent
+    related: [T-SET-01]
   - id: R-SET-31
     group: Support
     title: Changelog in your language
@@ -135,7 +160,7 @@ items:
     title: Developer mode
     text: |
       - About → tap the version 7×
-      - app: plan simulator · debug tools · claim
+      - app: plan simulator · debug tools
       - web: only *Simulate an ended subscription*
     source: MONETIZATION §3b, APP_SHELL_WEB §6a
     related: [R-MON-53]
@@ -143,7 +168,8 @@ items:
     group: Copy
     title: Three languages, one voice
     text: |
-      - EN "you" · DE *du* · JA no pronoun, です/ます
+      - never addresses the user (R-PLAT-24) · JA です/ます
       - *Sicherung* not "Backup" · *Sparziel* · *Ausgabenlimit* · 帳簿
       - labels: no period · 2+ sentences: every one
     source: CLAUDE.md (UX copy)
+    related: [R-PLAT-24, R-PLAT-25]

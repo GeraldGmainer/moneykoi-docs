@@ -4,97 +4,142 @@ items:
     title: Server files, dev first
     owner: gerald
     detail: |
-      `moneykoi-supabase` deploys by branch: a push to `develop` runs `db push` + `functions deploy` on dev, `main` on prod. The files, in version order: `20261005120000_offline_tier.sql` and `20261007120000_early_adopter_grant.sql` (dev has both), `20261011120000_delete_account_deletes_owned_books.sql`, `20261012120000_store_entitlement.sql` (+ `functions/revenuecat-webhook/`), `20261013120000_cloud_tenants.sql`, `20261013140000_profile_setting.sql`, `20261013160000_public_price_read.sql`.
-
-      ⚠️ **Prod and `profile_setting`**: an app build from before it fails its sync. The prod push belongs in the same hour as the app release that carries it, with `moneykoi-web` and `moneykoi-admin` deployed together. Dev needs these files before a dev build is tested.
+      - push to `develop` → dev · `main` → prod (`db push` + `functions deploy`)
+      - files, in order:
+        - `20261005120000_offline_tier.sql` + `20261007120000_early_adopter_grant.sql` (dev has both)
+        - `20261011120000_delete_account_deletes_owned_books.sql`
+        - `20261012120000_store_entitlement.sql` + `functions/revenuecat-webhook/`
+        - `20261013120000_cloud_tenants.sql`
+        - `20261013140000_profile_setting.sql`
+        - `20261013160000_public_price_read.sql`
+      - ⚠️ **prod + `profile_setting`**: older app builds fail to sync → push in the same hour as the app release, web + admin too
+      - dev needs them before testing a dev build
     command: |
       cd moneykoi-supabase
       for t in early_adopter_grant store_entitlement cloud_tenants profile_setting; do
         psql "$DEV_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/$t.sql
       done
-      supabase secrets set REVENUECAT_WEBHOOK_SECRET="$(openssl rand -hex 32)" --project-ref dpmemqshhdnanywcvsod
+      SECRET="$(openssl rand -hex 32)" && echo "$SECRET"   # the same value goes into RevenueCat's webhook Authorization header
+      supabase secrets set REVENUECAT_WEBHOOK_SECRET="$SECRET" --project-ref dpmemqshhdnanywcvsod
       # prod: the same with $PROD_DATABASE_URL and --project-ref cwheprirreyscppmbybp
   - id: T-MON-02
-    title: Apple — agreements, products, subscription group
+    title: Apple · agreements and products
     owner: gerald
     detail: |
-      - Paid Applications agreement + Austrian bank/tax details; apply to the Small Business Program
-      - Non-consumables `pro.lifetime`, `cloud.lifetime`, `cloud.lifetime.upgrade`
-      - Subscription group *MoneyKoi Cloud*: `cloud.yearly` (1-month free trial), `cloud.monthly`
-      - Prices per the pricing page; family sharing **on for Pro, off for Cloud** (one-way on Apple)
-      - Launch price as a scheduled price change with a real end date
-      - Localizations en/de/ja; App Store Server Notifications V2 → RevenueCat; sandbox testers; a review note on how to reach the paywall
+      - Paid Applications agreement + bank/tax · apply for Small Business Program
+      - non-consumables: `pro.lifetime` · `cloud.lifetime` · `cloud.lifetime.upgrade`
+      - group *Money Koi Cloud*: `cloud.yearly` (1-month trial) · `cloud.monthly`
+      - prices per Pricing · family sharing **Pro on, Cloud off** (one-way)
+      - launch price = scheduled price change with a real end date
+      - en/de/ja · Server Notifications V2 → RevenueCat · sandbox testers · review note: how to reach the paywall
+      - App Store id → tell the next AI pass: *Update app* on the paywall needs it on iOS (E-MON-15)
   - id: T-MON-03
-    title: Google — payments profile and products
+    title: Google · payments and products
     owner: gerald
+    status: done
     detail: |
-      - Payments profile; the same products; `cloud` subscription with yearly/monthly base plans
-      - The launch window as a discount offer
-      - Real-time developer notifications → RevenueCat; license testers
-      - A new build has to reach every track for Google to see it (Play Billing 8 is satisfied by `purchases_flutter ≥ 9`)
-      - Check whether Play's Family Library does anything for Pro (it mostly covers paid apps, not in-app purchases)
+      - **done 2026-10-18** · payments profile (individual)
+      - 3 one-time products, purchase option `buy` · Cloud = **two subscriptions** `cloud.monthly` / `cloud.yearly` (base plans `monthly` / `yearly`)
+      - trial offer `free-trial` on yearly · *never had any subscription* → one trial per Google account
+      - regional prices → [Pricing](/monetization/pricing/) · euro rows all the same price
+      - real-time notifications → `Play-Store-Notifications` → RevenueCat
+      - still to confirm: license testing + internal testers (plan A2.2, A2.3)
+      - left for later: T-MON-09 (January discount) · T-MON-10 (Family Library)
   - id: T-MON-04
-    title: RevenueCat — project, entitlements, webhook
+    title: RevenueCat · project and webhook
     owner: gerald
     waitsFor: [T-MON-01, T-MON-02, T-MON-03]
     detail: |
-      - Project + both store apps; entitlements `pro` / `cloud`, every product mapped (each Cloud product → both); one offering
-      - **Restore Behavior = keep with the original App User ID**
-      - Webhook `https://<project>.supabase.co/functions/v1/revenuecat-webhook`, `Authorization` header = the secret from T-MON-01
-      - Public SDK keys into `.env.dev` / `.env.prod` as `REVENUECAT_API_KEY_ANDROID` / `REVENUECAT_API_KEY_IOS`
+      - **Android done 2026-10-18** · own service account `id-revenuecat-play@…` · webhook test 200 on prod · left: the iOS app
+      - project + both apps · entitlements `pro` / `cloud` · each Cloud product → both · one offering
+      - `pro.lifetime`, `cloud.lifetime`, `cloud.lifetime.upgrade` → **Non-consumable**, or a restore finds nothing
+      - **Restore Behavior = keep original App User ID**
+      - webhook `https://<project>.supabase.co/functions/v1/revenuecat-webhook` · `Authorization` = secret from T-MON-01
+      - SDK keys → `.env.dev` / `.env.prod`: `REVENUECAT_API_KEY_ANDROID` / `_IOS`
+      - version floor, only when an old build must stop selling: offering metadata `{"min_app_version": "1.20.0"}` · a string, never a number (R-MON-48)
   - id: T-MON-05
-    title: Legal — Terms, privacy policy, a lawyer's hour
+    title: Legal · terms, privacy, lawyer
     owner: gerald
     detail: |
-      Define "lifetime" and the early adopters' "for life" in the Terms. The privacy policy names RevenueCat, Sentry (opt-out), the anonymous price fetch and the opt-in usage statistics. A lawyer reads the legal page and the lapse behavior in the same hour, including the delete-account line about store billing. See [Legal](/monetization/legal/).
+      - Terms: define "lifetime" + early adopters' "for life"
+      - privacy policy names RevenueCat · Sentry (opt-out) · anonymous price fetch · opt-in usage stats
+      - lawyer, one hour: legal page + lapse + delete-account billing line
+      - and: every export Pro · free way out for server data? (D-DATA-13)
+      - see [Legal](/monetization/legal/)
   - id: T-MON-06
     title: Decide the open questions
     owner: gerald
     waitsFor: [D1, D2, D3, D4, D5, D8]
-    detail: |
-      Then tell the next AI pass. See the decisions below.
+    detail: Answer the open decisions below → tell the next AI pass
   - id: T-MON-07
     title: Device tests
     owner: gerald
     waitsFor: [T-MON-01, T-MON-04]
     detail: |
-      Nothing built since 2026-10-13 has run on a phone yet. Run [What to test](/monetization/testing/), including the store sandbox group. The claim's failure paths (W1–W5 of `.agents/reports/2026-10-08_release_1_16_review.md`) are what opening the claim to everyone waits for.
+      - nothing since 2026-10-13 has run on a phone
+      - run [What to test](/monetization/testing/) incl. store sandbox
+      - claim failure paths W1–W5 (`.agents/reports/2026-10-08_release_1_16_review.md`) · the claim is already open to all (T-MON-20), so these run live
+      - Android store: license test on an internal-track build, checklist A5 of `.agents/plans/PLAY_LICENSE_TESTING_PLAN.md`
+    command: |
+      # needs REVENUECAT_API_KEY_ANDROID in .env.prod, build number above production's
+      ./publish.sh internal monetization
   - id: T-MON-08
-    title: The release (Jan 17)
+    title: The release · Jan 17
     owner: gerald
     waitsFor: [T-MON-05, T-MON-07, D4]
     detail: |
-      Build with `--dart-define=MONETIZATION=true`, the launch window's date set, store listings per `ASO_STORE_LISTING_PLAN.md`. Then watch RevenueCat's charts and the store consoles for the three thresholds: download-to-paid below 1.5 %, annual → lifetime attach, Y1 retention. No analytics SDK, by decision. Until the flip the plan simulator is the only way to see a lock.
+      - trade registered (T-MON-11) · build `--dart-define=MONETIZATION=true` · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
+      - watch RevenueCat + store consoles: download-to-paid < 1.5 % · annual → lifetime · Y1 retention
+      - no analytics SDK · until then only the simulator shows locks
+  - id: T-MON-09
+    title: Google · launch discount in January
+    owner: gerald
+    waitsFor: [D4]
+    detail: |
+      - first discount day: *Add offer* on `cloud.lifetime` (€49.99) and `cloud.lifetime.upgrade` (€24.99), 90 days
+      - Play adds VAT to a bulk price: base = target ÷ 1.20 · then the euro rows by hand
+      - same day: RevenueCat offering metadata `launch_until` + `regular_prices` for EUR, USD, GBP, CHF, JPY (R-MON-48 area, plan A7)
+      - no build needed
+  - id: T-MON-10
+    title: "Check: does Play Family Library cover Pro?"
+    owner: gerald
+    detail: Family Library mostly covers paid apps, not in-app purchases · decides whether Pro can be shared on Android
+  - id: T-MON-11
+    title: Register the trade before the first sale
+    owner: gerald
+    waitsFor: [T-MON-07]
+    detail: |
+      - *freies Gewerbe* "Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik" · GISA with ID Austria · free
+      - before the paywall release: license-test purchases are €0
+      - ask WKO Gründerservice or a tax advisor: UID number (invoices to Google Ireland) · SVS small-business exemption
 
   - id: T-MON-20
     title: Open the claim to everyone
     owner: ai
-    waitsFor: [T-MON-07, D5]
+    status: done
     detail: |
-      Also opens an invite's *Join {book}* page, which sits behind the same switch.
-    prompt: |
-      Open `ClaimEntry.isOpen` to every install (drop the developer-mode read) — this also opens an invite's *Join {book}* page (behind the same switch since 2026-10-16; closed, `BookLinkTarget.claim` sends the invite to the claim intro as a backup); update `claim_entry_test.dart`, `book_deep_link_listener_test.dart` (its closed-switch cases), `claim_intro_page_test.dart` (the *Have an invite?* hint) and `OFFLINE_TIER_AI_CONTEXT.md` §9.
+      - **done 2026-10-21** · `ClaimEntry.isOpen` and the developer-mode read removed · *Back up & sync*, *Get Cloud free*, Profile *Sign in*, *Join {book}* on every install
+      - opened ahead of the device test (T-MON-07), Gerald's call · W1–W5 now run live
   - id: T-MON-21
-    title: Set the launch window's date
-    owner: ai
-    waitsFor: [D4]
+    title: Set the launch window in RevenueCat
+    owner: gerald
+    waitsFor: [D4, T-MON-04]
     detail: |
-      *then {regular}* stays off until `StoreProduct.regularPriceString` has a source (D8).
-    prompt: |
-      Set `FeatureConstants.launchWindowEnd` to <last day of the launch price> — `static final DateTime? launchWindowEnd = DateTime(y, m, d)`, a `DateTime` constructor is not const — replace the *no window* test in `launch_window_test.dart`, the launch row itself is covered by `paywall_price_option_test.dart`. *then {regular}* stays off until `StoreProduct.regularPriceString` has a source (D8).
+      - first day of the store's price change → offering metadata, no build:
+      - `"launch_until": "<last day, YYYY-MM-DD>"`
+      - `"regular_prices": {"cloud.lifetime": {"EUR": 69.99}, "cloud.lifetime.upgrade": {"EUR": 44.99}}` · one amount per currency sold
+      - after the last day → remove both (R-MON-42)
   - id: T-MON-22
     title: Server-side enforcement
     owner: ai
     waitsFor: [D2]
-    detail: |
-      Only if D2 decides "now". The app side needs nothing.
+    detail: Only if D2 says "now" · app needs nothing
     prompt: |
       New migration in `moneykoi-supabase`: copy the whole current `sync_all` body, add the no-entitlement degradation (empty data domains for an unentitled tenant, the lost-membership precedent); write policies through `internal.tenant_cloud_entitled` on the tenant-scoped data tables; a manual check; the app side needs nothing.
   - id: T-MON-23
     title: Price A/B
     owner: ai
     waitsFor: [D3, T-MON-02, T-MON-03]
-    detail: |
-      Only if D3 decides for a test, and once the products exist.
+    detail: Only if D3 says test · after the products exist
     prompt: |
       Let `StorePlan.productId` be a set of ids and map `pro.lifetime.1999` / `pro.lifetime.2999` to `StorePlan.pro`; nothing else changes.

@@ -142,3 +142,17 @@ items:
       - every fix round measured before + after
       - photos never in the app repo · `scanner-corpus-round` skill
     source: SCANNER §4.31–§4.35
+  - id: R-SCN-21
+    group: Review & save
+    title: First review · three tips, no carousel
+    text: |
+      - the first review shows one-line tips in place: *Tap any field to fix it* · *Every item needs a category* (while one is missing) · *Save, and each item becomes a booking* (once all are set)
+      - each once, per phone · the help button still replays the full intro, Edit & Merge included
+      - whoever saw the old 4-page tutorial sees no tips
+    source: SCANNER §4.15g
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
+        name: hero and category tips show from the first frame and are written as shown; the save tip waits for the last category
+      - file: test/features/receipt/service/scanner_onboarding_progress_test.dart
+        name: whoever saw the old carousel is shown nothing
+    related: [R-SCN-13, R-SCN-03]

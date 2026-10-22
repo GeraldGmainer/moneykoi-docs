@@ -1,19 +1,24 @@
 items:
   - id: T-BOOK-01
-    title: Find out how an invite reaches a phone with a local book
+    title: How does an invite reach a local book?
     owner: gerald
     detail: |
-      On a phone with a local book and developer mode on: tap an invite email link, open it from a chat, paste it. Note which one opens *Join {book}*. Answers Q-BOOK-1, and belongs before the claim opens to everyone.
+      - local book, no account
+      - try: email link · chat link · paste → which opens *Join {book}*?
+      - answers Q-BOOK-1 · the Join page is open to all since 2026-10-21 (T-MON-20), so this is live
   - id: T-BOOK-02
     title: Close the invite role hole
     owner: ai
     waitsFor: [Q-BOOK-2]
-    detail: |
-      Only once Q-BOOK-2 is decided.
+    detail: Only after Q-BOOK-2 is decided
     prompt: |
       New migration in moneykoi-supabase: create_book_invite accepts only 'member' and 'admin' as p_role; accept_book_invite never changes the role of an existing owner and never grants 'owner'. Add a manual check under supabase/tests/manual/. Hand Gerald the deploy step; do not run the supabase CLI.
   - id: T-BOOK-03
     title: Web book-switch issues
     owner: ai
     detail: |
-      From moneykoi-web `BOOKS_WEB_AI_CONTEXT.md` §8: review-2026-09 #2 (create / leave / delete / accept switch without invalidating the old book's data), #3 (`tenant_member` fallback in the accounts, shopping and recurring services), #7 (writes right after a switch land in the previous book). Read that section before starting; no prompt written yet.
+      From `BOOKS_WEB_AI_CONTEXT.md` §8, review-2026-09:
+      - 2: create/leave/delete/accept don't clear the old book
+      - 3: `tenant_member` fallback in accounts, shopping, recurring
+      - 7: writes right after a switch → previous book
+      - no prompt written yet

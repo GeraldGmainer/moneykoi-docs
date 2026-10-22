@@ -1,11 +1,14 @@
 import { getCollection } from 'astro:content';
 import { codeFeatures, FEATURE_DART } from './features';
+import { resolvedCatalog } from './catalog';
 import { idIndex, type IdKind } from './ids';
 import { checkTest, testStatusLabel, type TestRef } from './tests';
 import { areas } from '../areas.mjs';
+import { diagramSources } from './diagrams';
+import { readRepoFile, hasRepo } from './repos';
 
 export interface Problem {
-  kind: 'repo' | 'catalog' | 'test' | 'link' | 'duplicate';
+  kind: 'repo' | 'catalog' | 'test' | 'link' | 'duplicate' | 'diagram';
   where: string;
   message: string;
 }
@@ -98,6 +101,23 @@ export async function health(): Promise<Health> {
     }
   }
 
+  const scheduled = new Set<string>();
+  for (const bucket of await getCollection('roadmap')) {
+    for (const item of bucket.data.items) {
+      scheduled.add(item.ref);
+      const known = catalog.some((c) => c.id === item.ref) || index.has(item.ref);
+      if (!known) problems.push({ kind: 'link', where: `roadmap.yaml → ${bucket.id}`, message: `${item.ref} is neither a catalog row nor a docs id` });
+    }
+  }
+  if (code) {
+    const resolved = await resolvedCatalog();
+    for (const row of resolved) {
+      if (row.status === 'planned' && !scheduled.has(row.id)) {
+        problems.push({ kind: 'catalog', where: `catalog.yaml → ${row.id}`, message: 'planned, but in no bucket of src/data/roadmap.yaml' });
+      }
+    }
+  }
+
   const areaIds = new Set(areas.map((a) => a.id));
   for (const release of await getCollection('releases')) {
     for (const item of release.data.items) {
@@ -106,6 +126,21 @@ export async function health(): Promise<Health> {
       expect(where, item.checks, 'check', ['checks']);
       expect(where, item.related, 'see also');
     }
+  }
+
+  const sources = diagramSources();
+  const registered = new Set<string>();
+  for (const d of await getCollection('diagrams')) {
+    const where = `diagrams.yaml → ${d.id}`;
+    registered.add(d.id);
+    if (!sources.has(d.id)) problems.push({ kind: 'diagram', where, message: `src/diagrams/${d.id}.mmd does not exist` });
+    for (const a of d.data.areas) if (!areaIds.has(a)) problems.push({ kind: 'diagram', where, message: `area ${a} is not in src/areas.mjs` });
+    for (const s of d.data.sources) {
+      if (hasRepo(s.repo) && readRepoFile(s.repo, s.file) === null) problems.push({ kind: 'diagram', where, message: `source ${s.repo}:${s.file} does not exist` });
+    }
+  }
+  for (const id of sources.keys()) {
+    if (!registered.has(id)) problems.push({ kind: 'diagram', where: `src/diagrams/${id}.mmd`, message: 'has no entry in src/data/diagrams.yaml' });
   }
 
   let ok = 0;

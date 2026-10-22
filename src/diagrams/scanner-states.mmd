@@ -1,0 +1,11 @@
+stateDiagram-v2
+  direction LR
+  [*] --> initial
+  initial --> askingPermission
+  askingPermission --> initializingCamera
+  initializingCamera --> findingTotal
+  findingTotal --> harvestingItems: items to capture
+  findingTotal --> reviewing: skip (one line)
+  harvestingItems --> reviewing
+  reviewing --> harvestingItems: redo or scan more
+  reviewing --> [*]: saved

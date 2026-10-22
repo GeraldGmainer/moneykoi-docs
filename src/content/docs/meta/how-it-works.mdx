@@ -11,50 +11,86 @@ sidebar:
 cd moneykoi-docs
 nvm use            # Node 24
 npm install        # once
-npm run dev        # http://localhost:4321, live reload
-npm run check      # build + fail on any health problem
+npm run dev        # http://localhost:4321
+npm run check      # build + health check
 ```
 
-Search works in `npm run build && npm run preview`, not in `dev`.
+Search works only in `npm run build && npm run preview`.
 
-## Three sources, one rule each
+## Three sources
 
 | Source | Holds | Rule |
 |---|---|---|
-| **Code** (`moneykoi-app`) | tier, needs and live/planned of every gated feature (`feature.dart`), paywall names and details (`en.json`), the tests | never copied by hand — read on every build |
-| **Data** (`src/data/`) | feature catalog, rules, journeys, edge cases, checks, tasks, decisions, releases | YAML, validated by a schema; a wrong field fails the build |
-| **Pages** (`src/content/docs/`) | prose: overviews, pricing, legal | MDX; tables and lists, no walls of text |
+| **Code** · `moneykoi-app` | tiers (`feature.dart`) · paywall text (`en.json`) · tests | read on every build · **never** copied |
+| **Data** · `src/data/` | catalog · rules · journeys · edge cases · checks · tasks · decisions · releases · diagrams | YAML + schema · wrong field → build fails |
+| **Pages** · `src/content/docs/` | overviews · pricing · legal | MDX · tables + lists |
 
 ## What is checked
 
-- Every catalog row with `feature:` must exist in `feature.dart`; every `Feature` must have a catalog row. A row with `feature:` must not carry its own tier or status.
-- Every test link must point to an existing file that contains the test's name.
-- Every id is unique. Every *See also*, every check a journey or a release names, and every task or decision a task waits for exists — across areas.
+- catalog ↔ `feature.dart`, both ways
+- every test link → file exists + contains the name
+- every id unique · every cross-link resolves
+- every diagram: entry ↔ file · sources exist
 
 ## Ids
 
 | Prefix | Kind | Example |
 |---|---|---|
-| `R-<AREA>-nn` | business rule | `R-MON-14` |
+| `R-<AREA>-nn` | rule | `R-MON-14` |
 | `J-<AREA>-nn` | journey | `J-MON-50` |
 | `E-<AREA>-nn` | edge case | `E-MON-08` |
 | `C-<AREA>-nnn` | manual check | `C-MON-030` |
 | `T-<AREA>-nn` | task | `T-MON-04` |
-| `D…`, `Q-…` | decision, open question | `D4`, `D-ACC-1`, `Q-BOOK-1` |
+| `D…` · `Q-…` | decision · question | `D4` · `Q-BOOK-1` |
 
-Ids are permanent: Trello cards, commits and chats may cite them. Never renumber; retire an id by deleting its entry.
+- ids are **permanent** · Trello, commits, chats cite them
+- never renumber · retire by deleting
 
 ## Releases
 
-`src/data/releases/<version>.yaml` lists a release's items in order. Each item names its area and the **check ids** it needs; the release page renders those checks with the same ticks as the area pages. A note on an item carries a status — *still open*, *fixed since*, *changed since*, *decided* — so outdated release notes stay visible as outdated.
+- `src/data/releases/<version>.yaml` · items in order
+- each item: area + **check ids** · ticks shared with area pages
+- notes: *still open* · *fixed since* · *changed since* · *decided*
 
-## Linking across areas
+## Linking
 
-Every entry may carry `related: [ids]`; it renders as *See also* links, resolved across all areas. A journey's `checks:` and a task's `waitsFor:` work the same way.
+`related:` → *See also* · journey `checks:` · task `waitsFor:` · all cross-area
 
 ## Add an area
 
-1. A line in `src/areas.mjs` (the sidebar and the home table read it)
-2. `src/data/<area>/` with any of `rules.yaml`, `journeys.yaml`, `edge-cases.yaml`, `checks.yaml`, `tasks.yaml`, `decisions.yaml`
-3. `src/content/docs/<area>/` — an `index.mdx` overview (facts table, `<AreaFeatures area="…" />` for the catalog rows whose `docs:` is this area, where it lives) plus one page per kind (a heading and one component, like `accounts/`); an area without `tasks.yaml` gets a decisions-only `open.mdx`
+1. a line in `src/areas.mjs`
+2. `src/data/<area>/` · any of the six YAML kinds
+3. `src/content/docs/<area>/` · `index.mdx` (facts table + `<AreaFeatures>`) + one page per kind
 4. `npm run check`
+
+## Width + text size
+
+| Picker | Options | Default |
+|---|---|---|
+| Width | 45 · 65 · 85rem · Full | 65rem · phones hide it |
+| Text | 16 · 17 · 18 · 20 · 22 · 24px · text only | 18px |
+
+- remembered per browser · add an option in `ThemeSelect.astro`, nothing else
+
+## Diagrams
+
+- *How it works* pages + bottom of area overviews · offline: *Offline-first › How it works*
+- one `src/diagrams/<id>.mmd` + one entry in `src/data/diagrams.yaml`
+- **Full screen** or click → whole window · tap = 2× zoom · tap again = reset · Esc / **Close**
+
+## Who keeps it current
+
+Every repo's `CLAUDE.md`: a change users see, or you must test/do/decide → update this site **in the same pass**.
+
+| Repo | Rule |
+|---|---|
+| `moneykoi-app` | *Product docs* + 6 skills |
+| `moneykoi-web` | *Product docs* · web parity + prepare-release |
+| `moneykoi-supabase` | §14 · your commands → tasks |
+| `moneykoi-admin` | *Product docs* |
+| `moneykoi-site` | *Feature and price claims* |
+| `moneykoi-receipts` | docs follow the app |
+
+## Writing style
+
+Keywords, not prose · one fact per line · see *Keywords, not prose* in `moneykoi-docs/CLAUDE.md`.

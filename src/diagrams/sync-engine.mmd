@@ -1,0 +1,32 @@
+flowchart TD
+  UI["Screens · RepoBloc and cubits"]
+  subgraph device["On the phone"]
+    direction TB
+    Cache["RepoCache · memory"]
+    SQLite[("SQLite<br/>every read comes from here")]
+    Gate{{"SyncGate<br/>does this row's book sync?"}}
+    Writer["OfflineFirstWriter"]
+    Queue["QueueManager · the outbox"]
+    Notifier["OfflineFirstNotifier"]
+    Sync["SyncManager · delta pull"]
+    Realtime["RealtimeManager"]
+  end
+  Server[("Supabase")]
+
+  UI -- "getAll · getById" --> Cache
+  Cache -- "cache miss" --> SQLite
+  UI -- "save · delete" --> Writer
+  Writer -- "write the row" --> SQLite
+  Writer --> Gate
+  Gate -- "Cloud: enqueue" --> Queue
+  Gate -. "local book: row is born synced,<br/>nothing is queued" .-> SQLite
+  Queue -- "push, one item at a time" --> Server
+  Queue -- "mark synced" --> SQLite
+  Server -- "change event" --> Realtime
+  Realtime -- "syncFresh, debounced" --> Sync
+  Sync -- "sync_all, paged" --> Server
+  Sync -- "apply deltas" --> SQLite
+  Writer -. "localChanged" .-> Notifier
+  Queue -. "queueChanged" .-> Notifier
+  Sync -. "syncChanged" .-> Notifier
+  Notifier -- "reload from SQLite" --> UI

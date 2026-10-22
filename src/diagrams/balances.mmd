@@ -1,0 +1,9 @@
+flowchart LR
+  b["booking<br/>insert · update · soft delete ·<br/>moved to another account or category"] --> t1["sync_account_income_outcome()"]
+  b --> t2["sync_category_balance()"]
+  t1 --> a["account.booking_income · booking_outcome"]
+  a --> g["generated: total_income · total_outcome ·<br/>current_balance = initial + income − outcome"]
+  t2 --> c["category.balance"]
+  c --> p["rolled up into the parent category"]
+  g --> read(["screens read the column,<br/>never SUM(booking.amount)"])
+  p --> read

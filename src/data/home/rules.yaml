@@ -89,12 +89,21 @@ items:
     source: NAVIGATION §6
   - id: R-HOM-13
     group: Bottom bar & drawer
-    title: Locked pages last in the drawer
-    text: "Free: Analytics, Shopping list, Investments, Forecast locked, above *Get Pro*"
-    source: MONETIZATION §3a, §7
+    title: Locked pages form a Pro group
+    text: |
+      - Free: Analytics, Shopping list, Investments, Forecast leave the page list
+      - Pro group at the **very end**, after Settings, Tips, Feedback
+      - header: crown, *Pro features*, *Get Pro* · rows dimmed, no padlock
+      - tap → that feature's paywall · read-only page with records
+    source: NAVIGATION §8, MONETIZATION §3a, §7 (decided 2026-10-21)
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart
-        name: 'Free: the locked pages close the list, in their usual order, right above Get Pro'
+        name: 'Free: the locked pages leave the list for the Pro group, last in the drawer, in their usual order'
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: 'Free: listed dimmed in the Pro group, and a tap opens the paywall at Analytics'
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: 'Pro: every page back in its place'
+    related: [D-HOM-5, R-MON-45]
 
   # Android widgets
   - id: R-HOM-20
@@ -180,6 +189,7 @@ items:
       - make recurring: a saved entry in a fixed-cost category (rent, insurance) → snackbar *Make recurring*
       - scan: 5 form entries and no scan → one line under the amount of a new entry
       - calendar: 3rd Budget Book open with ≥ 7 entries → chip above the tabs
+      - second book joined or created → one line under the Home header, *Switch book* opens the switcher
       - only in the first 14 days after setup on this phone · at most one hint per screen visit
     source: GETTING_STARTED §4
     tests:

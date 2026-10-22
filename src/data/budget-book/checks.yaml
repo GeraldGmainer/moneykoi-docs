@@ -4,12 +4,16 @@ groups:
     title: Budget Book
     items:
       - id: C-BB-001
-        text: Summary — transfers and balance corrections are not in income / expenses / balance but are listed under Transactions; grouped / flat; a row opens the category's activity
+        text: "Summary: no transfers/corrections in totals, listed in Transactions · grouped/flat · row → activity"
       - id: C-BB-002
-        text: Filter by search → the count says "in this period"; *Search all time* → *Back to …* chip; reopening the app keeps the old period
+        text: Search → *in this period* · *Search all time* → *Back to …* · reopen → old period
       - id: C-BB-003
-        text: Calendar — month, year and all-years; today ringed; future days outlined; an anchored month (start on the 25th) shows two partial grids
+        text: Calendar month/year/all · today ringed · future outlined · start 25 → two grids
       - id: C-BB-004
-        text: Export on Free → lock and paywall; on Pro → summary PDF and CSVs match the screen
+        text: "Export: Free → lock + paywall · Pro → PDF + CSVs match the screen"
       - id: C-BB-005
-        text: Week start Sunday and month start 25 → periods, labels and paging agree; test over the late-October DST change
+        text: Week start Sunday + month start 25 → periods, labels, paging agree · test over late-Oct DST
+      - id: C-BB-006
+        text: "Small_Phone, new book → Book tab: header *October 2026* · smaller koi · *Add transaction* above the bar, no stripe"
+      - id: C-BB-007
+        text: Empty book → *Add transaction* + *Scan a receipt* on every tab · scan lands on the scanner

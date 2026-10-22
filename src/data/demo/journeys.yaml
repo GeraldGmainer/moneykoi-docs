@@ -1,0 +1,85 @@
+# Source: moneykoi-app DEMO_AI_CONTEXT.md §1, §5, §6.
+items:
+  - id: J-DEMO-01
+    group: Demo
+    title: Starts the demo
+    from: first-run Welcome
+    steps:
+      - "*Look around with sample data*"
+      - spinner on the button
+      - Home with months of data
+    result: demo book + banner
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: writes the books into the minted local book, then onboards it last
+    checks: [C-DEMO-001, C-DEMO-002, C-DEMO-004]
+  - id: J-DEMO-02
+    group: Demo
+    title: Switches books
+    from: Home → book avatar
+    steps:
+      - book list
+      - tap the other book
+    result: other book's data
+    checks: [C-DEMO-010]
+  - id: J-DEMO-03
+    group: Demo
+    title: Leaves the demo
+    from: banner or Profile
+    steps:
+      - "*Start a real book* · *Leave demo*"
+      - "*Delete sample data*"
+      - Welcome → *Get started*
+    result: empty phone · normal setup
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: wipes the phone and ends the demo
+    checks: [C-DEMO-030, C-DEMO-031]
+  - id: J-DEMO-04
+    group: Links during a demo
+    title: Opens an invite
+    from: invite link
+    steps:
+      - "*Leave the demo to join?*"
+      - "*Delete sample data*"
+      - invite page · sign in
+    result: joins on a fresh phone
+    tests:
+      - file: test/features/book/ui/widgets/book_deep_link_listener_test.dart
+        name: in a demo an invite asks to leave it first
+    checks: [C-DEMO-022]
+  - id: J-DEMO-05
+    group: Links during a demo
+    title: Opens a backup file
+    from: tapped `.moneykoi` file
+    steps:
+      - "*Leave the demo to restore?*"
+      - "*Delete sample data*"
+      - "*Welcome back* preview"
+    result: restores on a fresh phone
+    checks: [C-DEMO-023]
+  - id: J-DEMO-06
+    group: Editing
+    title: Gerald changes sample data
+    from: "`assets/demo/demo_*.yaml`"
+    steps:
+      - edit names, amounts, sections
+      - "`flutter test test/features/demo/`"
+      - build · leave + start the demo
+    result: new data on the phone
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: every reference resolves inside its book
+  - id: J-DEMO-07
+    group: Editing
+    title: Gerald reloads the demo
+    from: About → Developer mode (in a demo)
+    steps:
+      - "*Reload demo data*"
+      - spinner on the row
+      - Home · *Sample data made again*
+    result: today's data in the app language · inbox refilled
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: the developer reload takes the app language, fills the inbox and opens the first book when the open one is gone
+    checks: [C-DEMO-041]

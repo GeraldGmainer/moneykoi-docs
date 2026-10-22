@@ -5,45 +5,50 @@ sidebar:
   order: 1
 ---
 
-A **book** (database: `tenant`) is a household's data: accounts, categories, bookings, budgets, goals. A person can be in several books; one is active at a time.
+import AreaDiagrams from '../../../components/AreaDiagrams.astro';
+
+- **book** = a household's data · database: `tenant`
+- several books per person · **one** active
 
 | | |
 |---|---|
-| **Kinds** | private (`personal`) or shared (`family`) |
-| **Limit** | 3 owned books; memberships unlimited. More than one own book is Cloud |
-| **Currency** | one per book; only the owner changes it |
-| **Roles** | owner (one, fixed) → admin (invite, manage, set up) → member (bookings, receipts, shopping) |
-| **Who pays** | the owner — members of a Cloud book get every feature inside it |
-| **Offline** | reading works; managing (create, invite, roles, leave, delete) needs a connection |
-| **Sync** | only the active book's data is pulled; switching re-pulls, never wipes |
+| **Kinds** | private (`personal`) · shared (`family`) |
+| **Limit** | ≤ 3 owned · memberships unlimited · 2+ own = Cloud |
+| **Currency** | one per book · owner changes it |
+| **Roles** | owner (fixed) → admin → member |
+| **Who pays** | owner · members get every feature inside |
+| **Offline** | reading ✓ · managing needs internet |
+| **Sync** | only the active book pulled · switch never wipes |
 
-## What each role can do
+## Roles
 
 | | Owner | Admin | Member |
 |---|---|---|---|
-| Bookings, receipts, shopping | ✓ | ✓ | ✓ |
-| Accounts, categories, goals, loans, investments, recurring rules | ✓ | ✓ | read only |
-| Invite, remove plain members | ✓ | ✓ | – |
-| Change roles, remove an admin | ✓ | – | – |
-| Change the currency | ✓ | – | – |
-| Export / import / back up the whole book | ✓ | ✓ | – |
-| Export bookings (CSV, Pro), download own data | ✓ | ✓ | ✓ |
-| Erase data, rename, stop sharing, delete | ✓ | – | – |
+| Bookings · receipts · shopping | ✓ | ✓ | ✓ |
+| Accounts · categories · goals · loans · investments · rules | ✓ | ✓ | read |
+| Invite · remove members | ✓ | ✓ | – |
+| Roles · remove an admin | ✓ | – | – |
+| Currency | ✓ | – | – |
+| Whole-book export · import · backup | ✓ | ✓ | – |
+| Booking CSV (Pro) · own data | ✓ | ✓ | ✓ |
+| Erase · rename · stop sharing · delete | ✓ | – | – |
 | Leave | – | ✓ | ✓ |
 
-## App and web
+## App vs web
 
 | | App | Web |
 |---|---|---|
-| Manage | any book, swipe to preview | the active book only |
-| Book avatars, rename | ✓ | – |
-| Live updates | realtime | on the next refetch |
-| Which books open | all | only Cloud books; others listed locked |
+| Manage | any book · swipe to preview | active book only |
+| Avatars · rename | ✓ | – |
+| Live updates | realtime | next refetch |
+| Opens | all books | Cloud books only |
 
 ## Where it lives in code
 
 | Piece | Where |
 |---|---|
-| App feature | `moneykoi-app/lib/features/book/` — `BOOK_AI_CONTEXT.md`, `FAMILY_ACCOUNTS_AI_CONTEXT.md` |
-| Server | `moneykoi-supabase` `20260710090000_books.sql` and later (RPCs `create_book`, `create_book_invite`, `accept_book_invite`, …) |
-| Web | `moneykoi-web/src/lib/books/`, `src/app/invite/` — `BOOKS_WEB_AI_CONTEXT.md` |
+| App | `lib/features/book/` · `BOOK_AI_CONTEXT.md` · `FAMILY_ACCOUNTS_AI_CONTEXT.md` |
+| Server | `20260710090000_books.sql` + later · `create_book` · `create_book_invite` · `accept_book_invite` |
+| Web | `src/lib/books/` · `src/app/invite/` · `BOOKS_WEB_AI_CONTEXT.md` |
+
+<AreaDiagrams area="books" />

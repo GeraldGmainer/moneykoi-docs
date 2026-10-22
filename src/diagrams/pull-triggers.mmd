@@ -1,0 +1,11 @@
+flowchart LR
+  resume["Back from background"] --> fresh
+  online["Back online"] --> fresh
+  rt["Realtime nudge<br/>250 ms, at most 2 s"] --> fresh
+  join["Realtime channel joined<br/>app start · reconnect · switch"] --> fresh
+  sw["Book switch"] --> fresh
+  timer["Resume timer<br/>after a broken first sync"] --> fresh
+  empty["A screen finds its table empty"] --> plain
+  fresh{{"Fresh pull<br/>something just changed"}} -- "none running → now<br/>one running → one more behind it" --> run
+  plain{{"Plain pull"}} -- "joins a running pull<br/>at most 1 per 5 s" --> run
+  run(["One pull at a time<br/>push first, then pull"])

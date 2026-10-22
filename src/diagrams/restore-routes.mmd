@@ -1,0 +1,10 @@
+flowchart TD
+  file(["A .moneykoi file<br/>picked, or tapped in Files, Drive, mail"]) --> lock{"protected?"}
+  lock -- "yes" --> pass["passphrase sheet"] --> preview
+  lock -- "no" --> preview["preview: compare the file with the book"]
+  preview --> who{"who is restoring?"}
+  who -- "account with Cloud" --> where{"into which book?"}
+  where -- "a new book" --> newbook["server, one transaction:<br/>a new book '… (restored)', nothing else changes"]
+  where -- "the book it came from" --> inplace["server: bring deleted rows back,<br/>or undo every change since"]
+  who -- "no account, or no Cloud" --> replace["on the phone, into SQLite:<br/>replaces a book after a red confirm"]
+  who -- "fresh phone, Welcome back" --> first["on the phone: the first book, no account"]

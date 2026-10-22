@@ -150,7 +150,7 @@ items:
     title: Opt-in, first-party, no SDK
     text: |
       - nothing sent before a **yes**
-      - MoneyKoi's own server only · no Google, Firebase, third party
+      - Money Koi's own server only · no Google, Firebase, third party
       - ≠ the Analytics tab
     source: USAGE_STATS §1
     tests:
@@ -241,7 +241,7 @@ items:
     group: Web sign-in
     title: "Release builds: production only"
     text: |
-      - release → only `https://my.moneykoi.app`
+      - release → only `https://my.moneykoi.com`
       - dev → only local hosts · production code → *expired*
     source: WEB_SIGN_IN §4 rule 7
     tests:

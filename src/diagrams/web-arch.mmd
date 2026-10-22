@@ -1,0 +1,11 @@
+flowchart LR
+  subgraph tab["Browser tab"]
+    page["Page · 'use client'"] --> hook["hook · React Query"]
+    hook --> svc["service · Supabase access"]
+    active[("localStorage<br/>active book")] --> client
+    svc --> client["one supabase client<br/>adds X-Tenant-Id"]
+  end
+  client -- "queries · RPCs · writes" --> api["PostgREST"]
+  svc -. "a write invalidates its queries" .-> hook
+  switch["book switch"] -. "invalidates every query" .-> hook
+  note["no mirror · no realtime · no offline<br/>others' changes show on the next refetch"] -.- hook

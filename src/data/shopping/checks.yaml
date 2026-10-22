@@ -4,10 +4,10 @@ groups:
     title: Shopping list
     items:
       - id: C-SHP-001
-        text: Quick-add `3x Äpfel`, `Milch 3,5%`, `Chips 2026`, `りんご3個` → quantities only where expected; grouping on/off per list; drag between groups recategorizes; check off with Undo
+        text: "`3x Äpfel` · `Milch 3,5%` · `Chips 2026` · `りんご3個` → quantities right · grouping per list · drag recategorizes · Undo"
       - id: C-SHP-002
-        text: Swipe right → booking form with name and an expense category; back out → the item stays; save → the item is gone
+        text: Swipe right → form + expense category · back → item stays · save → gone
       - id: C-SHP-003
-        text: Two phones in a shared book — add on one, check off on the other, live; a member can do everything
+        text: "Two phones, shared book: add here, check off there, live · members can do all"
       - id: C-SHP-004
-        text: Pin a list in Settings → Navigation → the tab opens it; delete that list → the tab falls back to all lists
+        text: Pin a list → tab opens it · delete it → all lists

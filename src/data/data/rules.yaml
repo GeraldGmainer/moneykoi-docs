@@ -4,15 +4,20 @@ items:
   # Backup files
   - id: R-DATA-01
     group: Backup files
-    title: A restore never merges into another book
+    title: Restore never merges
     text: |
-      It makes a **new** book, or — only for the book the file came from — undoes changes in place behind a red dialog. On a phone without Cloud it replaces one of your own books.
+      - makes a **new** book
+      - or undoes changes in the book it came from · red dialog
+      - phone without Cloud → replaces one of your books
     source: BACKUP §0, §1
   - id: R-DATA-02
     group: Backup files
-    title: Creating a backup is Pro; restoring is free
+    title: Backup is Pro · restore is free
     text: |
-      Create: Pro, owner or admin of the active book. Restore: everyone, any plan. The photos option, the passphrase and the reminder ride on the same lock.
+      - create: Pro + owner or admin
+      - restore: everyone, any plan
+      - photos, passphrase, reminder → same lock as create
+      - import free · export Pro (R-MON-21)
     source: BACKUP §6, MONETIZATION §3 rule 5
     tests:
       - file: test/features/backup/use_cases/create_backup_use_case_test.dart
@@ -22,9 +27,10 @@ items:
     related: [R-MON-21]
   - id: R-DATA-03
     group: Backup files
-    title: A backup is made on the phone, offline
+    title: Backup made on the phone, offline
     text: |
-      From the phone's own copy, which also holds writes not yet synced. Only photos already uploaded need a connection.
+      - from the phone's copy, incl. unsent writes
+      - only uploaded photos need a connection
     source: BACKUP §3
     tests:
       - file: test/features/backup/data/book_snapshot_reader_test.dart
@@ -33,7 +39,8 @@ items:
     group: Backup files
     title: Everything, not just bookings
     text: |
-      Every synced kind of record of the book is in the file; a new one fails the build until it is added.
+      - every synced record kind is in the file
+      - a new kind fails the build until added
     source: BACKUP §9, §11
     tests:
       - file: test/features/backup/backup_entity_coverage_test.dart
@@ -42,7 +49,9 @@ items:
     group: Backup files
     title: Never half a book
     text: |
-      The server restore is one transaction; a phone restore stages every row aside and swaps them in at once. A cancel, a failure or a killed app leaves the book as it was.
+      - server restore = one transaction
+      - phone restore stages rows, swaps at once
+      - cancel, failure, kill → book unchanged
     source: BACKUP §4, §4c
     tests:
       - file: test/features/backup/restore_backup_use_case_test.dart
@@ -53,7 +62,8 @@ items:
     group: Backup files
     title: New ids on restore
     text: |
-      Every id is regenerated and every link follows. Kept only on a phone that holds no other book, where nothing can collide.
+      - every id new · links follow
+      - kept only on a phone with no other book
     source: BACKUP §5, §4c
     tests:
       - file: test/features/backup/backup_remapper_test.dart
@@ -62,10 +72,11 @@ items:
         name: next to another book on the phone the ids are remapped, so nothing can collide
   - id: R-DATA-07
     group: Backup files
-    title: An old file always restores; a newer one is refused by name
+    title: Old files restore · newer refused
     source: BACKUP §8
     text: |
-      `format_v1.moneykoi` is checked in and never regenerated — it stands for files on users' drives.
+      - `format_v1.moneykoi` checked in, never regenerated
+      - newer format → refused by name
     tests:
       - file: test/features/backup/backup_archive_test.dart
         name: the checked-in format v1 fixture still opens and remaps
@@ -75,7 +86,9 @@ items:
     group: Backup files
     title: Nothing silently missing
     text: |
-      A row that cannot be linked is skipped and counted, a renamed duplicate gets " (2)", a bad photo is left out and counted — the restore still succeeds and the result says what happened.
+      - unlinkable row → skipped, counted
+      - duplicate name → " (2)"
+      - bad photo → left out, counted · restore still succeeds
     source: BACKUP §5, §4d
     tests:
       - file: test/features/backup/backup_remapper_test.dart
@@ -84,9 +97,8 @@ items:
         name: a photo that fails its checksum is left out and counted, the rest still come
   - id: R-DATA-09
     group: Backup files
-    title: Only a finished save counts as a backup
-    text: |
-      A cancelled save dialog or a dismissed share sheet is not a backup: no *last backup* stamp, no re-armed reminder.
+    title: Only a finished save counts
+    text: cancelled save or share → no *last backup* stamp, no re-armed reminder
     source: BACKUP §3
     tests:
       - file: test/features/backup/use_cases/create_backup_use_case_test.dart
@@ -95,15 +107,18 @@ items:
         name: a dismissed share sheet is not a backup
   - id: R-DATA-10
     group: Backup files
-    title: No storage permission, ever
+    title: No storage permission
     text: |
-      The system save dialog is the permission. Never saved into the app's own storage — it dies with an uninstall.
+      - system save dialog = the permission
+      - **never** saved in app storage · uninstall would delete it
     source: BACKUP §3a, BOOKING_EXPORT §7
   - id: R-DATA-11
     group: Backup files
-    title: The passphrase is the user's alone
+    title: Passphrase is yours alone
     text: |
-      ≥ 8 characters, typed twice; every entry AES-256 encrypted, opens in 7-Zip with the same passphrase (umlauts too). It never sits in app state. Lost passphrase = lost file.
+      - ≥ 8 characters, typed twice · AES-256
+      - opens in 7-Zip, umlauts too
+      - lost passphrase = lost file
     source: BACKUP §4h
     tests:
       - file: test/features/backup/bloc/create_backup_cubit_test.dart
@@ -112,9 +127,10 @@ items:
         name: a protected file opens only with its passphrase, every entry encrypted
   - id: R-DATA-12
     group: Backup files
-    title: Photos are opt-in and come back through the upload queue
+    title: "Photos: opt-in, via the upload queue"
     text: |
-      Under the restored receipt's new id and the new book; storage paths are never copied.
+      - under the restored receipt's new id + new book
+      - storage paths never copied
     source: BACKUP §4d
     tests:
       - file: test/features/backup/backup_archive_extras_test.dart
@@ -123,18 +139,18 @@ items:
         name: queues each photo under the restored receipt and the new book, in order, then cleans up
   - id: R-DATA-13
     group: Backup files
-    title: Settings travel, but only a new phone takes them
+    title: Settings travel · new phone only
     text: |
-      Applied on a *Welcome back* restore only; notification settings and goal reminders never (turning a channel on is when the OS asks).
+      - applied only on a *Welcome back* restore
+      - **never** notification switches or goal reminders
     source: BACKUP §4g
     tests:
       - file: test/features/backup/data/backup_settings_store_test.dart
         name: profile settings are written, but notifications stay as the phone has them
   - id: R-DATA-14
     group: Backup files
-    title: Undo in place has four fences
-    text: |
-      A book that syncs; the file made from this very book; owner or admin; no unsent writes of this book.
+    title: "Undo in place: four fences"
+    text: book syncs · file from this book · owner or admin · no unsent writes
     source: BACKUP §4b
     tests:
       - file: test/features/backup/use_cases/rewind_backup_use_case_test.dart
@@ -147,10 +163,10 @@ items:
     group: Backup files
     title: Where a restore lands
     text: |
-      - **Account with Cloud** → a new book on the server
-      - **Account without Cloud** → replaces the own book you pick, or a new own book kept on the phone
-      - **No account, empty phone** (*Welcome back*) → this phone, with settings
-      - **Local book** → replaces it, after a red confirmation
+      - **Cloud account** → new book on the server
+      - **free account** → replaces a chosen own book, or a new local one
+      - **empty phone** (*Welcome back*) → this phone + settings
+      - **local book** → replaced after a red confirm
     source: BACKUP §4c
     tests:
       - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
@@ -159,26 +175,33 @@ items:
         name: a new book of its own is the target, never a server restore that would open empty
   - id: R-DATA-16
     group: Backup files
-    title: A phone restore keeps the book's name and currency
-    text: |
-      A file in another currency gets a note; nothing is converted.
+    title: Phone restore keeps name + currency
+    text: other currency → a note · **nothing** converted
     source: BACKUP §4c
 
   # Your data
   - id: R-DATA-20
     group: Your data
-    title: '*Download all your data* is free, for every member'
+    title: "*Download all data*: Pro, everyone"
     text: |
-      One zip: `profile.json`, a README and one restorable `.moneykoi` per book. A book you only belong to gives your own entries. Access to your own data is never paid (decided 2026-10-16), even though each file inside restores like a backup.
-    source: BACKUP §4f
+      - zip: `profile.json` + README + one `.moneykoi` per book
+      - joined book → only own entries
+      - **Pro** since 2026-10-21 · free before (D-DATA-12)
+      - Free: row wears the lock → paywall *Data export*
+    source: BACKUP §4f, MONETIZATION §3 rule 5
     tests:
       - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
         name: 'one zip: a restorable backup per book, the profile and a README'
+      - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
+        name: without Pro nothing is read or saved
+    related: [R-MON-21]
   - id: R-DATA-21
     group: Your data
-    title: Books are read where their real rows are
+    title: Books read where their rows are
     text: |
-      The active book and any book that does not sync from the phone; another book that syncs from the server. Offline with another syncing book → refused before anything is read.
+      - active book + non-syncing books → from the phone
+      - other syncing books → from the server
+      - offline + another syncing book → refused
     source: BACKUP §4f
     tests:
       - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
@@ -187,18 +210,26 @@ items:
         name: offline with other books is refused before anything is read
   - id: R-DATA-22
     group: Your data
-    title: The whole-book export (ZIP) strips ids
+    title: Whole-book ZIP strips ids
     text: |
-      14 CSVs + `moneykoi-data.json` + README, owner or admin, active book, from the Book card menu. No id that names a book or a person leaves in it.
-    source: DATA_PORTABILITY §1, §2
+      - 14 CSVs + `moneykoi-data.json` + README
+      - **Pro** · owner or admin · active book · Book card menu
+      - no book or person ids inside
+      - Free: ⋮ *Export data* + lapse review *Export* → paywall
+    source: DATA_PORTABILITY §1, §2, MONETIZATION §3a
     tests:
       - file: test/features/data_export/bloc/data_export_cubit_test.dart
         name: a member who may not export is denied, and export does nothing
+      - file: test/features/data_export/export_book_archive_use_case_test.dart
+        name: without Pro the export is refused before the book is read
+    related: [R-MON-21, E-MON-23]
   - id: R-DATA-23
     group: Your data
-    title: Erase data — owner only, irreversible
+    title: "Erase: owner only, final"
     text: |
-      Deletes every record of the book, on every device; keeps the book, its name, members and settings. Nothing stays in the trash to restore.
+      - deletes every record, every device
+      - keeps book, name, members, settings
+      - nothing left in the trash
     source: DATA_PORTABILITY §5
     tests:
       - file: test/features/book/ui/book_card_menu_test.dart
@@ -207,54 +238,56 @@ items:
   # CSV import
   - id: R-DATA-30
     group: CSV import
-    title: One CSV, owner or admin, free
+    title: One CSV · owner/admin · free
     text: |
-      Into the active book; bookings plus the accounts, categories and labels they need. Nothing is written until **Import**.
+      - into the active book · bookings + needed accounts, categories, labels
+      - nothing written before **Import**
     source: BOOKING_IMPORT §1
     tests:
       - file: test/features/data_import/use_cases/commit_import_use_case_test.dart
         name: a member who may not import is refused before anything is written
   - id: R-DATA-31
     group: CSV import
-    title: Accounts match exactly, never fuzzily
+    title: Accounts match exactly
     text: |
-      Same name, ignoring case, hidden accounts included. "Giro" onto "Giro alt" would move money silently.
+      - same name, any case, hidden ones too
+      - **never** fuzzy · "Giro" ≠ "Giro alt"
     source: BOOKING_IMPORT §7
   - id: R-DATA-32
     group: CSV import
-    title: Categories — exact, then a synonym as a suggestion, then new
+    title: "Categories: exact → synonym → new"
     text: |
-      Always within the side (income / expense). DE/EN/JA synonyms suggest; a new one is top-level with the template's look. Never onto a parent that has subcategories — the user picks a sub.
+      - within the same side · income / expense
+      - DE/EN/JA synonyms only suggest
+      - new = top-level · never onto a parent with subs
     source: BOOKING_IMPORT §8
   - id: R-DATA-33
     group: CSV import
-    title: What is skipped and listed
+    title: Skipped + listed
     text: |
-      Rows without a category (a file without a category column cannot continue), transfers, opening balances, bad dates or amounts, zero amounts — each with its row number and reason.
+      - no category · transfers · opening balances
+      - bad dates or amounts · zero amounts
+      - each with row number + reason
     source: BOOKING_IMPORT §5
   - id: R-DATA-34
     group: CSV import
     title: Duplicates start unticked
-    text: |
-      Same account, day, side and amount as an existing booking — counted pairwise, description ignored.
+    text: same account, day, side, amount · counted pairwise · description ignored
     source: BOOKING_IMPORT §9
   - id: R-DATA-35
     group: CSV import
-    title: Cut to the server's limits
-    text: |
-      Description 20 characters (hard cut), account and category names 20, labels 24.
+    title: Cut to server limits
+    text: description 20 · account + category names 20 · labels 24
     source: BOOKING_IMPORT §5
   - id: R-DATA-36
     group: CSV import
     title: No currency handling
-    text: |
-      A currency column is ignored; every amount is taken in the book's currency, nothing converted or flagged.
+    text: currency column ignored · all in the book's currency
     source: BOOKING_IMPORT §5
   - id: R-DATA-37
     group: CSV import
     title: Limits
-    text: |
-      16 MB, 10,000 rows (refused with "split it"), a background-sync note from 2,000.
+    text: 16 MB · 10,000 rows → *split it* · sync note from 2,000
     source: BOOKING_IMPORT §3
     tests:
       - file: test/features/data_import/use_cases/read_import_file_use_case_test.dart
@@ -263,7 +296,9 @@ items:
     group: CSV import
     title: Undo on the result screen only
     text: |
-      Deleted for good, not trashed; an account, category or label someone booked onto since is kept. Leaving the page ends it.
+      - deleted for good, not trashed
+      - items used since are kept
+      - leave the page → undo gone
     source: BOOKING_IMPORT §11
     tests:
       - file: test/features/data_import/use_cases/undo_import_use_case_test.dart
@@ -273,35 +308,36 @@ items:
   - id: R-DATA-39
     group: CSV import
     title: Insert or skip, never update
-    text: |
-      An import never changes an existing booking, and never rebuilds recurring rules.
+    text: never changes existing bookings · never rebuilds rules
     source: BOOKING_IMPORT §13
 
   # Booking export
   - id: R-DATA-50
     group: Booking export (CSV)
-    title: Filtered booking export is Pro, for every member
+    title: "Booking export: Pro, every member"
     text: |
-      `Feature.exportFiltered` — the tile wears the lock and opens the paywall. Read-only members may use it. (`BOOKING_EXPORT_AI_CONTEXT.md` D12 still says "free" — stale, see T-DATA-01.)
-    source: feature.dart, backup_restore_page.dart
+      - `Feature.exportFiltered` · lock → paywall *Data export*
+      - read-only members may use it
+      - same gate as every export (R-MON-21)
+    source: feature.dart, backup_restore_page.dart, BOOKING_EXPORT §1
     tests:
       - file: test/features/backup/ui/backup_restore_page_test.dart
         name: a read-only member may export bookings, though not back up or import
-    related: [T-DATA-01]
+    related: [R-MON-21]
   - id: R-DATA-51
     group: Booking export (CSV)
-    title: Opens on This month, never all time
-    text: |
-      The anchored budget month. *Reset* returns to it.
+    title: Opens on This month
+    text: the budget month · *Reset* returns to it
     source: BOOKING_EXPORT §4
     tests:
       - file: test/features/booking_export/bloc/booking_export_cubit_test.dart
         name: opens on the budget month, so older bookings wait for a wider period
   - id: R-DATA-52
     group: Booking export (CSV)
-    title: The file reads back through the import
+    title: File reads back via import
     text: |
-      A plain table: no metadata block, no booking id; transfers and opening balances come back as skipped.
+      - plain table · no metadata, no booking id
+      - transfers + opening balances → skipped on import
     source: BOOKING_EXPORT §1
     tests:
       - file: test/features/booking_export/booking_export_round_trip_test.dart
@@ -310,9 +346,11 @@ items:
         name: no booking id is written, in the header or in a row
   - id: R-DATA-53
     group: Booking export (CSV)
-    title: Filters — OR within, AND across
+    title: "Filters: OR within, AND across"
     text: |
-      Period, categories, labels, creator. A parent's own row means bookings filed on the parent itself; ticking a parent takes its subs too.
+      - period · categories · labels · creator
+      - parent's own row = bookings on the parent itself
+      - ticking a parent → its subs too
     source: BOOKING_EXPORT §4
     tests:
       - file: test/features/booking_export/domain/booking_export_matcher_test.dart
@@ -321,25 +359,29 @@ items:
   # On the web
   - id: R-DATA-70
     group: On the web
-    title: Backup & restore — the same file, in a browser
+    title: "Web backup: same file"
     text: |
-      The web writes and reads the same `.moneykoi` format (passphrase included) — files move freely between web and app. Differences: a browser download instead of Save / Share, no `settings.json` (ignored on open, never written), photos downloaded and uploaded at once without a retry queue, packing on the main thread.
+      - same `.moneykoi` format + passphrase · files move freely
+      - browser download · no `settings.json`
+      - photos once, no retry queue
     source: BACKUP_RESTORE_WEB §7
   - id: R-DATA-71
     group: On the web
-    title: Book export — 14 CSVs and a README
+    title: "Web book export: 14 CSVs"
     text: |
-      Owner or admin, active book, from the Books page. No `moneykoi-data.json` (nothing reads it since 2026-09-28). Download all your data is not on the web — it reads only the active book.
+      - owner or admin · active book · Books page
+      - no `moneykoi-data.json`
+      - no *Download all data* on the web
     source: DATA_EXPORT_WEB §7
   - id: R-DATA-72
     group: On the web
-    title: CSV import — the same wizard
+    title: "Web CSV import: same wizard"
     text: |
-      Columns → Accounts → Categories → Review with the app's detection and fixtures; writes go straight to the server (no outbox), the duplicate window is the exact day range.
+      - Columns → Accounts → Categories → Review
+      - writes straight to the server · exact day range for duplicates
     source: IMPORT_WEB §7
   - id: R-DATA-73
     group: On the web
-    title: Booking export — one CSV from the ledger
-    text: |
-      The ledger's current filter as the shared 16-column `bookings.csv`; no multi-select export page, no PDF.
+    title: "Web booking export: ledger CSV"
+    text: current ledger filter → `bookings.csv` · no export page, no PDF
     source: DATA_EXPORT_WEB §7, catalog

@@ -1,0 +1,35 @@
+# Source: OFFLINE_FIRST_AI_CONTEXT.md §6; test/edge_cases/offline_conflict_edge_cases_test.dart run with
+# --run-skipped on 2026-10-17; .agents/reports/edge-cases-2026-09.md. T-ACC-01/02 moved here from accounts.
+items:
+  - id: T-ACC-01
+    title: Is the B1 sync fix on prod?
+    owner: gerald
+    detail: |
+      - `20261005130000_sync_all_deletes_ignore_exclude.sql` is committed
+      - engine doc §6 still says "parked" · check prod
+    command: |
+      psql "$PROD_DATABASE_URL" -c "select version from supabase_migrations.schema_migrations where version = '20261005130000';"
+  - id: T-ACC-02
+    title: Fix "parked" in the engine doc
+    owner: ai
+    waitsFor: [T-ACC-01]
+    detail: Doc drift found while building this site
+    prompt: |
+      In moneykoi-app/.agents/references/OFFLINE_FIRST_AI_CONTEXT.md §6 step 2, the deletes half of bug B1 is fixed by moneykoi-supabase 20261005130000_sync_all_deletes_ignore_exclude.sql (in migrations/, not migrations_later/). Rewrite the sentence to say it is applied and keep the warning not to put the filter back. The upserts half (O4) stays open.
+  - id: T-OFF-01
+    title: Unskip 3 conflict tests that pass
+    owner: ai
+    detail: |
+      - EC-SYNC-2 ×2 + EC-SYNC-3 ×1 still marked `skip`
+      - all 3 pass with `--run-skipped` · fixed 2026-09-23
+    prompt: |
+      In moneykoi-app/test/edge_cases/offline_conflict_edge_cases_test.dart, three tests carry a `skip:` for EC-SYNC-2 (two) and EC-SYNC-3 (one), but they pass since saveAllNotSynced stopped overwriting rows the outbox owns (OFFLINE_FIRST_AI_CONTEXT.md §6 step 4, 2026-09-23). Verify with `flutter test --run-skipped test/edge_cases/offline_conflict_edge_cases_test.dart`, remove those three skips and their EC comments, and mark EC-SYNC-2/3 fixed in .agents/reports/edge-cases-2026-09.md. Leave EC-SYNC-1 and EC-SYNC-4 skipped — they still fail. Then link the three tests from E-OFF-04 / E-OFF-05 in ../moneykoi-docs/src/data/offline/edge-cases.yaml.
+  - id: T-OFF-02
+    title: Clear the ghost after a stale push
+    owner: ai
+    waitsFor: [T-ACC-01]
+    detail: |
+      - EC-SYNC-1 · 3 tests skipped and failing
+      - push answer already says deleted · phone ignores it
+    prompt: |
+      Fix EC-SYNC-1 in moneykoi-app (.agents/reports/edge-cases-2026-09.md): when the outbox pushes an edit of a booking the server already soft-deleted, the upsert's returned row carries deleted_at, but QueueManager's markAsSynced ignores it, so the phone keeps a live ghost until a pull brings the delete. Apply the returned deleted_at locally (tombstone for a trash-enabled source, otherwise delete), keep OFFLINE_FIRST_AI_CONTEXT.md §3/§5 in sync, and unskip the three EC-SYNC-1 tests in test/edge_cases/offline_conflict_edge_cases_test.dart. Then set E-OFF-01 in ../moneykoi-docs/src/data/offline/edge-cases.yaml to fixed with the tests.

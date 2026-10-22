@@ -1,36 +1,36 @@
 items:
   - id: E-ANL-01
     group: Numbers
-    title: All-time averages (app)
-    when: An average over *All*.
-    then: The app divides by days since 1970 (a known app bug); the web by days since the first booking.
+    title: All-time averages · app
+    when: average over *All*
+    then: "app divides by days since 1970 (bug) · web: since first booking"
     status: known-issue
     risk: medium
   - id: E-ANL-02
     group: Numbers
     title: Leap day in the baseline
-    when: A comparison window ends on 29 February.
-    then: The baseline overflows into 1 March — pinned as failing on the web; the Dart original has the same bug. Fix both together.
+    when: window ends on 29 Feb
+    then: spills into 1 Mar · web failing test · Dart same · fix both
     status: known-issue
     risk: low
   - id: E-ANL-03
     group: Numbers
     title: No income, no ratio
-    when: A period with expenses and no income.
-    then: The fixed-cost ratio shows "record your income", not 0 %.
+    when: expenses, no income
+    then: "*record your income*, not 0 %"
     risk: low
   - id: E-ANL-04
     group: Web
-    title: '"All" shows only this month in the fixed & variable group (web)'
-    when: '`range=all` on the web.'
-    then: Those four cards cover the current month while the rest covers all history. From reading the code.
+    title: "Web *All*: fixed/variable = this month"
+    when: "`range=all` on the web"
+    then: those 4 cards show this month only · from reading code
     status: known-issue
     risk: medium
   - id: E-ANL-05
     group: Web
-    title: Web waiting for migrations
-    when: The analytics month-anchor and corrections migrations are not applied.
-    then: Calendar months and the server's day; corrections missing from net worth and the waterfall; no *Untracked* bar.
+    title: Web waits for migrations
+    when: anchor + corrections migrations not applied
+    then: calendar months · server day · no *Untracked* bar
     status: known-issue
     risk: medium
     related: [T-ANL-01]

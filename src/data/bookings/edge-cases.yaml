@@ -1,94 +1,96 @@
 items:
   - id: E-BKG-01
     group: Quick booking
-    title: '`vor 2 tagen` and an amount'
-    when: '`apfel 2,5 vor 2 tagen`'
-    then: The date claims its own `2` first, so 2.50 is booked two days ago.
+    title: "`vor 2 tagen` + an amount"
+    when: "`apfel 2,5 vor 2 tagen`"
+    then: date takes its own `2` → 2.50, two days ago
     risk: medium
   - id: E-BKG-02
     group: Quick booking
-    title: A 3-decimal currency
-    when: A book in KWD or BHD types `1,500`.
-    then: Read as 1500 — the thousands rule assumes at most two decimals. Every shipped currency has two or fewer.
+    title: 3-decimal currency
+    when: KWD/BHD book types `1,500`
+    then: read as 1500 · all shipped currencies have ≤ 2 decimals
     status: by-design
     risk: low
   - id: E-BKG-03
     group: Quick booking
-    title: Only an amount typed
-    when: The prompt is just `5,90`.
-    then: The description falls back to the category's name — a row with no title is unreadable.
+    title: Only an amount
+    when: prompt is just `5,90`
+    then: description = category name
     risk: low
   - id: E-BKG-04
     group: Quick booking
-    title: Opened from the home-screen widget
-    when: The quick booking widget opens the sheet.
-    then: The keyboard is asked for again with a bounded retry — a single focus request does not raise it there.
+    title: Opened from the widget
+    when: quick booking widget opens the sheet
+    then: keyboard requested again with a bounded retry
     risk: medium
   - id: E-BKG-05
     group: Quick booking
     title: Upper-case umlauts in history
-    when: You booked `DÖNER` before and type `döner`.
-    then: The first history lookup is ASCII-only, so a later tier (normalized history) finds it.
+    when: booked `DÖNER`, now typing `döner`
+    then: normalized history lookup finds it
     risk: low
   - id: E-BKG-10
     group: Trash
-    title: Restoring after the category was deleted
-    when: The category of a trashed booking is gone.
-    then: The entry disappears from the trash rather than restoring into nothing.
+    title: Restore, category deleted
+    when: trashed booking's category is gone
+    then: entry leaves the trash
     status: by-design
     risk: low
   - id: E-BKG-11
     group: Trash
-    title: Trashed bookings never block deleting a category
-    when: Every booking of a category is in the trash.
-    then: The category can be deleted; the trashed ones no longer count as "in use".
+    title: Trash never blocks category delete
+    when: all a category's bookings are in trash
+    then: category deletable · trash doesn't count as use
     risk: low
   - id: E-BKG-12
     group: Trash
-    title: A restored recurring booking on today or later
-    when: An occurrence dated today or in the future is restored (unlinked).
-    then: The forecast still projects the rule for that day beside it — that day counts twice. Accepted with the unlink decision.
+    title: Restored occurrence today or later
+    when: recurring occurrence restored, unlinked
+    then: forecast also projects the rule → counted twice · accepted
     status: known-issue
     risk: low
   - id: E-BKG-13
     group: Trash
     title: Deleting an imported year
-    when: Thousands of bookings deleted in one go.
-    then: The trash keeps at most 200 per type — the window alone would not bound it.
+    when: thousands deleted at once
+    then: trash keeps max 200 per type
     status: by-design
     risk: low
   - id: E-BKG-20
     group: Web
-    title: Double submit on the web
-    when: The user double-clicks Save on `/add` or `/add-receipt`.
-    then: Books twice — pinned as a failing test.
+    title: Web double submit
+    when: double-click Save on `/add` or `/add-receipt`
+    then: books twice · failing test pinned
     status: known-issue
     risk: high
   - id: E-BKG-21
     group: Web
-    title: A pasted grouped amount on the web
-    when: '`1,250.00` or `1.250,00` pasted into `/add`; or a German user types `1.500`.'
-    then: Rejected, or saved as 1.5 (review #15b). Open.
+    title: Web grouped amounts
+    when: "`1,250.00` / `1.250,00` pasted · German `1.500`"
+    then: rejected, or saved as 1.5 · open (review 15b)
     status: known-issue
     risk: high
   - id: E-BKG-22
     group: Web
-    title: 0- and 3-decimal currencies on the web
-    when: A JPY or KWD book edits a booking or splits a receipt.
-    then: The edit re-saves through a 2-decimal calculator (a KWD amount is rewritten); the receipt balance tolerance and some labels are wrong (reviews #13, #16, #22).
+    title: Web 0/3-decimal currencies
+    when: JPY/KWD book edits a booking or splits a receipt
+    then: |
+      - 2-decimal calculator rewrites KWD amounts
+      - receipt tolerance + labels wrong (reviews 13, 16, 22)
     status: known-issue
     risk: medium
   - id: E-BKG-23
     group: Web
-    title: The receipt split on the web
-    when: An item fails while saving `/add-receipt`.
-    then: A retry re-books the others; negative and zero items are booked; no receipt record is written. Pinned as failing.
+    title: Web receipt split
+    when: an item fails while saving `/add-receipt`
+    then: retry re-books others · ≤ 0 items booked · no receipt row · failing test
     status: known-issue
     risk: medium
   - id: E-BKG-24
     group: Web
-    title: Balance corrections in the web ledger
-    when: A balance check booked corrections.
-    then: They show in the balance check and on the dashboard, not in `/bookings` (by design for now).
+    title: Corrections in the web ledger
+    when: balance check booked corrections
+    then: on balance check + dashboard, not `/bookings` · by design for now
     status: by-design
     risk: low

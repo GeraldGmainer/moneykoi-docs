@@ -1,0 +1,9 @@
+flowchart TD
+  anchor(["Anchor: today's balance<br/>initial balances + bookings up to end of today"]) --> r1
+  r1["Rung 1 · future-dated bookings — exact"] --> r2["Rung 2 · planned items — exact"]
+  r2 --> r3["Rung 3 · recurring rules, projected — exact"]
+  r3 --> r3b["Rung 3b · loan installments until payoff — exact"]
+  r3b --> r4["Rung 4 · budgets: what is left of the cap ÷ days left"]
+  r4 --> r5["Rung 5 · everyday baseline: median daily spend outside budgets<br/>from 2+ whole months, else none"]
+  r5 --> line(["Daily balance line · lowest point · safe to spend"])
+  note["Each euro is claimed once:<br/>a higher rung removes what it covers from the rungs below"] -.- r3

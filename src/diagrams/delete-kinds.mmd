@@ -1,0 +1,11 @@
+flowchart TD
+  del(["You delete"]) --> hide["Hidden everywhere at once<br/>waits as a pending delete"]
+  hide --> send["Outbox sends the delete"]
+  send --> kind{"what was it?"}
+  kind -- "most records" --> soft["Server marks it deleted<br/>the row stays, flagged"]
+  kind -- "shopping item" --> hard["Server removes it for good<br/>the journal keeps a note"]
+  soft --> peers["Other phones pull the delete"]
+  hard --> peers
+  send --> here{"on this phone"}
+  here -- "booking or its tag" --> trash["kept in the trash"]
+  here -- "anything else" --> gone["row removed"]

@@ -4,39 +4,38 @@ groups:
     title: Everyday
     items:
       - id: C-INV-030
-        text: Buy, partial sell (realized gain shown before saving), transfer between two places (no gain), staking income, a fee; booking the cash leg moves the depot or the account
+        text: Buy · partial sell (gain shown first) · transfer (no gain) · staking · fee · cash leg moves the account
       - id: C-INV-031
-        text: Prices arrive daily with "as of" time; a custom asset with a manual price; a manual price on a feed-priced asset is flagged as ignored; chart 1M / 3M / 1Y / 5Y / All
+        text: Daily prices + "as of" · custom asset · ignored manual price flagged · 1M…All charts
       - id: C-INV-032
-        text: As a member — every position visible, nothing editable
+        text: "Member: all visible, nothing editable"
   - id: currencies
     title: Currency positions
-    setup: |
-      Needs `currency_assets.sql` pushed, then `is_active` flipped (T-INV-01) — hidden until both are done.
+    setup: Needs `currency_assets.sql` pushed + `is_active` on (T-INV-01)
     items:
       - id: C-INV-001
-        text: Add → a *Currencies* group; the book's own currency is hidden; search by localized name
+        text: Add → *Currencies* group · book currency hidden · search by localized name
       - id: C-INV-002
-        text: JPY — 0 decimals, unit label "JPY"
+        text: 'JPY: 0 decimals, label "JPY"'
       - id: C-INV-003
-        text: The price row is *Exchange rate*, prefilled from the market rate; detail shows *Avg. rate paid* / *Current rate*; prices read "1 EUR = 175.42 JPY"
+        text: '*Exchange rate* prefilled · *Avg. rate paid* / *Current rate* · "1 EUR = 175.42 JPY"'
       - id: C-INV-004
-        text: Buy / Sell and Transfer use the ISO code
+        text: Buy/Sell + Transfer use the ISO code
 
   - id: grid
-    title: Asset grid "Show more"
+    title: Asset grid *Show more*
     items:
       - id: C-INV-010
-        text: A class with more than 9 assets shows 8 plus *Show more · N more* (crypto today); a search shows every match
+        text: "> 9 assets → 8 + *Show more · N more* · search shows all"
       - id: C-INV-011
-        text: Picking from the hidden tail and going back reopens the group expanded
+        text: Pick from the hidden tail → back → group still expanded
 
   - id: wizard
     title: Investment wizard steps
     items:
       - id: C-INV-020
-        text: '"Step N of 3" in the app bar, no tabs; on steps 2–3 a back arrow goes one step back'
+        text: '"Step N of 3" · no tabs · steps 2–3: back arrow'
       - id: C-INV-021
-        text: The arrow, Android back and the iOS swipe each go back one step; with the keypad open, back closes the keypad first
+        text: Arrow · Android back · iOS swipe → one step back · keypad closes first
       - id: C-INV-022
-        text: Step 1 with changes → discard dialog; editing an existing position still shows ×
+        text: Step 1 with changes → discard dialog · editing shows ×

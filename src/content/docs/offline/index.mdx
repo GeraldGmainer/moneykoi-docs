@@ -1,0 +1,105 @@
+---
+title: Overview
+description: How Money Koi works without internet — what is saved where, what waits, what syncs, and what needs a connection.
+sidebar:
+  order: 1
+---
+
+import Diagram from '../../../components/Diagram.astro';
+
+- **phone** = truth for what you see · every screen reads the phone
+- **server** = truth for what exists · other phones meet there
+- no internet → everything still works · changes wait in the **outbox**
+
+<Diagram id="offline-overview" headingLevel={2} />
+
+## At a glance
+
+| | |
+|---|---|
+| **Reads** | from the phone · never wait on the network |
+| **Saves** | on screen at once · sent later |
+| **Ids** | made on the phone · same on every device |
+| **Order** | one by one · deletes first · survives a restart |
+| **No internet** | 3 tries → paused · wakes when back online |
+| **Others' changes** | realtime nudge → pull · also on return + reconnect |
+| **Conflicts** | last push wins · unsent edits never overwritten |
+| **Deletes** | hidden at once · bookings → trash |
+| **First sync** | pages of 1,000 · resumes after a drop or a kill |
+| **Book switch** | deletes nothing · unsent writes wait for their book |
+| **Logout** | keeps every book + unsent writes |
+
+## Which books sync
+
+| Book | Outbox | Pull | Realtime |
+|---|---|---|---|
+| **Without account** | – | – | – |
+| **Free account, own book** | – | members + invites only | – |
+| **Cloud book** · own or shared | ✓ | ✓ | ✓ |
+| **Paused** · Cloud ended | – | members + invites only | – |
+
+- decided per **row's own book**, not the open one (R-ACC-15)
+- details: [Sign-in & accounts](/accounts/)
+
+## What works offline
+
+| Feature | Offline | Note |
+|---|---|---|
+| Bookings · transfers · tags · trash | ✓ | sent later |
+| Accounts · categories · budgets · goals · loans | ✓ | sent later |
+| Shopping lists · balance check · investments | ✓ | sent later |
+| Budget Book · analytics · forecast · search | ✓ | read from the phone |
+| Receipt scanner | ✓ | on the phone · photos upload later |
+| Recurring rules | ✓ | new, edit, pause |
+| Recurring bookings due | Cloud: after the next pull | made by the server · book without account: on the phone |
+| Reminders | ✓ | Cloud book: re-armed only on an online return |
+| Investment prices | last known | new prices need internet |
+| Price history chart | days already loaded | new days need internet |
+| Pro features | ✓ | plan table lives in the app |
+| Backup file | ✓ | uploaded receipt photos missing offline |
+| Switch book | ✓ | a book never opened here → empty until online |
+| Create · invite · roles · leave · delete a book | – | online only |
+| Restore into a new own book | – | online only |
+| *Download all data* · other synced books | – | online only |
+| Sign in · claim · *Use on computer* | – | online only |
+| Usage statistics | – | dropped offline, never queued |
+| Web dashboard | – | no offline mode |
+
+## Timings
+
+| What | Value |
+|---|---|
+| Outbox retry while offline | every 2 s · 3× → paused |
+| Outbox real error | 3 tries → paused · next app start retries |
+| Pull waits for the outbox | ≤ 10 s |
+| Plain pulls | ≤ 1 per 5 s |
+| Realtime → pull | 250 ms after the last event · ≤ 2 s |
+| Own echo ignored | 4 s |
+| One pull call | ≤ 60 s · 1,000 rows per type |
+| Failed page | retry after 2 s, 5 s |
+| Broken first sync | resume 30 s → 60 s → 2 min → every 5 min |
+
+## What you see
+
+- list icon: **dot** = waiting · **red dot** = failed
+- edit page footer: waiting · deleting · times · who made it
+- offline → *waiting for a connection*
+
+## Read next
+
+- [How it works](/offline/how-it-works/) · 13 diagrams, step by step
+- [Business rules](/offline/rules/) · [Journeys](/offline/journeys/) · [Edge cases](/offline/edge-cases/)
+- [What to test](/offline/testing/) · [Open work](/offline/open/)
+
+## Where it lives in code
+
+| Piece | moneykoi-app |
+|---|---|
+| Engine | `lib/core/offline_first/` · `OFFLINE_FIRST_AI_CONTEXT.md` |
+| Outbox | `lib/core/offline_first/queue/` |
+| Pull | `lib/core/offline_first/sync_manager/` |
+| Realtime | `lib/core/offline_first/realtime/` |
+| Which books sync | `lib/core/offline_first/sync_gate/` · `OFFLINE_TIER_AI_CONTEXT.md` |
+| App start, background, online | `lib/app/lifecycle/session_life_cycle_manager.dart` |
+| Server pull | `sync_all` · `sync_membership` · moneykoi-supabase |
+| Timings | `lib/core/constants/feature_constants.dart` |

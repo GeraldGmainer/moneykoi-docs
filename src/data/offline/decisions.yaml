@@ -1,0 +1,17 @@
+# Source: OFFLINE_FIRST_AI_CONTEXT.md §6, §12. D-ACC-1/2 moved here from accounts on 2026-10-17.
+items:
+  - id: D-ACC-1
+    question: Fix the late-commit cursor gap?
+    status: open
+    answer: |
+      - fix: cap `sync_all`'s cursor below the oldest open transaction
+      - or a few seconds behind `statement_timestamp()`
+      - no decision yet
+    related: [E-ACC-32]
+  - id: D-ACC-2
+    question: Deliver a peer's edit of a just-pushed row? (O4)
+    status: open
+    answer: |
+      - needs `(id, updated_at)` pairs in the exclude list
+      - no decision yet
+    related: [E-ACC-31]

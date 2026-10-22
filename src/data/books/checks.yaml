@@ -3,62 +3,60 @@
 groups:
   - id: join
     title: Join & keep
-    setup: |
-      Two devices: A with Cloud, B without (plan simulator or a manual revoke). Developer mode on B unless a check says otherwise.
+    setup: A with Cloud · B without
     items:
       - id: C-BOOK-001
-        text: B has a local book, developer mode on → invite link → *Join {book}* with the inviter's name → sign in with an account without Cloud → no upload, the shared book syncs, the own book stays local and still generates its recurring bookings; the same with a Cloud account uploads the own book too
-      - id: C-BOOK-002
-        text: B has a local book, developer mode **off** → invite link → *Back up this book* (no *Have an invite?* line) → sign in without Cloud → *Keep it on this phone* → the invite opens
+        text: B local book → invite → *Join {book}* + inviter → free account → no upload, shared syncs, own book local · Cloud account → own uploads too
       - id: C-BOOK-005
-        text: An expired or revoked invite → the Join page says it is no longer valid and offers no sign-in
+        text: Expired or revoked invite → *no longer valid* · no sign-in offered
       - id: C-BOOK-020
-        text: A (Cloud) invites B (free) → the shared book syncs both ways, live; B's own book never reaches the server
+        text: A (Cloud) invites B (free) → shared book live both ways · B's own book never on the server
       - id: C-BOOK-021
-        text: B on the plan simulator, Free + *Enforce plans* → every feature works inside A's book, the locks come back in B's own book; *Your plan* reads *Cloud through {book}*
+        text: B Free + *Enforce plans* → all features in A's book · locks back in own book · *Cloud through {book}*
 
   - id: read-only
     title: Read-only shared books
     items:
       - id: C-BOOK-003
-        text: Owner revokes Cloud → B relaunches → no + button (a grey cloud-slash button whose sheet leads to *Export*), a notification and an inbox row *{book} no longer syncs*; the owner's review lists the shared book with its member count. Owner renews → *{book} syncs again*, editable, the owner's later edits arrive
+        text: "Owner revokes → B: grey cloud-slash → *Export* (B on Free → paywall) · *{book} no longer syncs* · renew → *syncs again*, editable"
       - id: C-BOOK-004
-        text: Owner deletes the shared book → B keeps it read-only, *{book} was deleted*; Settings → *Books that stopped syncing* → *Export* works, *Remove from this phone* deletes it
+        text: Owner deletes the book → B read-only · *was deleted* · *Books that stopped syncing* → *Export*, *Remove*
       - id: C-BOOK-006
-        text: Tablet — the navigation rail shows the same read-only button
+        text: Tablet rail → same read-only button
 
   - id: everyday
     title: Everyday sharing
-    setup: |
-      Derived from the book docs, not from an earlier checklist.
+    setup: From the book docs
     items:
       - id: C-BOOK-010
-        text: Create a second book (Cloud) — name, currency, private or shared, starter set → it opens; the switcher shows both; double-tap the Home avatar switches back
+        text: New book (Cloud) → opens · switcher shows both · double-tap avatar → back
       - id: C-BOOK-011
-        text: Invite by email as member and as admin → the email arrives; when the email fails, the link to copy shows instead
+        text: Invite as member + admin → email arrives · email fails → link to copy
       - id: C-BOOK-012
-        text: Accept on the web → preview, sign in, *Join*, *Open in the MoneyKoi app* → the book list shows the joined book
+        text: "Web: preview → sign in → *Join* → *Open in the Money Koi app* → book listed"
       - id: C-BOOK-013
-        text: As a member — bookings, receipts and shopping work; accounts, categories, goals, loans and recurring rules are read-only with a hint
+        text: "Member: bookings, receipts, shopping work · accounts, categories, goals, loans, rules read-only + hint"
       - id: C-BOOK-014
-        text: As an admin — invite and remove plain members; no currency change, no *Erase data*
+        text: "Admin: invite + remove members · no currency, no *Erase data*"
       - id: C-BOOK-015
-        text: Owner changes the currency → confirm dialog; the partner's phone relabels after its sync; the partner's money format stays theirs
+        text: Owner changes currency → confirm · partner relabels on sync · partner's format unchanged
       - id: C-BOOK-016
-        text: Remove a member → gone at once; on their phone the book disappears and they land in their own book
+        text: Remove member → gone at once · their phone drops the book → own book
       - id: C-BOOK-017
-        text: Leave a book (member) and *Stop sharing* (owner) both land in a sensible book
+        text: "*Leave* (member) + *Stop sharing* (owner) → land in a sensible book"
       - id: C-BOOK-018
-        text: A shopping item added on one phone appears on the other within seconds
+        text: Shopping item on one phone → other within seconds
       - id: C-BOOK-019
-        text: Switch books while offline, then go online → that book's data arrives
+        text: Switch offline → online → that book's data arrives
 
   - id: attribution
     title: Creator avatar on booking rows
     items:
       - id: C-BOOK-030
-        text: B adds a booking → A sees B's face in the row's mark slot (Budget Book, Home recent, category and tag lists)
+        text: B adds a booking → A sees B's face on the row · Budget Book, Home, category + tag lists
       - id: C-BOOK-031
-        text: A recurring or receipt booking → its glyph wins over the avatar; your own bookings show nothing
+        text: Recurring or receipt glyph wins over the avatar · own bookings show nothing
       - id: C-BOOK-032
-        text: Booking form footer — the creator avatar is 20 px (was 16)
+        text: Form footer creator avatar = 20 px (was 16)
+      - id: C-BOOK-033
+        text: Invite link on a fresh phone → sign in → loading screen only, no language/currency/method step → *Join* → shared book active · Home checklist ticks from its entries · Books list shows the private book with the starter set

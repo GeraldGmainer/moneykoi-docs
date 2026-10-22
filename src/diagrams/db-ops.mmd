@@ -1,0 +1,25 @@
+erDiagram
+  TENANT ||--o{ SYNC_LOG : "tenant_id"
+  PROFILE ||--o{ SYNC_LOG : "profile_id"
+  PROFILE ||--o{ APP_VERSION_LOG : "profile_id"
+  PROFILE |o--o{ USER_FEEDBACK : "profile_id"
+  AUTH_USERS |o--o{ WEB_SIGN_IN_REQUEST : "user_id (the approving phone)"
+  SYNC_LOG {
+    text table_name
+    uuid row_id
+    text operation
+  }
+  CHANGELOG {
+    text client "app or web"
+    text version
+    jsonb notes "en, de, ja"
+  }
+  USAGE_EVENT {
+    text name "opt-in only, kept 400 days"
+  }
+  FEATURE_FLAGS {
+    text key "maintenance_mode is the kill switch"
+  }
+  ADMIN_AUDIT_LOG {
+    text action
+  }

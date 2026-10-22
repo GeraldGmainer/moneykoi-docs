@@ -1,0 +1,63 @@
+# Source: derived from OFFLINE_FIRST_AI_CONTEXT.md §5–§9 and FAMILY_ACCOUNTS_AI_CONTEXT.md — not from an
+# existing device checklist. C-ACC-050…053 moved here from accounts on 2026-10-17 and keep their ids.
+groups:
+  - id: one-phone
+    title: Airplane mode · one phone
+    setup: Signed in · a Cloud book open · airplane mode on
+    items:
+      - id: C-OFF-001
+        text: Add, edit, delete bookings → all show at once · dot on new ones
+      - id: C-OFF-002
+        text: Scan a receipt → booking saved · photo uploads once online
+      - id: C-OFF-003
+        text: Kill the app → reopen offline → everything still there, dots too
+      - id: C-OFF-004
+        text: Airplane mode off → dots gone within seconds · web shows every change
+      - id: C-OFF-005
+        text: Switch to a book opened before → its data shows
+      - id: C-OFF-006
+        text: Invite someone offline → refused · book unchanged
+
+  - id: two-phones
+    title: Sync basics · two phones
+    setup: Two phones · same Cloud book
+    items:
+      - id: C-ACC-050
+        text: Booking on phone 1 → phone 2 within seconds
+      - id: C-ACC-051
+        text: "Phone 1 offline: add · edit · delete → pending dot · online → reaches phone 2, dot clears"
+      - id: C-ACC-052
+        text: Phone 2 in background while phone 1 edits → back → changes appear
+      - id: C-ACC-053
+        text: Big book, slow connection → first sync finishes · kill halfway → continues
+
+  - id: conflicts
+    title: Conflicts · two phones
+    setup: Two phones · same Cloud book · one booking both can see
+    items:
+      - id: C-OFF-010
+        text: Both offline, edit the note differently → phone 1 online, then phone 2 → both show phone 2's note
+      - id: C-OFF-011
+        text: Phone 1 deletes offline · phone 2 edits online → phone 1 online → deleted on both
+      - id: C-OFF-012
+        text: Both delete it offline → both online → gone · no red dot
+      - id: C-OFF-013
+        text: Phone 1 edits offline · phone 2 deletes → phone 1 online → gone on both · still there = E-OFF-01
+
+  - id: bad-network
+    title: Bad network
+    setup: iPhone → Settings → Developer → Network Link Conditioner → *Very Bad Network*
+    items:
+      - id: C-OFF-020
+        text: Fresh install, sign in → Home fills step by step · no error screen
+      - id: C-OFF-021
+        text: Mid first sync, airplane mode 1 min → off → sync continues · nothing doubled
+      - id: C-OFF-022
+        text: Wi-Fi without internet → app usable · no crash · saves wait
+
+  - id: accounts
+    title: Accounts
+    setup: Signed in · a Cloud book
+    items:
+      - id: C-OFF-030
+        text: Edit offline → log out → sign in online → edits reach the server

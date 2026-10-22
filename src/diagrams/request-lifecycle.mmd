@@ -1,0 +1,15 @@
+sequenceDiagram
+  autonumber
+  participant C as App or web
+  participant R as PostgREST
+  participant P as db_pre_request()
+  participant T as Tables with RLS
+  C->>R: request with JWT + X-Tenant-Id (the open book)
+  R->>P: runs before every request
+  P->>P: profile from auth.uid()
+  P->>P: X-Tenant-Id a live membership? else profile_setting.active_tenant_id, else a book of yours
+  P-->>R: request.tenant_id · profile_id · role
+  R->>T: query or RPC
+  Note over T: SELECT → the open book only<br/>bookings, receipts, tags, shopping → any member<br/>accounts, categories, goals, loans, rules → owner or admin
+  T-->>C: rows — a refused write matches 0 rows, no error
+  Note over C,T: Realtime and Storage skip db_pre_request: realtime reads every book you belong to, storage checks the path's book

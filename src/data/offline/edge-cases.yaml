@@ -1,0 +1,293 @@
+# Source: OFFLINE_FIRST_AI_CONTEXT.md §3a, §5–§7, §12; .agents/reports/edge-cases-2026-09.md (EC-SYNC-1…4);
+# test/edge_cases/offline_conflict_edge_cases_test.dart run with --run-skipped on 2026-10-17
+# (EC-SYNC-2 and EC-SYNC-3 pass, EC-SYNC-1 and EC-SYNC-4 still fail).
+# E-ACC-30…37 moved here from accounts on 2026-10-17 and keep their ids.
+items:
+  # Conflicts
+  - id: E-ACC-37
+    group: Conflicts
+    title: Edits on two phones
+    when: same booking edited offline on both, then sync
+    then: last write wins · no merge
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: 'flush first, then pull: device and server both keep the later offline edit'
+  - id: E-OFF-01
+    group: Conflicts
+    title: Edit offline, partner deleted it
+    when: you edit offline · partner deletes · you push
+    then: |
+      - server keeps it deleted
+      - your phone shows a ghost until a pull brings the delete
+      - needs B1 on prod (T-ACC-01) · instant fix open (T-OFF-02)
+    status: known-issue
+    risk: high
+    related: [E-ACC-30, T-ACC-01, T-OFF-02]
+  - id: E-OFF-02
+    group: Conflicts
+    title: Edited twice offline, deleted elsewhere
+    when: two offline edits · partner deletes meanwhile
+    then: one outbox item · ends deleted
+    status: handled
+    risk: medium
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the outbox coalesces to one item carrying the latest edit
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the device converges to the remote deletion
+  - id: E-OFF-03
+    group: Conflicts
+    title: Deleted on both phones
+    when: both delete the same booking offline
+    then: one trash entry · outbox drains, no error
+    status: handled
+    risk: low
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the idempotent delete RPC drains the outbox and leaves one tombstone
+  - id: E-OFF-04
+    group: Conflicts
+    title: Pull before your delete is sent
+    when: you delete offline · partner edits · pull runs first
+    then: stays hidden · your delete still goes out
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: saveAllNotSynced keeps a pending delete hidden instead of resurrecting it
+    related: [T-OFF-01]
+  - id: E-OFF-05
+    group: Conflicts
+    title: Pull before your edit is sent
+    when: you edit offline · partner edits · pull runs first
+    then: your edit stays · pushed later · last push wins
+    status: fixed
+    risk: high
+    tests:
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: saveAllNotSynced never overwrites a row the outbox still owns
+    related: [R-ACC-12, T-OFF-01]
+
+  # Peer timing
+  - id: E-ACC-30
+    group: Peer timing
+    title: Peer deletes a row just pushed
+    when: phone 1 pushes · phone 2 deletes before phone 1 pulls
+    then: |
+      - fixed on the server (B1, `20261005130000_sync_all_deletes_ignore_exclude.sql`)
+      - engine doc still says "parked" · check prod (T-ACC-01)
+    status: fixed
+    risk: high
+    related: [T-ACC-01]
+  - id: E-ACC-31
+    group: Peer timing
+    title: Peer edits a row just pushed
+    when: phone 1 pushes · phone 2 edits before phone 1 pulls
+    then: phone 1 may miss it until the row changes again · open (O4)
+    status: known-issue
+    risk: medium
+    related: [D-ACC-2]
+  - id: E-ACC-32
+    group: Peer timing
+    title: Cursor passes a late commit
+    when: two overlapping server writes + a pull within ms
+    then: later row never delivered by a delta · rare · server fix
+    status: known-issue
+    risk: low
+    related: [D-ACC-1]
+  - id: E-ACC-33
+    group: Peer timing
+    title: Hard-delete echo gap
+    when: partner deletes an item ≤ 4 s after my push of it
+    then: delete arrives with the next pull, not live (EC-SYNC-4)
+    status: known-issue
+    risk: low
+  - id: E-ACC-34
+    group: Peer timing
+    title: Two quick partner changes
+    when: partner adds 2 items within 5 s
+    then: both arrive · second event queues a new pull
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_resync_test.dart
+        name: a caller arriving while the queued pull runs gets one more after it
+
+  # The outbox
+  - id: E-OFF-10
+    group: The outbox
+    title: Push to a deleted booking refused
+    when: server refuses an edit of a deleted booking
+    then: paused after 3 tries · other bookings keep going · app start retries
+    status: handled
+    risk: medium
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: a rejected upsert pauses after the retry budget and does not wedge other bookings
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: an app restart gives the exhausted item a fresh chance instead of a stuck queue
+  - id: E-OFF-11
+    group: The outbox
+    title: Delete during a save
+    when: delete tapped while the same record saves
+    then: delete lands last · record stays deleted
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/writer_test.dart
+        name: run one at a time, so a delete started mid-save still lands last in the queue
+  - id: E-OFF-12
+    group: The outbox
+    title: Write for a book not open
+    when: Cloud book write pushes while another book is open
+    then: sent under its own book · lands normally
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: a write in the shared Cloud book still flushes after switching to the own book, under its own book
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: a delete there goes out under its own book too
+  - id: E-OFF-13
+    group: The outbox
+    title: Offline during a push
+    when: connection drops while one item pushes
+    then: that item finishes · nothing else sent until online
+    status: handled
+    risk: low
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_wake_test.dart
+        name: going offline while the head is in flight finishes the head but pushes nothing else
+  - id: E-OFF-14
+    group: The outbox
+    title: First booking of a new book
+    when: first booking saved in a new book
+    then: Home counts it at once · fixed 2026-10-12
+    status: fixed
+    risk: low
+    tests:
+      - file: test/core/offline_first/writer_test.dart
+        name: reads past the cache after a save, so the first row of a book is counted
+
+  # The pull
+  - id: E-ACC-35
+    group: The pull
+    title: Slow first sync
+    when: fresh install, weak connection, first page fails
+    then: retries 2 s, 5 s → 30 s → 60 s → 2 min → 5 min (B8)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: a first page that failed is asked again once the resume delay has passed
+  - id: E-ACC-36
+    group: The pull
+    title: Midway through a big first sync
+    when: screen opened after first pages landed
+    then: shows the partial book · balances may be off for seconds · accepted
+    status: by-design
+    risk: low
+  - id: E-OFF-20
+    group: The pull
+    title: Connection stalls mid-pull
+    when: network hangs without an answer
+    then: call ends after 60 s · counted as offline · retried
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/data_sources/sync_remote_source_test.dart
+        name: a page fails as NoInternetException once the request timeout passes
+  - id: E-OFF-21
+    group: The pull
+    title: Server outage
+    when: server answers 504 or drops the connection
+    then: no crash · screens keep the phone's data · retried
+    status: fixed
+    risk: high
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: fired and forgotten never surfaces as an unhandled error
+      - file: test/core/offline_first/repo/offline_first_repo_test.dart
+        name: a pull that fails answers from the local rows instead of failing the read
+  - id: E-OFF-22
+    group: The pull
+    title: One data type can't be read
+    when: server sends rows one type cannot save
+    then: other types land · its bookmark waits · retried
+    status: fixed
+    risk: high
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_test.dart
+        name: a domain whose local write throws keeps its cursor and does not block the others
+  - id: E-OFF-23
+    group: The pull
+    title: Newer server, older app
+    when: server sends a data type this app doesn't know
+    then: ignored · the pull still ends
+    status: handled
+    risk: low
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: a domain this build does not know does not keep the walk going
+  - id: E-OFF-24
+    group: The pull
+    title: Book switch mid-pull
+    when: switch book while a big pull runs
+    then: stops after the page · resumes on switch back
+    status: handled
+    risk: low
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: a book switch mid-walk ends it after the current page, stored under the old book
+  - id: E-OFF-25
+    group: The pull
+    title: Logout mid-pull
+    when: log out while a big pull runs
+    then: page dropped · nothing of the old account lands
+    status: handled
+    risk: high
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: a logout mid-walk drops the page in flight and writes no cursor
+
+  # Lifecycle
+  - id: E-OFF-30
+    group: Lifecycle
+    title: Phone offline all night
+    when: app in the background · no network for hours
+    then: no endless reconnect attempts · fixed 2026-10-04
+    status: fixed
+    risk: low
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: in the background a socket that cannot reach the server stops redialing
+  - id: E-OFF-31
+    group: Lifecycle
+    title: Notification shade or Face ID
+    when: app only covered for a moment
+    then: not a return from background · no extra pull
+    status: by-design
+    risk: low
+    tests:
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: an inactive-only blip (notification shade, Face ID sheet) is not a resume
+  - id: E-OFF-32
+    group: Lifecycle
+    title: Recurring booking due while offline
+    when: Cloud book · a rule falls due · phone offline
+    then: |
+      - made by the server → shows after the next pull
+      - upcoming list still shows the date
+      - book without account → made on the phone
+    status: by-design
+    risk: low
+    related: [R-ACC-22]
+  - id: E-OFF-33
+    group: Lifecycle
+    title: Reminders after an offline return
+    when: app reopened offline
+    then: reminders not re-armed until an online return
+    status: by-design
+    risk: low

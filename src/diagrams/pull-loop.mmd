@@ -1,0 +1,15 @@
+flowchart TD
+  start(["syncFresh / syncAll<br/>realtime · resume · reconnect · book switch"]) --> local{"open book local?"}
+  local -- "yes" --> skip(["skipped: local_mode<br/>with an account: membership domains only"])
+  local -- "no" --> settle["wait until the outbox of this book is pushed"]
+  settle --> cursors["read cursors and afterIds for the open book"]
+  cursors --> exclude["excludeIds: rows this phone pushed after the cursor"]
+  exclude --> rpc["sync_all(p_tenant_id, p_last_synced, p_exclude_ids, p_app_version, p_limit, p_after_ids)"]
+  rpc -- "network error" --> retry{"retries left?"}
+  retry -- "2 s, then 5 s" --> rpc
+  retry -- "no" --> later(["walk resumes on the next sync"])
+  rpc --> apply["apply per entity: upserts, deletes<br/>a row still unsent here wins"]
+  apply --> advance["move each cursor that moved,<br/>failed types keep theirs"]
+  advance --> more{"server says more?"}
+  more -- "yes" --> rpc
+  more -- "no" --> done(["notify screens · drop caches"])

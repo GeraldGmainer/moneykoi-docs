@@ -1,32 +1,24 @@
 # Source: OFFLINE_FIRST_AI_CONTEXT.md §6, §12; OFFLINE_TIER_AI_CONTEXT.md §5, §7; MONETIZATION §9a.
 items:
-  - id: D-ACC-1
-    question: Fix the late-commit cursor gap on the server?
-    status: open
-    answer: The engine doc names the fix — cap the cursor `sync_all` returns below the oldest open transaction, or a few seconds behind `statement_timestamp()` — as a new `sync_all` migration. No decision recorded.
-    related: [E-ACC-32]
-  - id: D-ACC-2
-    question: Deliver a peer's edit of a row this phone pushed since its last pull (O4)?
-    status: open
-    answer: Needs `(id, updated_at)` pairs instead of plain ids in the pull's exclude list (`SHOPPING_ITEM_HARD_DELETE_PLAN.md` O4). No decision recorded.
-    related: [E-ACC-31]
   - id: D-ACC-3
-    question: Logout — wipe the phone or keep the books?
+    question: "Logout: wipe or keep books?"
     status: decided
     date: 2026-10-10
-    answer: Keep every book, hidden, under its account. Only *Delete account*, *Delete all data*, uninstall and *Remove from this phone* delete.
+    answer: |
+      - keep every book, hidden under its account
+      - only *Delete account* · *Delete all data* · uninstall · *Remove from this phone* delete
   - id: D-ACC-4
-    question: Deleting a bank account without sync deletes its recurring rules — block it?
+    question: No-sync bank account delete removes its rules · block it?
     status: decided
     date: 2026-10-07
-    answer: Keep the cascade (as the server's FK would), rather than blocking the delete.
+    answer: Keep the cascade, like the server's
   - id: D-ACC-5
     question: Lazy Supabase start on a free launch?
     status: decided
-    answer: No — Supabase is read unguarded across the app; the risk outweighs the cold-start gain.
+    answer: No · too risky for the cold-start gain
     related: [X5]
   - id: D-ACC-6
-    question: After a logout from Profile's *Sign in*, does the local book open by itself?
+    question: After Profile sign-in + logout, does the local book open?
     status: decided
     date: 2026-10-12
-    answer: No — a logout lands on Welcome; *Continue without an account* opens the book. (1.16.1 opened it by itself.)
+    answer: No · Welcome → *Continue without an account*

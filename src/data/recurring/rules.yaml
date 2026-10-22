@@ -2,25 +2,30 @@
 items:
   - id: R-REC-01
     group: Rules and bookings
-    title: A recurring booking is a rule; the server makes the bookings
+    title: A rule · the server books
     text: |
-      The phone stores and edits the rule; the server's generator (hourly, and on every app resume) turns it into real bookings that sync down. A book without an account is the one exception — the phone generates, with the same rules.
+      - phone stores + edits the rule
+      - server generator: hourly + every app resume → real bookings sync down
+      - book without account → the phone generates, same rules
     source: RECURRING §1, OFFLINE_TIER §4
     related: [R-ACC-22]
   - id: R-REC-02
     group: Rules and bookings
-    title: Future dates are a projection, never a booking
+    title: Future = projection, not booking
     text: |
-      What Upcoming, Home and the forecast show ahead is computed on the fly — never stored, never in a balance, allowed to be slightly wrong; it corrects itself at today.
+      - Upcoming, Home, forecast: computed live
+      - never stored, never in balances · corrects itself at today
     source: RECURRING §1, §4
     tests:
       - file: test/features/recurring_booking/domain/recurrence/recurrence_projector_test.dart
         name: excludes exdates
   - id: R-REC-03
     group: Rules and bookings
-    title: The app and the server expand a rule to the same dates
+    title: "App + server: same dates"
     text: |
-      Daily, weekly (on chosen weekdays), monthly (on chosen days, or *last day*), yearly; every N; ends never, on a date (inclusive) or after N times. Shared test vectors pin both sides — if the app's library cannot expand something, the editor does not offer it.
+      - daily · weekly (weekdays) · monthly (days or *last day*) · yearly · every N
+      - ends: never · on a date · after N
+      - shared test vectors · editor offers only what both expand
     source: RECURRING §3
     tests:
       - file: test/features/recurring_booking/domain/recurrence/recurrence_parity_test.dart
@@ -29,80 +34,85 @@ items:
     group: Rules and bookings
     title: '*Last day*, never "31"'
     text: |
-      A literal 31 silently skips February, April, June, September and November, so the month-day picker has an explicit *last day*. A bare monthly rule is given an explicit day before it can be applied.
+      - "31" skips Feb, Apr, Jun, Sep, Nov
+      - bare monthly rule gets an explicit day first
     source: RECURRING §3
     tests:
       - file: test/features/recurring_booking/ui/widgets/recurrence_sheet_test.dart
         name: a bare monthly rule is given an explicit day before it can be applied
   - id: R-REC-05
     group: Rules and bookings
-    title: A rule is categorised or a transfer — and stays so
+    title: Categorized or transfer, for good
     text: |
-      Expense, income or transfer (From ≠ To, no category). The kind cannot be changed on an existing rule; a transfer rule nets to zero in Upcoming.
+      - expense · income · transfer (From ≠ To, no category)
+      - kind fixed after creation · transfer nets 0 in Upcoming
     source: RECURRING §6
     tests:
       - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
         name: a transfer rule drops the category, needs two different accounts and saves the destination
   - id: R-REC-06
     group: Rules and bookings
-    title: A rule whose account or category is gone pauses itself
+    title: Missing account/category → paused
     text: |
-      The generator auto-pauses it. The app's rule list drops a rule it cannot resolve; the web lists it as *Needs attention*.
+      - generator pauses it
+      - app list drops it · web: *Needs attention*
     source: RECURRING §6, OFFLINE_TIER §4, RECURRING_WEB §7
     tests:
       - file: test/features/recurring_booking/data/mappers/recurring_booking_mapper_test.dart
         name: skips rule when category is missing
   - id: R-REC-07
     group: Rules and bookings
-    title: A deleted or skipped occurrence is never made again
+    title: Deleted occurrence never returns
     text: |
-      Each generated booking holds its rule's date slot; deleting it is a permanent skip. Editing a generated booking keeps the link.
+      - each booking holds its date slot
+      - delete = permanent skip · edit keeps the link
     source: RECURRING §5, BOOKINGS_WEB §4.8
     related: [R-BKG-52, R-BKG-31]
   - id: R-REC-08
     group: Rules and bookings
-    title: '*Make recurring* never doubles the booking'
+    title: "*Make recurring* never doubles"
     text: |
-      From a saved booking, the rule starts after that booking's date; from an unsaved one, the server makes the first. Offered only while the booking is not already from a rule, and to owners and admins.
+      - saved booking → rule starts after its date
+      - unsaved → server makes the first
+      - not on rule bookings · owners + admins
     source: RECURRING §5
   - id: R-REC-09
     group: Rules and bookings
-    title: Owners and admins write rules
-    text: |
-      A rule reshapes what the book books every month. Members open and read it.
+    title: Owners + admins write rules
+    text: members open + read
     source: RECURRING §8
     tests:
       - file: test/features/recurring_booking/ui/pages/recurring_booking_list_page_test.dart
         name: a read-only member gets the role hint and no way to add
   - id: R-REC-10
     group: Screens
-    title: Rules and Upcoming
+    title: Rules + Upcoming
     text: |
-      **Rules**: cadence, next date, status (active / paused / ended — *ended* when no next date). Active first, then income · expense · transfer. **Upcoming**: this month plus 12, in month cards with a signed net.
+      - **Rules**: cadence · next date · active / paused / ended
+      - **Upcoming**: this month + 12 · month cards + signed net
     source: RECURRING §8
     tests:
       - file: test/features/recurring_booking/ui/screens/recurring_rules_view_test.dart
         name: a live rule gets its next date and an exhausted one reads as ended
   - id: R-REC-11
     group: Screens
-    title: Only future skips can be removed
-    text: |
-      Past skipped dates are history — the generator has passed them.
+    title: Only future skips removable
+    text: past skips = history
     source: RECURRING §8
   - id: R-REC-12
     group: Screens
-    title: An end mode needs its value
-    text: |
-      *On date* without a date or *after N* without N blocks Save — otherwise the rule would silently never end.
+    title: End mode needs its value
+    text: "*On date* without date / *after N* without N → Save blocked"
     source: RECURRING §8
     tests:
       - file: test/features/recurring_booking/ui/widgets/ends_sheet_test.dart
         name: clearing or zeroing the count drops the stale value so save can block it
   - id: R-REC-13
     group: Reminders
-    title: A reminder lead per rule
+    title: Reminder lead per rule
     text: |
-      *Use the default* (the Bill reminders setting's lead, not "off") or 1, 2, 3 or 7 days before. The phone sends it; the web edits it.
+      - *Use the default* (Bill reminders lead, not off) · 1/2/3/7 days
+      - phone sends · web edits
     source: RECURRING §8, RECURRING_WEB §1
     tests:
       - file: test/features/recurring_booking/recurring_due_schedule_test.dart

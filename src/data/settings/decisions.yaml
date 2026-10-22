@@ -1,6 +1,17 @@
 items:
   - id: D-SET-1
-    question: Should the app follow the account's language?
+    question: App follows the account's language?
     status: open
     answer: |
-      Three options in PROFILE_SETTINGS §4 — (1) the app also writes its pick, (2) the app follows a pick made on the web and writes its own, (3) leave the column the web's. No decision recorded.
+      - 1: app also writes its pick
+      - 2: app follows web picks + writes its own
+      - 3: leave it the web's
+      - no decision yet
+  - id: D-SET-2
+    question: Feedback without an account · how to reply?
+    status: decided
+    date: 2026-10-21
+    answer: |
+      - drawer lists *Feedback* for everyone
+      - no account → optional reply email · account → *Attach email address*
+    related: [R-SET-30, R-SET-33]

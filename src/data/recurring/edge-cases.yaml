@@ -1,49 +1,49 @@
 items:
   - id: E-REC-01
     group: Rules
-    title: A sparse rule looked ended
-    when: A valid "every 3 years" rule with no date inside the default 730-day scan.
-    then: The scan widens with the interval, so it is not shown as *Ended*.
+    title: Sparse rule looked ended
+    when: '"every 3 years", no date in the 730-day scan'
+    then: scan widens with the interval · not *Ended*
     status: fixed
     risk: medium
   - id: E-REC-02
     group: Rules
-    title: Editing in another client rewrites the rule
-    when: A rule authored with constructs the editor does not know is opened and saved.
-    then: It is rewritten to what the editor understands.
+    title: Other client rewrites the rule
+    when: rule with unknown constructs opened + saved
+    then: rewritten to what the editor knows
     status: by-design
     risk: low
   - id: E-REC-03
     group: Rules
     title: Daylight saving
-    when: A daily or weekly rule across a DST change.
-    then: Dates step by calendar day, never by 24 hours — no occurrence lands on the wrong day.
+    when: daily/weekly rule across DST
+    then: steps by calendar day · never wrong day
     risk: high
   - id: E-REC-04
     group: Web
-    title: Web make-recurring with a moved start date
-    when: On the web the start date in the sheet is moved away from the booking's date.
-    then: Later → the first occurrence is never made; earlier → the converted booking is made a second time. The app pins it to the booking's date. From reading the code, not reproduced.
+    title: "Web: moved start date"
+    when: web *Make recurring*, start date moved
+    then: later → first never made · earlier → booked twice · app pins it · not reproduced
     status: known-issue
     risk: high
   - id: E-REC-05
     group: Web
-    title: Web amounts with separators
-    when: '`1,250.00` typed, or a German `1.500`.'
-    then: Rejected, or saved as 1.5; 3-decimal currencies lose a digit. Open.
+    title: Web amount separators
+    when: "`1,250.00` or German `1.500`"
+    then: rejected or 1.5 · 3-decimal loses a digit · open
     status: known-issue
     risk: medium
   - id: E-REC-06
     group: Web
-    title: A web rule's time zone
-    when: A rule is created on the web.
-    then: It takes the browser's time zone; the app stamps Europe/Vienna.
+    title: Web rule time zone
+    when: rule created on the web
+    then: browser's zone · app uses Europe/Vienna
     status: by-design
     risk: low
   - id: E-REC-07
     group: Web
-    title: A broken rule still projected on the web
-    when: A rule's category or account is deleted.
-    then: The web keeps it in Upcoming and the 30-day stat until the generator pauses it.
+    title: Web projects a broken rule
+    when: rule's category/account deleted
+    then: still in Upcoming + 30-day stat until paused
     status: known-issue
     risk: low

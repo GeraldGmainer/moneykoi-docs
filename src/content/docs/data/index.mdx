@@ -5,40 +5,48 @@ sidebar:
   order: 1
 ---
 
-Sync is not a backup — it copies deletions too. Three things users mean by "backup", and the answer to each:
+import AreaDiagrams from '../../../components/AreaDiagrams.astro';
 
-| The user means | The answer |
+**Sync is not a backup** · it copies deletions too.
+
+| You mean | Answer |
 |---|---|
-| *Put my data on my new phone* | signing in (an account) — or, without one, a backup file |
-| *Give me my data* | the `.moneykoi` file (JSONL + a plain CSV, readable without MoneyKoi), *Download all your data* |
-| *Undo what I broke* | partly — a file rewinds to the last backup; the reminder is what makes one exist |
+| *My data on a new phone* | sign in · without account: a backup file |
+| *Give me my data* | `.moneykoi` file · *Download all data* · both Pro |
+| *Undo what I broke* | partly · a file rewinds to the last backup |
 
 ## The tools
 
 | Tool | Who | Plan | Where |
 |---|---|---|---|
-| **Create a backup** (`.moneykoi`) | owner, admin | Pro | Settings → Backup & restore |
-| **Restore from a backup** | everyone | free | Backup & restore, *Welcome back*, or tap the file |
-| **Undo changes in this book** | owner, admin; a syncing book | free | the restore preview of a file from this book |
-| **Backup reminder** | owner, admin | Pro | Settings → Notifications |
-| **Download all your data** | every member | free | Backup & restore → *Your data* |
-| **Import bookings** (CSV) | owner, admin | free | Backup & restore, Book card menu |
-| **Export bookings** (filtered CSV) | every member | Pro | Backup & restore |
-| **Export data** (whole-book ZIP of CSVs) | owner, admin | free | Book card menu |
-| **Erase data** | owner | free | Book card menu |
+| **Create a backup** | owner · admin | Pro | Backup & restore |
+| **Restore** | everyone | free | Backup & restore · *Welcome back* · tap the file |
+| **Undo changes in this book** | owner · admin | free | restore preview |
+| **Backup reminder** | owner · admin | Pro | Notifications |
+| **Download all data** | everyone | Pro | *Personal data* |
+| **Import bookings** (CSV) | owner · admin | free | Backup & restore · Book menu |
+| **Export bookings** (CSV) | everyone | Pro | Backup & restore |
+| **Export data** (ZIP) | owner · admin | Pro | Book menu |
+| **Erase data** | owner | free | Book menu |
+
+- **import free · export Pro** · decided 2026-10-21 (D-DATA-12)
 
 ## The file
 
-- `MoneyKoi-<Book>-YYYY-MM-DD.moneykoi` — a zip of JSONL per record type, a manifest with checksums, a plain `bookings.csv`, a README; optionally receipt photos, `settings.json`, AES-256 passphrase.
-- One book per file. Format version 1; older files always restore, newer ones are refused by name.
-- The spec is `moneykoi-supabase/BACKUP_FORMAT.md` — a contract between the app, the web and the server.
+- `MoneyKoi-<Book>-YYYY-MM-DD.moneykoi` · a zip
+- JSONL per record type · manifest + checksums · `bookings.csv` · README
+- optional: photos · `settings.json` · AES-256 passphrase
+- one book per file · format v1 · older restore, newer refused
+- spec: `moneykoi-supabase/BACKUP_FORMAT.md`
 
 ## Where it lives in code
 
-| Piece | Where (moneykoi-app) |
+| Piece | moneykoi-app |
 |---|---|
-| Backup & restore | `lib/features/backup/` — `BACKUP_RESTORE_AI_CONTEXT.md` |
-| CSV import | `lib/features/data_import/` — `BOOKING_IMPORT_AI_CONTEXT.md` |
-| CSV export | `lib/features/booking_export/` — `BOOKING_EXPORT_AI_CONTEXT.md` |
-| Whole-book ZIP, erase | `lib/features/data_export/`, `lib/features/book/` — `DATA_PORTABILITY_AI_CONTEXT.md` |
-| Server restore | `moneykoi-supabase` `restore_begin` / `restore_stage` / `restore_book_apply`, `rewind_*` |
+| Backup & restore | `lib/features/backup/` · `BACKUP_RESTORE_AI_CONTEXT.md` |
+| CSV import | `lib/features/data_import/` · `BOOKING_IMPORT_AI_CONTEXT.md` |
+| CSV export | `lib/features/booking_export/` · `BOOKING_EXPORT_AI_CONTEXT.md` |
+| ZIP · erase | `lib/features/data_export/` · `DATA_PORTABILITY_AI_CONTEXT.md` |
+| Server restore | `restore_begin` · `restore_stage` · `restore_book_apply` · `rewind_*` |
+
+<AreaDiagrams area="data" />

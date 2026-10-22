@@ -1,53 +1,79 @@
 # Source: BACKUP_RESTORE_AI_CONTEXT.md §0, §4c–§4h, §6, §10; BOOKING_IMPORT §16; BOOKING_EXPORT §10.
 items:
   - id: D-DATA-1
-    question: Who may create a backup — owner and admin, or any member?
+    question: Who may create a backup?
     status: open
-    answer: Shipped as owner/admin (the plan said any member). The backup doc calls it a product decision for Gerald, not a bug to fix either way.
+    answer: |
+      - shipped: owner + admin · plan said any member
+      - a product call for Gerald, not a bug
   - id: D-DATA-2
-    question: '*Download all your data* — free, although each book inside restores like a Pro backup?'
+    question: "*Download all data* free?"
     status: decided
-    date: 2026-10-16
-    answer: Free. Access to your own data is never paid.
+    date: 2026-10-21
+    answer: |
+      - free from 2026-10-16 · own data never paid
+      - **reversed** 2026-10-21 → Pro (D-DATA-12)
+    related: [D-DATA-12]
+  - id: D-DATA-12
+    question: Which data tools are paid?
+    status: decided
+    date: 2026-10-21
+    answer: |
+      - Gerald: "import free, export pro, simple as that"
+      - free: CSV import · restoring a backup
+      - Pro: ZIP · *Download all data* · CSV · PDF · backup file
+    related: [R-MON-21, D-DATA-2, D-DATA-13]
+  - id: D-DATA-13
+    question: Free way out for a free account's server data?
+    status: open
+    answer: |
+      - GDPR Art. 20 + 15 · only full export now needs Pro
+      - lawyer asks: export on request via support enough? (T-MON-05)
+      - same gap: read-only shared book on Free (E-MON-23)
+    related: [R-MON-21, E-MON-23]
   - id: D-DATA-3
     question: Restore target
     status: decided
-    answer: A new book, never a merge or an overwrite — except applying a file to the book it came from, behind a red dialog.
+    answer: New book · never merge · except the book it came from, red dialog
   - id: D-DATA-4
     question: Backup destination
     status: decided
     date: 2026-10-03
-    answer: A file the user holds, through the save dialog or the share sheet. No MoneyKoi-hosted snapshots, no automatic Drive/iCloud uploads.
+    answer: |
+      - a file you hold · save dialog or share
+      - no hosted snapshots · no auto Drive/iCloud
   - id: D-DATA-5
-    question: Account without Cloud — restore into a new server book?
+    question: "Free account: restore to a new server book?"
     status: decided
     date: 2026-10-14
-    answer: No — it would open empty here. It replaces one of its own books (the user picks, 2026-10-16), or makes a new own book kept on the phone.
+    answer: |
+      - no · would open empty here
+      - replaces a picked own book, or new local book (2026-10-16)
   - id: D-DATA-6
-    question: iOS strong-password autofill on the passphrase
+    question: iOS strong-password autofill
     status: decided
     date: 2026-10-16
-    answer: Keep it — create offers a strong password and saves it to the Keychain.
+    answer: Keep · saved to Keychain
   - id: D-DATA-7
-    question: Android claims every `application/octet-stream` file
+    question: Android claims all octet-stream files
     status: decided
     date: 2026-10-16
-    answer: Keep it — mail and chat apps send `.moneykoi` that way. Other binary files offer MoneyKoi too and read as *damaged*.
+    answer: Keep · mail + chat send `.moneykoi` that way · others → *damaged*
   - id: D-DATA-8
     question: Bank CSV without categories
     status: decided
     date: 2026-09-28
-    answer: Cannot be imported. The statement import (planned) has to revisit this rule rather than inherit it.
+    answer: Can't import · statement import must revisit this
   - id: D-DATA-9
-    question: Booking export default period
+    question: Export default period
     status: decided
     date: 2026-10-02
-    answer: This month (was all time) — the page should not invite exporting the whole book.
+    answer: This month, not all time
   - id: D-DATA-10
-    question: Renaming the restored book inline
+    question: Rename the restored book inline
     status: dropped
-    answer: Dropped 2026-10-03 — it is always "… (restored)".
+    answer: Dropped 2026-10-03 · always "… (restored)"
   - id: D-DATA-11
-    question: Import presets, QIF, remembered mappings, a bulk upload lane
+    question: Import presets, QIF, remembered mappings
     status: dropped
-    answer: Dropped from planning 2026-10-03. No preset without a real sample file.
+    answer: Dropped 2026-10-03 · no preset without a real sample file

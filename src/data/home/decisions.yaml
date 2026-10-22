@@ -1,17 +1,26 @@
 items:
   - id: D-HOM-1
-    question: Arrange cards in place on Home (long-press → drag)?
+    question: Drag cards on Home itself?
     status: open
-    answer: Not built — ship the editor first, measure the ask (D9). The only open follow-up of Home cards.
+    answer: Not built · editor first, measure the ask (D9)
   - id: D-HOM-2
-    question: A net-worth card
+    question: Net-worth card
     status: open
-    answer: Unblocked (net worth counts investments); build it on the Analytics series so the two cannot disagree. Name reserved.
+    answer: Unblocked · build on the Analytics series · name reserved
   - id: D-HOM-3
-    question: Bar sizes 3 or 5
+    question: Bar with 3 or 5 tabs
     status: decided
-    answer: No — the + needs the middle slot; that would be a bar redesign.
+    answer: No · + needs the middle · would be a redesign
   - id: D-HOM-4
     question: iOS widgets
     status: open
-    answer: Planned (`plans/IOS_WIDGET_PLAN.md`); the bundled icon assets port directly.
+    answer: Planned (`plans/IOS_WIDGET_PLAN.md`) · icon assets port directly
+  - id: D-HOM-5
+    question: Where do locked pages sit in the Free drawer?
+    status: decided
+    date: 2026-10-21
+    answer: |
+      - Pro group at the very end · *Get Pro* in its header
+      - Gerald: "a pro group on bottom, so that settings is still visible"
+      - early-adopter window → header without button
+    related: [R-HOM-13]

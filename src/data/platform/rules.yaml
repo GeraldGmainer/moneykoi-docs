@@ -54,8 +54,17 @@ items:
       - en: no *you / your* · de: no *du / dein*, never *Sie* · ja: no あなた
       - name the thing or the outcome: *Current plan*, *this phone*, *Delete this booking?*
       - buttons stay verbs: *Save goal* / *Ziel speichern* / *保存する*
-      - existing copy: ≈570 en / ≈440 de strings still address the user · converted when touched
+      - all copy converted 2026-10-21 · ≈590 keys + 105 German imperatives
     source: app CLAUDE.md
+  - id: R-PLAT-25
+    group: Copy
+    title: The name is *Money Koi*
+    text: |
+      - two words in every user-visible text · app, web, invite email, docs
+      - `MoneyKoi` only in code, package ids, URLs, file names
+      - backup files keep `MoneyKoi-…` · applied migrations keep theirs
+    source: app CLAUDE.md (decided 2026-10-21)
+    related: [D-PLAT-1, D-PLAT-2, T-PLAT-03]
   - id: R-PLAT-30
     group: Releases
     title: A release

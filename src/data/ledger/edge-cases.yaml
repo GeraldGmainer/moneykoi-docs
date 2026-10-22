@@ -1,60 +1,62 @@
 items:
   - id: E-LED-01
     group: Categories
-    title: A parent that already held bookings
-    when: Bookings sit on a parent from before the never-a-parent rule (or written by another client).
-    then: The parent's edit page shows *"12 bookings sit on Food itself"* with a pick-a-sub fix and Undo. No automatic migration; the rule is enforced by the clients only.
+    title: Parent already holds bookings
+    when: old bookings on a parent, or from another client
+    then: |
+      - edit page: *12 bookings sit on Food itself* + fix + Undo
+      - no auto-migration · clients enforce the rule
     status: known-issue
     risk: medium
   - id: E-LED-02
     group: Categories
-    title: Moving changes fixed / variable silently?
-    when: A sub that only inherited *Fixed* moves under a *Variable* parent.
-    then: The inherited value is written onto the row first, so it stays *Fixed*. An unclassified one inherits the new parent.
+    title: Move changes fixed/variable?
+    when: sub inheriting *Fixed* moves under *Variable*
+    then: inherited value written first → stays *Fixed* · unset → inherits new parent
     risk: medium
     tests:
       - file: test/features/category/domain/service/category_move_rules_test.dart
         name: an inherited value is written onto the row when the new parent differs
   - id: E-LED-03
     group: Categories
-    title: An income category named like a bucket
-    when: The book has an income category called "Transport".
-    then: It does not cover the scanner's Transport bucket — a receipt line never lands on income (fixed 2026-10-16).
+    title: Income category named like a bucket
+    when: income category "Transport"
+    then: not used for scans · lines never land on income (fixed 2026-10-16)
     status: fixed
     risk: medium
   - id: E-LED-04
     group: Categories
-    title: The handover and delete on the web
-    when: A web handover or delete-with-bookings is interrupted.
-    then: Several requests, not one transaction (by decision); each step is idempotent and a partial handover shows up as the fix-it notice.
+    title: Web handover interrupted
+    when: web handover or delete-with-bookings stops
+    then: several requests by design · steps idempotent · fix-it notice shows
     status: by-design
     risk: medium
   - id: E-LED-05
     group: Categories
     title: Web palette drift
-    when: A colour is picked on the web.
-    then: The web still offers the retired 8×5 palette — exactly the 40 colours a migration remapped — and app colours open as custom.
+    when: color picked on the web
+    then: old 8×5 palette · app colors open as custom
     status: known-issue
     risk: low
   - id: E-LED-06
     group: Categories
-    title: Web plain delete and goal / loan links
-    when: A booking linked to a goal contribution or loan payment is deleted on the web.
-    then: The link is not cleared as the app does. Open.
+    title: Web delete keeps goal/loan links
+    when: linked booking deleted on the web
+    then: link not cleared like the app does · open
     status: known-issue
     risk: medium
   - id: E-LED-10
     group: Accounts
-    title: A starting balance without a date (web)
-    when: An old account carries a balance but no date.
-    then: The web form cannot save it until a date is added.
+    title: "Web: balance without date"
+    when: old account has balance, no date
+    then: web form can't save until a date is added
     status: known-issue
     risk: low
   - id: E-LED-11
     group: Accounts
     title: Balances before they load
-    when: The account list opens before the balances are computed.
-    then: No amount shows, rather than zeros.
+    when: list opens before balances computed
+    then: no amount, not zeros
     risk: low
     tests:
       - file: test/features/account/ui/pages/account_list_page_test.dart

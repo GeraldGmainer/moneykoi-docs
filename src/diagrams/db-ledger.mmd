@@ -1,0 +1,34 @@
+erDiagram
+  CATEGORY |o--o{ CATEGORY : "parent_id"
+  ACCOUNT ||--o{ BOOKING : "account_id"
+  ACCOUNT |o--o{ BOOKING : "to_account_id (transfer)"
+  CATEGORY |o--o{ BOOKING : "category_id"
+  RECEIPT |o..o{ BOOKING : "receipt_id"
+  RECURRING_BOOKING |o--o{ BOOKING : "recurring_id"
+  RECONCILIATION |o--o{ BOOKING : "reconciliation_id (correction)"
+  ACCOUNT ||--o{ RECURRING_BOOKING : "account_id"
+  ACCOUNT |o--o{ RECURRING_BOOKING : "to_account_id"
+  CATEGORY |o--o{ RECURRING_BOOKING : "category_id"
+  RECONCILIATION ||--o{ RECONCILIATION_LINE : "reconciliation_id"
+  ACCOUNT ||--o{ RECONCILIATION_LINE : "account_id"
+  ACCOUNT |o--o{ RECONCILIATION : "target_account_id"
+  BOOKING ||--o{ BOOKING_TAG : "booking_id"
+  TAG ||--o{ BOOKING_TAG : "tag_id"
+  ACCOUNT {
+    numeric initial_balance
+    numeric current_balance "kept by triggers"
+  }
+  CATEGORY {
+    text category_type "income or expense"
+    numeric balance "kept by triggers"
+    text variability "fixed, variable, or not set"
+  }
+  BOOKING {
+    numeric amount "always positive"
+    date date
+    text adjustment_type "corrections only"
+  }
+  RECEIPT {
+    jsonb photos
+    jsonb line_items
+  }

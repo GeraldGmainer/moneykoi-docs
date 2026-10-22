@@ -2,45 +2,47 @@
 items:
   - id: E-INV-01
     group: Prices
-    title: A legacy currency row on prod
-    when: A book whose currency points at a display-name row ("Euro") instead of `EUR`.
-    then: It can never get an exchange rate, so no price series at all — an empty chart with nothing in any log. 1 of 22 tenants on prod. Not fixed; needs a migration.
+    title: Legacy currency row on prod
+    when: book currency points at "Euro", not `EUR`
+    then: |
+      - no FX → no price series, empty chart, no log
+      - 1 of 22 tenants · needs a migration
     status: known-issue
     risk: high
   - id: E-INV-02
     group: Prices
     title: Weekends in a chart
-    when: A chart over weekends and holidays.
-    then: Exchange rates carry forward, so no day drops out.
+    when: chart over weekends + holidays
+    then: FX carries forward · no day drops out
     status: fixed
     risk: medium
   - id: E-INV-03
     group: Prices
-    title: A gold price per ounce applied per gram
-    when: The asset and its quote sync separately.
-    then: The unit is read from the asset, never the quote — the bug charted 11 g at 41k.
+    title: Ounce price applied per gram
+    when: asset + quote sync separately
+    then: unit read from the asset, never the quote · bug charted 11 g at 41k
     status: fixed
     risk: high
   - id: E-INV-04
     group: Prices
     title: Weight to count
-    when: A weight is converted into a coin count.
-    then: Refused.
+    when: weight converted to a coin count
+    then: refused
     risk: low
     tests:
       - file: test/features/investment/domain/services/asset_valuation_test.dart
         name: refuses to convert a weight into a count
   - id: E-INV-05
     group: Web
-    title: Web writes that RLS refused
-    when: A member archives or deletes on the web.
-    then: Success is reported though nothing changed; the row comes back (review #9). Open for archive, price points and three older deletes.
+    title: Web write refused by RLS
+    when: member archives or deletes on the web
+    then: success shown, nothing changed, row returns · open (review 9)
     status: known-issue
     risk: medium
   - id: E-INV-06
     group: Web
-    title: A web price point on a day another device recorded
-    when: Two devices record a value on the same day.
-    then: The web inserts a duplicate (review #26). Open.
+    title: Web price point, same day
+    when: two devices record a value on one day
+    then: web inserts a duplicate · open (review 26)
     status: known-issue
     risk: low

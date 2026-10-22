@@ -1,56 +1,58 @@
 ---
 title: Overview
-description: How MoneyKoi makes money — three tiers, Cloud per book, accounts on the device.
+description: How Money Koi makes money — three tiers, Cloud per book, accounts on the device.
 sidebar:
   order: 1
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import AreaDiagrams from '../../../components/AreaDiagrams.astro';
 
 <Aside type="note" title="Status">
-Built end to end, behind `--dart-define=MONETIZATION=true` until the store products exist. Release with the paywall: **Jan 17**. Nothing built since 2026-10-13 has run on a phone yet — see [What to test](/monetization/testing/) and [Open work](/monetization/open/).
+- built · behind `--dart-define=MONETIZATION=true`
+- release with the paywall: **Jan 17**
+- nothing since 2026-10-13 tested on a phone → [What to test](/monetization/testing/) · [Open work](/monetization/open/)
 </Aside>
 
 ## Three tiers
 
-Each higher tier contains everything below it.
-
-| Tier | How you pay | What it is |
+| Tier | Pay | What |
 |---|---|---|
-| **Free** | — | the full budgeting app on one phone, no account needed |
-| **Pro** | once, €24.99 | Free + the power features, **works offline**; the server is only ever read |
-| **Cloud** | monthly, yearly or lifetime | Pro + sync, devices, shared family books, up to 3 books, web dashboard |
+| **Free** | — | full budgeting app · one phone · no account |
+| **Pro** | once · €24.99 | Free + power features · **offline** |
+| **Cloud** | monthly · yearly · lifetime | Pro + sync · devices · shared books · ≤ 3 books · web |
 
-- Every Cloud plan includes Pro, the subscriptions too.
-- Monthly, yearly and lifetime Cloud unlock exactly the same thing.
-- **Tier** = a feature package (Free, Pro, Cloud). **Plan** = a way to pay for one (once, monthly, yearly, lifetime).
+- each tier includes the one below
+- every Cloud plan includes Pro · all Cloud plans unlock the same
+- **tier** = feature package · **plan** = how you pay
 
 ## Cloud belongs to the book
 
-Features in the open book = the higher of what I bought and what the book's **owner** pays for.
-
-| User | Own private book | A shared Cloud book |
+| User | Own book | Shared Cloud book |
 |---|---|---|
-| Free | Free | Cloud |
-| Pro | Pro | Cloud |
+| Free | Free | **Cloud** |
+| Pro | Pro | **Cloud** |
 | Cloud | Cloud | Cloud |
 
-- The owner pays; invited members get every feature, only inside that book.
-- When the owner stops paying, the book stops syncing for everyone in it; its data stays readable.
-- Feature checks depend on the **active book**, not only on the user.
+- the **owner** pays → members get every feature, in that book only
+- owner stops paying → book stops syncing · data stays readable
+- checks follow the **active book**
 
-## Accounts and the phone
+## Accounts
 
-An account is not a tier: Free and Pro never need one. The phone's states (Local Free, Local Pro, free account, paused, Cloud, signed out), the claim and the glossary live in [Accounts & sync](/accounts/).
+- an account is **not** a tier · Free + Pro never need one
+- phone states, claim, words → [Sign-in & accounts](/accounts/)
 
 ## Where it lives in code
 
 | Piece | Where |
 |---|---|
-| The feature table | `moneykoi-app/lib/features/monetization/domain/feature.dart` |
-| The one question | `Feature.x.isActive` (UI), `featureAccess.isActive(Feature.x)` (use cases) |
-| Entitlement reader | `EntitlementService` — merges the store receipt, the server's verdict and the active book's Cloud |
-| Store seam | `PurchaseGateway` → `RevenueCatPurchaseGateway` (fake without keys) |
-| Server | `moneykoi-supabase` `revenuecat-webhook` → `public.apply_store_entitlement` |
-| Plan simulator | About → Developer mode → *Plan simulator* |
-| AI context | `moneykoi-app/.agents/references/MONETIZATION_AI_CONTEXT.md` |
+| Feature table | `lib/features/monetization/domain/feature.dart` |
+| The question | `Feature.x.isActive` · `featureAccess.isActive(...)` |
+| Plan reader | `EntitlementService` · store + server + book |
+| Store seam | `PurchaseGateway` → RevenueCat · fake without keys |
+| Server | `revenuecat-webhook` → `apply_store_entitlement` |
+| Simulator | About → Developer mode → *Plan simulator* |
+| AI context | `MONETIZATION_AI_CONTEXT.md` |
+
+<AreaDiagrams area="monetization" />

@@ -1,0 +1,17 @@
+stateDiagram-v2
+  [*] --> NoAccount: Get started
+  [*] --> Cloud: I already use Money Koi + Cloud
+  state "Book without an account<br/>(Free or Pro, only on this phone)" as NoAccount
+  state "Uploading<br/>adopted → retenanted → pushed" as Claim
+  state "Under a free account<br/>(kept on this phone)" as Kept
+  state "Cloud<br/>syncs, realtime" as Cloud
+  state "Sync paused<br/>(everything stays and works)" as Paused
+  state "Signed out<br/>(books kept, hidden)" as SignedOut
+  NoAccount --> Claim: Back up and sync, sign in
+  Claim --> Cloud: account has Cloud
+  Claim --> Kept: account without Cloud, Keep it on this phone
+  Kept --> Cloud: Cloud bought, upload starts by itself
+  Cloud --> Paused: plan ends, last push and pull
+  Paused --> Cloud: renewal, pushes the backlog, replays deletes
+  Cloud --> SignedOut: log out
+  SignedOut --> Cloud: Sign back in

@@ -1,24 +1,24 @@
 items:
   - id: D-BKG-1
-    question: Quick booking on a tap instead of a long press?
+    question: Quick booking on tap, not long press?
     status: decided
-    answer: Not yet — the guess is weakest for new users. Promoting it later is a one-line change.
+    answer: Not yet · guess is weakest for new users · one-line change later
   - id: D-BKG-2
-    question: Mark a guessed category in quick booking?
+    question: Mark a guessed category?
     status: decided
-    answer: No — a confirmation tap on every entry cost more than the occasional miscategorisation.
+    answer: No · a confirm tap on every entry costs more than a rare miss
   - id: D-BKG-3
-    question: Trash for recurring rules, goals and loans; a server-backed trash?
+    question: Trash for rules, goals, loans · server trash?
     status: dropped
     date: 2026-09-09
-    answer: Dropped — goals and loans would need a group restore; the regret happens within minutes, on the device that made it.
+    answer: Dropped · regret happens within minutes, on that device
   - id: D-BKG-4
-    question: A restored recurring occurrence — keep the rule link?
+    question: Restored occurrence keeps its rule link?
     status: decided
     date: 2026-10-08
-    answer: No — it comes back as a plain booking; the server's unique key would refuse it.
+    answer: No · plain booking · server key would refuse it
   - id: D-BKG-5
-    question: The description prompt on a transfer
+    question: Description prompt on a transfer
     status: decided
     date: 2026-10-06
-    answer: Never — **=** opens the missing From/To picker instead.
+    answer: Never · **=** opens the missing From/To instead

@@ -1,0 +1,21 @@
+flowchart LR
+  subgraph feeds["Providers"]
+    ecb["ECB · FX<br/>fetching, not serving yet"]
+    gold["gold-api.com · metals<br/>serving"]
+    legacy["metals.dev · FX<br/>CoinGecko · crypto"]
+  end
+  cron["pg_cron · UTC"] --> fp["fetch-prices"]
+  cron --> rq["refresh-quotes"]
+  ecb --> fp
+  gold --> fp
+  legacy --> rq
+  fp --> raw[("price_raw<br/>as published, append-only")]
+  raw --> derived[("price_fx_usd · price_asset_usd")]
+  fp --> latest[("asset_quote · fx_rate<br/>latest")]
+  rq --> latest
+  rq --> hist[("asset_quote_daily · fx_rate_daily")]
+  latest -- "sync_all read_only domains" --> app["App"]
+  hist --> series["get_asset_price_series<br/>in the book's currency, FX carried forward"]
+  derived --> series
+  series -- "paged, once per price_epoch,<br/>then only new days" --> app
+  series -- "get_asset_price_series_json, one row" --> web["Web"]

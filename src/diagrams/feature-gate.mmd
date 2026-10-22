@@ -1,0 +1,12 @@
+flowchart TD
+  q(["Feature.x.isActive"]) --> live{"isLive in feature.dart?"}
+  live -- "no" --> off["off everywhere, not on the paywall"]
+  live -- "yes" --> needs{"needs met?<br/>nothing · account · sync"}
+  needs -- "no" --> absent["absent — no upgrade can fix it"]
+  needs -- "yes" --> flag{"MONETIZATION on?"}
+  flag -- "no" --> on["active"]
+  flag -- "yes" --> covers{"plan covers it?<br/>your store receipt or the server's verdict,<br/>or the open book has Cloud through its owner"}
+  covers -- "yes" --> on
+  covers -- "no" --> records{"readable records<br/>(shopping lists, investments)?"}
+  records -- "yes" --> ro["opens read-only"]
+  records -- "no" --> locked["locked: lock icon, the paywall opens"]

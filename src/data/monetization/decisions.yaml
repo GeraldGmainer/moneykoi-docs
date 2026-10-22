@@ -2,113 +2,160 @@
 items:
   # Open
   - id: D1
-    question: 'Copy: *Purchases restored* whatever came back; the Free card always carries *Your plan* (a Pro owner sees the pill twice, a Cloud owner three times)'
-    status: open
-    answer: Keep both — a restore never says which tier until the user looks, and "Free is always yours" is the message.
-  - id: D2
-    question: Server-side enforcement — now, or only on evidence of abuse?
-    status: open
-    answer: On evidence. The app stops on the verdict; the only loss is a patched client's storage. Prompt ready in T-MON-22.
-  - id: D3
-    question: Price A/B, or pick €24.99?
-    status: open
-    answer: €24.99 until download-to-paid is known.
-  - id: D4
-    question: The launch window's end date
-    status: open
-    answer: 90 days after the paywall release, written into the stores and the constant on the same day (T-MON-21).
-  - id: D5
-    question: When does the claim open to everyone?
-    status: open
-    answer: After the device tests (T-MON-07), in the release before Nov 1 if they pass (T-MON-20).
-  - id: D8
-    question: Where the launch window comes from — the end date is code today and the regular price has no source
+    question: Restore copy + *Current plan* pill on the Free card
     status: open
     answer: |
-      **RevenueCat offering metadata**, not Supabase: it arrives with the products in the request the paywall already makes, needs no account, no anon grant and no second server, and changes without a release. Holds `launch_until` and the regular price per currency; the gateway fills `regularPriceString` and the window from it. Prices themselves stay the store's.
+      - keep *Purchases restored* whatever came back
+      - Free card always says *Current plan* · "Free is always yours"
+  - id: D2
+    question: "Server-side enforcement: now or on abuse?"
+    status: open
+    answer: |
+      - on evidence of abuse
+      - app already stops on the verdict · prompt ready (T-MON-22)
+  - id: D3
+    question: Price A/B or €24.99?
+    status: open
+    answer: €24.99 until download-to-paid is known
+  - id: D4
+    question: Launch window end date
+    status: open
+    answer: 90 days after the paywall release · stores + constant same day (T-MON-21)
 
   # Decided
-  - id: D6
-    question: Price history for a Pro book without an account
+  - id: D5
+    question: When does the claim open to all?
     status: decided
-    date: 2026-10-16
-    answer: Account-only, as built. A book without an account shows today's price and no chart; opening it would need a new RPC that takes only short windows.
-  - id: D7
-    question: On Free, may the overdue review of a forecast made with Pro still confirm / *it didn't happen* / *book it now*?
+    date: 2026-10-21
+    answer: 1.18.0, ahead of the device tests (T-MON-07) · T-MON-20 done
+  - id: D10
+    question: What does *Get Pro* / *Get Cloud* open on?
     status: decided
-    date: 2026-10-16
-    answer: Yes, they stay usable; only *move* opens the paywall. They close what the user already planned, and an unanswerable review nags forever.
-  - id: D9
-    question: A Cloud subscription lapses without Pro — are investments and shopping lists unreachable?
+    date: 2026-10-21
+    answer: |
+      - the plan's overview on top · name, promise, every feature
+      - no scroll to the plan card · a lock still shows its feature
+      - Gerald: "a better display on page top to know what i get with pro"
+    related: [R-MON-54]
+  - id: D11
+    question: "*Restore purchases* once a plan is held?"
+    status: decided
+    date: 2026-10-21
+    answer: |
+      - hidden on the paywall once Pro or Cloud is held
+      - Settings has no restore row · paywall + *Welcome back* keep it
+    related: [R-MON-56, R-MON-57]
+  - id: D12
+    question: "*Restore Pro purchase* on *Welcome back*: what next?"
+    status: decided
+    date: 2026-10-21
+    answer: |
+      - nothing found → snackbar, stays (Gerald's choice)
+      - Pro → *Pro restored* · Cloud → *Cloud found* + sign-in
+    related: [R-MON-58]
+  - id: D8
+    question: Where does the launch window come from?
     status: decided
     date: 2026-10-17
-    answer: Read-only, as built. With records the pages open under a banner and send adding and editing to the paywall; without records the paywall opens.
+    answer: |
+      - **RevenueCat offering metadata**, not Supabase · built
+      - comes with the products · no account, no server, no release to change
+      - `launch_until` + `regular_prices` per currency · prices stay the store's
+      - launch line only while the store charges less (E-MON-16)
+  - id: D6
+    question: Price history without an account
+    status: decided
+    date: 2026-10-16
+    answer: |
+      - account-only, as built
+      - today's price, no chart · opening it needs a new short-window RPC
+  - id: D7
+    question: Pro forecast review on Free
+    status: decided
+    date: 2026-10-16
+    answer: |
+      - *confirm* · *it didn't happen* · *book it now* stay usable
+      - only *move* → paywall · else the review nags forever
+  - id: D9
+    question: "Cloud lapses without Pro: investments + shopping?"
+    status: decided
+    date: 2026-10-17
+    answer: |
+      - **read-only**, as built · banner, add/edit → paywall
+      - no records → paywall
   - id: D-C1
-    question: Does Pro follow a user between iPhone and Android?
+    question: Pro across iPhone and Android?
     status: decided
     date: 2026-10-10
-    answer: No. Moving platforms with Pro features needs Cloud, or a second purchase.
+    answer: No · needs Cloud, or a second purchase
   - id: D-C6
-    question: How long is a paused account's server copy kept?
+    question: How long is a paused server copy kept?
     status: decided
     date: 2026-10-10
-    answer: As long as the account exists. No retention job, no lapse warnings; an active subscription is never affected however long the app goes unused.
+    answer: |
+      - as long as the account exists
+      - no cleanup job, no lapse warnings
   - id: D-C7
     question: Store family sharing?
     status: decided
-    answer: On for Pro, off for Cloud — Cloud is shared through books.
+    answer: Pro on · Cloud off → shared through books
   - id: D-B1
-    question: What happens to members when a shared book's owner drops Cloud?
+    question: Members when the owner drops Cloud
     status: decided
-    answer: The book is read-only for members, with *Export*; it reopens when the owner renews. "Migrate to a free book" is a possible later feature, not planned.
+    answer: |
+      - read-only + *Export* · reopens on renewal
+      - "move to a free book": maybe later, not planned
   - id: D-B2
-    question: Does being invited make you a Cloud account?
+    question: Does an invite make you Cloud?
     status: decided
-    answer: No. The member keeps a private book at their own tier next to the shared Cloud book.
+    answer: No · own private book stays at own plan
   - id: D-B3
-    question: A cap on members per Cloud book?
+    question: Member cap per Cloud book?
     status: decided
-    answer: No cap — shared data makes it useless as a way to share a subscription.
+    answer: No cap · shared data makes sharing a subscription pointless
   - id: E-ADOPT
     question: Early adopters
     status: decided
     date: 2026-10-07
-    answer: Cloud for life for every **account created** before the paywall cutover (Jan 17). Not install date — the server cannot see local installs, so the launch copy says "create an account before Jan 17". "For life" must be defined in the Terms.
+    answer: |
+      - Cloud for life · **account created** before Jan 17
+      - not install date · server can't see installs
+      - copy: "create an account before Jan 17" · Terms define "for life"
 
   # Dropped — do not re-plan
   - id: X1
-    question: Server retention job and 7/30/60-day lapse warnings
+    question: Server cleanup job + 7/30/60-day warnings
     status: dropped
-    answer: The server copy lives as long as the account (D-C6).
+    answer: Server copy lives as long as the account (D-C6)
   - id: X2
-    question: '"Delete my account, keep my data"'
+    question: '"Delete account, keep data"'
     status: dropped
-    answer: A logout keeps every book instead.
+    answer: Logout keeps every book instead
   - id: X3
-    question: Pro following a user between iPhone and Android
+    question: Pro between iPhone and Android
     status: dropped
-    answer: D-C1.
+    answer: See D-C1
   - id: X4
-    question: Per-book "keep device / keep cloud" prompt on renewal
+    question: '"Keep device / keep cloud" prompt on renewal'
     status: dropped
-    answer: The device wins per row.
+    answer: Device wins per row
   - id: X5
-    question: Lazy Supabase initialization on a free launch
+    question: Lazy Supabase start on a free launch
     status: dropped
-    answer: Listed as dropped in §12, no reason recorded.
+    answer: Dropped · no reason recorded
   - id: X6
-    question: A count-capped launch offer, any fake countdown
+    question: Count-capped offer, fake countdown
     status: dropped
-    answer: Unfair commercial practice (legal note 2).
+    answer: Unfair commercial practice (legal note 2)
   - id: X7
-    question: A product-analytics SDK
+    question: Product-analytics SDK
     status: dropped
-    answer: RevenueCat charts and the store consoles; first-party opt-in usage stats only.
+    answer: RevenueCat + store consoles · first-party opt-in stats only
   - id: X8
-    question: Gating anything that shipped free, after the launch
+    question: Gate something that shipped free, after launch
     status: dropped
-    answer: After the launch features only move down.
+    answer: After launch features only move down
   - id: X9
-    question: An account switcher
+    question: Account switcher
     status: dropped
-    answer: Log out + *Sign back in*.
+    answer: Log out + *Sign back in*

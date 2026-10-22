@@ -2,7 +2,9 @@
 // src/data/ and src/content/docs/.
 export const areas = [
   { id: 'monetization', name: 'Monetization', blurb: 'Free · Pro · Cloud, prices, paywall, store' },
-  { id: 'accounts', name: 'Sign-in & sync', blurb: 'No-account mode, sign-in, claim, pause, the sync engine' },
+  { id: 'offline', name: 'Offline-first', blurb: 'Works without internet: the outbox, the pull, conflicts, realtime' },
+  { id: 'accounts', name: 'Sign-in & accounts', blurb: 'No-account mode, sign-in, claim, pause, logout' },
+  { id: 'demo', name: 'Demo', blurb: 'Sample data from Welcome: every plan, the YAML files, leaving' },
   { id: 'books', name: 'Books & sharing', blurb: 'Books, invites, roles, read-only members, switching' },
   { id: 'bookings', name: 'Bookings', blurb: 'Booking form, transfers, quick booking, tags, trash, search' },
   { id: 'ledger', name: 'Categories & accounts', blurb: 'Category tree, money signs, bank accounts, balances' },

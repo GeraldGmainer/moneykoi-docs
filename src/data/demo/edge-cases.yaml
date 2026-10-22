@@ -1,0 +1,68 @@
+# Source: moneykoi-app DEMO_AI_CONTEXT.md §4, §5, §6a, §10.
+items:
+  - id: E-DEMO-01
+    group: Starting
+    title: Offline at start
+    when: no network while the demo starts
+    then: BTC, gold priced by hand · rest unchanged
+    risk: low
+    tests:
+      - file: test/features/demo/demo_seeder_test.dart
+        name: a listed asset links to the price list when the phone has it
+  - id: E-DEMO-02
+    group: Starting
+    title: Killed while starting
+    when: app closed before Home appears
+    then: next Welcome deletes the half demo
+    risk: medium
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: is cleared on Welcome, a finished demo is not
+  - id: E-DEMO-03
+    group: Starting
+    title: Started on the 1st
+    when: month has barely started
+    then: budgets keep a usual cap · overspent one gets a booking
+    risk: low
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: budgets have no name and a period
+  - id: E-DEMO-04
+    group: Time
+    title: Opened weeks later
+    when: demo reopened after weeks
+    then: made again on that cold start · spending up to today · same book open · demo edits gone
+    status: fixed
+    risk: low
+    related: [D-DEMO-7, R-DEMO-13]
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: a stale demo is made again in place on cold start, the inbox left as it was
+  - id: E-DEMO-08
+    group: Time
+    title: Killed while being made again
+    when: app closed during the weekly remake
+    then: next cold start makes it again · never a half-empty demo for long
+    risk: low
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: a refresh that dies after clearing stays stale, so the next cold start makes it again
+  - id: E-DEMO-05
+    group: Time
+    title: Second book's rules
+    when: second book opened days later
+    then: its recurring bookings appear on opening
+    risk: low
+  - id: E-DEMO-06
+    group: Language
+    title: Language changed in the demo
+    when: app language switched during a demo
+    then: data stays in the start language, also after a week · *Reload demo data* takes the new one · names are data
+    status: by-design
+    risk: low
+  - id: E-DEMO-07
+    group: Data safety
+    title: Restore during a demo
+    when: Backup & restore opened in a demo
+    then: no restore row · a tapped file asks to leave
+    risk: medium

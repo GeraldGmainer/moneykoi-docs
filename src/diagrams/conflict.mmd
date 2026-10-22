@@ -1,0 +1,19 @@
+sequenceDiagram
+  autonumber
+  participant P1 as Phone 1
+  participant S as Server
+  participant P2 as Phone 2
+  Note over P1,P2: both offline · both edit one booking
+  P1->>P1: note = "Lunch"
+  P2->>P2: note = "Dinner"
+  Note over P1: online
+  P1->>S: push "Lunch"
+  S-->>P1: ok
+  Note over P2: online
+  P2->>S: push first: "Dinner"
+  S-->>P2: ok · server now "Dinner"
+  P2->>S: then pull
+  S-->>P1: realtime nudge
+  P1->>S: pull
+  S-->>P1: "Dinner"
+  Note over P1,P2: both show "Dinner" · the last push wins

@@ -12,12 +12,13 @@
   web: parity
   docs: ledger
 - id: categories
-  name: Categories (parent / sub, income / expense, favorite, hide, move, delete with bookings)
+  name: Categories
   area: money
   tier: free
   web: partial
   webNote: no income totals
   docs: ledger
+  note: parent/sub · income/expense · favorite · hide · move
 - id: bookings
   name: Bookings
   area: money
@@ -39,12 +40,13 @@
   web: parity
   docs: bookings
 - id: quick-booking
-  name: Quick booking (one-line entry)
+  name: Quick booking
   area: money
   tier: free
   web: parity
-  webNote: minus the learned scanner corrections
+  webNote: no learned scanner fixes
   docs: bookings
+  note: one-line entry
 - id: bulk-edit
   name: Select bookings and bulk tag, edit, delete
   area: money
@@ -65,17 +67,17 @@
   web: app-only
   docs: notifications
 - id: budgets
-  name: Budgets (spending caps) and income goals
+  name: Budgets + income goals
   area: money
   tier: free
   web: partial
-  webNote: no duplicate guard or alerts
+  webNote: no duplicate guard, no alerts
   docs: budgets
 - id: budget-calculator
   name: Budget calculator
   area: money
   tier: free
-  since: decided free 2026-10-16
+  since: free, decided 2026-10-16
   web: parity
   docs: budgets
 - id: income-goals
@@ -85,25 +87,27 @@
   web: parity
   docs: budgets
 - id: savings-goals
-  name: Savings goals (milestones, what-if, round-ups)
+  name: Savings goals
   area: money
   tier: free
   web: partial
-  webNote: auto-contributions linked on the phone only
+  webNote: auto-deposits linked on the phone only
   docs: budgets
+  note: milestones · what-if · round-ups
 - id: loans
-  name: Loans (borrowed / lent, payments, payoff strategy)
+  name: Loans
   area: money
   tier: free
   web: parity
   webNote: reminders stay on the phone
   docs: budgets
+  note: borrowed/lent · payments · payoff strategy
 - id: balance-check
   name: Balance check
   area: money
   tier: free
   web: partial
-  webNote: no reminder; corrections not in the ledger
+  webNote: no reminder · corrections not in the ledger
   docs: balance-check
 - id: tags
   name: Tags
@@ -138,22 +142,23 @@
   area: money
   feature: forecast
   note: page, Home card, Analytics card
-  web: parity
+  web: partial
+  webNote: no nested-cap fix, income/bills split, income estimate, monthly figures, pay rule or counted accounts yet (E-FC-15, E-FC-16)
   docs: forecast
 - id: investments
-  name: Investments (metals, crypto, currencies)
+  name: Investments
   area: money
   feature: investments
-  note: positions stay readable after the plan ends
+  note: metals · crypto · currencies · readable after the plan
   web: parity
-  webNote: one form instead of the wizard
+  webNote: one form, no wizard
   docs: investments
 - id: shopping-list
   name: Shopping lists
   area: money
   feature: shoppingList
-  note: page, Home card, Android widget; lists stay readable after the plan ends
-  since: Pro since 2026-10-17, free before
+  note: page · Home card · widget · readable after the plan
+  since: Pro since 2026-10-17
   web: partial
   webNote: no pinned list, no swipe gestures
   docs: shopping
@@ -179,13 +184,20 @@
   name: Budget rollover
   area: money
   feature: budgetRollover
+- id: voice-input
+  name: Voice input for bookings
+  area: money
+  tier: pro
+  status: planned
+  docs: bookings
+  note: speak a booking · no plan yet
 
 # Viewing
 - id: budget-book
-  name: Budget Book (periods, summary, transactions, filters)
+  name: Budget Book
   area: viewing
   tier: free
-  note: periods, calendar, filters, custom range
+  note: periods · summary · transactions · filters · calendar
   web: partial
   webNote: no day grouping
   docs: budget-book
@@ -223,30 +235,30 @@
   web: web-only
   docs: analytics
 - id: home-default
-  name: Home with the default layout
+  name: Home, default layout
   area: viewing
   tier: free
-  note: the layout picked at onboarding; holds only free cards
+  note: picked at onboarding · free cards only
   web: partial
-  webNote: the web's own layout; settings open from the editor only
+  webNote: own layout · no quick add by default · settings in the editor
   docs: home
 - id: bottom-bar-default
   name: Bottom bar Home · Budget Book
   area: viewing
   tier: free
-  note: Goals opens from the drawer
+  note: Goals in the drawer
   since: decided 2026-10-16
   web: app-only
-  webNote: the web has a sidebar
+  webNote: web has a sidebar
   docs: home
 - id: analytics
   name: Analytics
   area: viewing
   feature: analytics
-  note: every card, the whole tab locks
-  since: Pro since 2026-10-17; KPI, income vs. expense, period comparison, breakdowns and the leaderboard were free before
+  note: the whole tab locks
+  since: Pro since 2026-10-17 · parts were free before
   web: partial
-  webNote: net worth without investments; no share image
+  webNote: net worth without investments · no share image
   docs: analytics
 - id: analytics-custom-range
   name: Analytics custom date range
@@ -257,28 +269,48 @@
   area: viewing
   feature: homeEditor
   web: partial
-  webNote: all 17 card types; no cash-flow breakdown sheet
+  webNote: all 17 card types · no cash-flow sheet
   docs: home
 - id: nav-bar
   name: Configurable bottom bar
   area: viewing
   feature: navBar
-  note: a purchase switches to the 4-tab bar at once (adds Analytics and Goals)
+  note: purchase → 4-tab bar at once
   web: app-only
   docs: home
 - id: accent-colors
   name: Accent colors
   area: viewing
   feature: accentColors
+- id: empty-states
+  name: Screens with no data + koi illustrations
+  area: viewing
+  tier: free
+  docs: home
+  note: built 2026-10-19, ships 1.18.0 · Home cards earn their place, Book + analytics empty states · `NEW_USER_EXPERIENCE_PLAN.md` ph. 1
+- id: saved-views
+  name: Saved filter views
+  area: viewing
+  tier: pro
+  status: planned
+  docs: budget-book
+  note: save a filter set · reopen it later · no plan yet
+- id: monthly-reports
+  name: Monthly reports
+  area: viewing
+  tier: pro
+  status: planned
+  docs: analytics
+  note: a summary of each month · no plan yet
 
 # Receipt scanner
 - id: receipt-scanner
   name: On-device receipt scanner
   area: scanner
   tier: free
-  note: line items, RKSV QR
+  note: line items · RKSV + TSE QR
   web: app-only
-  webNote: the web splits a total by hand (`/add-receipt`)
+  webNote: split a total by hand (`/add-receipt`)
   docs: scanner
 - id: receipt-photos-local
   name: Receipt photos kept on the phone
@@ -291,7 +323,7 @@
   area: scanner
   feature: receiptCloudBackup
   web: parity
-  webNote: shown on the booking's receipt card
+  webNote: shown on the receipt card
   docs: scanner
 
 # Data in & out
@@ -305,19 +337,20 @@
 - id: book-export
   name: Whole-book ZIP export
   area: data
-  tier: free
-  note: the door out, stays free (GDPR)
+  feature: exportFiltered
+  note: the door out
+  since: Pro since 2026-10-21 · free before
   web: parity
   webNote: without `moneykoi-data.json`
   docs: data
 - id: download-all-data
-  name: Download all your data
+  name: Download all data
   area: data
-  tier: free
-  note: the all-data archive; access to your own data is never paid
-  since: decided 2026-10-16
+  feature: exportFiltered
+  note: profile + a backup per book
+  since: Pro since 2026-10-21 · free before
   web: missing
-  webNote: the web reads only the active book
+  webNote: web reads only the active book
   docs: data
 - id: backup-restore
   name: Restore a backup file
@@ -330,16 +363,16 @@
   name: Create a backup file
   area: data
   feature: backupCreate
-  note: the backup reminder shows only with Pro
+  note: reminder only with Pro
   web: parity
   webNote: no Share, no `settings.json`
   docs: data
 - id: export-filtered
-  name: Filtered booking export, per-screen CSV, PDF
+  name: Filtered booking export · CSV · PDF
   area: data
   feature: exportFiltered
   web: partial
-  webNote: single-filter ledger CSV; no multi-select export page
+  webNote: one ledger CSV · no export page
   docs: data
 - id: statement-import
   name: Bank statement import (CAMT.053 / MT940)
@@ -358,19 +391,19 @@
   area: sync
   tier: free
   web: app-only
-  docs: accounts
+  docs: offline
 - id: sync
   name: Sync, multiple devices, realtime, automatic cloud backup
   area: sync
   feature: sync
-  docs: accounts
+  docs: offline
 - id: shared-books
-  name: Shared family books + invites
+  name: Shared books + invites
   area: sync
   feature: sharedBooks
-  note: members get every feature inside the book
+  note: members get every feature in the book
   web: partial
-  webNote: manages the active book only; invites are accepted on the web
+  webNote: active book only · invites accepted on the web
   docs: books
 - id: multiple-books
   name: More than one book (up to 3 owned)
@@ -387,27 +420,29 @@
 
 # Web
 - id: web-dashboard
-  name: Web dashboard ("Use on computer")
+  name: Web dashboard · *Use on computer*
   area: web
   feature: webDashboard
-  note: follows the book; a free member of a Cloud book uses it for that book
+  note: follows the book · free member of a Cloud book can use it
   docs: privacy
 
 # App & privacy
 - id: sign-in
-  name: Sign-in (email link or code, password, Google)
+  name: Sign-in
   area: app
   tier: free
   web: parity
-  webNote: plus the QR the phone approves
+  webNote: + QR the phone approves
   docs: accounts
+  note: email link/code · password · Google
 - id: onboarding
-  name: Onboarding (currency, starter accounts and categories)
+  name: Onboarding
   area: app
   tier: free
   web: partial
-  webNote: no AI path, no balances, no variability
+  webNote: no balances, no variability
   docs: settings
+  note: currency · starter accounts + categories
 - id: app-lock
   name: App lock (PIN / biometric)
   area: app
@@ -431,7 +466,7 @@
   name: Android widgets
   area: app
   tier: free
-  note: the shopping list widget's picker is Pro
+  note: shopping widget's picker is Pro
   web: app-only
   docs: home
 - id: ios-widgets
@@ -440,12 +475,13 @@
   tier: free
   status: planned
 - id: languages
-  name: Languages (EN / DE / JA)
+  name: Languages
   area: app
   tier: free
   web: parity
-  webNote: the login page is English only
+  webNote: login page English only
   docs: settings
+  note: EN · DE · JA
 - id: settings
   name: Settings (formats, start of week and month, currency)
   area: app
@@ -461,7 +497,7 @@
 - id: feedback
   name: Feedback
   area: app
-  feature: feedback
+  tier: free
   web: parity
   docs: settings
 - id: usage-stats
@@ -492,8 +528,30 @@
   area: app
   tier: free
   status: planned
+  note: T2–T4 · T1 = the budget calculator
 - id: koi-pond
   name: Koi pond (gamification)
   area: app
   tier: free
   status: planned
+- id: setup-flow
+  name: Personalized setup with starting balances
+  area: app
+  tier: free
+  web: partial
+  webNote: currency + starter sets only
+  docs: settings
+  note: built 2026-10-19, ships 1.18.0 · accounts + balances, calendar, sub-category switch + preview · NUX ph. 3
+- id: getting-started
+  name: Getting-started checklist + hints
+  area: app
+  tier: free
+  docs: home
+  note: built 2026-10-19, ships 1.18.0 · checklist · 4 just-in-time hints · Tips & features page · NUX ph. 2
+- id: demo-mode
+  name: Demo mode
+  area: app
+  tier: free
+  web: app-only
+  docs: demo
+  note: built 2026-10-19/20 · several local books · every Pro + Cloud feature · `assets/demo/*.yaml` · made again after a week

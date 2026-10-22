@@ -1,0 +1,150 @@
+# Source: moneykoi-app DEMO_AI_CONTEXT.md (built 2026-10-19, refresh + inbox 2026-10-20), MONETIZATION_AI_CONTEXT.md §3a.
+items:
+  # Starting
+  - id: R-DEMO-01
+    group: Starting
+    title: Only on an empty phone
+    text: |
+      - first-run Welcome only
+      - refused: account · local book · signed-out books · running demo
+      - leaving wipes the phone → **nothing** else may be there
+    source: DEMO §1
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: is offered only on a phone that holds nothing to keep
+  - id: R-DEMO-02
+    group: Starting
+    title: App language picks the file
+    text: |
+      - de → `demo_de.yaml` · ja → `demo_ja.yaml`
+      - any other → `demo_en.yaml`
+    source: DEMO §3
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: an app language without a demo file gets the English one
+  - id: R-DEMO-03
+    group: Starting
+    title: No half demo
+    text: |
+      - a failed start → deleted again → Welcome + error
+      - app killed while starting → next Welcome clears it
+    source: DEMO §1
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: a demo that cannot be written is left again
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: is cleared on Welcome, a finished demo is not
+  # Showroom
+  - id: R-DEMO-04
+    group: Showroom
+    title: Every plan on view
+    text: |
+      - all **Pro** + **Cloud** features on, whatever was bought
+      - book switching works without sync
+      - needs a server → off: sharing, sync, web, feedback
+    source: DEMO §5
+    tests:
+      - file: test/features/monetization/service/feature_access_test.dart
+        name: shows every plan, and switches between its books without a server
+  - id: R-DEMO-05
+    group: Showroom
+    title: Sample data never reaches a server
+    text: |
+      - no *Back up & sync* · no *Sign in*
+      - only request: the public price list
+    source: DEMO §5
+    tests:
+      - file: test/features/cloud_tier/claim_entry_test.dart
+        name: a demo never offers it
+  - id: R-DEMO-06
+    group: Showroom
+    title: Never notifies
+    text: |
+      - reminder toggles work · **nothing** reaches the OS
+      - fake rent must not read like real rent
+      - inbox shows sample notifications instead · one of each kind · 2 unread
+    source: DEMO §4b, §5
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: the inbox shows one of each kind, fired before today, about things in the first book
+      - file: test/features/demo/demo_generator_test.dart
+        name: every inbox key exists in every language, with one placeholder per name
+  - id: R-DEMO-07
+    group: Showroom
+    title: Not counted as use
+    text: |
+      - no Pro nudge · no usage-stats prompt
+      - their clocks do not start
+    source: DEMO §5
+    tests:
+      - file: test/features/monetization/service/pro_nudge_service_test.dart
+        name: a demo never counts as adoption
+  # The data
+  - id: R-DEMO-08
+    group: The data
+    title: Every feature has data
+    text: |
+      - first book holds every kind of record
+      - a new feature fails the test until the demo shows it
+    source: DEMO §7
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: every entity a book can hold is in the first book
+  - id: R-DEMO-09
+    group: The data
+    title: Looks real on any day
+    text: |
+      - always ends today · generated at start, again after a week (R-DEMO-13)
+      - checking, savings, cash **never** below zero
+      - budget bar = the file's `used`
+    source: DEMO §4
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: checking, savings and cash accounts never dip below zero
+  - id: R-DEMO-10
+    group: The data
+    title: Recurring bookings keep coming
+    text: |
+      - the phone books rent, salary, subscriptions on their day
+      - **never** twice
+    source: DEMO §4
+    tests:
+      - file: test/features/demo/demo_materializer_handoff_test.dart
+        name: ten days later the materializer adds exactly those ten days
+  - id: R-DEMO-11
+    group: The data
+    title: A typo names its line
+    text: |
+      - unknown key, missing account or category → test fails
+      - message names the place in the file
+    source: DEMO §3
+    tests:
+      - file: test/features/demo/demo_scenario_test.dart
+        name: a misspelt key names its place
+      - file: test/features/demo/demo_scenario_test.dart
+        name: an account or category that does not exist names the entry pointing at it
+  - id: R-DEMO-13
+    group: The data
+    title: Made again after a week
+    text: |
+      - cold start ≥ **7 days** after it was made → new data up to today
+      - also after an app update that changed the sample data
+      - kept: open book · settings · app lock + PIN
+      - gone: edits made in the demo · inbox keeps its old rows
+    source: DEMO §6a
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: a demo is stale a week after it was made, or when the generator changed
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: a stale demo is made again in place on cold start, the inbox left as it was
+  # Leaving
+  - id: R-DEMO-12
+    group: Leaving
+    title: Leaving deletes everything
+    text: |
+      - full *Delete all data* → Welcome
+      - app lock off · nothing kept · no conversion
+    source: DEMO §6
+    tests:
+      - file: test/features/demo/demo_use_cases_test.dart
+        name: wipes the phone and ends the demo

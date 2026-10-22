@@ -1,0 +1,18 @@
+sequenceDiagram
+  autonumber
+  participant B as Browser /login/app
+  participant F as web-sign-in function
+  participant App as Phone app (signed in)
+  B->>B: /login → Sign in with the app
+  B->>F: start
+  F-->>B: request id + secret (the secret never leaves the tab)
+  B->>B: QR code holds only the id
+  App->>App: drawer → Use on computer → Scan code
+  App->>F: inspect(id), shows the browser's label
+  App->>F: approve (as the signed-in user)
+  loop until approved, declined or expired
+    B->>F: poll(id, secret)
+  end
+  F-->>B: one-time token hash (generateLink)
+  B->>B: verifyOtp → a session of its own
+  Note over B,App: no session token ever travels in a URL · logging out on the web leaves the phone signed in

@@ -1,0 +1,16 @@
+flowchart TD
+  start(["Scan receipt"]) --> src{"camera or gallery?"}
+  src -- "gallery" --> assemble["whole receipt assembled offline"] --> review
+  src -- "camera" --> s1["Step 1 · find the total<br/>live ML Kit OCR on the phone"]
+  s1 --> qr["RKSV or German TSE QR: total, date<br/>merchant from the ATU seed or learned map"]
+  s1 --> ocr["OCR text: merchant, total, date"]
+  qr --> kind
+  ocr --> kind{"what kind of shop?"}
+  kind -- "restaurant" --> dining["one Dining line"] --> review
+  kind -- "one-category shop<br/>(registry: not itemizable)" --> single["one line, the shop's category"] --> review
+  kind -- "supported or unknown" --> s2["Step 2 · capture items<br/>shutter per photo"]
+  s2 --> parser["ShopRegistry.select(merchant)<br/>SPAR · BILLA · LIDL · ADEG · HOFER · TEDI · Smyths · OBI<br/>anything else → generic parser"]
+  parser --> review["Step 3 · review<br/>every line needs a category · merge · undo"]
+  review -- "sum mismatch" --> s2
+  review --> save["Save: one booking per line<br/>BookingRepo.saveAll → outbox"]
+  save --> photos["photos stay on the phone<br/>uploaded on Cloud when switched on"]

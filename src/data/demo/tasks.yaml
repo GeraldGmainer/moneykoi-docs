@@ -1,0 +1,21 @@
+# Source: moneykoi-app DEMO_AI_CONTEXT.md §10.
+items:
+  - id: T-DEMO-01
+    title: Device test
+    owner: gerald
+    detail: |
+      - run [What to test](/demo/testing/) on Android + iPhone
+      - de, en, ja once each
+  - id: T-DEMO-02
+    title: Read the sample data
+    owner: gerald
+    detail: |
+      - names, shops, amounts in `assets/demo/demo_{de,en,ja}.yaml`
+      - change freely · the test checks the file
+  - id: T-DEMO-03
+    title: Refresh a stale demo
+    owner: ai
+    status: done
+    detail: |
+      - **done 2026-10-20** · in place, not leave + start · R-DEMO-13
+      - with it: sample inbox rows · *Reload demo data* in developer mode

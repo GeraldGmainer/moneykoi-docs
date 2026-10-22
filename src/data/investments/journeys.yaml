@@ -4,19 +4,19 @@ items:
     title: Adds a position
     from: Investments → + (Pro)
     steps:
-      - '"Step 1 of 3": pick the asset (a class with more than 9 shows 8 + *Show more*)'
-      - the opening buy — quantity in your unit, date, price prefilled from that day
-      - details (place, fineness…) → *Save*
-    result: the position, valued at today's price
+      - "Step 1: asset · > 9 → 8 + *Show more*"
+      - opening buy · price prefilled for that day
+      - details → *Save*
+    result: position at today's price
     checks: [C-INV-010, C-INV-020]
   - id: J-INV-02
     group: Positions
     title: Records a buy, sell or transfer
     from: a position → *Add transaction*
     steps:
-      - kind, date, quantity, price (spot prefilled), fee
-      - optionally book the cash leg from an account
-    result: quantity and cost update; a sell shows what it realized before saving
+      - kind, date, quantity, price, fee
+      - optionally book the cash
+    result: quantity + cost update · sell shows realized first
     tests:
       - file: test/features/investment/domain/services/investment_math_test.dart
         name: reports what a sell would realize before it is saved
@@ -26,19 +26,18 @@ items:
     title: Holds foreign cash
     from: Investments → + → *Currencies*
     steps:
-      - pick JPY (your book's currency is hidden)
-      - amount and the exchange rate (prefilled)
-    result: '"100,000 JPY", priced "1 EUR = 175.42 JPY"'
+      - pick JPY · book currency hidden
+      - amount + rate, prefilled
+    result: '"100,000 JPY" · "1 EUR = 175.42 JPY"'
     status: waiting
-    note: |
-      Hidden until the server migration is in and the catalog is switched on (T-INV-01).
+    note: Hidden until migration + switch-on (T-INV-01)
     checks: [C-INV-001, C-INV-003]
   - id: J-INV-04
     group: Portfolio
     title: Reads the portfolio
     from: Investments
     steps:
-      - value vs. cost chart, allocation, movers, holdings with sparklines
-      - a position → chart, XIRR, yield, ledger
-    result: what it is worth and how it did
+      - value vs cost · allocation · movers · holdings
+      - position → chart, XIRR, yield, ledger
+    result: worth + performance
     checks: [C-INV-031]

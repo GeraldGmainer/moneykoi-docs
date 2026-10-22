@@ -7,15 +7,18 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution">Not legal advice — a lawyer reads this page before the paywall ships (task T-MON-05 on [Open work](/monetization/open/)).</Aside>
+<Aside type="caution">Not legal advice · a lawyer reads this before the paywall ships (T-MON-05)</Aside>
 
-1. **Launch price wording.** An announced price *reduction* must show the lowest price charged in the 30 days before it (EU Price Indication Directive 98/6/EC Art. 6a, via the Omnibus Directive 2019/2161; national rules in DE and AT). €69.99 was never charged, so **never** write "€20 off", "was €69.99" or a strikethrough. Write **"Launch price €49.99 until [date], then €69.99"**. A later sale from €69.99 is a real reduction once €69.99 has been charged.
-2. **No false urgency.** Countdowns or scarcity counters that do not match reality are unfair commercial practices (UCPD Annex I). A real end date, stated plainly, is fine. No "only 200 left".
-3. **Define "lifetime" in the Terms.** Lifetime Cloud promises a server — say what it means ("for as long as MoneyKoi Cloud is operated") and what happens if it ends. The early adopters' "for life" needs the same.
-4. **App Review on the purchase screen:** subscription name, length and price per period, what a trial costs afterwards and when billing starts, Terms and Privacy links, *Restore purchases* without buying.
-5. **The privacy policy must name:** RevenueCat (anonymous app user id, store receipt, purchase events, country, device metadata), Sentry (opt-out), the anonymous price fetch, the opt-in usage statistics.
-6. **Sentry stays opt-out — Gerald's risk call (2026-10-14).** No regulator exempts crash reporting from device-access consent (ePrivacy Art. 5(3); AT TKG 2021 §165(3), DE TDDDG §25). Done to lower the risk: EU region, `sendDefaultPii` off, no Session Replay, screenshots or view hierarchy, user content scrubbed. Still open: a signed DPA with Sentry, the privacy policy naming it, the lawyer's view.
-7. **Data portability.** The whole-book export stays free. GDPR Art. 20 applies to data on the server; locking the only way out behind a payment invites trouble.
-8. **Selling outside the stores** (a web checkout) would make cancellation your job: Germany's cancellation button (§312k BGB) and the EU withdrawal flow. Inside the App Store and Google Play the stores handle it.
-9. **Price-data attribution.** "Source: ECB statistics." is shown; Coinranking needs its attribution once it serves.
-10. **Delete account vs. store billing.** The delete screen says a store subscription keeps billing until cancelled in the store, with *Manage subscription* — the lawyer reads that line too.
+| # | Topic | Rule |
+|---|---|---|
+| 1 | **Launch price wording** | • €69.99 never charged → **never** "€20 off", "was €69.99", strikethrough<br/>• write: *Launch price €49.99 until [date], then €69.99*<br/>• EU 98/6/EC Art. 6a · Omnibus 2019/2161 |
+| 2 | **No false urgency** | • no fake countdowns, no "only 200 left" (UCPD Annex I)<br/>• a real end date is fine |
+| 3 | **Define "lifetime"** | • in the Terms: "as long as Money Koi Cloud runs" + what if it ends<br/>• same for early adopters' "for life" |
+| 4 | **App Review** | name · length · price per period · trial cost · billing start · Terms + Privacy · *Restore* |
+| 5 | **Privacy policy names** | RevenueCat · Sentry (opt-out) · anonymous price fetch · opt-in usage stats |
+| 6 | **Sentry opt-out** | • Gerald's risk call, 2026-10-14<br/>• done: EU · no PII · no replay/screenshots · scrubbed<br/>• open: DPA · policy · lawyer |
+| 7 | **Data portability** | • Gerald's risk call, 2026-10-21: every export **Pro**<br/>• server data: GDPR Art. 20 + 15 · only full way out now paid<br/>• lawyer: free way out for a free account? (D-DATA-13)<br/>• read-only shared book: no free export (E-MON-23) |
+| 8 | **Web checkout** | would make cancellation our job (§312k BGB) · stores handle it now |
+| 9 | **Price credits** | "Source: ECB statistics." shown · Coinranking needs credit later |
+| 10 | **Delete account billing** | screen says store keeps billing + *Manage subscription* · lawyer reads it |
+| 11 | **Store claim** | *your data stays on your phone* → book without account only · D-PRIV-7 |

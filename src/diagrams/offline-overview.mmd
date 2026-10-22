@@ -1,0 +1,16 @@
+flowchart LR
+  you(["You"])
+  subgraph phone["Your phone"]
+    direction TB
+    db[("Every book on this phone")]
+    outbox["Outbox<br/>changes not sent yet"]
+  end
+  server[("Server")]
+  partner(["Partner's phone"])
+  you -- "save" --> db
+  db -- "shows at once" --> you
+  db -- "copy of the change" --> outbox
+  outbox -- "when online, one by one" --> server
+  server -- "nudge: something changed" --> partner
+  partner -- "pull what changed" --> server
+  server -- "pull what changed" --> db

@@ -1,0 +1,33 @@
+---
+title: Database
+description: 'The Supabase schema in five parts — people and books, the ledger, planning, investments, operations.'
+sidebar:
+  order: 2
+---
+
+import Diagram from '../../../components/Diagram.astro';
+
+- every `public` table, read from the migrations
+- UUID keys · `created_at` / `updated_at` · soft delete `deleted_at`
+- `shopping_item` = the one hard-deleted table
+- money = `NUMERIC`, never a float
+
+
+
+<Diagram id="db-books" headingLevel={2} />
+
+
+
+<Diagram id="db-ledger" headingLevel={2} />
+
+
+
+<Diagram id="db-planning" headingLevel={2} />
+
+
+
+<Diagram id="db-investments" headingLevel={2} />
+
+
+
+<Diagram id="db-ops" headingLevel={2} />

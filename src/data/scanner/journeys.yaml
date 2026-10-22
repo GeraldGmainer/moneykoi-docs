@@ -4,17 +4,17 @@ items:
     title: Scans a supermarket receipt
     from: Home quick action *Scan receipt* (or the booking form)
     steps:
-      - hold the camera over the receipt until total, date and shop lock (or the QR does it)
-      - photograph the items, part by part
-      - review — categorize, fix, merge → *Save*
-    result: one booking per item, with the photo
+      - hold over the receipt until total, date, shop lock
+      - photograph items part by part
+      - review → categorize, fix, merge → *Save*
+    result: one booking per item + photo
     checks: [C-SCN-001]
   - id: J-SCN-02
     group: Scanning
     title: Scans a restaurant bill
     from: the scanner
     steps:
-      - total locks, the restaurant is detected
+      - total locks · restaurant detected
       - one photo, or *Without photo*
     result: one *Dining* booking
     tests:
@@ -26,13 +26,13 @@ items:
     title: Imports from the gallery
     from: scanner → gallery button
     steps:
-      - pick the photos top to bottom
-    result: the review, as from the camera
+      - pick photos top to bottom
+    result: review, like from the camera
     checks: [C-SCN-003]
   - id: J-SCN-04
     group: Scanning
-    title: Attaches a receipt to an existing booking
+    title: Receipt for an existing booking
     from: a booking → *Scan receipt*
     steps:
       - scan
-    result: the receipt linked to that booking, photos uploaded
+    result: receipt linked · photos uploaded

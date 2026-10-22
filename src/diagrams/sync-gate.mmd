@@ -1,0 +1,14 @@
+flowchart TD
+  q(["Does this book sync?<br/>SyncGate.modeFor(book)"]) --> session{"signed in?"}
+  session -- "no" --> L["Local"]
+  session -- "yes" --> claim{"a claim uploading?"}
+  claim -- "yes" --> L
+  claim -- "no" --> own{"whose book?"}
+  own -- "your own" --> grant{"your plan includes Cloud?"}
+  own -- "someone else's" --> list{"in cloud_tenants?<br/>its owner pays"}
+  grant -- "no" --> L
+  list -- "no" --> RO["Local, read-only for members"]
+  grant -- "yes" --> lapse{"a paused stretch not pushed yet?"}
+  list -- "yes" --> lapse
+  lapse -- "yes" --> L
+  lapse -- "no" --> C["Cloud: outbox pushes, sync pulls, realtime on"]

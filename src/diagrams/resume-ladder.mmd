@@ -1,0 +1,13 @@
+flowchart TD
+  page["Ask for the next page<br/>1,000 rows per type"] -- "ok" --> more{"more pages?"}
+  more -- "yes" --> page
+  more -- "no" --> done(["Done · ladder starts over"])
+  page -- "fails" --> r1["retry after 2 s"]
+  r1 -- "ok" --> more
+  r1 -- "fails" --> r2["retry after 5 s"]
+  r2 -- "ok" --> more
+  r2 -- "fails" --> stop["stop · keep what landed"]
+  stop --> offline{"phone offline?"}
+  offline -- "yes" --> wait(["wait · back online → pull at once"])
+  offline -- "no" --> ladder["resume timer<br/>30 s → 60 s → 2 min → every 5 min"]
+  ladder --> page

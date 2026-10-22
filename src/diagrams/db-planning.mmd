@@ -1,0 +1,25 @@
+erDiagram
+  CATEGORY |o--o{ GOAL : "category_id"
+  ACCOUNT |o--o{ GOAL : "linked_account_id"
+  GOAL ||--o{ GOAL_CONTRIBUTION : "goal_id"
+  ACCOUNT |o--o{ LOAN : "linked_account_id"
+  LOAN ||--o{ LOAN_PAYMENT : "loan_id"
+  FORECAST_SCENARIO |o--o{ FORECAST_ITEM : "scenario_id"
+  ACCOUNT |o--o{ FORECAST_ITEM : "account_id"
+  CATEGORY |o--o{ FORECAST_ITEM : "category_id"
+  GOAL |o--o{ FORECAST_ITEM : "goal_id"
+  SHOPPING_LIST ||--o{ SHOPPING_ITEM : "shopping_list_id"
+  CATEGORY |o--o{ SHOPPING_ITEM : "category_id"
+  GOAL {
+    text goal_type "savings, spending_limit (a budget), income, …"
+  }
+  SHOPPING_ITEM {
+    text name
+    text quantity "hard-deleted when checked off"
+  }
+  FORECAST_SETTING {
+    uuid tenant_id
+  }
+  FORECAST_MONTH_OVERRIDE {
+    uuid tenant_id
+  }

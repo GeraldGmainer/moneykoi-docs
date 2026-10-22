@@ -1,0 +1,21 @@
+---
+import TestRefs from './TestRefs.astro';
+import type { TestRef } from '../lib/tests';
+
+interface Props {
+  tests?: TestRef[];
+  source?: string;
+}
+const { tests = [], source } = Astro.props;
+const label = [tests.length > 0 && `${tests.length} test${tests.length === 1 ? '' : 's'}`, source && 'source'].filter(Boolean).join(' · ');
+---
+
+{
+  label && (
+    <details class="mk-meta">
+      <summary>{label}</summary>
+      {source && <p class="mk-source">{source}</p>}
+      <TestRefs tests={tests} />
+    </details>
+  )
+}

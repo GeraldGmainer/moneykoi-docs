@@ -1,6 +1,9 @@
 items:
   - id: T-ANL-01
-    title: Apply the web analytics migrations
+    title: Apply web analytics migrations
     owner: gerald
     detail: |
-      Written, not applied (web 02_FEATURES): `20261009100000_corrections_out_of_period_flows.sql` and `20261009130000_analytics_month_anchor.sql` — budget months, the browser's day, corrections out of flows and in levels. Through the usual `moneykoi-supabase` branch push.
+      - written, not applied:
+        - `20261009100000_corrections_out_of_period_flows.sql`
+        - `20261009130000_analytics_month_anchor.sql`
+      - via the usual branch push

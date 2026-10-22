@@ -4,11 +4,11 @@ items:
     title: Books an expense
     from: tap the centre **+**
     steps:
-      - amount on the keypad → **=**
-      - category (favorites and recent first)
-      - description (if the app learned you write one)
-      - '*Save*'
-    result: the booking, on the last account, today
+      - amount → **=**
+      - category · favorites first
+      - description, if learned
+      - "*Save*"
+    result: booking · last account, today
     checks: [C-BKG-001]
   - id: J-BKG-02
     group: Entering
@@ -16,19 +16,19 @@ items:
     from: the booking form → *Transfer*
     steps:
       - amount
-      - From and To (pick the other's account to swap, or ⇅)
-      - '*Save*'
-    result: a transfer — no category, counted in neither income nor expense
+      - From + To · or ⇅
+      - "*Save*"
+    result: transfer · not income or expense
     checks: [C-BKG-002]
   - id: J-BKG-03
     group: Entering
     title: Quick booking
     from: long-press the centre **+**
     steps:
-      - type `kebap 5,90 gestern #italien`
-      - check the chips; tap one to fix it
-      - '*Save*'
-    result: the booking; the sheet closes with a confirmation
+      - "type `kebap 5,90 gestern #trip cash`"
+      - check chips · tap to fix
+      - "*Save*"
+    result: booking · sheet closes + confirmation
     tests:
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
         name: init seeds the last-used account
@@ -39,8 +39,8 @@ items:
     from: a booking's edit page
     steps:
       - delete
-      - '*Undo* in the snackbar — or later Settings → Trash → restore'
-    result: the booking back (as a new row)
+      - "*Undo* · or later Trash → restore"
+    result: booking back as a new row
     tests:
       - file: test/features/trash/get_trash_entries_use_case_test.dart
         name: pairs each mapped booking with its own deletion stamp
@@ -50,9 +50,9 @@ items:
     title: Bulk-edits on the web
     from: '`/bookings`'
     steps:
-      - tick rows, or *select all N matching*
-      - '*Add tags* / *Edit* / *Delete*'
-    result: only the touched fields change
+      - tick rows or *select all N matching*
+      - "*Add tags* / *Edit* / *Delete*"
+    result: only touched fields change
     checks: [C-BKG-030]
   - id: J-BKG-20
     group: Tags
@@ -60,9 +60,9 @@ items:
     from: a tag page
     steps:
       - start trip mode
-      - book as usual — the tag is pre-selected
-      - '*Add bookings from dates* for what was booked before'
-    result: the trip's totals, per category, by day
+      - book as usual · tag pre-selected
+      - "*Add bookings from dates*"
+    result: trip totals by category + day
     tests:
       - file: test/features/tag/services/active_tag_service_test.dart
         name: start makes the tag active for the current book
@@ -73,8 +73,8 @@ items:
     from: Budget Book ⋮ → *Search* (web ⌘K)
     steps:
       - type
-      - tap a result, or *Show all*
-    result: the account, category activity, goal, loan or booking
+      - tap a result or *Show all*
+    result: the account, category, goal, loan or booking
     tests:
       - file: test/features/search/ui/pages/search_page_test.dart
         name: typing searches once, after the debounce

@@ -1,0 +1,125 @@
+# The roadmap Gerald reads instead of Trello. AI recommendation of 2026-10-17, from his board
+# (1.18.0–1.20.0, as decided in chat that day) and moneykoi-app/.agents/plans/ (sizes, order,
+# dependencies). House rules (_RELEASE_SCHEDULE.md §1, §8): a release every Sunday, one M-sized risk
+# item per release, two features touching the same authority never share one.
+# Every planned row of catalog.yaml must sit in a bucket — /meta/health/ fails otherwise.
+# A release ships → delete its bucket.
+- id: v1-18-0
+  title: 1.18.0
+  date: 2026-10-25
+  goal: A first run that makes sense
+  items:
+    - ref: setup-flow
+      size: S–M
+      why: the checklist reads its answers → it goes first
+    - ref: empty-states
+      size: M
+      why: no broken-looking chart at 0 bookings
+    - ref: getting-started
+      size: M
+      why: built with the empty states · new users meet scanner, quick add, budgets in week 1
+    - ref: T-MON-20
+      why: Welcome's account door · done 2026-10-21, ahead of the device tests
+
+- id: v1-19-0
+  title: 1.19.0
+  date: 2026-11-01
+  goal: Public launch · Android
+  items:
+    - ref: T-PLAT-01
+      why: screenshots + videos after the new first run
+    - ref: D-PRIV-7
+      why: the listing may say it now · local mode only
+
+- id: v1-20-0
+  title: 1.20.0
+  date: 2026-11-08
+  goal: Demo mode · store setup
+  items:
+    - ref: demo-mode
+      size: M
+      why: built 2026-10-19 · waits for its device test (T-DEMO-01)
+    - ref: T-MON-03
+      why: Play billing · days of lead time
+    - ref: T-MON-02
+      why: the same on Apple
+    - ref: T-MON-04
+      why: RevenueCat project + webhook
+    - ref: T-MON-07
+      why: gates + paywall stay flag-off until these pass
+
+- id: nov
+  title: Nov 15 → Nov 29
+  goal: Free basics every budget app has
+  items:
+    - ref: split-transactions
+      size: 3 × M
+      why: the scanner's receipt groups need it · one release per phase
+    - ref: booking-templates
+      size: S
+      why: small · rides along with split
+    - ref: calculator-tools
+      size: S each
+      why: T1 built · T2–T4 left
+    - ref: ios-widgets
+      why: iPhone gets what Android has
+
+- id: dec
+  title: Dec 6 → Dec 20
+  goal: Pro content before the paywall
+  items:
+    - ref: contract-tracker
+      size: 2 × M
+      why: the Pro headliner for Austria + Germany
+    - ref: subscription-checkup
+      why: builds on contracts
+    - ref: analytics-custom-range
+      size: S
+      why: small Pro add
+    - ref: saved-views
+      why: Budget Book power users · Pro
+
+- id: jan
+  title: Jan 2027
+  goal: Paywall on · Jan 17
+  items:
+    - ref: T-MON-05
+      why: a lawyer reads the paywall first
+    - ref: T-MON-08
+      why: nothing else ships that week
+
+- id: feb-apr
+  title: Feb → Apr 2027
+  goal: After the paywall
+  items:
+    - ref: multi-currency
+      size: S + M
+      why: phase 0 fixes three currency sources first
+    - ref: light-mode
+      size: M
+      why: its palette comes before accent colors
+    - ref: accent-colors
+      why: needs the light-mode palette
+    - ref: budget-rollover
+      why: rides along with accent colors
+    - ref: detect-recurring
+      why: fills the contract tracker
+    - ref: statement-import
+      size: M
+      why: plugs into the CSV import wizard
+    - ref: monthly-reports
+      why: needs months of real data
+    - ref: accessibility
+      size: M
+      why: after light mode · both touch every screen
+
+- id: later
+  title: Later
+  goal: Ideas without a plan
+  items:
+    - ref: voice-input
+      why: no plan yet
+    - ref: koi-pond
+      why: after the koi illustrations
+    - ref: D-PRIV-8
+      why: decide first

@@ -1,0 +1,18 @@
+# Source: moneykoi-app CLAUDE.md (UX copy · product name), 2026-10-21.
+items:
+  - id: D-PLAT-1
+    question: Where does the name read *Money Koi*?
+    status: decided
+    date: 2026-10-21
+    answer: |
+      - every user-visible text · app, web, invite email, docs
+      - not: code, ids, URLs, `MoneyKoi-` backup files, applied migrations
+    related: [R-PLAT-25]
+  - id: D-PLAT-2
+    question: Rewrite *MoneyKoi* in the applied changelog?
+    status: open
+    answer: |
+      - 16× in the changelog rows of `20261015140000_changelog_app_and_web.sql`
+      - users read it in *Changelog* · app + web
+      - yes → new migration (T-PLAT-04) · no → old notes keep it
+    related: [R-PLAT-25, T-PLAT-04]

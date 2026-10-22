@@ -5,24 +5,24 @@ items:
     from: Shopping (Pro)
     steps:
       - quick-add `3x Äpfel`, `Milch 1,5 l`
-      - items group under their categories
-      - check off in the store (swipe left / double-tap / trash bar)
-    result: an empty list; Undo for a mistake
+      - items group by category
+      - check off · swipe left, double-tap, trash bar
+    result: empty list · Undo for mistakes
     checks: [C-SHP-001]
   - id: J-SHP-02
     group: Shopping
     title: Books an item
     from: an item → swipe right
     steps:
-      - the booking form with the name and a guessed category
+      - "form: name + guessed category"
       - amount → *Save*
-    result: the booking; the item is gone (or stays if you backed out)
+    result: booking · item gone, or stays if you back out
     checks: [C-SHP-002]
   - id: J-SHP-03
     group: Shopping
     title: Shops together
     from: a shared book
     steps:
-      - one partner adds, the other checks off
-    result: both lists agree within seconds
+      - one adds, the other checks off
+    result: both agree within seconds
     checks: [C-SHP-003]

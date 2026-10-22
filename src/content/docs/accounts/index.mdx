@@ -1,70 +1,69 @@
 ---
 title: Overview
-description: No-account mode, accounts on the phone, the claim, sync pauses and how sync behaves.
+description: No-account mode, accounts on the phone, the claim, sync pauses and logout.
 sidebar:
   order: 1
 ---
 
 import { Aside } from '@astrojs/starlight/components';
+import AreaDiagrams from '../../../components/AreaDiagrams.astro';
 
 <Aside type="note" title="Status">
-Built and on `main`. The ways from a local book into an account (*Back up & sync*, Profile's *Sign in*, an invite's *Join*) sit behind developer mode until the claim's device test — see [Open work](/monetization/open/) (T-MON-07, T-MON-20).
+- built, on `main`
+- local book → account (*Back up & sync*, *Sign in*, *Join*): **developer mode** until the device test (T-MON-07, T-MON-20)
 </Aside>
 
-## How sync behaves
+## Sync
 
-| | What the user gets |
-|---|---|
-| **Reads** | from the phone's own database — never wait on the network |
-| **Writes** | on screen at once; pushed in the background, in order, one at a time |
-| **Other devices' changes** | a realtime event starts a pull; app resume and reconnect pull too |
-| **Conflicts** | last write wins, no field merging; a pull never overwrites an unpushed edit |
-| **Offline** | everything works; a pending dot shows until pushed; 3 failures pause an item (red dot) |
-| **First sync** | paged, oldest first; resumes after a failure (30 s → 60 s → 2 min → 5 min) or a kill |
-| **A local book** | writes stay on the phone; nothing of the book's data is sent |
+- how sync works, conflicts, what works offline → [Offline-first](/offline/)
+- **local book** = stays on the phone · nothing sent
 
 ## The phone's states
 
-The phone is a cache of books. Who is signed in decides which are visible; nothing is deleted by a logout.
+- the phone is a **cache of books**
+- who is signed in → what is visible
+- logout deletes **nothing**
 
-| State | Account | Own book | Shared Cloud books | Features in own book | Leaves via |
-|---|---|---|---|---|---|
-| **Local Free** | – | on the phone | – | Free | *Delete all data*, uninstall |
-| **Local Pro** | – | on the phone | – | Pro (store receipt) | as above; Pro stays with the store account |
-| **Free account** | ✓ | on the phone, local | sync, every feature | Free, or Pro if bought | *Log out*, *Delete account* |
-| **Paused** | ✓ | on the phone; the server keeps the copy of the pause | sync, every feature | Free, or Pro if owned | as above |
-| **Cloud** | ✓ | syncs (up to 3 owned books) | sync, every feature | Cloud | as above |
-| **Signed out** | (kept) | hidden on the phone | hidden | — | sign in again, or uninstall |
+| State | Account | Own book | Shared Cloud books | Own book features |
+|---|---|---|---|---|
+| **Local Free** | – | phone | – | Free |
+| **Local Pro** | – | phone | – | Pro (store) |
+| **Free account** | ✓ | phone, local | sync, all features | Free / Pro |
+| **Paused** | ✓ | phone · server keeps a copy | sync, all features | Free / Pro |
+| **Cloud** | ✓ | syncs · ≤ 3 owned | sync, all features | Cloud |
+| **Signed out** | kept | hidden | hidden | — |
 
-Free and Pro open **one own book at a time**; more own books are *Locked until Cloud*. Before **Jan 17 00:00 Europe/Vienna** every new account is an early adopter with Cloud for life, so free accounts first appear on Jan 17.
+- Free + Pro: **one** own book open · others *Locked until Cloud*
+- until **Jan 17** every new account = early adopter with Cloud → free accounts start Jan 17
 
-## Ways from a local book into an account
+## Ways into an account
 
-| Door | Where | What happens to the phone's book |
+| Door | Where | The phone's book |
 |---|---|---|
-| **Back up & sync** (the claim) | Settings, Profile, the drawer's *Get Free Cloud* | with Cloud: uploaded; without: moved under the account, kept on the phone |
-| **Join \{book\}** | an invite on a phone with a book and no account | never uploaded unless the account has Cloud; the shared book syncs |
-| **Sign in / Sign back in** | Profile | not a claim — the book is set aside, closed after the logout until *Continue without an account* |
+| **Back up & sync** (claim) | Settings · Profile · drawer *Get Free Cloud* | Cloud → uploaded · else kept on the phone |
+| **Join \{book\}** | invite on a phone with a local book | uploaded only with Cloud |
+| **Sign in** | Profile | set aside · closed after logout |
 
 ## Words
 
 | Word | Means |
 |---|---|
-| **account** | a MoneyKoi sign-in (Google or email): how you use Cloud — your own, or a book shared with you |
-| **book** | a household's data; each lives on the phone under its own id |
-| **local book** | the one book of a device without an account |
-| **Cloud book** | a book whose **owner** has Cloud; everyone in it gets every feature, only inside it |
-| **free account** | an account with no plan of its own; its own book lives on the phone |
-| **paused** | a former subscriber: sync stopped, the phone keeps working, the server keeps the copy of the pause |
-| **claim** | moving a local book into an account (uploading it with Cloud) |
-| **signed-out books** | an account's books kept on the phone after a logout, hidden until it signs in again |
+| **account** | Google or email sign-in |
+| **book** | a household's data |
+| **local book** | the one book without an account |
+| **Cloud book** | owner has Cloud → all features inside |
+| **free account** | no own plan · own book on the phone |
+| **paused** | ex-subscriber · sync stopped, phone works |
+| **claim** | moving a local book into an account |
+| **signed-out books** | kept after logout, hidden |
 
 ## Where it lives in code
 
-| Piece | Where (moneykoi-app) |
+| Piece | moneykoi-app |
 |---|---|
-| Sync engine | `lib/core/offline_first/` — `OFFLINE_FIRST_AI_CONTEXT.md` |
-| Local vs. cloud per book | `lib/core/offline_first/sync_gate/` (`SyncGate`) |
-| Who am I | `lib/core/identity/` (`IdentityResolver`) |
-| Claim, pause, renewal | `lib/features/cloud_tier/` — `OFFLINE_TIER_AI_CONTEXT.md` |
-| Logout, delete | `lib/core/offline_first/wiper/` (`OfflineFirstWiper`) |
+| Local vs cloud | `lib/core/offline_first/sync_gate/` |
+| Who am I | `lib/core/identity/` |
+| Claim · pause · renewal | `lib/features/cloud_tier/` · `OFFLINE_TIER_AI_CONTEXT.md` |
+| Logout · delete | `lib/core/offline_first/wiper/` |
+
+<AreaDiagrams area="accounts" />

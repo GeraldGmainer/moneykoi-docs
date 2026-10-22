@@ -1,0 +1,19 @@
+sequenceDiagram
+  autonumber
+  actor O as Owner or admin
+  participant App as Owner's app
+  participant S as Supabase
+  participant F as send-book-invite
+  actor I as Invitee
+  participant W as Web /invite
+  O->>App: invite by email, role member or admin
+  App->>S: create_book_invite(tenant, email, role)
+  S->>S: book_invite row, token, valid 7 days<br/>a private book becomes shared
+  App->>F: send the email (owner or admin only)
+  F-->>I: email with the invite link
+  I->>W: opens the link
+  W->>I: sign in (an account is required, free)
+  I->>W: Join
+  W->>S: accept_book_invite(token)
+  S->>S: checks token, expiry, email → tenant_member row
+  Note over I,S: the invitee's app learns the book through sync_all's membership domains (never realtime)

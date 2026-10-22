@@ -1,6 +1,6 @@
 ---
 import Md from './Md.astro';
-import TestRefs from './TestRefs.astro';
+import ItemMeta from './ItemMeta.astro';
 import Pill from './Pill.astro';
 import Refs from './Refs.astro';
 import { areaJourneys, groupBy } from '../lib/data';
@@ -31,9 +31,9 @@ const statusLabel = { built: 'built', waiting: 'waits for Gerald', 'by-design': 
             <li class="mk-flow-end"><Md text={j.result} inline /></li>
           </ol>
           {j.note && <div class="mk-note-block"><Md text={j.note} /></div>}
-          <TestRefs tests={j.tests} />
           <Refs ids={j.checks} label="Test by hand" />
           <Refs ids={j.related} label="See also" />
+          <ItemMeta tests={j.tests} />
         </article>
       ))}
     </section>

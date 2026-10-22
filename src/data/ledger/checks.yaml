@@ -4,19 +4,19 @@ groups:
     title: Categories
     items:
       - id: C-LED-001
-        text: First sub under a category with bookings → move dialog; *Cancel* saves nothing; *Move* → bookings, rules, planned payments, favorite, Home quick tile and an Android category widget follow; Undo reverts all
+        text: First sub on a used category → dialog · *Cancel* saves nothing · *Move* → all follow, widget too · Undo reverts
       - id: C-LED-002
-        text: Delete a category in use → *Hide instead* works with Undo; *Delete with bookings* names count and total; account balances change; no trash entry
+        text: Delete used category → *Hide instead* + Undo · *Delete with bookings* names count + total · no trash
       - id: C-LED-003
-        text: '*Move to…* offers only same-type, visible, top-level targets and *None*; Undo'
+        text: "*Move to…* → same type, visible, top-level + *None* · Undo"
       - id: C-LED-004
-        text: Expense tab without a Snacks-like category → the hint shows; *Create* opens pre-filled with Save ready; dismiss → gone 7 days
+        text: No Snacks category → hint · *Create* pre-filled · dismiss → gone 7 days
       - id: C-LED-005
-        text: Fixed / variable — set on a parent, a sub shows *Same as parent*; Analytics fixed/variable and the Budget Book cost-type filter agree
+        text: Fixed on a parent → sub *Same as parent* · Analytics + Budget Book filter agree
   - id: accounts
     title: Accounts
     items:
       - id: C-LED-010
-        text: New account with a starting balance and date → the list shows the balance as a level; a balance without a date is refused
+        text: New account + balance + date → shown as a level · balance without date refused
       - id: C-LED-011
-        text: Delete an account used by a transfer → refused; the last account → refused; Hide removes it from pickers only
+        text: Delete account used by a transfer → refused · last → refused · Hide → only pickers

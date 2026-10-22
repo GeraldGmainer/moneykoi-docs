@@ -4,27 +4,35 @@ items:
   # The booking form
   - id: R-BKG-01
     group: The booking form
-    title: Three shapes — expense, income, transfer
+    title: Three shapes
     text: |
-      The type of an expense or income *is* its category's type; a transfer has no category, a From and a To. A balance correction (from a balance check) is a fourth shape with neither.
+      - expense · income → type = the category's type
+      - transfer → no category · From + To
+      - correction (balance check) → neither
     source: CATEGORY §money signs, RECONCILIATION
   - id: R-BKG-02
     group: The booking form
-    title: Save sits at the bottom; back asks before it throws work away
+    title: Save at the bottom · back asks
     text: |
-      A full-width *Save*, enabled once something changed and the form is valid. Back with changes → *Discard / Keep editing*; a barely-started new booking is just dropped. Create and edit look the same.
+      - full-width *Save* · on once changed + valid
+      - back with changes → *Discard / Keep editing*
+      - barely started → just dropped · create = edit look
     source: CLAUDE.md, FORMS §1–§4
   - id: R-BKG-03
     group: The booking form
-    title: The amount is typed on the app's own keypad
+    title: App's own keypad
     text: |
-      The hero amount with a calculator; **=** moves on to the category, then may open the description (learned — after two skipped prompts in a row it stops opening by itself; a transfer never gets it).
+      - hero amount + calculator
+      - **=** → category → maybe description
+      - 2 skipped prompts in a row → stops asking · transfers never
     source: FORMS §7b, §8c
   - id: R-BKG-04
     group: The booking form
-    title: A transfer's From and To are one pair
+    title: From + To are one pair
     text: |
-      Each picker lists the other row's account tagged ⇅; picking it swaps the pair. A ⇅ button swaps them. Only an explicit From pick becomes the next booking's default account.
+      - each picker shows the other's account with ⇅ → pick = swap
+      - ⇅ button swaps
+      - only an explicit From becomes the next default
     source: FORMS §8e
     tests:
       - file: test/features/booking/bloc/booking_save_bloc_test.dart
@@ -33,42 +41,50 @@ items:
         name: picking the From account as To swaps the pair without touching the last account
   - id: R-BKG-05
     group: The booking form
-    title: Last account, today, and the description is 20 characters
+    title: Defaults + 20 characters
     text: |
-      A new booking starts on the last account picked and today. The description is cut to 20 characters (the server's column); a blank one is saved as none.
+      - new booking: last account, today
+      - description cut to 20 · blank → none
     source: BOOKING_IMPORT §13, use cases
     tests:
       - file: test/features/booking/use_cases/use_cases_test.dart
         name: saves a booking, normalizing a blank description to null
   - id: R-BKG-06
     group: The booking form
-    title: The creator is kept on edit
+    title: Creator kept on edit
     text: |
-      A new booking belongs to the active book and the signed-in person; editing another member's booking keeps them as the creator.
+      - new → active book + signed-in person
+      - editing another's booking keeps them as creator
     source: FAMILY_ACCOUNTS §5.5
     tests:
       - file: test/features/booking/use_cases/use_cases_test.dart
         name: attributes a NEW booking to the active workspace and current profile
   - id: R-BKG-07
     group: The booking form
-    title: Money signs are decided by what the figure is
+    title: Signs by what the figure is
     text: |
-      A movement (one booking) shows + / −; a labelled total shows none; a net or a change is signed; an exact zero is bare. An expense amount is never tinted; a transfer takes no sign and its own colour.
+      - one booking → + / −
+      - labelled total → none · net or change → signed · zero bare
+      - expenses **never** tinted · transfer: no sign, own color
     source: CLAUDE.md, CATEGORY_AI_CONTEXT
     related: [R-LED-30]
 
   # Quick booking
   - id: R-BKG-10
     group: Quick booking
-    title: One line, parsed live into chips
+    title: One line → live chips
     text: |
-      Long-press the centre **+** (web: long press on the mobile +, the sidebar, ⌘K). `kebap 5,90 gestern #trip cash` → amount · category · account · date · tags. A tap on + still opens the full form.
+      - long-press centre **+** · web: long press +, sidebar, ⌘K, key **Q**
+      - `kebap 5,90 gestern #trip cash` → amount · category · account · date · tags
+      - tap + → full form
     source: QUICK_BOOKING §1–§2, BOOKING_ENTRY_WEB §4.16
   - id: R-BKG-11
     group: Quick booking
-    title: Amounts — either separator, the last one decides
+    title: "Amounts: last separator decides"
     text: |
-      `1.234,56` and `1,234.56` both work; one separator with exactly three digits behind it is thousands (`1.500` = 1500); a lone integer is a full amount; digits inside a word (`7up`, `b12`) never are.
+      - `1.234,56` = `1,234.56`
+      - one separator + 3 digits → thousands (`1.500` = 1500)
+      - digits in a word (`7up`) never an amount
     source: QUICK_BOOKING §3
     tests:
       - file: test/features/booking/quick_add/quick_booking_parser_test.dart
@@ -79,9 +95,11 @@ items:
         name: digits welded into a word are not an amount
   - id: R-BKG-12
     group: Quick booking
-    title: Dates in English, German and Japanese, whatever the app language
+    title: Dates in EN, DE, JA
     text: |
-      `gestern`, `vor 2 tagen`, `last friday`, `先週の金曜日`, `monatsende`, `3.7.`… The longest phrase wins; a bare weekday looks back 1–7 days; week phrases follow the start-of-week setting. Not parsed: month names, slash or ISO dates, a bare day.
+      - `gestern` · `vor 2 tagen` · `last friday` · `先週の金曜日` · `3.7.`
+      - longest phrase wins · weekday → last 1–7 days
+      - not: month names, slash/ISO dates, bare day
     source: QUICK_BOOKING §3
     tests:
       - file: test/features/booking/quick_add/date_extractor_test.dart
@@ -90,9 +108,8 @@ items:
         name: the week boundary follows the start-of-week setting
   - id: R-BKG-13
     group: Quick booking
-    title: Accounts by their exact names
-    text: |
-      Whole word, case-insensitive, longest name first, hidden accounts never. Otherwise the last account.
+    title: Accounts by exact name
+    text: whole word, any case, longest first · hidden never · else last account
     source: QUICK_BOOKING §3
     tests:
       - file: test/features/booking/quick_add/account_extractor_test.dart
@@ -101,9 +118,11 @@ items:
         name: the longest account name wins over its prefix
   - id: R-BKG-14
     group: Quick booking
-    title: A guessed category saves without confirmation
+    title: Guessed category saves directly
     text: |
-      From your own history first (same description, scanner corrections, similar descriptions), then category names, then keyword and merchant tables. No "guess" marker. Save is locked only while no category was found.
+      - your history first → category names → keyword tables
+      - no "guess" marker
+      - Save locked only while no category
     source: QUICK_BOOKING §3–§4
     tests:
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
@@ -112,18 +131,19 @@ items:
         name: save stays locked while no category was found
   - id: R-BKG-15
     group: Quick booking
-    title: What you fixed by hand stays fixed
-    text: |
-      A chip you picked is never overwritten by typing on.
+    title: Hand-picked chips stay
+    text: typing on never overwrites a chip you picked
     source: QUICK_BOOKING §4
     tests:
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
         name: a re-parse never clobbers a confirmed field
   - id: R-BKG-16
     group: Quick booking
-    title: '`#name` uses a tag or creates it on Save'
+    title: "`#name` uses or creates a tag"
     text: |
-      Matched case- and space-blind, archived tags too; new ones are created only on Save and shown as *name (new)*. A name over 24 characters blocks Save.
+      - any case/spaces, archived too
+      - new → created on Save, shown *name (new)*
+      - > 24 characters → Save blocked
     source: QUICK_BOOKING §3
     tests:
       - file: test/features/booking/quick_add/tag_extractor_test.dart
@@ -134,7 +154,9 @@ items:
     group: Tags
     title: Tags belong to the book
     text: |
-      ≤ 24 characters, unique ignoring case, no `#` or `|` inside. Rename, archive, merge, delete. A tag page answers "what did the trip cost": totals, per category, by day.
+      - ≤ 24 chars · unique · no `#` or `|`
+      - rename · archive · merge · delete
+      - tag page: totals, per category, by day
     source: tag_name.dart, TAGS_WEB §4
     tests:
       - file: test/features/tag/domain/tag_name_test.dart
@@ -143,9 +165,11 @@ items:
         name: rewrites a source assignment onto the target
   - id: R-BKG-21
     group: Tags
-    title: Trip mode tags new bookings only
+    title: "Trip mode: new bookings only"
     text: |
-      Start a trip on a tag (per book, 7 days by default): new bookings get it pre-selected — never edits, recurring bookings or imports. It ends on its last day, or when the tag is archived or deleted.
+      - per book, 7 days default · tag pre-selected
+      - **never** edits, recurring, imports
+      - ends on last day, or tag archived/deleted
     source: TAGS_WEB trip mode, ActiveTagService
     tests:
       - file: test/features/tag/services/active_tag_service_test.dart
@@ -154,9 +178,10 @@ items:
         name: an archived or deleted tag is cleared on read
   - id: R-BKG-22
     group: Tags
-    title: Transfers and corrections are listed, never summed
+    title: Transfers listed, never summed
     text: |
-      On a tag page they show, but count in no money figure. *Add bookings from dates* never offers recurring bookings, transfers or corrections.
+      - shown on tag pages, in no total
+      - *Add bookings from dates*: no recurring, transfers, corrections
     source: tag_summary, tag_range_selection
     tests:
       - file: test/features/tag/view_models/tag_summary_test.dart
@@ -167,32 +192,37 @@ items:
   # Trash
   - id: R-BKG-30
     group: Trash
-    title: A local, per-device trash for bookings
+    title: Local trash, per device
     text: |
-      Deleting shows *Undo*; Settings → Trash keeps deleted bookings 30 days (max 200). Not a backup: gone after a reinstall, per device, emptied by *Delete account* / *Delete all data*. The web has none.
+      - delete → *Undo* · Trash: 30 days, max 200
+      - **not** a backup: per device, gone after reinstall
+      - web has none
     source: TRASH §1, §5, §7
     tests:
       - file: test/features/trash/sweep_trash_use_case_test.dart
         name: sweeps with the retention window and the row cap from FeatureConstants
   - id: R-BKG-31
     group: Trash
-    title: A restore is a new booking
+    title: Restore = new booking
     text: |
-      A fresh id with the same content and tags. Links to goals or loans are not restored; a recurring occurrence comes back unlinked and its rule does not make that date again.
+      - new id, same content + tags
+      - goal/loan links not restored
+      - recurring comes back unlinked · rule won't redo that date
     source: TRASH §4
   - id: R-BKG-32
     group: Trash
     title: Bookings only
-    text: |
-      Not receipts, accounts, categories, rules, goals, loans or shopping items — by decision.
+    text: not receipts, accounts, categories, rules, goals, loans, shopping
     source: TRASH §8
 
   # Search
   - id: R-BKG-40
     group: Search
-    title: One field finds accounts, categories, goals, loans and bookings
+    title: One search for everything
     text: |
-      Budget Book ⋮ → *Search* (web: ⌘K). Each section shows five and offers *Show all*; a category opens its activity; examples come from your own data.
+      - Budget Book ⋮ → *Search* · web ⌘K
+      - accounts · categories · goals · loans · bookings
+      - 5 each + *Show all*
     source: 02_FEATURES, search tests
     tests:
       - file: test/features/search/ui/search_results_view_test.dart
@@ -203,19 +233,22 @@ items:
   # Web
   - id: R-BKG-50
     group: Web ledger
-    title: Every filter lives in the URL
+    title: Web filters live in the URL
     text: |
-      Shareable and restored on return. Type, account (either side of a transfer), category (a parent covers its subs), tag, member, cost type; search over description, receipt merchant, names, amounts, dates.
+      - shareable, restored on return
+      - type · account · category · tag · member · cost type
+      - search: description, merchant, names, amounts, dates
     source: BOOKINGS_WEB §4.2, §4.4
   - id: R-BKG-51
     group: Web ledger
-    title: Bulk edit touches only what you change
+    title: "Web bulk edit: only what changes"
     text: |
-      Select rows (shift for a range, or every match) → add tags, edit category / account / date / description, delete. A category only while the selection is on one side; transfers are skipped.
+      - shift-range or every match
+      - tags · category · account · date · description · delete
+      - category only for one side · transfers skipped
     source: BOOKINGS_WEB §4.6–§4.7
   - id: R-BKG-52
     group: Web ledger
-    title: Deleting a recurring occurrence skips it for good
-    text: |
-      Its date stays taken, so the rule never re-creates it.
+    title: Deleted occurrence stays skipped
+    text: date stays taken → rule never re-creates it
     source: BOOKINGS_WEB §4.8

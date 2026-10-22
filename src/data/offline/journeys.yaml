@@ -1,0 +1,149 @@
+# Source: OFFLINE_FIRST_AI_CONTEXT.md §5–§9, FAMILY_ACCOUNTS_AI_CONTEXT.md, the conflict tests in
+# test/edge_cases/offline_conflict_edge_cases_test.dart.
+items:
+  # One phone
+  - id: J-OFF-01
+    group: One phone
+    title: Booking without internet
+    from: Cloud book · airplane mode
+    steps:
+      - save a booking
+      - shows at once · dot on its icon
+      - airplane mode off
+      - outbox pushes it
+      - dot gone
+    result: Booking on the server
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: enqueue while offline defers processing until connectivity returns
+      - file: test/core/offline_first/queue/queue_manager_wake_test.dart
+        name: an offline-paused item restored while offline pushes once connectivity returns
+    checks: [C-OFF-001, C-OFF-004]
+    related: [R-ACC-10, R-ACC-11]
+  - id: J-OFF-02
+    group: One phone
+    title: App killed with unsent writes
+    from: saves made offline
+    steps:
+      - app killed or phone off
+      - open again, online
+      - outbox replays in the same order
+    result: Nothing lost, nothing doubled
+    tests:
+      - file: test/core/offline_first/queue/queue_restart_order_test.dart
+        name: restart replays the outbox in enqueue order with deletes first
+    checks: [C-OFF-003]
+    related: [R-OFF-10]
+  - id: J-OFF-03
+    group: One phone
+    title: Switch book while offline
+    from: two books · offline
+    steps:
+      - switch book
+      - shows what the phone has
+      - back online
+      - pull of that book
+    result: Book complete
+    note: never opened on this phone → empty until online
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: coming back online pulls at once, staying online does not
+    checks: [C-OFF-005]
+    related: [R-OFF-60]
+  - id: J-OFF-04
+    group: One phone
+    title: Logout with unsent writes
+    from: edits made offline
+    steps:
+      - log out
+      - sign back in, online
+      - held writes pushed
+    result: Edits on the server
+    tests:
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: keeps every book's unsent writes and drops only those of no book
+    checks: [C-OFF-030]
+    related: [R-OFF-62]
+
+  # Two phones
+  - id: J-OFF-10
+    group: Two phones
+    title: Partner adds, you watch
+    from: same book · both online
+    steps:
+      - partner adds a shopping item
+      - server nudges your phone
+      - pull after 250 ms
+      - list refreshes
+    result: Item there within seconds
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: a change schedules ONE debounced background sync for a burst of events
+    checks: [C-ACC-050]
+    related: [R-ACC-13, R-OFF-30]
+  - id: J-OFF-11
+    group: Two phones
+    title: Back from the background
+    from: app in the background
+    steps:
+      - socket closed
+      - partner edits
+      - you open the app
+      - rejoin + pull
+    result: Change shows
+    tests:
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: a resume after the hidden state counts, and each trip away pulls once
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: a rejoin after the app resumes pulls again
+    checks: [C-ACC-052]
+    related: [R-OFF-32]
+  - id: J-OFF-12
+    group: Two phones
+    title: Same booking, both offline
+    from: both phones offline
+    steps:
+      - both edit one booking
+      - phone 1 online → pushes
+      - phone 2 online → pushes
+      - phone 1 pulls
+    result: Both show phone 2's edit
+    note: last push wins · no merge
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: 'flush first, then pull: device and server both keep the later offline edit'
+    checks: [C-OFF-010]
+    related: [R-OFF-40]
+  - id: J-OFF-13
+    group: Two phones
+    title: You delete, partner edits
+    from: you offline · partner online
+    steps:
+      - you delete · hidden at once
+      - partner edits it
+      - you go online
+    result: Deleted on both
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: 'flush first, then pull: deleted everywhere and not resurrected by the remote edit'
+    checks: [C-OFF-011]
+    related: [R-OFF-41]
+
+  # First sync
+  - id: J-OFF-20
+    group: First sync
+    title: New phone, weak signal
+    from: big book · slow network
+    steps:
+      - sign in
+      - pages of 1,000 rows
+      - signal drops → retry 2 s, 5 s
+      - resume 30 s → 60 s → 2 min
+    result: Whole book arrives
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: a network drop after the first page keeps what landed and reports the walk as interrupted
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: resumes that keep failing back off 30 s, 60 s, 2 min, then every 5 min
+    checks: [C-ACC-053, C-OFF-020]
+    related: [R-ACC-14]

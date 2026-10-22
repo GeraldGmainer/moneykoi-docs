@@ -1,0 +1,90 @@
+---
+import Default from '@astrojs/starlight/components/ThemeSelect.astro';
+import Select from '@astrojs/starlight/components/Select.astro';
+
+// A value is all an option needs: width in rem (or 'full'), text in px. `key` is the localStorage
+// entry (mk-docs:<key>) the head script in astro.config.mjs restores before first paint.
+const pickers = [
+  {
+    key: 'width',
+    label: 'Content width',
+    icon: 'document',
+    fallback: '65',
+    width: '6.75em',
+    options: [
+      { value: '45', label: '45rem' },
+      { value: '65', label: '65rem' },
+      { value: '85', label: '85rem' },
+      { value: 'full', label: 'Full' },
+    ],
+  },
+  {
+    key: 'text',
+    label: 'Text size',
+    icon: 'open-book',
+    fallback: '18',
+    width: '5.75em',
+    options: [
+      { value: '16', label: '16px' },
+      { value: '17', label: '17px' },
+      { value: '18', label: '18px' },
+      { value: '20', label: '20px' },
+      { value: '22', label: '22px' },
+      { value: '24', label: '24px' },
+    ],
+  },
+] as const;
+---
+
+{
+  pickers.map((p) => (
+    <mk-pref-select class="mk-pref-select" data-key={p.key} data-fallback={p.fallback}>
+      <Select icon={p.icon} label={p.label} width={p.width} options={p.options.map((o) => ({ ...o, selected: o.value === p.fallback }))} />
+    </mk-pref-select>
+  ))
+}
+<Default />
+
+<script>
+  const root = document.documentElement;
+  // Must match the head script in astro.config.mjs, which applies the stored value before first paint.
+  const apply: Record<string, (value: string) => void> = {
+    width: (v) => {
+      if (root.hasAttribute('data-has-sidebar')) root.style.setProperty('--sl-content-width', v === 'full' ? '100vw' : `${v}rem`);
+    },
+    text: (v) => root.style.setProperty('--mk-text-scale', String(Number(v) / 16)),
+  };
+
+  class MkPrefSelect extends HTMLElement {
+    connectedCallback() {
+      const select = this.querySelector('select');
+      const key = this.dataset.key;
+      if (!select || !key) return;
+      let stored: string | null = null;
+      try {
+        stored = localStorage.getItem(`mk-docs:${key}`);
+      } catch {}
+      if (stored && [...select.options].some((o) => o.value === stored)) {
+        select.value = stored;
+      } else {
+        select.value = this.dataset.fallback ?? select.value;
+        if (stored) {
+          apply[key]?.(select.value);
+          try {
+            localStorage.removeItem(`mk-docs:${key}`);
+          } catch {}
+        }
+      }
+      select.addEventListener('change', () => {
+        apply[key]?.(select.value);
+        try {
+          localStorage.setItem(`mk-docs:${key}`, select.value);
+        } catch {}
+        document
+          .querySelectorAll<HTMLSelectElement>(`mk-pref-select[data-key="${key}"] select`)
+          .forEach((other) => (other.value = select.value));
+      });
+    }
+  }
+  customElements.define('mk-pref-select', MkPrefSelect);
+</script>

@@ -6,7 +6,7 @@ groups:
       - id: C-SET-001
         text: Formats + Sunday week + month start 25 (confirm) → Budget Book, budgets, analytics follow · web same
       - id: C-SET-002
-        text: Feedback with/without consent → admin inbox · email only with consent
+        text: Account → feedback with and without *Attach email address* → admin inbox · email only when ticked
       - id: C-SET-003
         text: Changelog offline after one online open · German + Japanese
       - id: C-SET-004
@@ -21,3 +21,7 @@ groups:
         text: Tips & features → every row's *Open* lands on its feature (calendar tab, budgets tab, recurring page, scanner with the intro again) · back returns to the list
       - id: C-SET-009
         text: Tips & features on Free → Forecast, Shared books, Investments wear the lock and open the paywall · after Pro the lock is gone · iOS has no widgets row
+      - id: C-SET-010
+        text: "No account → drawer *Feedback* → reply email field, no checkbox · `a@b` → error, *Send* off · valid address → sent → admin shows it"
+      - id: C-SET-011
+        text: "No account, email left empty → sent → admin inbox row reads *no account* · dev server without the migration → error, draft kept"

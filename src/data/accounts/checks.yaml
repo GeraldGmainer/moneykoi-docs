@@ -5,7 +5,6 @@ groups:
     title: Before you start
     setup: |
       - dev flavor · one device with a cloud account, one fresh
-      - developer mode (About → version 7×) opens claim, *Sign in*, *Join*
       - plan simulator: [Monetization → What to test](/monetization/testing/)
     items:
       - id: C-ACC-000
@@ -26,6 +25,8 @@ groups:
         text: Budget-over + reminders fire · widgets configure · *Delete all data* → Welcome
       - id: C-ACC-006
         text: New book's **first** booking → onboarding card gone at once
+      - id: C-ACC-007
+        text: "*I already use Money Koi* → new account → setup step 1 → *Log out* → Welcome · sign in again → setup from step 1"
 
   - id: claim
     title: Back up & sync (the claim)
@@ -69,7 +70,7 @@ groups:
     title: Accounts on the phone
     items:
       - id: C-ACC-030
-        text: Logout keeps books · *Sign back in* → delta · other account → own books only · reminders off/on · widget *Open MoneyKoi to sign in*
+        text: Logout keeps books · *Sign back in* → delta · other account → own books only · reminders off/on · widget *Open Money Koi to sign in*
       - id: C-ACC-031
         text: "*Delete account* → wipes, or only its books next to others · names shared books"
       - id: C-ACC-032
@@ -110,8 +111,10 @@ groups:
     title: Small phone (Small_Phone AVD, 360×640 dp)
     items:
       - id: C-ACC-080
-        text: Welcome → no key points · *Get started*, *I already use MoneyKoi*, terms visible without scrolling · tall phone keeps key points
+        text: Welcome → no key points · *Get started*, *I already use Money Koi*, terms visible without scrolling · tall phone keeps key points
       - id: C-ACC-081
         text: Signed out, account remembered → small koi · *Sign back in*, *Use another account*, *New here?*, terms on screen
       - id: C-ACC-082
         text: Onboarding step 1 → language + currency above *Continue* · step 2 → both choices (en) · largest system font → scrolls, nothing clipped
+      - id: C-ACC-083
+        text: "German · *Welcome back* → *Sicherung wiederherstellen* + *Pro-Kauf wiederherstellen* on one line each, not clipped · also on a ~5\" phone · E-ACC-63 still true?"

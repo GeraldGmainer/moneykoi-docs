@@ -1,13 +1,13 @@
 items:
   - id: D-LED-1
-    question: Enforce "never book onto a parent" on the server?
+    question: Enforce "never book a parent" on the server?
     status: decided
-    answer: No — client-side only (D10). The fix-it notice repairs what another writer leaves.
+    answer: No · clients only (D10) · fix-it notice repairs others
   - id: D-LED-2
-    question: Category balances from the server's column?
+    question: Category balances from the server column?
     status: decided
-    answer: No — every per-category amount is computed from bookings; the column is not even mapped.
+    answer: No · computed from bookings · column not mapped
   - id: D-LED-3
-    question: Delete with bookings — trash them?
+    question: Delete with bookings → trash them?
     status: decided
-    answer: No, deleted for good (D14).
+    answer: No · gone for good (D14)

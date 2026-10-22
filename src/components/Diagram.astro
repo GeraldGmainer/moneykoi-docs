@@ -1,0 +1,121 @@
+---
+import { getEntry } from 'astro:content';
+import Md from './Md.astro';
+import { diagramSources } from '../lib/diagrams';
+import { githubUrl } from '../lib/repos';
+
+interface Props {
+  id: string;
+  headingLevel?: 2 | 3;
+}
+const { id, headingLevel = 3 } = Astro.props;
+const entry = await getEntry('diagrams', id);
+if (!entry) throw new Error(`diagram ${id} is not in src/data/diagrams.yaml`);
+const source = diagramSources().get(id);
+if (!source) throw new Error(`src/diagrams/${id}.mmd does not exist`);
+const { title, caption, sources, checked } = entry.data;
+const repoName = { app: 'moneykoi-app', web: 'moneykoi-web', supabase: 'moneykoi-supabase', admin: 'moneykoi-admin' } as const;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<figure class="mk-diagram" id={`diagram-${id}`} data-diagram>
+  <div class="mk-diagram-head">
+    <Heading class="mk-diagram-title">{title}</Heading>
+    <button type="button" class="mk-diagram-expand not-content" data-diagram-expand aria-haspopup="dialog">Full screen</button>
+  </div>
+  <div class="mk-diagram-canvas not-content">
+    <pre class="mermaid" data-source={source.trim()}>{source.trim()}</pre>
+  </div>
+  <figcaption>
+    <Md text={caption} />
+    <p class="mk-diagram-meta">
+      Checked against {sources.map((s, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a href={githubUrl(s.repo, s.file)}><code>{repoName[s.repo]}/{s.file}</code></a>
+        </>
+      ))} on {checked}
+    </p>
+  </figcaption>
+</figure>
+
+<script>
+  import mermaid from 'mermaid';
+
+  const theme = () => (document.documentElement.dataset.theme === 'light' ? 'neutral' : 'dark');
+  let rendering = Promise.resolve();
+
+  function render() {
+    rendering = rendering.then(async () => {
+      mermaid.initialize({ startOnLoad: false, theme: theme(), securityLevel: 'strict', fontFamily: getComputedStyle(document.body).fontFamily });
+      const nodes = [...document.querySelectorAll<HTMLElement>('pre.mermaid[data-source]')];
+      for (const node of nodes) {
+        node.removeAttribute('data-processed');
+        node.textContent = node.dataset.source ?? '';
+      }
+      for (const node of nodes) {
+        try {
+          await mermaid.run({ nodes: [node] });
+        } catch (error) {
+          console.error('[mk-docs] diagram failed to render', error);
+          node.textContent = `This diagram has a Mermaid error — fix src/diagrams/${node.closest('[data-diagram]')?.id.replace('diagram-', '')}.mmd`;
+          node.classList.add('mk-diagram-error');
+        }
+      }
+    });
+  }
+
+  render();
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // A <dialog> opened with showModal() sits in the top layer, above Starlight's header and sidebar,
+  // which a position: fixed overlay inside the content column cannot get past.
+  const dialog = document.createElement('dialog');
+  dialog.className = 'mk-diagram-dialog';
+  dialog.innerHTML = '<div class="mk-diagram-dialog-head"><strong></strong><button type="button" class="mk-diagram-expand">Close</button></div><div class="mk-diagram-dialog-body"></div>';
+  document.body.append(dialog);
+  const body = dialog.querySelector('.mk-diagram-dialog-body')!;
+  let home: { canvas: Element; parent: Element; next: Node | null } | null = null;
+
+  const open = (figure: Element) => {
+    const canvas = figure.querySelector('.mk-diagram-canvas');
+    if (!canvas?.parentElement) return;
+    home = { canvas, parent: canvas.parentElement, next: canvas.nextSibling };
+    dialog.querySelector('strong')!.textContent = figure.querySelector('.mk-diagram-title')?.textContent ?? '';
+    body.append(canvas);
+    dialog.showModal();
+  };
+  dialog.addEventListener('close', () => {
+    body.classList.remove('mk-zoomed');
+    if (home) home.parent.insertBefore(home.canvas, home.next);
+    home = null;
+  });
+
+  const ZOOM = 2;
+  const toggleZoom = (event: MouseEvent, svg: SVGSVGElement) => {
+    const canvas = svg.closest('.mk-diagram-canvas');
+    if (!canvas) return;
+    const zoomed = body.classList.contains('mk-zoomed');
+    const box = svg.getBoundingClientRect();
+    const view = canvas.getBoundingClientRect();
+    const fx = (event.clientX - box.left) / box.width;
+    const fy = (event.clientY - box.top) / box.height;
+    body.classList.toggle('mk-zoomed', !zoomed);
+    if (zoomed) return canvas.scrollTo(0, 0);
+    // Keep the tapped point under the finger: scroll so the same spot of the 2× diagram lands there.
+    canvas.scrollLeft = fx * box.width * ZOOM - (event.clientX - view.left);
+    canvas.scrollTop = fy * box.height * ZOOM - (event.clientY - view.top);
+  };
+  dialog.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (target.closest('button')) return dialog.close();
+    const svg = target.closest<SVGSVGElement>('.mk-diagram-canvas svg');
+    if (svg) toggleZoom(event, svg);
+  });
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (dialog.contains(target)) return;
+    const figure = target.closest('[data-diagram]');
+    if (figure && (target.closest('[data-diagram-expand]') || target.closest('.mk-diagram-canvas svg'))) open(figure);
+  });
+</script>

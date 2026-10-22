@@ -1,0 +1,26 @@
+erDiagram
+  ASSET ||--o{ INVESTMENT : "asset_id"
+  ACCOUNT |o--o{ INVESTMENT : "funding_account_id"
+  INVESTMENT ||--o{ INVESTMENT_TRANSACTION : "investment_id"
+  ACCOUNT |o--o{ INVESTMENT_TRANSACTION : "account_id"
+  BOOKING |o--o{ INVESTMENT_TRANSACTION : "booking_id (cash leg)"
+  INVESTMENT ||--o{ INVESTMENT_PRICE : "manual prices"
+  ASSET ||--o| ASSET_QUOTE : "latest price"
+  ASSET ||--o{ ASSET_QUOTE_DAILY : "price history"
+  CURRENCY ||--o| FX_RATE : "latest rate"
+  CURRENCY ||--o{ FX_RATE_DAILY : "rate history"
+  PRICE_PROVIDER ||--o{ PRICE_SOURCE_MAP : "provider"
+  PRICE_PROVIDER ||--o{ PRICE_RAW : "provider"
+  PRICE_PROVIDER ||--o{ PRICE_FETCH_RUN : "provider"
+  PRICE_RAW ||--o{ PRICE_FX_USD : "raw_id"
+  PRICE_RAW ||--o{ PRICE_ASSET_USD : "raw_id"
+  PRICE_RAW ||--o{ PRICE_RAW_CONFLICT : "raw_id"
+  ASSET {
+    text quote_source
+    int price_epoch "a bump makes phones re-download history"
+  }
+  PRICE_PROVIDER {
+    text licence_status "cleared, conditional, blocked"
+    bool fetch_enabled
+    bool serve_enabled
+  }

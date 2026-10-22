@@ -1,0 +1,92 @@
+---
+title: Overview
+description: Sample data from Welcome — every plan to look at, deleted when the demo ends.
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside type="note" title="Status">
+- built 2026-10-19 · ships with the release that carries it
+- device test open → [What to test](/demo/testing/)
+</Aside>
+
+## What it is
+
+| | |
+|---|---|
+| Entry | Welcome → *Look around with sample data* |
+| Offered | **empty phone only** · first-run Welcome |
+| Data | 6 months + this month · from `assets/demo/*.yaml` · made again after a week |
+| Books | several · first opens · Home avatar switches |
+| Plans | every **Pro** + **Cloud** feature without a server |
+| Server | **nothing** sent · only the public price list |
+| Banner | *Sample data* · *Start a real book* · always visible |
+| Leaving | deletes **everything** → Welcome → normal setup |
+| Kept | nothing · no conversion into a real book |
+
+## Which file
+
+| App language | File | Story |
+|---|---|---|
+| de | `demo_de.yaml` | *Familie Huber* (shared) + *Lena privat* · EUR |
+| ja | `demo_ja.yaml` | *わたしの家計簿* + *シェアハウス* (shared) · JPY |
+| any other | `demo_en.yaml` | *Jordan's budget* + *Jordan & Sam* (shared) · USD |
+
+## Editing the sample data
+
+- one YAML file per language · `moneykoi-app/assets/demo/`
+- comments allowed · header explains the format
+- names in the file = **data**, never translation keys
+- `flutter test test/features/demo/` → names the line of a mistake
+- full key list: `DEMO_AI_CONTEXT.md` §3
+
+| Convention | Example |
+|---|---|
+| dates relative to the start day | `days_ago: 12` · `in_days: 24` · `started_months_ago: 20` |
+| amounts positive | income or expense = the category |
+| transfer | `to: savings` instead of `category` |
+| keys name things | `key: giro` · never shown |
+| member books it | `by: Markus` · shared books |
+| icons + colours | names from `icon_data.json` · `icon_color.json` |
+
+| Section | Makes |
+|---|---|
+| `accounts` | accounts · `settle_from` = card paid off monthly |
+| `categories` | categories · `sub:` children |
+| `recurring` | rules + their past bookings |
+| `spending` | everyday bookings · `receipts` + `items` → scanned receipts |
+| `bookings` | one-off bookings · trips, repairs |
+| `budgets` | caps · `used: 0.8` = bar 80 % today |
+| `goals` | savings goals · `saved: 1` = completed |
+| `loans` | loans + payments |
+| `shopping` | lists + items |
+| `investments` | `asset: BTC` live price · `custom:` priced by hand |
+| `forecast` | planned payments · busier months |
+| `balance_check` | one check + corrections |
+| `trash` | count of recent bookings in the trash |
+
+## What a demo changes
+
+| Where | In a demo |
+|---|---|
+| plans | all Pro + Cloud features on |
+| book switch | works without sync |
+| *Back up & sync* · *Sign in* | hidden |
+| notifications | **never** fire · toggles still work · inbox shows sample ones |
+| Pro nudge · usage-stats prompt | never |
+| Profile | *Leave demo* instead of *Delete all data* |
+| *Restore from a backup* | hidden |
+| invite link · backup file | asks to leave first → continues on the fresh phone |
+| crash reports | tagged `demo` |
+
+## Where it lives in code
+
+| Piece | moneykoi-app |
+|---|---|
+| feature | `lib/features/demo/` · `DEMO_AI_CONTEXT.md` |
+| sample data | `assets/demo/demo_{de,en,ja}.yaml` |
+| guard | `DemoMode.isActive` |
+| screenshots | `--dart-define=DEMO_SCREENSHOTS=true` · `DEMO_ANCHOR=YYYY-MM-DD` |
+| reload | About → Developer mode → *Reload demo data* |

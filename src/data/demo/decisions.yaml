@@ -1,0 +1,58 @@
+items:
+  - id: D-DEMO-1
+    question: One book or several?
+    status: decided
+    date: 2026-10-19
+    answer: |
+      - **several** · Gerald's brief
+      - first opens · Home avatar switches
+  - id: D-DEMO-2
+    question: Investments in the demo?
+    status: decided
+    date: 2026-10-19
+    answer: |
+      - **yes** · loading quotes is fine
+      - listed assets live · custom ones by hand
+  - id: D-DEMO-3
+    question: Which features does a demo show?
+    status: decided
+    date: 2026-10-19
+    answer: |
+      - every **Pro** + **Cloud** feature without a server
+      - no badge on them
+  - id: D-DEMO-4
+    question: Turn the demo into a real book?
+    status: decided
+    date: 2026-10-19
+    answer: |
+      - **no** · leaving deletes it
+      - normal setup afterwards
+  - id: D-DEMO-5
+    question: Where is the demo offered?
+    status: decided
+    date: 2026-10-19
+    answer: |
+      - first-run Welcome only
+      - never next to a book or an account
+  - id: D-DEMO-6
+    question: Where does the sample data live?
+    status: decided
+    date: 2026-10-19
+    answer: |
+      - on the phone · `assets/demo/*.yaml`
+      - YAML · easy to edit · works on old versions without a server
+  - id: D-DEMO-7
+    question: Regenerate a demo opened weeks later?
+    status: decided
+    date: 2026-10-20
+    answer: |
+      - **yes**, on cold start when made ≥ 7 days ago · built
+      - in place: same book, settings, PIN · demo edits gone
+    related: [E-DEMO-04, R-DEMO-13]
+  - id: D-DEMO-8
+    question: Mark Pro and Cloud features inside the demo?
+    status: decided
+    date: 2026-10-20
+    answer: |
+      - **no**
+      - the paywall shows the plans after leaving

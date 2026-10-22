@@ -1,0 +1,15 @@
+flowchart TD
+  subgraph scheduled["Scheduled channels"]
+    when(["cold start · sign-in<br/>back from background, when online"]) --> pass["re-arm pass"]
+    toggle(["a channel switched on"]) --> pass
+    pass --> cancel["cancelChannel — drop everything pending"]
+    cancel --> rebuild["rebuild from current data<br/>goals and loans · bills · entry nudge · backup"]
+    rebuild --> os["schedule with the OS<br/>+ an inbox row with a future fire_at"]
+  end
+  subgraph live["Event channels"]
+    ev(["booking events · also a partner's sync"]) --> debounce["800 ms debounce"] --> over{"a cap newly over<br/>in this period?"}
+    over -- "yes" --> now["show now · once per budget and period"]
+    fc(["forecast recomputed"]) --> fa{"below the buffer or zero?"} -- "yes" --> now
+  end
+  os --> bell["Home bell: rows whose fire_at has passed"]
+  now --> bell

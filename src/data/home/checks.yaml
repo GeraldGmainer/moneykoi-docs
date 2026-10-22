@@ -19,6 +19,8 @@ groups:
         text: Fresh setup → 3 typed entries → bubble above **+** on Home · tap elsewhere closes it, tap still lands · *Try it* opens quick entry · never again · a quick entry before the 3rd save → no bubble
       - id: C-HOM-014
         text: Budget Book opened 3× with 7 entries → *See the month day by day* above the tabs · tap → Calendar · × → gone for the visit · opening Calendar first → never
+      - id: C-HOM-015
+        text: "Small_Phone, Free → drawer: *Settings* on screen without scrolling · scroll → *Pro features* + *Get Pro*, 4 dimmed pages · German + Japanese: button not clipped"
   - id: widgets
     title: Android widgets
     setup: HOME_WIDGET §12 · what only a person can judge

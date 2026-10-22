@@ -1,0 +1,39 @@
+erDiagram
+  AUTH_USERS ||--|| PROFILE : "user_id"
+  PROFILE ||--o{ TENANT_MEMBER : "profile_id"
+  TENANT ||--o{ TENANT_MEMBER : "tenant_id"
+  PROFILE ||..o{ TENANT : "owner_profile_id"
+  CURRENCY ||--o{ TENANT : "currency_id"
+  TENANT ||--o{ BOOK_INVITE : "tenant_id"
+  PROFILE ||--o{ BOOK_INVITE : "created_by"
+  PROFILE ||--|| PROFILE_SETTING : "id"
+  PROFILE ||--|| PROFILE_SETTING_APP : "id"
+  PROFILE ||--o| PROFILE_SETTING_WEB : "id"
+  TENANT |o--o{ PROFILE_SETTING : "active_tenant_id"
+  PROFILE ||--o| ENTITLEMENT : "profile_id"
+  PROFILE |o--o{ STORE_EVENT : "profile_id"
+  TENANT {
+    text kind "personal or family"
+    uuid owner_profile_id
+    uuid currency_id "the book's currency"
+  }
+  TENANT_MEMBER {
+    text role "owner, admin, member"
+  }
+  PROFILE {
+    text display_name
+    text avatar_url
+    bool onboarding_completed
+  }
+  BOOK_INVITE {
+    text token
+    text status
+    timestamptz expires_at "7 days"
+  }
+  ENTITLEMENT {
+    bool cloud
+    bool plus "Pro"
+    text source "manual, store, grandfathered, early_adopter"
+    timestamptz cloud_expires_at
+    timestamptz cloud_grace_until
+  }

@@ -1,0 +1,70 @@
+---
+title: How it works
+description: Offline-first step by step — saving, the outbox, the pull, realtime, conflicts, deletes and books, with diagrams.
+sidebar:
+  order: 2
+---
+
+import Diagram from '../../../components/Diagram.astro';
+
+- read top to bottom · each step builds on the one before
+- **Full screen** on any diagram · tap = 2× zoom
+
+## 1 · The big picture
+
+- you only ever talk to your phone
+- the outbox sends · the pull fetches · realtime nudges
+
+<Diagram id="offline-overview" />
+
+<Diagram id="sync-engine" />
+
+## 2 · Saving
+
+- save → phone database → screen at once
+- a copy goes to the outbox · sent when online
+- each record carries a status: waiting · sent · failed
+
+<Diagram id="write-path" />
+
+<Diagram id="outbox" />
+
+<Diagram id="row-status" />
+
+## 3 · Getting changes
+
+- the pull asks: what changed since my bookmark?
+- push first, then pull · one pull at a time
+- big first sync → pages · a broken one resumes
+
+<Diagram id="pull-triggers" />
+
+<Diagram id="pull-loop" />
+
+<Diagram id="resume-ladder" />
+
+## 4 · Realtime
+
+- server nudges · the phone pulls · data never rides the nudge
+- background → no socket · return → pull
+
+<Diagram id="realtime-flow" />
+
+## 5 · Conflicts and deletes
+
+- last push wins · whole record
+- a pull never overwrites what you haven't sent
+- deletes hide at once · shopping items go for good
+
+<Diagram id="conflict" />
+
+<Diagram id="delete-kinds" />
+
+## 6 · Books
+
+- every book stays on the phone · one is open
+- each book decides alone whether it syncs
+
+<Diagram id="book-switch" />
+
+<Diagram id="sync-gate" />

@@ -7,44 +7,47 @@ sidebar:
 
 ## What it sells
 
-Ordered by selling power; the last block is an "and more" line.
+1. **Sync & share** · Cloud: devices · cloud backup · shared books · web · ≤ 3 books
+2. **Deeper insights** · Pro: Analytics · forecast · custom ranges
+3. **Money tools** · Pro: investments · shopping lists
+4. **Make it yours** · Pro: Home editor · bottom bar · colors · exports · backups
 
-1. **Sync & share** (Cloud) — all your devices, automatic cloud backup, shared family books where everyone gets every feature, web dashboard, up to 3 books
-2. **Deeper insights** (Pro) — Analytics (insights, merchants, receipt items, habits, net worth), forecast, custom ranges
-3. **Money tools** (Pro) — investments, shopping lists; contract tracker, multi-currency and statement import as they ship
-4. **Make it yours** (Pro) — home editor, bottom bar, accent colors; CSV & PDF export, backups
-
-**The free promise:** subtitle *Budgeting stays free. Always.* — Free card *The full budgeting app on your phone. Yours forever, at no cost.* The copy promises budgeting, never "every feature".
+**Free promise**
+- subtitle: *Budgeting stays free. Always.*
+- Free card: *The full budgeting app on this phone. Forever, at no cost.*
+- promises budgeting · **never** "every feature"
 
 ## Where free users meet it
 
-| Place | What it does |
+| Place | What |
 |---|---|
-| **The paywall** | three cards, Free · Pro · Cloud |
-| **Settings → *Your plan*** | Free · Pro · Cloud · *Cloud through \{book\}* · *Early adopter: Cloud for life* · *Cloud ended, sync is paused* (paused only for a former subscriber) |
-| **Locked affordances** | Analytics and the shopping list in the drawer (last, above *Get Pro*), the *Shopping list* and *Add investment* quick actions, *Edit home*, export actions, a saved tab that holds a locked destination |
-| **The Home nudge** | once, after a booking or age threshold; dismissed = gone for good |
-| **The drawer's upgrade entry** | *Get Pro* while a Pro feature is locked, *Get Cloud* while only sync is, nothing for Cloud or inside a Cloud book; *Get Cloud free* (early adopter) takes precedence |
+| **Paywall** | Free · Pro · Cloud cards |
+| **Plan row** | Settings → *Account* · Free · Pro · Cloud · *Cloud through \{book\}* · *Early adopter* · *Cloud ended* |
+| **Locks** | drawer Pro group · quick actions · *Edit home* · every export · saved locked tab |
+| **Home nudge** | once · dismissed = gone |
+| **Drawer entry** | Free: Pro group, last · *Get Pro* · Pro: *Get Cloud* row · none in Cloud · *Get Cloud free* wins |
 
-## How the paywall behaves
+## How it behaves
 
-- **Cards:** what the user has first, then by price. Each wears its tier's tint — Free neutral, Pro koi orange, Cloud sky blue. The selected card gets a tinted ring and glow, never a fill.
-- **Cloud card:** opens with *Everything in Pro*, carries the monthly / yearly / lifetime picker (yearly preselected when a Cloud feature opened it) and the line *Everyone in a Cloud book gets every feature*.
-- **Pro owner:** no Pro price, cannot pick Pro; the Cloud card offers the **upgrade** in place of the lifetime; opens on Cloud yearly.
-- **Cloud owner:** *Manage subscription* (the store's page), no prices, no buy button, no bottom bar.
-- **Opened from a locked feature:** starts with that feature's details — icon, name, *Included in MoneyKoi Pro / Cloud*, two sentences, three points — and preselects the plan that unlocks it. It does not scroll.
-- **Opened from a general upgrade entry** (drawer *Get Pro* / *Get Cloud*): no details; scrolls the unlocking card into view only when it sits low.
-- **Price option:** plan name left, the store's price large right, *per year* / *per month* for a subscription; the yearly trial adds *\{trial\} free*; a launch price adds *Launch price until \{date\}* and *then \{regular\}*.
-- **Buying Cloud without an account** opens the claim intro first (sign in), because the receipt is booked under the profile id.
-- **A pending purchase** says the store still has to confirm it.
-- **Restore purchases** is reachable without buying, next to the Terms and Privacy links.
+| Case | Behavior |
+|---|---|
+| **Cards** | owned first, then by price · Free neutral · Pro orange · Cloud blue · picked = ring, not fill |
+| **Cloud card** | *Everything in Pro* · monthly/yearly/lifetime · *Everyone in a Cloud book gets every feature* |
+| **Pro owner** | no Pro price · Cloud **upgrade** · opens on yearly |
+| **Cloud owner** | *Manage subscription* · no prices, no buy |
+| **From a lock** | that feature's details · its plan picked · no scroll |
+| **From the drawer** | plan overview: name · promise · every feature · no scroll |
+| **Price** | name left · store price right · *per year/month* · trial · launch line |
+| **Cloud, no account** | claim intro first · receipt needs the profile id |
+| **Pending** | *waiting for the store* |
+| **Renewal note** | only while monthly or yearly is picked |
+| **Restore** | without buying · next to Terms + Privacy · gone once Pro or Cloud is held |
 
 ## Where a lock goes in code
 
-Same shape everywhere, so a paywall never leaks into 200 files:
-
-- The affordance shows `FeatureLockIcon` / `FeatureLockChevron` or a `LockedFeatureCard` and opens the paywall through `PaywallLauncher.require(context, feature)`.
-- The use case throws `TranslatedWarning(AppError.featureLocked)`.
-- `FeatureGateBuilder` rebuilds a surface when the plan, the sign-in, the server's verdict or the active book changes.
-- A gated destination is one line in `lib/app/navigation/destination_feature.dart`; `DestinationNavigator.open` covers every way in.
-- Records that stay readable after a lapse: `LockedRecords.readable` (shopping list, investments) → the page opens read-only under `ReadOnlyFeatureBanner`.
+- affordance: `FeatureLockIcon` · `FeatureLockChevron` · `LockedFeatureCard`
+- opens `PaywallLauncher.require(context, feature)`
+- use case throws `TranslatedWarning(AppError.featureLocked)`
+- `FeatureGateBuilder` rebuilds on plan, sign-in, verdict, book change
+- gated page = one line in `destination_feature.dart`
+- readable after lapse: `LockedRecords.readable` → `ReadOnlyFeatureBanner`

@@ -5,19 +5,24 @@ items:
     group: The model
     title: One tab, three kinds
     text: |
-      **Goals** (savings, deadline) grow from the deposits you log. **Budgets** (spending caps, income goals) measure your bookings inside a period — no deposits, no detail page. **Loans** (borrowed / lent) shrink with the payments you log.
+      - **Goals** (savings, deadline) → grow with deposits
+      - **Budgets** (caps, income goals) → measure bookings per period
+      - **Loans** (borrowed, lent) → shrink with payments
     source: BUDGET_GOALS §1
   - id: R-BUD-21
     group: The model
-    title: A deposit and its booking are two separate facts
+    title: Deposit ≠ booking
     text: |
-      A deposit or payment moves the goal or loan; the optional *also record a booking* moves the account. With a linked account it is a transfer. The booking is written first, then linked.
+      - deposit/payment moves the goal or loan
+      - *also record a booking* moves the account
+      - linked account → transfer · booking written first
     source: BUDGET_GOALS §7a
   - id: R-BUD-22
     group: The model
-    title: Reached and settled show at once
+    title: Reached + settled show at once
     text: |
-      A goal is reached when saved ≥ target, a loan settled when paid off or repaid ≥ principal — read from the phone's own fold, so the badge appears the moment a deposit lands, offline too.
+      - reached: saved ≥ target · settled: paid off
+      - read on the phone → badge at once, offline too
     source: BUDGET_GOALS §3
     tests:
       - file: test/features/budget_goals/domain/entities/goal_test.dart
@@ -26,24 +31,26 @@ items:
         name: isSettled reads the paid-off status OR the local fold
   - id: R-BUD-23
     group: The model
-    title: Owners and admins plan; members read
-    text: |
-      Goals, budgets, loans and their deposits are structure. Members see them read-only.
+    title: Owners + admins plan · members read
+    text: goals, budgets, loans, deposits = structure → members read-only
     source: FAMILY_ACCOUNTS §2
     related: [R-BOOK-10]
 
   # Budgets
   - id: R-BUD-30
     group: Budgets
-    title: A budget is its scope — no name of its own
+    title: A budget is its scope
     text: |
-      Type × category (or the whole book) × period (weekly, monthly, yearly). The title is the category's name, *Whole book*, or *Category not available yet* when the category has not synced here.
+      - type × category or whole book × week/month/year
+      - no name · title = category, *Whole book*, or *Category not available yet*
     source: BUDGET_GOALS §3
   - id: R-BUD-31
     group: Budgets
-    title: No two budgets on the same scope
+    title: No two budgets on one scope
     text: |
-      Same type, category and period is refused with the reason on screen; a different period is fine; an archived budget is history. App only — the web has no guard yet.
+      - same type + category + period → refused, reason shown
+      - other period ok · archived = history
+      - app only · web has no guard yet
     source: BUDGET_GOALS §3
     tests:
       - file: test/features/budget_goals/budget_duplicate_rule_test.dart
@@ -52,9 +59,11 @@ items:
         name: an archived budget is history, not a duplicate
   - id: R-BUD-32
     group: Budgets
-    title: One computation for every screen
+    title: One number for every screen
     text: |
-      The Budgets tab, the Home card, the Analytics card and the widget read the same progress. A parent cap counts its subs; a whole-book cap counts everything; transfers count toward the whole book only, never a category.
+      - Budgets tab · Home card · Analytics · widget read the same
+      - parent counts subs · whole book counts all
+      - transfers → whole book only
     source: BUDGET_GOALS §5
     tests:
       - file: test/features/budget_goals/budget_progress_test.dart
@@ -63,16 +72,20 @@ items:
     group: Budgets
     title: Nested caps
     text: |
-      Whole book → group → subcategory nest when they share a period; each sits in its nearest container, which shows how much is assigned and unassigned. Different periods never nest.
+      - whole book → group → sub, same period
+      - container shows assigned + unassigned
+      - different periods never nest
     source: BUDGET_GOALS §5
     tests:
       - file: test/features/budget_goals/budget_nesting_test.dart
         name: whole book, a group and a subcategory nest three deep, each inside the nearest container
   - id: R-BUD-34
     group: Budgets
-    title: A suggested amount from your own history
+    title: Suggested amount from history
     text: |
-      The median of the last 6 complete periods, rounded up to a friendly step; nothing when there is no history. Tap to use it on a new budget; muted on an edit — history informs, never overwrites.
+      - median of last 6 full periods, rounded up
+      - none without history
+      - new budget: tap to use · edit: muted, never overwrites
     source: BUDGET_GOALS §5a
     tests:
       - file: test/features/budget_goals/budget_suggestion_test.dart
@@ -83,7 +96,9 @@ items:
     group: Goals
     title: Pace, milestones, streaks
     text: |
-      Progress with 25 / 50 / 75 / 100 % milestones (each celebrated once per device), ahead / behind against a deadline, required per month, projected finish, and a monthly streak from 2 on. A withdrawal re-arms a milestone without celebrating the drop.
+      - 25/50/75/100 % milestones · celebrated once per device
+      - ahead/behind · per month needed · projected finish
+      - monthly streak from 2 · a withdrawal re-arms quietly
     source: BUDGET_GOALS §4, §7b
     tests:
       - file: test/features/budget_goals/claim_goal_milestone_test.dart
@@ -92,41 +107,47 @@ items:
         name: two contributions inside one anchored period count once
   - id: R-BUD-41
     group: Goals
-    title: Round-ups go to one goal
+    title: Round-ups → one goal
     text: |
-      A new expense rounds up into the round-up goal (1, 5, 10… units). Only the device that created the booking rounds it up, never on an edit — so nothing is contributed twice.
+      - new expense rounds up · units 1, 5, 10…
+      - only the creating device · never on edit → no doubles
     source: BUDGET_GOALS §7a
     tests:
       - file: test/features/budget_goals/round_up_test.dart
         name: is zero on a boundary, so a round expense contributes nothing
   - id: R-BUD-42
     group: Goals
-    title: Auto-contributions from a recurring rule (app only)
+    title: Auto-deposits from a rule · app
     text: |
-      A goal linked to a rule logs a deposit for each booking the rule makes from the link date on. Backfilled on the phone when a screen shows the goal; the web shows the link read-only.
+      - linked goal gets a deposit per rule booking, from link date
+      - filled in when a screen shows the goal
+      - web: link read-only
     source: BUDGET_GOALS §7a, GOALS_WEB §7
   - id: R-BUD-43
     group: Goals
-    title: Goal settings are per person
+    title: Goal settings per person
     text: |
-      Round-up target, rule links, celebrations and reminders live in the profile, not the book; a goal id from another book reads as "off".
+      - round-up target, rule links, celebrations, reminders → profile
+      - goal id from another book → off
     source: BUDGET_GOALS §7a
 
   # Loans
   - id: R-BUD-50
     group: Loans
-    title: A payment can split principal and interest
+    title: "Payment: principal + interest"
     text: |
-      With a split, the principal reduces the balance; without one, the whole amount does. Over-payment reads as settled.
+      - split → principal reduces the balance
+      - no split → whole amount · over-payment = settled
     source: BUDGET_GOALS §3
     tests:
       - file: test/features/budget_goals/domain/entities/loan_payment_test.dart
         name: 'the hybrid rule: the principal portion reduces the balance when entered, the full amount otherwise'
   - id: R-BUD-51
     group: Loans
-    title: Payoff calculator and debt strategy
+    title: Payoff + debt strategy
     text: |
-      A borrowed loan has a payoff simulator; with more than one debt, a strategy page ranks them by avalanche (default) or snowball on the outstanding balance.
+      - borrowed loan → payoff simulator
+      - several debts → strategy: avalanche (default) or snowball
     source: BUDGET_GOALS §7b, LOANS_WEB
     tests:
       - file: test/features/budget_goals/loan_math_test.dart
@@ -137,18 +158,23 @@ items:
   # Budget calculator
   - id: R-BUD-01
     group: Budget calculator
-    title: The same income plans the same month on the web and in the app
+    title: Calculator = the website's
     text: |
-      The calculator is the website's, line for line: presets *Balanced* (50/30/20) and *Saver*, per-adult and per-child shares, rounding to 10 with the drift in savings, per day over 30.4 days. Change one side, change both.
+      - same income → same month, web + app
+      - *Balanced* (50/30/20) · *Saver* · per adult + child
+      - rounds to 10, drift into savings · per day ÷ 30.4
+      - change one side → change both
     source: BUDGET_GOALS §5b
     tests:
       - file: test/features/budget_goals/budget_plan_math_test.dart
         name: a plan that fits adds up to the income exactly, the rounding drift landing in savings
   - id: R-BUD-02
     group: Budget calculator
-    title: Eight rows, matched to top-level expense categories
+    title: Eight rows → top-level categories
     text: |
-      Whole names first (EN, DE, JA starter names and synonyms), then a forgiving guess only for rows still empty — so a loose guess never steals another row's exact name. Unmatched: *No matching category* and a picker limited to top-level categories. Two rows on one category block Save. Savings never becomes a budget.
+      - exact names first (EN/DE/JA + synonyms), then a guess for empty rows
+      - unmatched → *No matching category* + top-level picker
+      - two rows, one category → Save blocked · savings never a budget
     source: BUDGET_GOALS §5b
     tests:
       - file: test/features/budget_goals/budget_plan_category_matcher_test.dart
@@ -159,18 +185,21 @@ items:
         name: a category picked for two rows blocks Save until one is changed
   - id: R-BUD-03
     group: Budget calculator
-    title: Income — an income goal, else your history, else empty
+    title: "Income: goal → history → empty"
     text: |
-      An active monthly whole-book income goal wins; otherwise the typical month of income bookings; a line under the field says which.
+      - active monthly income goal wins · else typical month
+      - a line says which
     source: BUDGET_GOALS §5b
     tests:
       - file: test/features/budget_goals/use_cases/budget_plan_use_cases_test.dart
         name: an active monthly whole-book income goal is the income, without a history lookup
   - id: R-BUD-04
     group: Budget calculator
-    title: Archived caps are history; paused ones come back on, and say so
+    title: Archived = history · paused = back on
     text: |
-      An archived cap is never prefilled, re-activated or deleted — the row creates a new cap. A paused monthly cap prefills its row and is active after Save; the row reads *Turns your paused budget back on*.
+      - archived cap: never touched · row makes a new cap
+      - paused cap: prefilled, active after Save
+      - row says *Turns your paused budget back on*
     source: BUDGET_GOALS §5b (2026-10-16)
     tests:
       - file: test/features/budget_goals/budget_plan_changes_test.dart
@@ -179,9 +208,11 @@ items:
         name: a paused monthly cap is turned back on even at the planned amount, and the update says so
   - id: R-BUD-05
     group: Budget calculator
-    title: Replace keeps ids and deletes only what no row keeps
+    title: Replace keeps ids
     text: |
-      A cap a planned row rewrites keeps its id (Home cards and the budget widget hold ids). Deleted: the live spending caps no row keeps — never an archived cap or an income goal. Writes go first, deletes last.
+      - rewritten cap keeps its id · Home + widget hold ids
+      - deletes only live caps no row keeps
+      - never archived caps or income goals · writes first, deletes last
     source: BUDGET_GOALS §5b
     tests:
       - file: test/features/budget_goals/budget_plan_changes_test.dart
@@ -191,6 +222,5 @@ items:
   - id: R-BUD-06
     group: Budget calculator
     title: Free
-    text: |
-      No gate. Decided 2026-10-16 (D13).
+    text: No gate · decided 2026-10-16 (D13)
     source: BUDGET_GOALS §5b, MONETIZATION §4

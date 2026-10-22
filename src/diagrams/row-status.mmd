@@ -1,0 +1,15 @@
+stateDiagram-v2
+  direction LR
+  [*] --> createdLocally: save (new)
+  synced --> updatedLocally: save (edit)
+  synced --> pendingDelete: delete
+  createdLocally --> synced: upsert pushed
+  updatedLocally --> synced: upsert pushed
+  createdLocally --> upsertFailed: 3 failures
+  updatedLocally --> upsertFailed: 3 failures
+  upsertFailed --> synced: retried at the next app start
+  pendingDelete --> [*]: delete pushed, row removed
+  pendingDelete --> tombstone: delete pushed, trash kept
+  pendingDelete --> deleteFailed: 3 failures
+  state "synced tombstone (deleted_at set)" as tombstone
+  note right of pendingDelete: hidden from every list at once

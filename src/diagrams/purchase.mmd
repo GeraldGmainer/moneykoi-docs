@@ -1,0 +1,17 @@
+sequenceDiagram
+  autonumber
+  actor U as You
+  participant App as App · PurchaseGateway
+  participant RC as RevenueCat + store
+  participant WH as revenuecat-webhook
+  participant DB as Supabase
+  U->>App: paywall → buy
+  App->>RC: configure on first paywall open, purchase (app user id = profile id)
+  RC-->>App: receipt: pro / cloud
+  App->>App: features unlock on this phone at once
+  RC->>WH: purchase event
+  WH->>DB: apply_store_entitlement(event)
+  DB->>DB: store_event ledger (once per event id)<br/>entitlement: cloud + expiry · plus only for one-time products
+  App->>DB: my_entitlement()
+  DB-->>App: cloud, plus, cloud_tenants
+  Note over App,DB: once the server has spoken it outranks the cached receipt for Cloud

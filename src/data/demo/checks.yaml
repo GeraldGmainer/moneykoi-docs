@@ -1,0 +1,54 @@
+# Source: moneykoi-app DEMO_AI_CONTEXT.md. Nothing here has run on a phone yet (2026-10-19).
+groups:
+  - id: start
+    title: Starting
+    setup: Fresh install, or *Delete all data* first
+    items:
+      - id: C-DEMO-001
+        text: Welcome → *Look around with sample data* → Home full within ~2 s · banner at the bottom
+      - id: C-DEMO-002
+        text: Every Home card shows data · Analytics, Forecast, Investments, Shopping open unlocked
+      - id: C-DEMO-003
+        text: Airplane mode → start → investments show hand-set prices · rest normal
+      - id: C-DEMO-004
+        text: App in de / en / ja → matching sample data · JPY without decimals
+      - id: C-DEMO-005
+        text: Returning account on Welcome → no demo button
+  - id: books
+    title: Books
+    items:
+      - id: C-DEMO-010
+        text: Home avatar → second book → its data, its currency · switch back
+  - id: guards
+    title: What a demo blocks
+    items:
+      - id: C-DEMO-020
+        text: Turn reminders on → no notification ever · inbox holds only the sample rows
+      - id: C-DEMO-024
+        text: Home bell → 2 unread · inbox shows due tomorrow, over budget, time to save, weekly wrap-up · in the app language
+      - id: C-DEMO-021
+        text: Profile → *Leave demo* · no *Back up & sync*, no *Sign in*
+      - id: C-DEMO-022
+        text: Tap an invite link → *Leave the demo to join?* → confirm → invite page
+      - id: C-DEMO-023
+        text: Tap a `.moneykoi` file → *Leave the demo to restore?* → *Welcome back* preview
+  - id: leaving
+    title: Leaving and coming back
+    items:
+      - id: C-DEMO-030
+        text: Banner *Start a real book* → confirm → Welcome → *Get started* → empty setup
+      - id: C-DEMO-031
+        text: App lock PIN set in the demo → leave → Welcome opens without a lock
+      - id: C-DEMO-032
+        text: Kill + reopen in a demo → straight back into it, banner shown
+      - id: C-DEMO-033
+        text: Date +10 days → reopen → rent, salary since then appear once
+      - id: C-DEMO-034
+        text: Date +8 days → kill + reopen → koi a moment longer · spending up to today · same book open · PIN still asked
+  - id: screenshots
+    title: Store screenshots
+    items:
+      - id: C-DEMO-040
+        text: Build with `--dart-define=DEMO_SCREENSHOTS=true` → demo without banner
+      - id: C-DEMO-041
+        text: About → Developer mode → *Reload demo data* → Home with today's data · inbox refilled · switch app language first → that language's file

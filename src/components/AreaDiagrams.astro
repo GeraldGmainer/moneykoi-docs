@@ -1,0 +1,18 @@
+---
+import Diagram from './Diagram.astro';
+import { diagramsFor } from '../lib/diagrams';
+
+interface Props {
+  area: string;
+}
+const list = await diagramsFor((d) => d.data.areas.includes(Astro.props.area));
+---
+
+{
+  list.length > 0 && (
+    <>
+      <h2 id="diagrams">Diagrams</h2>
+      {list.map((d) => <Diagram id={d.id} />)}
+    </>
+  )
+}

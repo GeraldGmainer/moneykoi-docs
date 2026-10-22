@@ -2,7 +2,7 @@ items:
   - id: E-PLAT-01
     group: Builds
     title: iOS 15.0–15.4
-    when: A user on iOS 15.0–15.4 opens the App Store.
-    then: No update past 1.16.x is offered.
+    when: user on iOS 15.0–15.4 opens the App Store
+    then: no update past 1.16.x
     status: by-design
     risk: medium

@@ -1,52 +1,74 @@
 items:
   - id: E-BB-01
     group: Periods
-    title: Weeks across daylight saving
-    when: A Sunday-start week over the autumn change.
-    then: Week bounds step by calendar day — no week reads Oct 25 – Oct 30, no booking falls between pages (fixed 2026-10-14).
+    title: Weeks across DST
+    when: Sunday-start week over the autumn change
+    then: steps by calendar day · no gaps (fixed 2026-10-14)
     status: fixed
     risk: high
   - id: E-BB-02
     group: Periods
-    title: An anchored month and grouping
-    when: The month starts on the 25th.
-    then: Bookings group by the period's own start; the old (year, month) key dropped them into no page.
+    title: Anchored month grouping
+    when: month starts on the 25th
+    then: grouped by the period's start · old key lost bookings
     status: fixed
     risk: high
   - id: E-BB-03
     group: Periods
-    title: Midnight passes while the tab is open
-    when: The page showing today is open past midnight.
-    then: It moves to the period holding the new today; a page the user paged to stays.
+    title: Midnight with the tab open
+    when: today's page open past midnight
+    then: moves to the new today · paged-to page stays
     risk: low
     tests:
       - file: test/features/budget_book/bloc/budget_book_bloc_test.dart
         name: moves a page that showed today onto the week holding the new today
+  - id: E-BB-08
+    group: Periods
+    title: Fresh book shows a one-day month
+    when: book with no bookings · Month
+    then: header *October 2026* · was *Oct 18 – Oct 18* until a period switch (fixed 2026-10-18)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/filtered_bookings/booking_page_data_service_test.dart
+        name: month spans the whole current month, not the instant "now"
   - id: E-BB-04
     group: Counts
     title: Counts differ between tabs
-    when: Summary and Transactions show different counts for one month.
-    then: Expected — Summary counts categorised bookings only (no transfers, no corrections).
+    when: Summary ≠ Transactions count
+    then: "expected · Summary: no transfers, no corrections"
     status: by-design
     risk: low
   - id: E-BB-05
     group: Export
     title: Export on Free
-    when: A Free user taps ⋮ → *Export*.
-    then: The row wears the lock and opens the paywall (it used to open the sheet and fail silently, B5).
+    when: Free taps ⋮ → *Export*
+    then: lock → paywall · used to fail silently (B5)
     status: fixed
     risk: medium
+  - id: E-BB-09
+    group: Small screens
+    title: Empty book on a small phone
+    when: no bookings · 360×640 dp phone
+    then: |
+      - koi shrinks (down to 72 dp), then is dropped · *Add transaction* above the bottom bar
+      - was a 12 px overflow stripe (fixed 2026-10-18) · every full-page empty state does the same
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/ui/common/koi_empty_state_test.dart
+        name: shrinks the koi on a short screen so the action stays on it
   - id: E-BB-06
     group: Web
-    title: Web calendar and list gaps
-    when: Using the ledger on the web.
-    then: No day grouping and no day / week calendar layouts; the calendar's outcome total is tinted (open).
+    title: Web calendar + list gaps
+    when: ledger on the web
+    then: no day grouping · no day/week calendar · outcome total tinted (open)
     status: known-issue
     risk: low
   - id: E-BB-07
     group: Web
     title: Web dates west of UTC
-    when: A browser west of UTC asks for a range.
-    then: Local midnights sent through `toISOString()` shift a day — latent, only the dashboard shows it today.
+    when: browser west of UTC asks for a range
+    then: "`toISOString()` shifts a day · only dashboard shows it"
     status: known-issue
     risk: medium

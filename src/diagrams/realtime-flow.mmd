@@ -1,0 +1,11 @@
+flowchart TD
+  partner["Partner saves"] --> server[("Server")]
+  server -- "change event · open book only" --> channel["Your phone's channel"]
+  channel --> echo{"your own push<br/>in the last 4 s?"}
+  echo -- "yes" --> ignore(["ignored"])
+  echo -- "no" --> wait["wait 250 ms after the last event<br/>at most 2 s"]
+  wait --> pull["one pull for all tables"]
+  pull --> screens(["screens refresh"])
+  bg["App to background"] --> leave["channel left · no socket"]
+  fg["App back"] --> rejoin["channel joined again"]
+  rejoin --> pull

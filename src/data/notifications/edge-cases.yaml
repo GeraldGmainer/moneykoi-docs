@@ -1,39 +1,39 @@
 items:
   - id: E-NTF-01
     group: Channels
-    title: A book switch repeats an over-budget alert
-    when: A budget is over in book A, the user switches to B and back to A.
-    then: The alert can fire again in the same period. Known gap, not fixed.
+    title: Book switch repeats an alert
+    when: budget over in A → switch to B → back to A
+    then: may alert again same period · known gap
     status: known-issue
     risk: low
   - id: E-NTF-02
     group: Channels
-    title: A booking during an over-budget check
-    when: A booking lands while the watcher is mid-pass.
-    then: Its crossing is noticed only at the next booking event. Known gap.
+    title: Booking during the check
+    when: booking lands mid-check
+    then: noticed only at the next booking · known gap
     status: known-issue
     risk: low
   - id: E-NTF-03
     group: Channels
-    title: A user who never opens the app
-    when: Weeks pass without a launch.
-    then: Only the first bill reminder per rule fires (iOS caps pending notifications at ~64); the chain extends on each resume. The fix would be push.
+    title: App never opened
+    when: weeks without a launch
+    then: only the first reminder per rule · iOS caps ~64 · fix = push
     status: by-design
     risk: medium
   - id: E-NTF-04
     group: Channels
-    title: A lead that already passed
-    when: A reminder's time is in the past when armed.
-    then: Skipped, never fired now.
+    title: Lead already passed
+    when: reminder time in the past when armed
+    then: skipped, never fired now
     risk: low
     tests:
       - file: test/features/recurring_booking/recurring_due_schedule_test.dart
         name: skips a lead that already passed rather than firing now
   - id: E-NTF-05
     group: Channels
-    title: Doze holds an alarm past its time
-    when: The OS still holds a reminder after its time and the channel is re-armed.
-    then: That row leaves the inbox — it never showed.
+    title: Doze holds an alarm
+    when: OS still holds it past its time · re-arm
+    then: row leaves the inbox · it never showed
     risk: low
     tests:
       - file: test/core/notifications/notification_log_store_test.dart

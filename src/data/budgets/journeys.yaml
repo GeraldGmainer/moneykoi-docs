@@ -4,10 +4,10 @@ items:
     title: Plans budgets with the calculator
     from: Goals & Budgets → Budgets
     steps:
-      - '*Plan with the budget calculator*'
-      - income, adults, kids → *Balanced* or *Saver*
-      - check the eight rows and their categories
-      - '*Save as budgets* (optionally *Replace existing budgets*)'
+      - "*Plan with the budget calculator*"
+      - income, adults, kids → preset
+      - check 8 rows + categories
+      - "*Save as budgets* · or *Replace*"
     result: monthly caps created or updated
     tests:
       - file: test/features/budget_goals/ui/pages/budget_planner_page_test.dart
@@ -18,36 +18,36 @@ items:
     title: Caps groceries
     from: Budgets → *Add budget*
     steps:
-      - pick the scope (category or *Whole book*) — no name field
-      - the suggestion from history, or type an amount
+      - "scope: category or *Whole book*"
+      - suggestion, or type an amount
       - period → *Save*
-    result: a cap with its progress; a second identical one is refused
+    result: cap + progress · identical one refused
     checks: [C-BUD-020]
   - id: J-BUD-20
     group: Goals
     title: Saves toward a goal
     from: Goals → +
     steps:
-      - name, target, optional deadline and linked account
-      - deposit — optionally *also record a booking*
-      - milestones celebrate, the streak grows
-    result: progress, pace and projected finish
+      - name, target, deadline, account
+      - deposit · *also record a booking*
+      - milestones, streak
+    result: progress, pace, finish date
     checks: [C-BUD-030, C-BUD-031]
   - id: J-BUD-21
     group: Goals
     title: Rounds up spare change
-    from: a goal → Automation → round-ups on, unit 1
+    from: goal → round-ups on, unit 1
     steps:
       - book a 4.30 expense
-    result: 0.70 goes to the goal; an edit adds nothing
+    result: 0.70 to the goal · edits add nothing
     checks: [C-BUD-032]
   - id: J-BUD-30
     group: Loans
     title: Tracks a loan
     from: Loans → +
     steps:
-      - borrowed or lent, principal, schedule
-      - log payments (optionally principal / interest, optionally a booking)
-      - payoff simulator; with several debts the strategy page
-    result: outstanding balance and debt-free date
+      - borrowed/lent, principal, schedule
+      - log payments · split, booking
+      - payoff simulator · strategy page
+    result: balance + debt-free date
     checks: [C-BUD-040]

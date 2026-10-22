@@ -4,10 +4,10 @@ groups:
     title: Balance check
     items:
       - id: C-BC-001
-        text: Count two accounts (one a credit card, typed as amount owed), leave one blank → corrections only for the two; the blank one has no line
+        text: "Count 2 accounts (card as amount owed), leave 1 blank → 2 corrections · blank: no line"
       - id: C-BC-002
-        text: All into one with +10 / −10 → "the differences cancel out"; per account → two corrections; the Home cash-flow breakdown shows *Untracked*, the Budget Book totals do not
+        text: All into one +10/−10 → *cancel out* · per account → two · Home *Untracked* yes · Budget Book totals no
       - id: C-BC-003
-        text: Delete the check → balances back; a correction row opens its check, never the booking form
+        text: Delete check → balances back · correction row opens its check
       - id: C-BC-004
-        text: First days of the month (anchored) → the Home card for owners/admins only; dismiss → gone for this period; the reminder fires on the anchor day
+        text: First days of month → card for owners/admins · dismiss → gone this period · reminder on anchor day

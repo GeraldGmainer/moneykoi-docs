@@ -8,9 +8,9 @@ items:
     from: Pro, owner or admin
     steps:
       - Settings → *Backup & restore* → *Create a backup*
-      - options — receipt photos, passphrase
-      - '*Save to device* (system dialog) or *Share*'
-    result: '`MoneyKoi-<Book>-YYYY-MM-DD.moneykoi`; the *last backup* line updates'
+      - photos? passphrase?
+      - "*Save to device* or *Share*"
+    result: "`MoneyKoi-<Book>-YYYY-MM-DD.moneykoi` · *last backup* updates"
     tests:
       - file: test/features/backup/use_cases/create_backup_use_case_test.dart
         name: builds a readable archive of the whole book and stamps the backup time
@@ -20,10 +20,10 @@ items:
     title: Restores into a new book
     from: account with Cloud
     steps:
-      - '*Restore from a backup* → pick the file'
-      - preview + comparison with the book
-      - red confirmation
-    result: a new book "… (restored)", switched into; photos follow through the upload queue
+      - "*Restore from a backup* → file"
+      - preview + comparison
+      - red confirm
+    result: new book "… (restored)" · photos follow
     tests:
       - file: test/features/backup/restore_backup_use_case_test.dart
         name: a clean restore stages every row, applies once and opens the new book
@@ -31,13 +31,13 @@ items:
   - id: J-DATA-03
     group: Backups
     title: Undoes changes in this book
-    from: a file made from the active, syncing book
+    from: file from the active syncing book
     steps:
-      - comparison shows deleted / edited / new
-      - '*Undo changes in this book*'
-      - '*Bring back* deleted records, or *Undo everything* since the backup'
-      - red confirmation
-    result: the book as it was; other members get it through sync
+      - "comparison: deleted · edited · new"
+      - "*Undo changes in this book*"
+      - "*Bring back* or *Undo everything*"
+      - red confirm
+    result: book as it was · members get it via sync
     tests:
       - file: test/features/backup/use_cases/rewind_backup_use_case_test.dart
         name: stages every row with its original id, applies in the chosen mode and pulls
@@ -47,10 +47,10 @@ items:
     title: New phone, no account
     from: fresh install
     steps:
-      - '*I already use MoneyKoi* → *Restore from a backup file*'
-      - the file lands on this phone, with its settings
-      - the store is asked for Pro, silently
-    result: the book back, nothing uploaded; recurring bookings do not double
+      - "*I already use Money Koi* → *Restore a backup*"
+      - lands on this phone + settings
+      - store asked for Pro, silently
+    result: book back · nothing uploaded · no doubles
     tests:
       - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
         name: without an account, a phone with no book restores into a new one
@@ -63,9 +63,9 @@ items:
     title: Replaces the local book from a file
     from: local book
     steps:
-      - '*Backup & restore* → *Restore from a backup*'
-      - red *Replace this book* confirmation
-    result: the book holds exactly the file
+      - "*Restore from a backup*"
+      - red *Replace this book*
+    result: book = the file
     tests:
       - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
         name: replacing the book swaps its rows for the file
@@ -75,9 +75,9 @@ items:
     title: Restores on an account without Cloud
     from: free account
     steps:
-      - several own books → pick which one to replace
-      - no own book → a new own book, kept on the phone
-    result: nothing uploaded; a later Cloud uploads it
+      - several own books → pick one to replace
+      - none → new own book on the phone
+    result: nothing uploaded · Cloud later uploads
     tests:
       - file: test/features/backup/use_cases/restore_locally_use_case_test.dart
         name: with several books of its own, every one is offered with its currency, the open one chosen
@@ -89,8 +89,8 @@ items:
     from: Files, Gmail, WhatsApp, Drive, AirDrop
     steps:
       - tap the `.moneykoi`
-      - (app lock → lock screen first; passphrase → unlock sheet first)
-    result: the restore preview — or *Welcome back* on an empty phone
+      - app lock / passphrase first if on
+    result: restore preview · or *Welcome back*
     tests:
       - file: test/features/backup/ui/backup_open_listener_test.dart
         name: an account or a book on the phone opens the restore preview in Backup & restore
@@ -102,8 +102,8 @@ items:
     title: Is reminded to back up
     from: Pro, owner or admin
     steps:
-      - Settings → Notifications → *Backup reminder* — weekly or monthly + a time
-      - '*Time for a backup* (names the book and the last backup)'
+      - Notifications → *Backup reminder* · weekly/monthly + time
+      - "*Time for a backup*"
       - tap
     result: Backup & restore for that book
     tests:
@@ -115,45 +115,46 @@ items:
     title: Uninstalled by accident
     from: Local Free or Pro
     steps:
-      - 'Android: a reinstall may bring everything back from Google''s backup'
-      - 'iPhone: only a backup file helps'
+      - "Android: reinstall may restore from Google backup"
+      - "iPhone: only a backup file helps"
     result: restored, or gone without a file
     status: by-design
-    note: |
-      The backup reminder (Pro only, like the backup itself) is what makes a file exist.
+    note: The reminder (Pro) is what makes a file exist
 
   # Your data
   - id: J-DATA-10
     group: Your data
     title: Downloads all their data
-    from: any member
+    from: Pro, any member
     steps:
-      - '*Backup & restore* → *Your data* → *Download all your data*'
+      - "*Personal data* → *Download all data*"
       - save or share the zip
-    result: profile, settings and a restorable backup per book
+    result: profile + settings + a backup per book
+    note: Free → lock → paywall *Data export* (2026-10-21)
     tests:
       - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
         name: lists every book with what of it goes in
-    checks: [C-DATA-008, C-DATA-025]
+    checks: [C-DATA-008, C-DATA-025, C-DATA-027]
   - id: J-DATA-11
     group: Your data
     title: Exports a whole book (ZIP)
-    from: owner or admin
+    from: Pro, owner or admin
     steps:
       - Book card menu → *Export data*
-    result: 14 CSVs, the JSON and a README
+    result: 14 CSVs + JSON + README
+    note: Free → lock → paywall *Data export* (2026-10-21)
     tests:
       - file: test/features/data_export/data_export_page_test.dart
         name: 'idle: lists every kind of record and offers the export button'
-    checks: [C-DATA-011]
+    checks: [C-DATA-011, C-DATA-027]
   - id: J-DATA-12
     group: Your data
     title: Erases a book's data
     from: owner
     steps:
       - Book card menu → *Erase data*
-      - the page says it is irreversible; confirm
-    result: an empty book with its name, members and settings; other phones follow over minutes
+      - irreversible → confirm
+    result: empty book, name + members kept · phones follow in minutes
     checks: [C-DATA-012]
 
   # CSV
@@ -163,9 +164,9 @@ items:
     from: owner or admin
     steps:
       - File → Columns → Accounts → Categories → Review
-      - '*Import*'
-      - result — *Undo* while still on it
-    result: bookings in the book, skipped rows listed
+      - "*Import*"
+      - "*Undo* while on the result"
+    result: bookings in · skipped rows listed
     tests:
       - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
         name: import writes, then the result step offers undo
@@ -175,11 +176,11 @@ items:
     title: Exports bookings
     from: Pro, any member
     steps:
-      - '*Backup & restore* → *Export bookings*'
-      - filters (opens on This month)
-      - '*Preview n bookings*'
-      - '*Save as CSV* or *Share*'
-    result: a plain CSV that the import reads back
+      - "*Backup & restore* → *Export bookings*"
+      - filters · This month
+      - "*Preview n bookings*"
+      - "*Save as CSV* or *Share*"
+    result: plain CSV the import reads back
     tests:
       - file: test/features/booking_export/ui/booking_export_page_test.dart
         name: a cancelled save dialog stays on the review, silently

@@ -49,6 +49,7 @@ items:
     title: Locks are visible
     text: |
       - locked Analytics, *Edit home*, exports, quick actions
+      - drawer: Pro pages dimmed in the Pro group (R-HOM-13)
       - they are the paywall's marketing
     source: §3 rule 1
     tests:
@@ -172,12 +173,19 @@ items:
         name: after the plan ends, a list widget still opens its list
   - id: R-MON-21
     group: Data stays yours
-    title: Restore is free · backup file is Pro
+    title: Import free · export Pro
     text: |
-      - *Download all your data* → free
-      - whole-book export → free
-      - access to your own data is **never** paid
-    source: §3 rule 5, §9b rule 6
+      - free: CSV import · restoring a backup file
+      - **Pro**: every export · ZIP · *Download all data* · CSV · PDF · backup file
+      - exports: one gate `Feature.exportFiltered` · paywall *Data export*
+      - decided 2026-10-21 · reverses 2026-10-16's free export (D-DATA-12)
+    source: §3 rule 5, §8 item 6, §9b rule 6
+    tests:
+      - file: test/features/data_export/export_book_archive_use_case_test.dart
+        name: without Pro the export is refused before the book is read
+      - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
+        name: without Pro nothing is read or saved
+    related: [D-DATA-12, D-DATA-13, R-DATA-02, R-DATA-20, R-DATA-22]
   # Store & purchases
   - id: R-MON-30
     group: Store & purchases
@@ -281,6 +289,25 @@ items:
       - Cloud is shared through books (D-C7)
       - Apple's switch is one-way
     source: §9a
+  - id: R-MON-58
+    group: Store & purchases
+    title: Welcome back restore leads on
+    text: |
+      - *Restore Pro purchase* → nothing → snackbar, stays on *Welcome back*
+      - Pro → *Pro restored*: *Start a new book* · *Restore a backup*
+      - Cloud → *Cloud found*: Google + email sign-in · Cloud wins over Pro
+      - closed local book → *Continue without an account* instead of a new one
+    source: §9a (decided 2026-10-21, D12)
+    tests:
+      - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
+        name: nothing in the store says so and stays on Welcome back
+      - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
+        name: a Pro purchase goes on to the page that offers a book
+      - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
+        name: a Cloud purchase goes on to the page that asks for its account
+      - file: test/features/auth/ui/pages/purchase_restored_page_test.dart
+        name: a book without an account, closed by a sign-out, is opened instead of starting another
+    related: [D12, J-MON-20, J-MON-22]
 
   # Paywall
   - id: R-MON-40
@@ -303,7 +330,7 @@ items:
     title: Copy promises budgeting
     text: |
       - subtitle: *Budgeting stays free. Always.*
-      - Free card: *The full budgeting app on your phone. Yours forever, at no cost.*
+      - Free card: *The full budgeting app on this phone. Forever, at no cost.*
       - **never** "every feature"
     source: §7, 2026-10-17
   - id: R-MON-42
@@ -333,7 +360,7 @@ items:
       - name · length · price per period
       - trial price afterwards
       - Terms + Privacy links
-      - *Restore purchases* without buying
+      - *Restore purchases* without buying · while nothing is held (R-MON-56)
     source: §8 item 4
     tests:
       - file: test/features/monetization/ui/paywall_page_test.dart
@@ -354,21 +381,23 @@ items:
     group: Paywall
     title: Drawer upgrade entry follows the book
     text: |
-      - Free → *Get Pro*
-      - Pro, only sync locked → *Get Cloud*
-      - Cloud or in a Cloud book → none
-      - Nov 1 → Jan 17: *Get Cloud free* wins
+      - Free → *Get Pro* in the Pro group, last in the drawer
+      - Pro, only sync locked → *Get Cloud* row · Cloud or Cloud book → none
+      - Nov 1 → Jan 17: *Get Cloud free* row · Pro group without button
       - simulator *Enforce plans* = after Jan 17 → no *Get Cloud free*
-    source: §3b, §7, §9a
+    source: §3b, §7, §9a · NAVIGATION §8
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart
-        name: 'Free: Get Pro, which opens the paywall at a Pro feature'
+        name: 'Free: the Pro group carries Get Pro, which opens the paywall on the Pro overview'
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: the early-adopter offer takes the place of Get Pro and Get Cloud
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: 'enforced plans simulate the store after the cutover: Free gets Get Pro, not Cloud free'
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: 'Pro: only sync is locked, so Get Cloud'
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: 'Cloud, or a Cloud book someone else pays for: nothing locked, no entry'
+    related: [R-HOM-13, D-HOM-5]
   - id: R-MON-46
     group: Paywall
     title: Home nudge threshold is latched
@@ -433,6 +462,61 @@ items:
         name: without Pro in the store, the Pro card shows its features but no price and cannot be picked
       - file: test/features/monetization/bloc/paywall_cubit_test.dart
         name: "a plan the store leaves out is never the pick: without Pro the page opens on Cloud yearly"
+  - id: R-MON-54
+    group: Paywall
+    title: Upgrade entry opens on the plan
+    text: |
+      - drawer *Get Pro* / *Get Cloud* → plan overview on top
+      - disc · *Money Koi Pro* / *Money Koi Cloud* · one-line promise
+      - 2 columns: every live feature · Cloud starts with *Everything in Pro*
+      - stays at the top · no scroll · from a lock → that feature instead
+    source: §7 (decided 2026-10-21, D10)
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: 'Get Pro opens on an overview of Pro: its name, its promise and every Pro feature'
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: Get Cloud opens on an overview of Cloud that starts with Everything in Pro
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: on a phone, an upgrade entry stays at the top, where its overview is
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a locked feature explains itself instead of the plan overview
+    related: [D10]
+  - id: R-MON-55
+    group: Paywall
+    title: Renewal note only for subscriptions
+    text: |
+      - *Cloud renews automatically…* while monthly or yearly is picked
+      - Pro or Cloud lifetime picked → **no** note
+    source: §7 (2026-10-21)
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: the renewal note shows only while a subscription is picked
+  - id: R-MON-56
+    group: Paywall
+    title: Restore only while nothing is held
+    text: |
+      - phone holds Pro or Cloud → *Restore purchases* **gone**
+      - Cloud comes back by signing in
+      - one restore at a time · button off while it runs
+    source: §7 (decided 2026-10-21, D11)
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a phone that holds Pro or Cloud has nothing to restore, so the button is gone
+    related: [D11, R-MON-43]
+  - id: R-MON-57
+    group: Paywall
+    title: Plan row in the Account card
+    text: |
+      - Settings → *Account*, under *Profile*
+      - *Get Money Koi Pro* · *Pro is active* · *Cloud through {book}* · …
+      - **no** restore row · restore: paywall + *Welcome back*
+      - separate plan card dropped 2026-10-21
+    source: §7
+    tests:
+      - file: test/features/settings/ui/pages/settings_page_test.dart
+        name: shows the current plan in the account card, without a restore row, once monetization is on
+      - file: test/features/monetization/ui/tiles/tier_settings_tile_test.dart
+        name: a free member inside a Cloud book reads Cloud through that book
 
   # Privacy & server
   - id: R-MON-50

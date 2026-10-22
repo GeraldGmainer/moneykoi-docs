@@ -1,0 +1,8 @@
+flowchart TD
+  save(["You save or delete"]) --> waiting["waiting in the outbox<br/>edited again → copy replaced"]
+  waiting --> open{"its book open,<br/>or your Cloud book?"}
+  open -- "no" --> held["held<br/>until its book is open again"]
+  open -- "yes · its turn, deletes first" --> sending["sending"]
+  sending -- "ok" --> sent(["done · row synced"])
+  sending -- "no internet" --> offline["retry after 2 s<br/>3rd time → paused until online"]
+  sending -- "server refused" --> refused["retry<br/>3 tries → paused, red dot<br/>next app start → again"]

@@ -1,0 +1,38 @@
+# Source: Gerald's Trello board (1.19.0), 2026-10-17; _RELEASE_SCHEDULE.md §7 (the site); D-PRIV-7.
+items:
+  - id: T-PLAT-01
+    title: Rewrite the marketing site
+    owner: gerald
+    detail: |
+      - features · scanner · roadmap · FAQ pages → today's app
+      - new screenshots + videos after the new first run
+      - claims: *your data stays on your phone* only for local mode (D-PRIV-7)
+  - id: T-PLAT-02
+    title: Move to moneykoi.com
+    owner: gerald
+    detail: |
+      - DNS + hosting: `moneykoi.com` (site) · `my.moneykoi.com` (web)
+      - `moneykoi.app` + `my.moneykoi.app` → 301 to `.com`, path + query kept (sent invite links, store listings)
+      - `my.moneykoi.com/.well-known/assetlinks.json` served without a redirect · else app links break
+      - Supabase Auth → URL Configuration, prod + dev: Site URL + `https://my.moneykoi.com/**` · keep `https://my.moneykoi.app/**` while old builds are out
+      - web on `.com` before the app release · the app now accepts only `my.moneykoi.com` (QR, app links)
+      - branch push `moneykoi-supabase`: `send-book-invite` (accepts both hosts) + `20261018120000_changelog_domain_moneykoi_com.sql`
+      - Play Console: website · privacy policy · account deletion URL
+      - Search Console + sitemap for `moneykoi.com`
+  - id: T-PLAT-03
+    title: Check the invite email's sender name
+    owner: gerald
+    detail: |
+      - `SMTP_FROM_NAME`, if set, overrides the default *Money Koi*
+      - set → make it *Money Koi* on dev + prod · unset → nothing to do
+    command: |
+      cd moneykoi-supabase
+      supabase secrets list --project-ref dpmemqshhdnanywcvsod   # dev · prod: cwheprirreyscppmbybp
+      supabase secrets set SMTP_FROM_NAME="Money Koi" --project-ref dpmemqshhdnanywcvsod
+  - id: T-PLAT-04
+    title: Rewrite *MoneyKoi* in old release notes
+    owner: ai
+    waitsFor: [D-PLAT-2]
+    detail: Only if D-PLAT-2 says yes · Gerald pushes the migration after
+    prompt: |
+      New migration in moneykoi-supabase (never edit an applied one): in public.changelog, replace "MoneyKoi" with "Money Koi" inside the notes JSONB of every row and language (the 16 occurrences come from 20261015140000_changelog_app_and_web.sql, which rebuilt the table); URLs and file names stay; the rows must still pass internal.changelog_notes_valid. Hand Gerald the push command.

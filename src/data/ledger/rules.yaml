@@ -3,18 +3,22 @@ items:
   # Categories
   - id: R-LED-01
     group: Categories
-    title: Two levels; only leaves are booked
+    title: Two levels · only leaves booked
     text: |
-      A parent with subcategories is a container: nothing books onto it — bookings, recurring rules and planned payments all go to a sub. A budget may cap a whole parent. Only leaves can be favorites.
+      - parent with subs = container · nothing books onto it
+      - bookings, rules, planned payments → a sub
+      - a budget may cap a parent · only leaves can be favorites
     source: CATEGORY §1, §6a
     tests:
       - file: test/features/category/domain/category_entity_test.dart
         name: parent with subcategories cannot be favorited
   - id: R-LED-02
     group: Categories
-    title: The first sub takes over what the parent held
+    title: First sub takes over
     text: |
-      Adding the first sub to a category that holds bookings, rules or planned payments asks to move them (and the favorite, Home quick tiles, Android widgets) into the sub — *Cancel* aborts the save. Undo puts everything back. Budgets stay on the parent.
+      - first sub → asks to move bookings, rules, planned payments, favorite, quick tiles, widgets
+      - *Cancel* aborts · Undo puts all back
+      - budgets stay on the parent
     source: CATEGORY §6a
     tests:
       - file: test/features/category/domain/service/category_handover_service_test.dart
@@ -23,9 +27,12 @@ items:
         name: confirming saves the sub, then hands the parent entries over to it
   - id: R-LED-03
     group: Categories
-    title: Delete has three guards
+    title: "Delete: three guards"
     text: |
-      Subcategories → move or delete them first (never overridable). Still used → *Hide instead* or *Delete with bookings…* (names the count, the total, that balances change, no undo). The last category → never. Recurring rules, planned payments and budgets on it go along, listed in the confirm.
+      - has subs → move or delete them first
+      - still used → *Hide instead* or *Delete with bookings…* (count, total, no undo)
+      - last category → never
+      - rules, planned payments, budgets go along, listed
     source: CATEGORY §6
     tests:
       - file: test/features/category/domain/service/category_delete_rule_test.dart
@@ -34,40 +41,41 @@ items:
         name: throws cannotDeleteLastCategory when only one category exists
   - id: R-LED-04
     group: Categories
-    title: Bookings deleted with a category are gone for good
-    text: |
-      Not trashed — a trashed booking without its category could never be restored.
+    title: Deleted with a category = gone
+    text: not trashed · couldn't restore without the category
     source: CATEGORY §6 (D14)
     related: [E-BKG-10]
   - id: R-LED-05
     group: Categories
-    title: '*Move to…* keeps the sign'
+    title: "*Move to…* keeps the side"
     text: |
-      Only a category without subs moves; targets are top-level categories of the same type, not hidden. A sub may move to the top level. Moving under a category that holds entries runs the handover first. Written at once, with Undo.
+      - only categories without subs
+      - targets: top-level, same type, visible · sub may go top-level
+      - handover runs first · Undo
     source: CATEGORY §6b
     tests:
       - file: test/features/category/domain/service/category_move_rules_test.dart
         name: hidden categories and the other type are never offered
   - id: R-LED-06
     group: Categories
-    title: Names unique per type, 20 characters
-    text: |
-      The same name is fine under income and expense.
+    title: Unique per type · 20 chars
+    text: same name ok under income + expense
     source: CATEGORY, category_parent_save_page tests
     tests:
       - file: test/features/category/ui/pages/category_parent_save_page_test.dart
         name: the same name is fine under the other type
   - id: R-LED-07
     group: Categories
-    title: Hide is for new entries only
-    text: |
-      A hidden category disappears from pickers (the one already selected stays), keeps its bookings and still counts everywhere.
+    title: Hide = new entries only
+    text: gone from pickers · keeps bookings · still counts everywhere
     source: CATEGORY §7, ACCOUNTS_WEB §4.6
   - id: R-LED-08
     group: Categories
     title: The picker
     text: |
-      Income / expense toggle, favorites and the 10 most recent as chips, grouped or flat, by relevance or A–Z (remembered); a search is always flat and ranked. A locked side shows only that side's favorites and recents.
+      - income/expense toggle · favorites + 10 recent as chips
+      - grouped or flat · relevance or A–Z, remembered
+      - search: flat + ranked
     source: CATEGORY §7
     tests:
       - file: test/features/booking/bloc/category_picker_cubit_test.dart
@@ -76,26 +84,33 @@ items:
   # Fixed or variable
   - id: R-LED-10
     group: Fixed or variable
-    title: Fixed or variable belongs to the category
+    title: Fixed/variable = the category's
     text: |
-      *Fixed costs* / *Variable costs* (income: *Fixed* / *Variable income*). Not set is a real state and the default; a sub inherits its parent unless it stores an exception. An unclassified booking counts as fixed if a recurring rule made it, else variable. Every surface — Analytics, Budget Book, Home cards — reads this one rule.
+      - *Fixed costs* / *Variable costs* · income: *Fixed* / *Variable income*
+      - not set = default · sub inherits unless it overrides
+      - unset booking: rule-made → fixed, else variable
+      - Analytics, Budget Book, Home read the same rule
     source: CATEGORY §3a
     tests:
       - file: test/features/category/domain/category_entity_test.dart
         name: an unclassified sub inherits its parent
   - id: R-LED-11
     group: Fixed or variable
-    title: Starter sets arrive classified
+    title: Starter sets come classified
     text: |
-      Housing, Savings, Education fixed; Food, Shopping, Leisure, Transport, Health, Pets variable; salary and child benefit fixed income — with sub exceptions (Furniture, Gym, Streaming, Car insurance). Renamed or new categories stay unset.
+      - fixed: Housing, Savings, Education · salary, child benefit
+      - variable: Food, Shopping, Leisure, Transport, Health, Pets
+      - renamed or new → unset
     source: CATEGORY §3a
 
   # Scanner hints
   - id: R-LED-20
     group: Scanner-coverage hints
-    title: The expense tab warns before a scan would fail
+    title: Warns before a scan would fail
     text: |
-      One hint per receipt bucket (Groceries, Snacks, Household, Beauty, Leisure, Dining, Health, Transport, Utilities, Water & Drink, Essentials) that no expense category resolves to, with *Create "…"* pre-filled. Dismiss snoozes that bucket 7 days per book. Owners and admins only.
+      - hint per receipt bucket with no expense category
+      - *Create "…"* pre-filled · dismiss = 7 days per book
+      - owners + admins only
     source: CATEGORY §8a
     tests:
       - file: test/features/category/domain/service/scanner_category_coverage_service_test.dart
@@ -107,18 +122,20 @@ items:
   # Money signs
   - id: R-LED-30
     group: Money signs & colour
-    title: A sign by what the figure is
+    title: Sign by what the figure is
     text: |
-      - **Movement** (one booking, payment, contribution) → + / −
-      - **Labelled total** (*Income*, *Spent*, *Total debt*) → no sign
-      - **Net or change** (a period's balance, a gain) → signed, exact zero bare
-      - **Level** (a balance, net worth, a target) → no sign
+      - **movement** (one booking, payment) → + / −
+      - **labelled total** (*Income*, *Spent*) → none
+      - **net or change** → signed · zero bare
+      - **level** (balance, net worth, target) → none
     source: CLAUDE.md, CATEGORY "Which amounts take a sign"
   - id: R-LED-31
     group: Money signs & colour
-    title: Expenses are never tinted
+    title: Expenses never tinted
     text: |
-      Tint the exception (income green, adverse red), never the 85 % case. The expense colour is for chips, icon discs and bars, never money text. A sign and a colour never contradict each other.
+      - tint the exception: income green, adverse red
+      - expense color → chips, icons, bars · never money text
+      - sign + color never contradict
     source: CLAUDE.md
     tests:
       - file: test/features/category/ui/widget/category_widgets_test.dart
@@ -127,18 +144,21 @@ items:
   # Accounts
   - id: R-LED-40
     group: Accounts
-    title: Account types and the asset / liability split
+    title: Account types · assets vs debts
     text: |
-      Name (20), type, icon, colour, an optional starting balance **with its date** (both or neither), Hide. Credit cards and loans are liabilities.
+      - name (20) · type · icon · color · hide
+      - starting balance **with its date**, both or neither
+      - credit cards + loans = liabilities
     source: 02_FEATURES, ACCOUNTS_WEB §1
     tests:
       - file: test/features/account/account_balance_anchor_test.dart
         name: a balance without a date flags the date row
   - id: R-LED-41
     group: Accounts
-    title: A balance is never summed on screen from scratch
+    title: Balances never summed on screen
     text: |
-      The server maintains it by triggers; the phone derives it from the starting balance plus its synced bookings. Same number. A balance is a level — no sign.
+      - server: triggers · phone: starting balance + synced bookings
+      - same number · a level, no sign
     source: CLAUDE.md, ACCOUNTS_WEB §7
     tests:
       - file: test/features/account/use_cases/get_balances_by_account_use_case_test.dart
@@ -147,9 +167,10 @@ items:
         name: each account shows its current balance as a plain level
   - id: R-LED-42
     group: Accounts
-    title: Delete only an unused account, never the last
+    title: Delete only unused accounts
     text: |
-      In use (either side of a transfer) → refused; the last account → refused. Hide covers "I don't use it any more".
+      - in use (either side of a transfer) → refused
+      - last account → refused · *Hide* instead
     source: AccountDeleteRule, ACCOUNTS_WEB §4.5
     tests:
       - file: test/features/account/domain/account_delete_rule_test.dart
@@ -158,17 +179,15 @@ items:
         name: throws TranslatedWarning(cannotDeleteLastAccount) when only one account exists
   - id: R-LED-43
     group: Accounts
-    title: Names are unique in a book
+    title: Account names unique per book
     source: account_save_page tests
-    text: |
-      Pickers are keyed on names.
+    text: pickers are keyed on names
     tests:
       - file: test/features/account/ui/pages/account_save_page_test.dart
         name: a name another account already has is refused
   - id: R-LED-44
     group: Accounts
-    title: Structure is owner and admin
-    text: |
-      Members see accounts and categories read-only with a hint.
+    title: "Structure: owner + admin"
+    text: "members: read-only + hint"
     source: FAMILY_ACCOUNTS §2
     related: [R-BOOK-10]

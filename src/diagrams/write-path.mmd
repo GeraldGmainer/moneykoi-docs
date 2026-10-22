@@ -1,0 +1,19 @@
+sequenceDiagram
+  autonumber
+  actor A as You
+  participant AppA as Your phone
+  participant S as Supabase
+  participant AppB as Partner's phone
+  A->>AppA: save a booking (offline)
+  AppA->>AppA: SQLite row, status createdLocally
+  AppA->>AppA: outbox item with a frozen copy of the row
+  Note over AppA: the screen shows it at once
+  Note over AppA: connection back
+  AppA->>S: upsert (marked to ignore its own realtime echo for 4 s)
+  S->>S: RLS, triggers: updated_at, sync_log, balances
+  S-->>AppA: ok
+  AppA->>AppA: row → synced, outbox item removed
+  S-->>AppB: realtime: booking changed
+  AppB->>S: sync_all with its cursors
+  S-->>AppB: upserts + deletes since the cursor
+  AppB->>AppB: apply, unless its own copy is still unsent

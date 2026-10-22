@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import TierBadge from './TierBadge.astro';
+import Pill from './Pill.astro';
+import Md from './Md.astro';
+import { resolvedCatalog } from '../lib/catalog';
+import { idIndex } from '../lib/ids';
+import source from '../data/roadmap.yaml?raw';
+
+// The collection comes back sorted by id; the file's order is the roadmap's order.
+const order = [...source.matchAll(/^- id: (\S+)/gm)].map((m) => m[1]);
+const buckets = (await getCollection('roadmap')).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+const catalog = new Map((await resolvedCatalog()).map((r) => [r.id, r]));
+const ids = await idIndex();
+const kindLabel = { rules: 'rule', journeys: 'journey', edgeCases: 'edge case', checks: 'check', tasks: 'task', decisions: 'decision' } as const;
+const sunday = (d: string) =>
+  new Date(`${d}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<div class="mk-road not-content">
+  {
+    buckets.map(({ id, data }) => (
+      <section class="mk-road-bucket" id={id}>
+        <header class="mk-road-head">
+          <h2>{data.title}</h2>
+          {data.date && <span class="mk-muted">{sunday(data.date)}</span>}
+          <span class="mk-road-goal">{data.goal}</span>
+        </header>
+        <ul class="mk-road-items">
+          {data.items.map((item) => {
+            const row = catalog.get(item.ref);
+            const ref = row ? undefined : ids.get(item.ref);
+            return (
+              <li>
+                <div class="mk-road-line">
+                  {row ? (
+                    <>
+                      <TierBadge tier={row.tier} />
+                      {row.docs ? <a href={`/${row.docs}/`}>{row.name}</a> : <span>{row.name}</span>}
+                      {row.status === 'live' && <Pill tone="ok">built</Pill>}
+                    </>
+                  ) : ref ? (
+                    <>
+                      <Pill tone={ref.kind === 'decisions' ? 'info' : 'warn'}>{kindLabel[ref.kind]}</Pill>
+                      <a href={ref.href}>{ref.title}</a>
+                      <span class="mk-muted">{ref.id}</span>
+                    </>
+                  ) : (
+                    <span>{item.ref}</span>
+                  )}
+                  {item.size && <span class="mk-road-size">{item.size}</span>}
+                </div>
+                <div class="mk-note"><Md text={item.why} inline /></div>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
+</div>

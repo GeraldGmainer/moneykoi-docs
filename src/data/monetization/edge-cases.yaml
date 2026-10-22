@@ -80,13 +80,17 @@ items:
     group: Paywall & store
     title: Restore finds nothing
     when: store holds nothing for this store account
-    then: "*No purchase found* · Pro on the phone **stays**"
+    then: |
+      - *No purchase found* · Pro on the phone **stays**
+      - on *Welcome back*: snackbar, page stays (D12)
     risk: high
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
         name: a restore that finds nothing never takes Pro away
       - file: test/features/monetization/ui/paywall_page_test.dart
         name: a restore that finds nothing says so
+      - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
+        name: nothing in the store says so and stays on Welcome back
   - id: E-MON-09
     group: Paywall & store
     title: Launch window edges
@@ -199,6 +203,17 @@ items:
     when: plan ended, user never made a list
     then: locked panel, not an empty state
     risk: low
+  - id: E-MON-23
+    group: Downgrade & lapse
+    title: Read-only shared book on Free
+    when: owner stopped paying or deleted the account · free member
+    then: |
+      - *Export* → paywall · no free copy out
+      - *Remove from this phone* → the rows are gone
+      - accepted with every export Pro (legal note 6)
+    status: known-issue
+    risk: medium
+    related: [J-MON-52, D-DATA-13, R-MON-21]
   # Accounts & claim
   - id: E-MON-35
     group: Accounts & claim
@@ -258,3 +273,13 @@ items:
     tests:
       - file: test/features/monetization/service/plan_simulator_test.dart
         name: a store build never raises a plan or lets the test store grant, but may still enforce
+  - id: E-MON-52
+    group: Paywall & store
+    title: Store build sells through the test store
+    when: build with the RevenueCat key · `.env` loaded after the store was set up at startup
+    then: |
+      - paywall shows the test store's prices (`€24.99`), not Play's (`24,99 €`)
+      - every purchase fails with *store unavailable* · no Play sheet, no log
+      - happened in internal build `1.17.1+32` · fixed 2026-10-19: `.env` loads first
+    status: fixed
+    risk: high

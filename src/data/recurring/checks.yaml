@@ -4,14 +4,14 @@ groups:
     title: Rules
     items:
       - id: C-REC-001
-        text: Monthly on *last day* — the preview shows Feb 28/29, Apr 30; after N times → the preview stops; *on date* without a date blocks Save
+        text: Monthly *last day* → Feb 28/29, Apr 30 · after N → preview stops · *on date* without date → blocked
       - id: C-REC-002
-        text: '*Make recurring* from a saved booking → no duplicate for that date the next day; from an unsaved booking → the first booking is made'
+        text: "*Make recurring* saved → no duplicate next day · unsaved → first booking made"
       - id: C-REC-003
-        text: Skip a future date → no booking that day; pause → nothing generated; delete a generated booking → not made again
+        text: Skip future date → none · pause → none · delete generated → not again
       - id: C-REC-004
-        text: Upcoming — 13 months, transfer rules net to zero, a paused rule projects nothing
+        text: "Upcoming: 13 months · transfers net 0 · paused projects nothing"
       - id: C-REC-005
-        text: A rule two months back on a phone without an account → past occurrences appear at once; resume creates nothing twice
+        text: No-account phone, rule 2 months back → past bookings at once · resume → no doubles
       - id: C-REC-006
-        text: As a member — rules open read-only, no add, no *Make recurring*
+        text: "Member: rules read-only · no add · no *Make recurring*"

@@ -10,3 +10,13 @@ groups:
     items:
       - id: C-PLAT-002
         text: Every full-width orange button (*Save*, *Apply*, *Continue*) reads **dark** text · disabled stays grey
+      - id: C-PLAT-003
+        text: Empty screens show their own koi in the original style with a slightly different face (Trash → bin + closed happy eye, Notifications → bell + sleeping, Search → magnifier + raised brow, a load error → wavy mouth + sweat drop) · readable at the small 76 px size · no fin floating apart from the body
+      - id: C-PLAT-004
+        text: Airplane mode → *Settings › About › Changelog* → koi under a rain cloud + *Retry* · back online → *Retry* loads the changelog
+
+  - id: android
+    title: Android
+    items:
+      - id: C-PLAT-005
+        text: Android 13+ → *Themed icons* on → the Money Koi icon turns one-color like the others (koi silhouette, eye and smile cut out) · prod and dev flavor

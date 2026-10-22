@@ -168,7 +168,7 @@ items:
     when: signed out with books kept
     then: |
       - reminders cancelled, re-armed on sign-in
-      - balance widget: *Open MoneyKoi to sign in*
+      - balance widget: *Open Money Koi to sign in*
     risk: low
     tests:
       - file: test/app/lifecycle/session_life_cycle_manager_test.dart
@@ -211,7 +211,7 @@ items:
     when: 360×640 dp phone, or a large system font
     then: |
       - key points dropped first
-      - *Get started*, *I already use MoneyKoi* and the terms stay on screen, no scrolling
+      - *Get started*, *I already use Money Koi* and the terms stay on screen, no scrolling
     status: fixed
     risk: medium
     tests:

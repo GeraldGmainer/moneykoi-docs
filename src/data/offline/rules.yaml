@@ -1,0 +1,480 @@
+# Source: OFFLINE_FIRST_AI_CONTEXT.md (§ per entry), OFFLINE_TIER_AI_CONTEXT.md §5, FAMILY_ACCOUNTS_AI_CONTEXT.md.
+# R-ACC-10…15 moved here from accounts on 2026-10-17 — ids are permanent, so they keep theirs.
+items:
+  # The basics
+  - id: R-ACC-10
+    group: The basics
+    title: Reads from the phone, writes first there
+    text: |
+      - screens read the phone's database, never the network
+      - save → on screen at once → pushed in background
+      - fully offline
+    source: OFFLINE_FIRST §1
+    tests:
+      - file: test/core/offline_first/repo/offline_first_repo_local_mode_test.dart
+        name: a read of an empty table in a local book never waits on the network
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: enqueue while offline defers processing until connectivity returns
+  - id: R-OFF-01
+    group: The basics
+    title: Ids are made on the phone
+    text: |
+      - every record gets its id on the phone
+      - no server round trip before it exists
+      - same id on every device
+    source: OFFLINE_FIRST §1, §3
+  - id: R-OFF-02
+    group: The basics
+    title: The server stamps the times
+    text: |
+      - created + updated time come from the server
+      - written back to the phone after the push
+      - book without account → the phone stamps them
+    source: OFFLINE_FIRST §5, §12
+    tests:
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: markAsSynced sets status, updated_at and coalesces created_at
+      - file: test/core/offline_first/writer_local_mode_test.dart
+        name: stamps timestamps the way the server trigger would, keeping created_at
+  - id: R-OFF-03
+    group: The basics
+    title: Screens refresh themselves
+    text: |
+      - save, push, pull → one event → screens re-read the phone
+      - many pushes in a row → **one** refresh at the end
+    source: OFFLINE_FIRST §8
+    tests:
+      - file: test/core/offline_first/notifier_and_event_test.dart
+        name: debounces queueChanged events and merges their types
+      - file: test/core/offline_first/writer_test.dart
+        name: reads past the cache after a save, so the first row of a book is counted
+  - id: R-OFF-04
+    group: The basics
+    title: An empty screen waits for the pull
+    text: |
+      - nothing in this book yet → waits for the running pull
+      - pull fails → shows what the phone has
+      - book without account → never waits
+    source: OFFLINE_FIRST §4
+    tests:
+      - file: test/core/offline_first/repo/offline_first_repo_test.dart
+        name: awaitSyncIfEmpty blocks on sync when local is empty
+      - file: test/core/offline_first/repo/offline_first_repo_test.dart
+        name: a pull that fails answers from the local rows instead of failing the read
+
+  # Sending changes — the outbox
+  - id: R-ACC-11
+    group: Sending changes · the outbox
+    title: Writes go out in order
+    text: |
+      - outbox strictly one by one · deletes first
+      - quick edits of one record → latest wins
+      - 3 failures → paused, failed dot · app restart → retry
+      - offline items wake when back online
+    source: OFFLINE_FIRST §5
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: coalesces repeated writes for the same id and prioritizes deletes
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: offline errors retry, pause, and resume when connectivity returns
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: non-offline errors retry up to maxAttempts then pause
+  - id: R-OFF-10
+    group: Sending changes · the outbox
+    title: The outbox survives a restart
+    text: |
+      - outbox lives in the phone's database
+      - app killed → same order on the next start
+      - failed items get a fresh chance each start
+    source: OFFLINE_FIRST §5
+    tests:
+      - file: test/core/offline_first/queue/queue_restart_order_test.dart
+        name: restart replays the outbox in enqueue order with deletes first
+      - file: test/core/offline_first/queue/queue_manager_wake_test.dart
+        name: a cold start online wakes offline-paused items, resets their error state and pushes them first
+  - id: R-OFF-11
+    group: Sending changes · the outbox
+    title: A copy, not a live link
+    text: |
+      - outbox keeps a copy of the record at save time
+      - edit again → copy replaced, **never** merged
+    source: OFFLINE_FIRST §5, §12
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the outbox coalesces to one item carrying the latest edit
+  - id: R-OFF-12
+    group: Sending changes · the outbox
+    title: One record, one write at a time
+    text: |
+      - save + delete of one record never overlap
+      - delete during a save → still lands last
+    source: OFFLINE_FIRST §5
+    tests:
+      - file: test/core/offline_first/writer_test.dart
+        name: run one at a time, so a delete started mid-save still lands last in the queue
+  - id: R-OFF-13
+    group: Sending changes · the outbox
+    title: Each book's writes wait for it
+    text: |
+      - other book open → its writes **held**, never dropped
+      - your Cloud books push anyway
+      - switch back → held writes go out
+    source: OFFLINE_FIRST §5
+    tests:
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: items of a non-active workspace are held; active-workspace items push
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: a write in the shared Cloud book still flushes after switching to the own book
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: switching back resumes held items via onWorkspaceChanged
+  - id: R-OFF-14
+    group: Sending changes · the outbox
+    title: Parent before child
+    text: |
+      - booking before its category reached the server → refused
+      - retried like any failure
+      - outbox order usually sends the category first
+    source: OFFLINE_FIRST §5, §12
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: detects missing-foreign-key Postgrest violations
+  - id: R-OFF-15
+    group: Sending changes · the outbox
+    title: A stuck item blocks nothing
+    text: |
+      - paused items move to the back
+      - every other write still goes out
+    source: OFFLINE_FIRST §5
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: a rejected upsert pauses after the retry budget and does not wedge other bookings
+      - file: test/core/offline_first/queue/queue_manager_wake_test.dart
+        name: an entity type without a registered adapter is parked and never blocks the rest
+
+  # Getting changes — the pull
+  - id: R-OFF-20
+    group: Getting changes · the pull
+    title: Push before pull
+    text: |
+      - pull waits for this book's outbox · ≤ 10 s
+      - a stuck item never holds the pull
+    source: OFFLINE_FIRST §6
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: a pull waits for the outbox to settle before it starts
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: gives up after the timeout instead of blocking the pull forever
+  - id: R-OFF-21
+    group: Getting changes · the pull
+    title: Only what changed
+    text: |
+      - one bookmark per data type per book
+      - pull asks: what changed since the bookmark
+      - your own pushes are not downloaded again
+    source: OFFLINE_FIRST §6
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_test.dart
+        name: applies upserts and deletes and advances the cursor
+      - file: test/core/offline_first/sync_manager/sync_cursor_repo_test.dart
+        name: tenant-scoped entities keep an independent cursor per workspace
+      - file: test/core/offline_first/sync_manager/sync_manager_test.dart
+        name: collects synced ids for a valid cursor and forwards them
+  - id: R-OFF-22
+    group: Getting changes · the pull
+    title: What starts a pull
+    text: |
+      - app start · back from background · back online
+      - realtime nudge · book switch
+      - resume timer · an empty screen
+    source: OFFLINE_FIRST §6, §7, §9
+    tests:
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: pulls at once on resume when authenticated and online
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: coming back online pulls at once, staying online does not
+      - file: test/core/offline_first/sync_manager/sync_facade_resync_test.dart
+        name: with nothing running it forces a fresh sync right away
+  - id: R-OFF-23
+    group: Getting changes · the pull
+    title: One pull at a time
+    text: |
+      - callers share the running pull
+      - plain pulls ≤ 1 per 5 s
+      - "just changed" → one more pull queued behind
+    source: OFFLINE_FIRST §6
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: 'is single-flight: concurrent calls share one underlying sync'
+      - file: test/core/offline_first/sync_manager/sync_manager_test.dart
+        name: throttles a second sync that happens within the cache window
+      - file: test/core/offline_first/sync_manager/sync_facade_resync_test.dart
+        name: every caller that arrives while a sync runs shares ONE pull queued behind it
+  - id: R-ACC-12
+    group: Getting changes · the pull
+    title: A pull never overwrites unsent edits
+    text: |
+      - unsent or newer on the phone → pull skips it
+      - **no field merging** · two devices → last write wins
+    source: OFFLINE_FIRST §6, §12
+    tests:
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: saveAllNotSynced never overwrites a row the outbox still owns
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: saveAllNotSynced keeps a pending delete hidden instead of resurrecting it
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: saveAllNotSynced skips a delta older than the synced local row
+  - id: R-OFF-24
+    group: Getting changes · the pull
+    title: One bad data type blocks nothing
+    text: |
+      - a type that fails → logged, its bookmark kept
+      - every other type still lands
+      - retried on the next pull
+    source: OFFLINE_FIRST §6
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_test.dart
+        name: a domain whose local write throws keeps its cursor and does not block the others
+  - id: R-ACC-14
+    group: Getting changes · the pull
+    title: Big first sync is paged
+    text: |
+      - 1,000 rows per entity per call · oldest first · 60 s per call
+      - failed page → retry after 2 s, 5 s
+      - interrupted → resumes 30 s → 60 s → 2 min → every 5 min, also after a kill
+    source: OFFLINE_FIRST §6.1
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: pulls page after page, sending each stored cursor and afterId back
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: the next sync resumes from the stored cursor and afterId instead of starting over
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: resumes that keep failing back off 30 s, 60 s, 2 min, then every 5 min
+  - id: R-OFF-25
+    group: Getting changes · the pull
+    title: A failed pull never breaks the app
+    text: |
+      - error logged once · no crash
+      - screens keep the phone's data
+      - stalled call ends after 60 s → counted as offline
+    source: OFFLINE_FIRST §6.1
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_test.dart
+        name: fired and forgotten never surfaces as an unhandled error
+      - file: test/core/offline_first/data_sources/sync_remote_source_test.dart
+        name: a page fails as NoInternetException once the request timeout passes
+
+  # Realtime
+  - id: R-ACC-13
+    group: Realtime
+    title: Realtime only says "changed"
+    text: |
+      - event → starts a pull · payload never applied
+      - no socket in the background · resume → pull
+    source: OFFLINE_FIRST §7
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: a change schedules ONE debounced background sync for a burst of events
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: suspend leaves the channel, and resume rejoins only if nothing stopped realtime meanwhile
+  - id: R-OFF-30
+    group: Realtime
+    title: Bursts become one pull
+    text: |
+      - waits 250 ms after the last event
+      - **at most** 2 s, even during a long stream
+      - all tables in one pull
+    source: OFFLINE_FIRST §7
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: a steady stream of changes still pulls once the max wait is up
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: changes to several tables share one pull
+  - id: R-OFF-31
+    group: Realtime
+    title: Your own change is not echoed
+    text: |
+      - own push marked for 4 s
+      - its realtime echo ignored
+      - a partner's change still pulls
+    source: OFFLINE_FIRST §5, §7
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: own write is ignored, a foreign change is not
+    related: [E-ACC-33]
+  - id: R-OFF-32
+    group: Realtime
+    title: Every join pulls
+    text: |
+      - channel joined → one pull
+      - catches what changed while it was down
+    source: OFFLINE_FIRST §7
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: joining the channel pulls once, for whatever changed before it listened
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: a rejoin after the app resumes pulls again
+  - id: R-OFF-33
+    group: Realtime
+    title: Only the open book is live
+    text: |
+      - channel listens to the open book
+      - other books catch up on switch
+      - book without account → no channel
+    source: OFFLINE_FIRST §7
+    tests:
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: start joins ONE channel watching every realtime table of the active workspace
+      - file: test/core/offline_first/realtime/realtime_manager_test.dart
+        name: local mode joins no channel and pulls nothing
+  - id: R-OFF-34
+    group: Realtime
+    title: Which data is live
+    text: |
+      - live: bookings · recurring · shopping · goals · loans
+      - live: investments · tags · balance checks · forecast
+      - next pull: accounts · categories · receipts · members · prices
+    source: OFFLINE_FIRST §3
+    tests:
+      - file: test/core/offline_first/realtime_test.dart
+        name: tableMap maps every realtime table to an entity type
+
+  # Conflicts
+  - id: R-OFF-40
+    group: Conflicts
+    title: Last write wins
+    text: |
+      - same record, two phones → last push wins
+      - whole record · **no** field merging
+      - shared books: same rule
+    source: OFFLINE_FIRST §6, §12 · FAMILY_ACCOUNTS
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: 'flush first, then pull: device and server both keep the later offline edit'
+    related: [R-ACC-12, E-ACC-37]
+  - id: R-OFF-41
+    group: Conflicts
+    title: A delete beats an old edit
+    text: |
+      - deleted on one phone, edited offline on another
+      - → stays deleted · the edit never brings it back
+    source: OFFLINE_FIRST §3a, §5
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the queued upsert does not resurrect the server row
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: 'flush first, then pull: deleted everywhere and not resurrected by the remote edit'
+    related: [E-OFF-01]
+
+  # Deletes
+  - id: R-OFF-50
+    group: Deletes
+    title: Gone from screens at once
+    text: |
+      - delete → hidden everywhere instantly
+      - server told later, via the outbox
+    source: OFFLINE_FIRST §3
+    tests:
+      - file: test/core/offline_first/data_sources/local_data_source_test.dart
+        name: hides rows flagged pendingDelete
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: while still offline the booking is hidden at once
+  - id: R-OFF-51
+    group: Deletes
+    title: Three kinds of delete
+    text: |
+      - most records: marked deleted on the server
+      - shopping items: removed for good
+      - bookings + their tags: kept in the trash
+    source: OFFLINE_FIRST §3, §3a · TRASH
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: 'processes a delete for a HARD-DELETE type: a table DELETE, no soft-delete RPC'
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: 'processes a delete for a TRASH-ENABLED type: remote soft-delete then a local tombstone'
+  - id: R-OFF-52
+    group: Deletes
+    title: A deleted shopping item stays deleted
+    text: |
+      - edit after the delete → dropped
+      - undo → a new item with a new id
+    source: OFFLINE_FIRST §3a
+    tests:
+      - file: test/core/offline_first/writer_test.dart
+        name: 'is dropped for a hard-delete type: nothing written, the queued delete stays'
+
+  # Books & accounts
+  - id: R-ACC-15
+    group: Books & accounts
+    title: A row's own book decides
+    text: |
+      - Cloud book write → queued, even with a local book open
+      - local book write → stays on the phone
+      - local + Cloud books side by side
+    source: OFFLINE_TIER §5
+    tests:
+      - file: test/core/offline_first/writer_per_book_test.dart
+        name: a write in the Cloud book is queued under that book, though the open book is local
+      - file: test/core/offline_first/writer_per_book_test.dart
+        name: a write in the local book stays on the device, born synced
+    related: [R-MON-02, R-ACC-20]
+  - id: R-OFF-60
+    group: Books & accounts
+    title: Switching books deletes nothing
+    text: |
+      - every book stays on the phone
+      - screens show the open book only
+      - switch → pull of the new book
+    source: OFFLINE_FIRST §6, §12 · FAMILY_ACCOUNTS
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_facade_resync_test.dart
+        name: in-flight sync, then pulls again instead of sharing it
+  - id: R-OFF-61
+    group: Books & accounts
+    title: Managing a book needs internet
+    text: |
+      - create · invite · roles · remove · leave · delete → online only
+      - reading a book → offline too
+    source: FAMILY_ACCOUNTS · product decisions
+  - id: R-OFF-62
+    group: Books & accounts
+    title: Logout keeps unsent writes
+    text: |
+      - outbox kept, held for its account
+      - sign back in → pushed
+      - only writes of no book dropped
+    source: OFFLINE_FIRST §9, §12
+    tests:
+      - file: test/core/offline_first/queue/queue_workspace_isolation_test.dart
+        name: keeps every book's unsent writes and drops only those of no book
+      - file: test/core/offline_first/wiper_test.dart
+        name: 'deletes no row: the outbox is detached, caches dropped, the cursors kept for the delta sync back'
+    related: [R-ACC-04]
+  - id: R-OFF-63
+    group: Books & accounts
+    title: Logout stops a running pull
+    text: |
+      - pull cancelled **first**
+      - nothing of the old account lands later
+    source: OFFLINE_FIRST §6.1
+    tests:
+      - file: test/core/offline_first/sync_manager/sync_manager_paging_test.dart
+        name: a logout mid-walk drops the page in flight and writes no cursor
+      - file: test/core/offline_first/wiper_test.dart
+        name: stops a sync still running before it wipes anything
+
+  # What you see
+  - id: R-OFF-70
+    group: What you see
+    title: Sync status per record
+    text: |
+      - list icon: dot = waiting · red dot = failed
+      - edit page footer: waiting · deleting · times · creator
+      - offline → "waiting for a connection"
+    source: OFFLINE_FIRST §10
+    tests:
+      - file: test/core/offline_first/entity_meta/entity_meta_widgets_test.dart
+        name: a pending write says it is waiting for a connection while offline
+      - file: test/core/offline_first/entity_meta/entity_meta_widgets_test.dart
+        name: a pending delete says "deleting"
+      - file: test/core/offline_first/entity_meta/entity_meta_cubit_test.dart
+        name: when the push lands it re-reads the row by id and shows the server timestamps

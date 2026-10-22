@@ -184,6 +184,38 @@ const releases = defineCollection({
   }),
 });
 
+// Order = file order. Every `ref` is a catalog row id or a docs id (R-, T-, D-…), so it links.
+const roadmap = defineCollection({
+  loader: file('src/data/roadmap.yaml'),
+  schema: z.object({
+    title: z.string(),
+    date: day.optional(),
+    goal: z.string(),
+    items: z
+      .array(
+        z.object({
+          ref: z.string(),
+          size: z.string().optional(),
+          why: z.string(),
+        }),
+      )
+      .min(1),
+  }),
+});
+
+// Diagram sources are src/diagrams/<id>.mmd; this registry says what each one draws and from where.
+const diagrams = defineCollection({
+  loader: file('src/data/diagrams.yaml'),
+  schema: z.object({
+    title: z.string(),
+    page: z.string(),
+    areas: z.array(z.string()).default([]),
+    caption: z.string(),
+    sources: z.array(z.object({ repo, file: z.string() })).min(1),
+    checked: day,
+  }),
+});
+
 export const collections = {
   docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
   catalog,
@@ -194,4 +226,6 @@ export const collections = {
   tasks,
   decisions,
   releases,
+  diagrams,
+  roadmap,
 };

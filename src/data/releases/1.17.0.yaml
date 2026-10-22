@@ -3,281 +3,290 @@
 # or "changed since" was outdated by later work — the source is named in it.
 version: 1.17.0
 status: testing
-source: From the Trello release notes (pasted 2026-10-17). Items 5, 6, 8, 14 and 28–30 were not in the paste. Ticks are shared with each area's *What to test* page.
+source: From your Trello notes (2026-10-17) · items 5, 6, 8, 14, 28–30 weren't pasted · ticks shared with each area's *What to test*
 items:
   - n: 1
     title: Cloud per book
     area: accounts
     what: |
-      A book syncs while its owner has Cloud. A free member syncs a shared Cloud book; their own book stays on the phone. Local and Cloud books sit side by side.
+      - book syncs while its **owner** has Cloud
+      - free member syncs a shared Cloud book · own book stays local
+      - local + Cloud books side by side
     checks: [C-BOOK-020, C-BOOK-001, C-ACC-024, C-BOOK-021, C-ACC-025]
     related: [R-MON-02, R-ACC-15, R-ACC-45]
     screens: [Book switcher, Budget Book, Settings → Sync paused (lapse_review_page.dart)]
     notes:
-      - text: Sync-paused timestamps are now stored per book — test on a device whose sync was paused before the update.
+      - text: Pause times now stored per book → test a device paused before the update
         status: open
   - n: 2
-    title: Join a shared book without uploading + *Keep it on this phone*
+    title: Join without uploading · *Keep it on this phone*
     area: books
     what: |
-      An invite link on a phone with a book and no account opens *Join {book}*. The own book uploads only if the account has Cloud. *Back up & sync* into a free account offers *Keep it on this phone*.
+      - invite on a phone with a local book → *Join {book}*
+      - own book uploads only with Cloud
+      - *Back up & sync* into a free account → *Keep it on this phone*
     checks: [C-BOOK-001, C-BOOK-005, C-ACC-014, C-ACC-015]
     related: [J-BOOK-13, Q-BOOK-1]
     screens: [join_book_page.dart, claim_progress_page.dart, claim_intro_page.dart, lapse_review_page.dart]
     notes:
-      - text: '"The Join page is not behind developer mode, but the claim it runs on is."'
+      - text: '"Join page not behind developer mode, only the claim"'
         status: changed
-        now: Since 2026-10-16 the Join page sits behind the same switch as the claim (developer mode); with it closed an invite opens the claim intro (OFFLINE_TIER §9).
-      - text: How an https invite link reaches the app on such a phone is unclear — the app does not claim `/invite`.
+        now: Since 2026-10-16 both behind developer mode · closed → claim intro
+      - text: How does an https invite reach the app? App doesn't claim `/invite`
         status: open
-        now: Q-BOOK-1, task T-BOOK-01.
+        now: Q-BOOK-1 · T-BOOK-01
   - n: 3
     title: Read-only shared books + notices
     area: books
     what: |
-      When the owner loses Cloud or deletes the book, members keep a read-only copy. The + becomes a grey cloud-slash button. Notifications *no longer syncs* / *syncs again* / *was deleted*. New Settings row *Books that stopped syncing*.
+      - owner loses Cloud or deletes → members keep a read-only copy
+      - + becomes grey cloud-slash
+      - *no longer syncs* · *syncs again* · *was deleted*
+      - Settings: *Books that stopped syncing*
     checks: [C-BOOK-003, C-BOOK-004, C-BOOK-006]
     related: [R-BOOK-34, R-BOOK-35]
     screens: [shell_create_button.dart, read_only_book_button.dart, main_navigation_rail.dart, read_only_book_sheet.dart, cloud_sync_tiles.dart, lapse_review_sections.dart, notification inbox]
   - n: 4
     title: Home card *Your book is on your other phone*
     area: accounts
-    what: |
-      A free account on a second phone sees one card with *Get Cloud* instead of an empty Home.
+    what: free account, 2nd phone → one card + *Get Cloud*, not an empty Home
     checks: [C-ACC-023, C-ACC-026]
     related: [J-ACC-24]
     screens: [own_book_elsewhere_card.dart]
   - n: 7
-    title: 'Paid plans: locks, paywall, Your plan'
+    title: Paid plans · locks · paywall
     area: monetization
     what: |
-      One entitlement reader (store, server, Cloud through the active book). Every lock placed. Paywall with Free / Pro / Cloud cards and a monthly / yearly / lifetime picker. *Your plan* tile; drawer *Get Pro* / *Get Cloud*. RevenueCat behind a gateway seam.
+      - one plan reader: store · server · Cloud via the book
+      - every lock placed · paywall Free / Pro / Cloud + monthly/yearly/lifetime
+      - *Your plan* · drawer *Get Pro* / *Get Cloud* · RevenueCat behind a gateway
     checks: [C-MON-009, C-MON-021, C-MON-022, C-MON-019, C-MON-051]
     related: [R-MON-14, R-MON-17, R-MON-45]
     screens: [paywall_*.dart, settings_page.dart, tier_settings_tile.dart, app_drawer.dart, analytics cards, forecast pages and sheets, home editor, investments, backup & restore]
     notes:
-      - text: '`.env` needs `REVENUECAT_API_KEY_ANDROID` / `_IOS`. Empty means the fake gateway, and Buy fails.'
+      - text: "`.env` needs `REVENUECAT_API_KEY_ANDROID` / `_IOS` · empty → fake store, Buy fails"
         status: open
-        now: C-MON-003. With *Test purchases succeed* on, the fake gateway sells (dev builds only).
+        now: C-MON-003 · *Test purchases succeed* makes the fake store sell (dev)
   - n: 9
     title: Restore without an account
     area: data
     what: |
-      *Welcome back* → *Restore from a backup file* (nothing is uploaded) or *Restore Pro purchase*. On a local book: *Replace this book*.
+      - *Welcome back* → *Restore from a backup file* (no upload) · *Restore Pro purchase*
+      - local book → *Replace this book*
     checks: [C-DATA-005, C-DATA-014, C-MON-052]
     related: [J-DATA-04, J-DATA-05]
     screens: [welcome_back_page.dart, welcome_restore_section.dart, backup_restore_page.dart, restore sheet / preview / result]
   - n: 10
-    title: Delete account warns about the store subscription
+    title: "Delete account: store billing warning"
     area: accounts
-    what: |
-      "Keeps billing until cancelled in the store" plus a *Manage subscription* button.
+    what: '"Keeps billing until cancelled in the store" + *Manage subscription*'
     checks: [C-ACC-032]
     related: [E-MON-35]
     screens: [profile_delete_page.dart, delete_account_store_subscription.dart]
     notes:
-      - text: The button only shows with real RevenueCat.
+      - text: Button shows only with real RevenueCat
         status: open
   - n: 11
-    title: '*Back up this book* redesign + drawer row'
+    title: "*Back up this book* redesign"
     area: accounts
     what: |
-      Koi on top, sign-in buttons pinned at the bottom. A failed Google sign-in shows an error and stays on the page. *Get Free Cloud* is a plain drawer row above Settings. Fix in the same range: a new book's first booking switches Home off the onboarding card immediately.
+      - koi on top · sign-in buttons at the bottom
+      - Google fails → error, page stays
+      - drawer row *Get Free Cloud* above Settings
+      - new book's first booking → onboarding card gone at once
     checks: [C-ACC-016, C-ACC-017, C-ACC-006]
     related: [E-ACC-02]
     screens: [claim_intro_page.dart, claim_intro_actions.dart, app_drawer.dart]
   - n: 12
-    title: Sign in / out of a book without an account
+    title: Sign in/out of a local book
     area: accounts
     what: |
-      Profile shows *Sign in* / *Sign back in* — only a sign-in; the local book is set aside. After logout the local book stays closed; Welcome shows *Continue without an account*. New Profile row *Back up & sync*.
+      - Profile *Sign in* / *Sign back in* · only a sign-in · book set aside
+      - logout → book stays closed · *Continue without an account*
+      - new Profile row *Back up & sync*
     checks: [C-ACC-033, C-ACC-044]
     related: [J-ACC-14, R-ACC-07]
     screens: [profile_settings_page.dart, welcome_page.dart, welcome_returning_view.dart]
     notes:
-      - text: Behavior change — in 1.16.1 the local book came back by itself on logout.
+      - text: "Changed: in 1.16.1 the book came back by itself on logout"
         status: decided
-        now: D-ACC-6.
+        now: D-ACC-6
   - n: 13
-    title: Creator avatar on booking rows · iOS 15.5 minimum
+    title: Creator avatar · iOS 15.5
     area: books
     what: |
-      In a shared book, another member's avatar fills the booking row's mark slot. The form footer avatar grows from 16 to 20 px. Also in this item: iOS minimum 15.5 + CocoaPods.
+      - shared book: other member's avatar on booking rows
+      - form footer avatar 16 → 20 px
+      - iOS minimum 15.5 + CocoaPods
     checks: [C-BOOK-030, C-BOOK-031, C-BOOK-032, C-PLAT-001]
     related: [R-BOOK-41, R-PLAT-01]
     screens: [Budget Book, Home recent, category/tag lists (booking_item.dart), booking form footer]
     notes:
-      - text: iOS 15.0–15.4 users can no longer update.
+      - text: iOS 15.0–15.4 can't update
         status: open
-        now: E-PLAT-01.
+        now: E-PLAT-01
   - n: 15
     title: Budget calculator (new)
     area: budgets
     what: |
-      The website's calculator in the app: income, adults/kids, then 50/30/20 or Saver. 8 rows matched to top-level expense categories. Save writes monthly caps: create, update, or replace all.
+      - the website's calculator in the app
+      - income, adults, kids → 50/30/20 or Saver
+      - 8 rows → top-level categories · Save: create, update or replace caps
     checks: [C-BUD-001, C-BUD-002, C-BUD-003, C-BUD-004, C-BUD-005, C-BUD-006, C-BUD-007, C-BUD-008, C-BUD-009, C-BUD-010]
     related: [J-BUD-01]
     screens: [budget_planner_page.dart + ui/planner/, budgets_view.dart, koi_empty_state.dart, category picker (topLevelOnly)]
     notes:
-      - text: Replace gives every cap a new id → the Home Budgets card and the Android budget widget lose their budget.
+      - text: Replace gives new ids → Home card + widget lose their budget
         status: fixed
-        now: A rewritten cap keeps its id (BUDGET_GOALS §5b). E-BUD-01.
-      - text: A failure partway can leave caps deleted and nothing created.
+        now: Rewritten cap keeps its id · E-BUD-01
+      - text: Failure part-way → caps deleted, nothing created
         status: fixed
-        now: Writes first, deletes last — a failure leaves a cap too many. E-BUD-02.
-      - text: An archived monthly cap is silently re-activated on Save.
+        now: Writes first, deletes last · E-BUD-02
+      - text: Archived cap silently re-activated
         status: changed
-        now: Archived caps are never touched; a **paused** cap comes back on and the row says so. E-BUD-03.
-      - text: Loose name guesses ("Car" → Childcare, "Haus" → Haushalt, "Fun" → Funds).
+        now: Archived never touched · **paused** comes back + says so · E-BUD-03
+      - text: "Loose guesses: Car → Childcare, Haus → Haushalt, Fun → Funds"
         status: open
-        now: The guess now runs only after every exact match — re-test (C-BUD-010).
-      - text: There is no undo.
+        now: Guess runs after exact matches · re-test C-BUD-010
+      - text: No undo
         status: open
-        now: E-BUD-05.
-      - text: Which plan it needs (D13).
+        now: E-BUD-05
+      - text: Which plan? (D13)
         status: decided
-        now: Free, 2026-10-16.
+        now: Free, 2026-10-16
   - n: 16
-    title: Forecast fixes and additions
+    title: Forecast fixes
     area: forecast
-    what: |
-      Nested budgets count once; per-month figures from complete months; one "per day" figure in 4 places; a month breakdown card; copy changes.
+    what: nested budgets once · full months only · one per-day figure in 4 places · month breakdown · copy
     checks: [C-FC-001, C-FC-002, C-FC-003, C-FC-004, C-FC-005]
     related: [E-FC-01, E-FC-02]
     screens: [Forecast page, assumptions_sheet.dart, forecast_month_page.dart, month_breakdown_card.dart, day_feed.dart, budget_spread.dart]
     notes:
-      - text: With an active monthly income goal the day feed (net) and the month card (outflow only) can disagree.
+      - text: Income goal → day feed (net) and month card (outflow) can disagree
         status: open
-      - text: An exact-zero net is tinted green.
+      - text: Exact-zero net tinted green
         status: open
   - n: 17
     title: Currency positions (Investments)
     area: investments
     what: |
-      Hold 29 ECB currencies as cash ("100,000 JPY"). Prices show as a rate: "1 EUR = 175.42 JPY".
+      - 29 ECB currencies as cash: "100,000 JPY"
+      - price as a rate: "1 EUR = 175.42 JPY"
     checks: [C-INV-001, C-INV-002, C-INV-003, C-INV-004]
     related: [T-INV-01, D-INV-1]
     screens: [asset_pick_step.dart, opening_buy_card.dart, exchange_rate_tile.dart, investment_detail_header.dart, investment_price_stats.dart, transaction_save_page.dart, transfer_sheet.dart, price_sources_footer.dart]
     notes:
-      - text: Preconditions — `currency_assets.sql` pushed, then `is_active` flipped. Hidden until both are done.
+      - text: Needs `currency_assets.sql` pushed + `is_active` on · hidden until both
         status: open
-        now: T-INV-01.
-      - text: May a currency position transfer to a non-currency one (JPY → BTC)? Allowed today.
+        now: T-INV-01
+      - text: Currency → non-currency transfer (JPY → BTC)? Allowed today
         status: open
-        now: D-INV-1.
+        now: D-INV-1
   - n: 18
     title: Asset grid *Show more* cap
     area: investments
-    what: |
-      A class with more than 9 assets shows 8 plus *Show more · N more* (crypto today).
+    what: "> 9 assets → 8 + *Show more · N more* · crypto today"
     checks: [C-INV-010, C-INV-011]
     screens: [asset_group_grid.dart]
   - n: 19
     title: 'Investment wizard: step indicator'
     area: investments
-    what: |
-      "Step N of 3" in the app bar, no tabs. On steps 2–3 a back arrow goes one step back.
+    what: '"Step N of 3" · no tabs · steps 2–3 back arrow'
     checks: [C-INV-020, C-INV-021, C-INV-022]
     screens: [investment_save_page.dart, investment_wizard_header.dart, form_save_scaffold.dart]
   - n: 20
-    title: Usage statistics (opt-in, own server only)
+    title: Usage statistics · opt-in
     area: privacy
     what: |
-      Privacy & Legal → *Usage statistics*. One-time consent sheet after ≥ 3 bookings and 2 days. Events: consent, session, screen, booking_created, paywall_shown, scan_saved. No amounts, names or ids.
+      - Privacy & Legal → *Usage statistics*
+      - one consent sheet after ≥ 3 bookings + 2 days
+      - events: consent · session · screen · booking · paywall · scan · no amounts, names, ids
     checks: [C-PRIV-020, C-PRIV-021, C-PRIV-022]
     related: [R-PRIV-20, R-PRIV-22, T-PRIV-01]
     screens: [privacy_settings_page.dart, usage_stats_tile.dart, main_page.dart, usage_tab_tracker.dart, consent sheet, route observer in my_app.dart]
     notes:
-      - text: The whole `lib/features/usage_stats/` folder is untracked and must go in the same commit.
+      - text: "`lib/features/usage_stats/` untracked · must be in the same commit"
         status: fixed
-        now: Committed — the folder is tracked in moneykoi-app now.
+        now: Committed
   - n: 21
     title: 'Backup: receipt photos (opt-in)'
     area: data
-    what: |
-      *Include receipt photos*. Restore puts the photos back through the upload queue.
+    what: "*Include receipt photos* · restore puts them back via the upload queue"
     checks: [C-DATA-001, C-DATA-015, C-DATA-016, C-DATA-003, C-DATA-017]
     related: [R-DATA-12]
     screens: [create_backup_sheet.dart, backup_options_card.dart, restore preview / result]
   - n: 22
     title: 'Backup: passphrase (AES-256 zip)'
     area: data
-    what: |
-      Optional passphrase; every entry encrypted; opens in 7-Zip or Keka.
+    what: optional passphrase · every entry encrypted · opens in 7-Zip / Keka
     checks: [C-DATA-002, C-DATA-019, C-DATA-020]
     related: [R-DATA-11, E-DATA-01]
     screens: [backup_passphrase_sheet.dart, restore_backup_sheet.dart, welcome_restore_section.dart]
     notes:
-      - text: A wrong passphrase is detected by archive's error text, and `archive ^4.0.0` isn't pinned.
+      - text: Wrong passphrase detected by error text · `archive ^4.0.0` not pinned
         status: fixed
-        now: Any failure of the first encrypted entry counts as a wrong passphrase, whatever the message (BACKUP §4h). E-DATA-01.
-      - text: iOS `newPassword` autofill — keep it or not.
+        now: Any first-entry failure = wrong passphrase · E-DATA-01
+      - text: "iOS `newPassword` autofill: keep?"
         status: decided
-        now: Keep, 2026-10-16. D-DATA-6.
+        now: Keep, 2026-10-16 · D-DATA-6
   - n: 23
-    title: 'Backup: app settings travel with the file'
+    title: "Backup: settings travel"
     area: data
-    what: |
-      `settings.json` is applied only on a new-phone restore (*Welcome back*). Notification settings are never applied.
+    what: "`settings.json` applied only on *Welcome back* · notifications never"
     checks: [C-DATA-021]
     related: [R-DATA-13]
   - n: 24
     title: Open-with `.moneykoi`
     area: data
-    what: |
-      Tap the file in Files, Gmail, WhatsApp, Drive or AirDrop → the app opens straight at the restore preview.
+    what: Files · Gmail · WhatsApp · Drive · AirDrop → straight to the restore preview
     checks: [C-DATA-006, C-DATA-022, C-DATA-023]
     related: [J-DATA-07]
     screens: [AndroidManifest.xml, MainActivity.kt, OpenBackupActivity.kt, Info.plist, AppDelegate.swift, backup_open_listener.dart, opened_backup_files.dart]
     notes:
-      - text: 'Android `singleTop`: Gmail or WhatsApp may start a 2nd app instance inside their task.'
+      - text: "Android `singleTop`: Gmail/WhatsApp may start a 2nd instance"
         status: fixed
-        now: A trampoline activity hands the file to the one instance (2026-10-16). E-DATA-09.
-      - text: The octet-stream claim offers MoneyKoi for every unknown binary file.
+        now: Trampoline → one instance (2026-10-16) · E-DATA-09
+      - text: octet-stream claim offers Money Koi for any binary file
         status: decided
-        now: Kept on purpose, 2026-10-16 — such files read as *damaged*. D-DATA-7.
-      - text: If the native copy fails, nothing happens and only a log line is written.
+        now: Kept, 2026-10-16 · reads as *damaged* · D-DATA-7
+      - text: Native copy fails → only a log line
         status: fixed
-        now: A *damaged* snackbar. E-DATA-10.
+        now: "*damaged* snackbar · E-DATA-10"
   - n: 25
     title: Backup reminder
     area: data
-    what: |
-      Settings → Notifications → *Backup reminder* (Off / Weekly / Monthly + time). Needs Pro and owner or admin.
+    what: Notifications → *Backup reminder* · off/weekly/monthly + time · Pro + owner/admin
     checks: [C-DATA-024, C-DATA-007]
     related: [J-DATA-08]
     screens: [backup_reminder_tile.dart, notification_channels_card.dart]
     notes:
-      - text: 'Gap: tapping the notification opens the app, not Backup & restore.'
+      - text: Tap opens the app, not Backup & restore
         status: fixed
-        now: The tap opens Backup & restore for the reminded book (2026-10-16, backup_reminder_tap.dart). E-DATA-15.
+        now: Tap opens Backup & restore for that book (2026-10-16) · E-DATA-15
   - n: 26
-    title: '*Download all your data* (GDPR archive, free)'
+    title: "*Download all your data* · free"
     area: data
-    what: |
-      A *Your data* card on Backup & restore. One zip with profile.json, a README and one restorable `.moneykoi` per book.
+    what: "*Your data* card · zip: profile.json + README + one `.moneykoi` per book"
     checks: [C-DATA-008, C-DATA-025]
     related: [R-DATA-20, R-DATA-21]
     screens: [export_all_data_sheet.dart, backup_restore_page.dart]
     notes:
-      - text: 'Bug: non-active books are always read from the server (export_all_data_use_case.dart:139).'
+      - text: Non-active books always read from the server (`export_all_data_use_case.dart:139`)
         status: fixed
-        now: A book that does not sync is read from the phone (2026-10-14). E-DATA-17.
-      - text: A free full backup that bypasses the Pro backup lock.
+        now: Non-syncing book read from the phone (2026-10-14) · E-DATA-17
+      - text: Free full backup bypasses the Pro lock
         status: decided
-        now: Free on purpose, 2026-10-16. D-DATA-2.
-      - text: Packing the zip may jank the UI on big accounts.
+        now: Free on purpose, 2026-10-16 · D-DATA-2
+      - text: Packing may jank big accounts
         status: open
   - n: 27
     title: Restore pipeline
     area: data
-    what: |
-      Large files are read from disk by path.
+    what: large files read from disk by path
     checks: [C-DATA-026]
   - n: 31
     title: Launch-price window
     area: monetization
-    what: |
-      The paywall's launch line disappears after the window ends. No visible change: `launchWindowEnd` isn't set yet.
+    what: "launch line disappears after the window · nothing visible until the RevenueCat offering has `launch_until` + `regular_prices`"
     checks: [C-MON-060]
     related: [T-MON-21, D4]

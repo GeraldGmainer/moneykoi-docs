@@ -1,14 +1,14 @@
 items:
   - id: D-NTF-1
-    question: Push notifications (server-decided timing)
+    question: Push notifications
     status: open
-    answer: A separate, unbuilt project (`PUSH_INFRASTRUCTURE_PLAN.md`); block 700000 reserved.
+    answer: Separate, unbuilt project · `PUSH_INFRASTRUCTURE_PLAN.md` · id block 700000 reserved
   - id: D-NTF-2
-    question: Tap a notification to open its record
+    question: Tap opens the record?
     status: decided
     date: 2026-10-16
-    answer: Only the backup reminder routes; every other channel opens the app. Inbox rows stay untappable.
+    answer: Only the backup reminder · others open the app · inbox rows not tappable
   - id: D-NTF-3
-    question: Synced or per-device switches
+    question: Synced or per-device switches?
     status: decided
-    answer: Synced; a per-device override is the later add if double-device nudging annoys.
+    answer: Synced · per-device override later if needed

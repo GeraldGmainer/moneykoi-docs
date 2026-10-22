@@ -2,66 +2,75 @@
 items:
   - id: R-BC-01
     group: What it is
-    title: Count what you have, book the difference
+    title: Count real balances, book the gap
     text: |
-      Type each account's real balance; every difference becomes a **balance correction**, so the total matches reality without hunting for the missing bookings. Owners and admins run and delete checks; everyone reads the history.
+      - type each account's real balance
+      - each difference → a **balance correction**
+      - owners + admins run + delete · everyone reads history
     source: RECONCILIATION §1
     tests:
       - file: test/features/reconciliation/balance_check_nudge_use_case_test.dart
         name: a shared book asks admins and owners, never members
   - id: R-BC-02
     group: What it is
-    title: A correction is its own kind of booking
+    title: Correction = own booking kind
     text: |
-      No category, no destination — linked to its check. Never a system "Adjustment" category (it would land in charts and budgets). Tapping a correction opens its check; to change it, delete the check and count again.
+      - no category, no destination · linked to its check
+      - **never** a system "Adjustment" category
+      - tap → opens its check · to change: delete + recount
     source: RECONCILIATION §3, §5
   - id: R-BC-03
     group: Counting
-    title: Blank means not counted
+    title: Blank = not counted
     text: |
-      Nothing is pre-filled with the app's number — that would train people to save numbers they never checked. A blank account gets neither a line nor a correction; a typed zero difference still records the line.
+      - **nothing** prefilled with the app's number
+      - blank → no line, no correction · typed zero → line recorded
     source: RECONCILIATION §3, §4
     tests:
       - file: test/features/reconciliation/reconciliation_math_test.dart
         name: a blank account produces neither a line nor a booking
   - id: R-BC-05
     group: Counting
-    title: Cards and loans take the amount owed
-    text: |
-      Type 250 for a card that owes 250; it is compared against the negative balance.
+    title: "Cards + loans: amount owed"
+    text: type 250 for a card owing 250 → compared to −250
     source: RECONCILIATION §4
     tests:
       - file: test/features/reconciliation/reconciliation_cubit_edges_test.dart
         name: a liability is counted as the positive amount owed and compared against its negative balance
   - id: R-BC-06
     group: Counting
-    title: Investment and hidden accounts start hidden
+    title: Investment + hidden accounts hidden
     text: |
-      A monthly count would otherwise book market movement as untracked income. Typed into, they stay visible.
+      - else market moves → "untracked income"
+      - typed into → stay visible
     source: RECONCILIATION §4
     tests:
       - file: test/features/reconciliation/reconciliation_cubit_test.dart
         name: archived and investment accounts start hidden and stay counted once filled
   - id: R-BC-07
     group: Counting
-    title: Per account, or all into one
+    title: Per account or all into one
     text: |
-      One correction per drifted account, or the sum of the counted ones into one account. Per account, +10 and −10 still book two corrections; all-into-one they cancel out — the confirm says which.
+      - per account: +10 and −10 → two corrections
+      - all into one → they cancel · confirm says which
     source: RECONCILIATION §4
     tests:
       - file: test/features/reconciliation/reconciliation_cubit_edges_test.dart
         name: a zero total of opposite differences is not "all matched"
   - id: R-BC-08
     group: Counting
-    title: A date of its own
+    title: Its own date
     text: |
-      Default today; from the Home card, the last day of the period that just ended. The app's balance is read at the end of that day and the correction booked on it. The confirm warns while unsynced changes may explain part of a difference.
+      - default today · Home card: last day of the ended period
+      - balance read at end of that day
+      - confirm warns about unsynced changes
     source: RECONCILIATION §4
   - id: R-BC-04
     group: Where it counts
-    title: Untracked money moves totals, never "how you spend"
+    title: Moves totals, not "how you spend"
     text: |
-      Counts in balances, net worth, timelines, the Home cash-flow breakdown (*Untracked* row) and the waterfall (*Untracked* bar). Left out of categories, merchants, habits, budgets, tags, member stats, the Budget Book totals, the calendar and every analytics period flow.
+      - **in**: balances · net worth · timelines · Home *Untracked* row · waterfall
+      - **out**: categories · merchants · budgets · tags · Budget Book totals · period flows
     source: RECONCILIATION §6
     tests:
       - file: test/features/reconciliation/balance_query_parity_test.dart
@@ -69,16 +78,19 @@ items:
     related: [R-BB-10, R-ANL-02]
   - id: R-BC-09
     group: Reminders
-    title: The Home card and a monthly reminder
+    title: Home card + monthly reminder
     text: |
-      In the first 7 days of a budget month, owners and admins see a *Check balances* card for the period that just ended (dismissible per period). An opt-in reminder on each of the next 3 month starts — the budget month, not the 1st.
+      - first 7 days of a budget month → *Check balances* card · owners + admins
+      - dismiss per period
+      - opt-in reminder on the next 3 month starts
     source: RECONCILIATION §7
     tests:
       - file: test/features/reconciliation/balance_check_nudge_test.dart
         name: is due in the first days of a period nobody has counted
   - id: R-BC-10
     group: Web
-    title: The web checks in one transaction, with a stale guard
+    title: "Web: one transaction + stale guard"
     text: |
-      If a balance moved after the page loaded, saving is refused. Corrections are not listed in the web ledger (by design for now); no reminder.
+      - balance moved after load → save refused
+      - corrections not in the web ledger · no reminder
     source: RECONCILIATION §5, RECONCILIATION_WEB §9

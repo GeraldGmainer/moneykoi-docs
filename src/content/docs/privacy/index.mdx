@@ -5,35 +5,39 @@ sidebar:
   order: 1
 ---
 
+import AreaDiagrams from '../../../components/AreaDiagrams.astro';
+
 ## What leaves the phone
 
-| What | When | Where to | The user's control |
+| What | When | To | Control |
 |---|---|---|---|
-| Book data | only a book that syncs (Cloud) | MoneyKoi's Supabase (EU) | Cloud on / off |
-| Receipt photos | only for a book that syncs | the book's storage | — |
-| Live prices request | a book without an account, Pro, investments | MoneyKoi's Supabase, the whole list, anonymous | Settings → Privacy & Legal → *Live prices* |
-| Crash reports | on by default | Sentry, EU region, scrubbed | opt-out |
-| Usage statistics | only after a yes | MoneyKoi's Supabase, 400 days | Privacy & Legal → *Usage statistics* |
-| Purchases | when buying or restoring | the store and RevenueCat | — |
-| Invite emails | when inviting | MoneyKoi's mail function | — |
-| Changelog | when opened online | MoneyKoi's Supabase, anonymous | — |
-| Receipt text | never — read on the phone | — | — |
+| Book data | Cloud book only | Supabase (EU) | Cloud |
+| Receipt photos | Cloud book only | book storage | — |
+| Live prices | no account · Pro · investments | Supabase · whole list · anonymous | *Live prices* |
+| Crash reports | on by default | Sentry EU · scrubbed | opt-out |
+| Usage stats | after a **yes** | Supabase · 400 days | *Usage statistics* |
+| Purchases | buy · restore | store + RevenueCat | — |
+| Invite emails | inviting | mail function | — |
+| Changelog | opened online | Supabase · anonymous | — |
+| Receipt text | **never** | read on the phone | — |
 
 ## The four features
 
-| Feature | In one line | Where |
+| Feature | What | Where |
 |---|---|---|
-| **App lock** | PIN and/or biometrics over the whole app, from the first frame | Settings → App lock |
-| **Hide amounts** | *Off* · *Tap to reveal* · *Always* — a blur, per device | Settings → App preferences |
-| **Usage statistics** | opt-in, first-party, no SDK, erased on withdrawal | Privacy & Legal (app), Settings → Privacy & security (web) |
-| **Use on computer** | the phone approves a browser by QR; the computer gets its own session | drawer (Cloud) |
+| **App lock** | PIN + biometrics · from the first frame | Settings → App lock |
+| **Hide amounts** | *Off* · *Tap to reveal* · *Always* · blur · per device | App preferences |
+| **Usage stats** | opt-in · first-party · erased on withdrawal | Privacy & Legal · web Settings |
+| **Use on computer** | phone approves a browser by QR | drawer · Cloud |
 
 ## Where it lives in code
 
-| Piece | Where (moneykoi-app) |
+| Piece | moneykoi-app |
 |---|---|
-| App lock | `lib/features/app_lock/` — `APP_LOCK_AI_CONTEXT.md` |
-| Hide amounts | `lib/features/amount_privacy/` — `AMOUNT_PRIVACY_AI_CONTEXT.md` |
-| Usage statistics | `lib/features/usage_stats/` — `USAGE_STATS_AI_CONTEXT.md` (also web, server, admin) |
-| Web sign-in | `lib/features/web_sign_in/` — `WEB_SIGN_IN_AI_CONTEXT.md` |
+| App lock | `lib/features/app_lock/` · `APP_LOCK_AI_CONTEXT.md` |
+| Hide amounts | `lib/features/amount_privacy/` · `AMOUNT_PRIVACY_AI_CONTEXT.md` |
+| Usage stats | `lib/features/usage_stats/` · `USAGE_STATS_AI_CONTEXT.md` |
+| Web sign-in | `lib/features/web_sign_in/` · `WEB_SIGN_IN_AI_CONTEXT.md` |
 | Crash reports | `lib/app/sentry/` |
+
+<AreaDiagrams area="privacy" />

@@ -1,4 +1,5 @@
 :root {
+  --sl-content-width: 65rem;
   --sl-color-accent-low: #3b1c10;
   --sl-color-accent: #ff8742;
   --sl-color-accent-high: #ffd2b8;
@@ -71,13 +72,28 @@
 .mk-planned { opacity: 0.6; }
 .mk-points { margin-block: 0.3rem 0; font-size: var(--sl-text-sm); }
 
-.mk-tier-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); margin-block: 1.5rem; }
-.mk-tier-card { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 1rem 1.2rem; background: var(--mk-card); }
+.mk-tier-stack { display: grid; gap: 1.25rem; margin-block: 1.5rem; }
+.mk-tier-card { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 1rem 1.25rem; background: var(--mk-card); }
 .mk-tier-card-pro { border-color: color-mix(in srgb, var(--mk-pro) 55%, transparent); }
 .mk-tier-card-cloud { border-color: color-mix(in srgb, var(--mk-cloud) 55%, transparent); }
-.mk-tier-card h3 { margin: 0; font-size: var(--sl-text-base); display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-.mk-tier-card ul { padding-inline-start: 1.1rem; }
-.mk-tier-card li + li { margin-top: 0.25rem; }
+.mk-tier-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.75rem; margin-bottom: 0.75rem; }
+.mk-tier-head strong { color: var(--sl-color-white); }
+.mk-tier-head .mk-muted { font-size: var(--sl-text-sm); }
+.mk-tier-count { margin-inline-start: auto; font-size: var(--sl-text-xs); color: var(--sl-color-gray-3); }
+.mk-tier-areas { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 1.75rem; }
+.mk-tier-area { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; padding-block: 0.7rem; border-top: 1px solid var(--sl-color-gray-5); }
+.mk-tier-area h4 { margin: 0; font-size: var(--sl-text-sm); font-weight: 600; line-height: var(--sl-line-height); color: var(--sl-color-gray-2); }
+.mk-tier-area ul { margin: 0; padding: 0; list-style: none; columns: 16em; column-gap: 2rem; font-size: var(--sl-text-sm); }
+.mk-tier-area li { break-inside: avoid; margin: 0 0 0.45rem; }
+.mk-tier-area li:last-child { margin-bottom: 0; }
+.mk-tier-area a { color: var(--sl-color-white); text-decoration: none; }
+.mk-tier-area a:hover { text-decoration: underline; }
+.mk-tier-area .mk-note { display: block; line-height: 1.4; }
+@media (max-width: 40rem) {
+  .mk-tier-areas { grid-template-columns: minmax(0, 1fr); }
+  .mk-tier-area h4 { margin-bottom: 0.3rem; }
+}
+.mk-tier-planned { margin: 0.75rem 0 0; font-size: var(--sl-text-xs); color: var(--sl-color-gray-3); }
 
 .mk-item {
   border: 1px solid var(--sl-color-gray-5);
@@ -119,6 +135,11 @@
 .mk-wt dd { margin: 0; }
 .mk-wt dd p { margin: 0; }
 .mk-wt dd p + p { margin-top: 0.4rem; }
+.mk-wt { align-items: baseline; }
+.sl-markdown-content .mk-wt > dt,
+.sl-markdown-content .mk-wt > dd { margin-top: 0; }
+.mk-wt dd ul { margin: 0; padding-inline-start: 1.1rem; }
+.sl-markdown-content .mk-wt dd li + li { margin-top: 0.15rem; }
 
 .mk-tests { list-style: none; padding: 0; font-size: var(--sl-text-sm); }
 .sl-markdown-content .mk-tests li { margin: 0.15rem 0; }
@@ -221,3 +242,176 @@
 .sl-markdown-content .mk-release-notes li { margin: 0.3rem 0; }
 .mk-screens { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .mk-screens code { font-size: var(--sl-text-xs); }
+
+/* Diagrams */
+.mk-diagram {
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem 0.5rem;
+  background: var(--mk-card);
+}
+.mk-diagram-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.mk-diagram .mk-diagram-title {
+  margin: 0;
+  font-size: var(--sl-text-lg);
+}
+.mk-diagram-expand {
+  flex: none;
+  font: inherit;
+  font-size: var(--sl-text-xs);
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--sl-color-gray-4);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--sl-color-gray-2);
+  cursor: pointer;
+}
+.mk-diagram-canvas {
+  overflow-x: auto;
+  margin: 0.75rem 0 0.5rem;
+}
+.mk-diagram-canvas pre.mermaid {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  white-space: pre;
+}
+.mk-diagram-canvas pre.mermaid:not([data-processed]) {
+  color: transparent;
+  min-height: 6rem;
+}
+.mk-diagram-canvas svg {
+  max-width: 100%;
+  height: auto;
+}
+.mk-diagram figcaption {
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-gray-2);
+}
+.mk-diagram figcaption p {
+  margin: 0.25rem 0;
+}
+.mk-diagram-meta {
+  font-size: var(--sl-text-xs);
+  color: var(--sl-color-gray-3);
+}
+.mk-diagram-canvas svg { cursor: zoom-in; }
+.mk-diagram-dialog {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 1rem 1.5rem;
+  border: 0;
+  background: var(--sl-color-bg);
+  color: var(--sl-color-text);
+}
+.mk-diagram-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.mk-diagram-dialog::backdrop {
+  background: rgb(0 0 0 / 0.6);
+}
+.mk-diagram-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--sl-text-lg);
+}
+.mk-diagram-dialog-body {
+  flex: 1;
+  min-height: 0;
+}
+.mk-diagram-dialog-body .mk-diagram-canvas {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+}
+.mk-diagram-dialog-body pre.mermaid {
+  height: 100%;
+  overflow: visible;
+}
+.mk-diagram-dialog-body svg {
+  width: 100%;
+  height: 100%;
+  max-width: none !important;
+  cursor: zoom-in;
+}
+.mk-diagram-dialog-body.mk-zoomed svg {
+  width: 200%;
+  height: 200%;
+  cursor: zoom-out;
+}
+pre.mermaid.mk-diagram-error {
+  color: var(--mk-bad) !important;
+  white-space: normal;
+  min-height: 0;
+}
+
+@media (max-width: 50rem) {
+  mk-pref-select[data-key='width'] { display: none; }
+}
+
+/* Header pickers (ThemeSelect.astro) set --sl-content-width and --mk-text-scale inline on <html>;
+   these are the defaults. Text scale = px / 16 and touches text tokens only, never rem-based layout. */
+:root {
+  --mk-text-scale: 1.125;
+  --sl-text-2xs: calc(0.75rem * var(--mk-text-scale));
+  --sl-text-xs: calc(0.8125rem * var(--mk-text-scale));
+  --sl-text-sm: calc(0.875rem * var(--mk-text-scale));
+  --sl-text-base: calc(1rem * var(--mk-text-scale));
+  --sl-text-lg: calc(1.125rem * var(--mk-text-scale));
+  --sl-text-xl: calc(1.25rem * var(--mk-text-scale));
+  --sl-text-2xl: calc(1.5rem * var(--mk-text-scale));
+  --sl-text-3xl: calc(1.8125rem * var(--mk-text-scale));
+  --sl-text-4xl: calc(2.1875rem * var(--mk-text-scale));
+  --sl-text-5xl: calc(2.625rem * var(--mk-text-scale));
+  --sl-text-6xl: calc(4rem * var(--mk-text-scale));
+}
+/* The left menu keeps Starlight's own sizes whatever the text picker says. The tokens are redefined
+   here because a scaled token is already resolved on :root and inherits as a fixed value. */
+#starlight__sidebar {
+  font-size: 1rem;
+  --sl-text-2xs: 0.75rem;
+  --sl-text-xs: 0.8125rem;
+  --sl-text-sm: 0.875rem;
+  --sl-text-base: 1rem;
+  --sl-text-lg: 1.125rem;
+  --sl-text-xl: 1.25rem;
+  --sl-text-2xl: 1.5rem;
+}
+/* Starlight leaves body text at the browser's 16px; give it the scaled token. */
+body { font-size: var(--sl-text-body); }
+
+/* Tests and source, collapsed under each item */
+.mk-meta { margin-top: 0.5rem; font-size: var(--sl-text-xs); color: var(--sl-color-gray-3); }
+.mk-meta summary { cursor: pointer; width: fit-content; }
+.mk-meta summary:hover { color: var(--sl-color-white); }
+.mk-meta[open] summary { margin-bottom: 0.25rem; }
+
+/* Roadmap */
+.mk-road { display: grid; gap: 1.25rem; margin-block: 1.5rem; }
+.mk-road-bucket { border: 1px solid var(--sl-color-gray-5); border-radius: 0.75rem; padding: 1rem 1.25rem; background: var(--mk-card); scroll-margin-top: 5rem; }
+.mk-road-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.9rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--sl-color-gray-5); }
+.mk-road-head h2 { margin: 0; font-size: var(--sl-text-h4); color: var(--sl-color-white); }
+.mk-road-goal { margin-inline-start: auto; font-weight: 600; color: var(--sl-color-gray-2); }
+.mk-road-items { margin: 0; padding: 0; list-style: none; }
+.mk-road-items li { padding-block: 0.6rem; border-bottom: 1px solid var(--sl-color-gray-6); }
+.mk-road-items li:last-child { border-bottom: 0; padding-bottom: 0; }
+.mk-road-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.6rem; }
+.mk-road-line a { color: var(--sl-color-white); text-decoration: none; font-weight: 600; }
+.mk-road-line a:hover { text-decoration: underline; }
+.mk-road-size { margin-inline-start: auto; font-size: var(--sl-text-xs); color: var(--sl-color-gray-3); border: 1px solid var(--sl-color-gray-5); border-radius: 999px; padding: 0 0.5rem; }
+.mk-road-items .mk-note { margin-top: 0.15rem; }
+@media (max-width: 40rem) { .mk-road-goal { margin-inline-start: 0; flex-basis: 100%; } }

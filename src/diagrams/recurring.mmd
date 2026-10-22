@@ -1,0 +1,13 @@
+flowchart TD
+  rule["Recurring rule<br/>written on the phone or the web, synced like any row"] --> server
+  subgraph server["Supabase"]
+    cron["pg_cron · hourly"] --> fn["materialize-recurring"]
+    fn --> slot{"slot (recurring_id, scheduled date) free?"}
+    slot -- "yes" --> booking[("booking rows")]
+    slot -- "no" --> skip["skip — never twice"]
+    fn --> cursor["advance last_generated_date"]
+  end
+  resume["app resume"] -- "invokes for the open book" --> fn
+  booking -- "sync_all" --> phone["phones and web"]
+  rule -. "future dates" .-> proj["RecurrenceProjector<br/>never stored, never in balances"]
+  rule -- "book without an account" --> local["MaterializeRecurringLocallyUseCase<br/>the server's generator, step for step"]

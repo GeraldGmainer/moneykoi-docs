@@ -2,12 +2,12 @@ items:
   - id: J-BC-01
     group: Checking
     title: Monthly balance check
-    from: the Home card in the first days of the month (or Home → Total balance → *Check balances*)
+    from: Home card · or Total balance → *Check balances*
     steps:
-      - type the real balance of each account you checked
+      - type real balances
       - per account or all into one
-      - the confirm lists every correction → *Save*
-    result: balances match reality; history keeps the check
+      - confirm lists corrections → *Save*
+    result: balances = reality · check in history
     checks: [C-BC-001, C-BC-002]
   - id: J-BC-02
     group: Checking
@@ -15,7 +15,7 @@ items:
     from: Settings → *Balance check history* → a check
     steps:
       - '*Delete*'
-    result: its corrections, lines and the check go; balances unwind
+    result: corrections + check gone · balances unwind
     tests:
       - file: test/features/reconciliation/reconciliation_history_use_cases_test.dart
         name: deletes the corrections, then the lines, then the session

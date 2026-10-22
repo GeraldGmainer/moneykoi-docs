@@ -1,0 +1,34 @@
+flowchart LR
+  subgraph phone["App · Flutter"]
+    direction TB
+    screens["Screens"] --> sqlite[("SQLite mirror")]
+    sqlite --> outbox["Outbox<br/>queue_items"]
+  end
+  subgraph browser["Web · Next.js"]
+    direction TB
+    pages["Pages"] --> rq["React Query cache"]
+  end
+  subgraph supa["Supabase"]
+    direction TB
+    auth["Auth · GoTrue"]
+    rest["PostgREST + RPCs<br/>db_pre_request → RLS"]
+    pg[("Postgres 17")]
+    rt["Realtime"]
+    storage[("Storage<br/>receipts · avatars · book-avatars")]
+    fn["Edge functions<br/>materialize-recurring · send-book-invite<br/>web-sign-in · revenuecat-webhook<br/>fetch-prices · refresh-quotes"]
+    cron["pg_cron"]
+  end
+  outbox -- "push writes" --> rest
+  rest -- "sync_all deltas" --> sqlite
+  rt -. "change events" .-> phone
+  rq -- "queries · RPCs · writes" --> rest
+  rest --> pg
+  phone -- "sign in" --> auth
+  browser -- "sign in" --> auth
+  phone -- "receipt photos" --> storage
+  cron -- "hourly · daily" --> fn
+  fn --> pg
+  rc["RevenueCat"] -- "purchase events" --> fn
+  feeds["Price feeds<br/>ECB · gold-api.com · CoinGecko · metals.dev"] -- "daily fetch" --> fn
+  fn -- "invite email" --> smtp["SMTP"]
+  admin["Admin · Next.js<br/>secret key, admin emails only"] --> pg

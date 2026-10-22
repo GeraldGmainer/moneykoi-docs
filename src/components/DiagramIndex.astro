@@ -1,0 +1,47 @@
+---
+import { diagramsFor } from '../lib/diagrams';
+import { groupBy } from '../lib/data';
+
+const pages: Record<string, string> = {
+  overview: 'The whole system',
+  database: 'Database',
+  'offline-first': 'Offline-first › How it works',
+  'accounts-books': 'Accounts & books',
+  plans: 'Plans & purchases',
+  scanner: 'Receipt scanner',
+  money: 'Money flows',
+  data: 'Backup & data',
+  web: 'Web dashboard',
+  investments: 'Investment prices',
+  notifications: 'Notifications',
+};
+// A page that lives in its area instead of under /architecture/.
+const hrefs: Record<string, string> = { overview: '/architecture/', 'offline-first': '/offline/how-it-works/' };
+const href = (page: string) => hrefs[page] ?? `/architecture/${page}/`;
+const all = await diagramsFor(() => true);
+const order = Object.keys(pages);
+const grouped = groupBy(all, (d) => d.data.page).sort(([a], [b]) => order.indexOf(a) - order.indexOf(b));
+---
+
+<table class="mk-matrix">
+  <thead>
+    <tr><th>Page</th><th>Diagrams</th></tr>
+  </thead>
+  <tbody>
+    {
+      grouped.map(([page, items]) => (
+        <tr>
+          <td><a href={href(page)}><strong>{pages[page] ?? page}</strong></a></td>
+          <td>
+            {items.map((d, i) => (
+              <>
+                {i > 0 && ' · '}
+                <a href={`${href(page)}#diagram-${d.id}`}>{d.data.title}</a>
+              </>
+            ))}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

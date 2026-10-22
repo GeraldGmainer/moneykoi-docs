@@ -1,0 +1,9 @@
+# Source: moneykoi-supabase/supabase/migrations/20261021120000_feedback_without_account.sql.
+items:
+  - id: T-SET-01
+    title: Push the feedback migration
+    owner: gerald
+    detail: |
+      - `20261021120000_feedback_without_account.sql` · `submit_feedback` + reply email
+      - dev first · prod with the app release that lists *Feedback* for everyone
+      - until then: feedback without an account fails

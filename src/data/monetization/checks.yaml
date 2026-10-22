@@ -25,7 +25,7 @@ groups:
       - id: C-MON-009
         text: "*Free* → *Reopen the app* → locked: Analytics · Home edit · card gallery · Forecast · Investments · exports · *Create backup* · Books"
       - id: C-MON-010
-        text: "Drawer: **Analytics**, **Shopping list**, **Investments**, **Forecast** locked, last, above *Get Pro* → tap opens the paywall"
+        text: "Drawer: **Analytics**, **Shopping list**, **Investments**, **Forecast** dimmed in the Pro group, last, no padlock → tap opens that feature's paywall"
       - id: C-MON-011
         text: Saved bar with Analytics → locked page + *See plans*
       - id: C-MON-012
@@ -35,7 +35,7 @@ groups:
       - id: C-MON-014
         text: Budget Book ⋮ → *Export* → paywall, never the export sheet
       - id: C-MON-015
-        text: "*Create backup* → paywall · *Restore from a backup file* → free"
+        text: "*Create a backup* → paywall · *Restore from a backup* → free"
       - id: C-MON-016
         text: "Forecast page + card → paywall · with account: *Use on computer* locked → paywall"
       - id: C-MON-017
@@ -43,13 +43,21 @@ groups:
       - id: C-MON-018
         text: Buy from a lock → paywall closes → feature opens · back → stays put
       - id: C-MON-019
-        text: "*Your plan* follows: Free · Pro · Cloud · *Cloud through {book}* · *Early adopter* · *Cloud ended*"
+        text: "Settings → *Account* → plan row under *Profile* follows: *Get Money Koi Pro* · *Pro is active* · *Cloud is active* · *Cloud through {book}* · *Early adopter* · *Cloud ended* · no restore row"
       - id: C-MON-021
-        text: Simulator *Pro* → drawer *Get Cloud* · buy → lock clears in place · *Restore purchases* reports the store
+        text: Simulator *Pro* → drawer *Get Cloud* → Cloud overview · buy → lock clears in place
       - id: C-MON-022
         text: "Paywall: Free · Pro · Cloud cards · Cloud monthly/yearly/lifetime · from a lock → that feature's details"
       - id: C-MON-020
         text: "Pro owner: no Pro price, Cloud **upgrade** · Cloud owner: *Manage subscription*, no buy button"
+      - id: C-MON-023
+        text: "Free → drawer *Get Pro* → paywall top: Pro disc, *Money Koi Pro*, *Paid once, kept for good. Works offline.*, two columns of Pro features · no scroll"
+      - id: C-MON-024
+        text: "Pro → drawer *Get Cloud* → *Money Koi Cloud* overview starts with *Everything in Pro* · a lock still opens on its feature"
+      - id: C-MON-025
+        text: "Paywall: pick Cloud monthly or yearly → *Cloud renews automatically…* note · pick Pro or Cloud lifetime → note gone"
+      - id: C-MON-026
+        text: "Free → *Restore purchases* under the plans · simulator *Pro* or *Cloud* → button gone · tap twice fast → one restore"
       - id: C-MON-061
         text: "Paywall look: Free a slim row · color only on the picked plan's ring, radio and button · feature rows grey · no glow under the card · button text dark on orange and blue"
 
@@ -70,14 +78,19 @@ groups:
 
   - id: store
     title: Store sandbox · real products
-    setup: Needs T-MON-02 … T-MON-04 done + a build with RevenueCat keys
+    setup: |
+      - needs T-MON-03 + T-MON-04 · Android: `./publish.sh internal monetization` · install from the internal track, never a local build
+      - the phone's Play account = license tester · test cards in the purchase sheet: *always approves* · *always declines* · *slow card*
+      - renewals sped up: monthly ~5 min · yearly ~30 min · trial ~3 min · ends after 6 renewals
+      - the yearly trial only on a Google account that never had a subscription → test it first
+      - start over: Pro → Play Console order → **Refund + remove entitlement**, reinstall · Cloud → `admin_set_cloud_entitlement('<email>', false)`
     items:
       - id: C-MON-050
         text: "Buy each product on each store: `pro.lifetime` · `cloud.monthly` · `cloud.yearly` (trial) · `cloud.lifetime` · `cloud.lifetime.upgrade`"
       - id: C-MON-051
         text: Fresh install → restore finds the purchase
       - id: C-MON-052
-        text: "*I already use MoneyKoi* → *Restore Pro purchase* → Pro, no login"
+        text: "*I already use Money Koi* → *Restore Pro purchase* → *Pro restored* → Pro, no login"
       - id: C-MON-053
         text: Local book → claim → sign in → *See plans* → buy → upload continues by itself
       - id: C-MON-054
@@ -88,6 +101,29 @@ groups:
         text: "RevenueCat offering metadata `{\"min_app_version\": \"99.0.0\"}` → reopen the app → paywall: *New version needed*, no plans · *Update app* opens Play · *Restore purchases* works · metadata removed → plans back"
       - id: C-MON-063
         text: "Remove `cloud.monthly` from the offering → its row gone, the others pickable · put it back"
+      - id: C-MON-065
+        text: "*Always declines* → error · nothing unlocked"
+      - id: C-MON-066
+        text: Paywall prices match the store's regional price (Austria €24.99 · US $24.99) · yearly shows the trial only before any subscription
+      - id: C-MON-067
+        text: "Pro owner → *Cloud lifetime upgrade* offered, plain *Cloud lifetime* not"
+      - id: C-MON-068
+        text: "Cloud purchase → `public.store_event` has the event · `public.entitlement` the expiry · sync starts"
+
+  - id: welcome-back
+    title: Welcome back · Restore Pro purchase
+    setup: |
+      - fresh install or *Delete all data* · *I already use Money Koi*
+      - store sandbox (C-MON-050 bought), or dev flavor with *Test purchases succeed*
+    items:
+      - id: C-MON-070
+        text: Store account without a purchase → *Restore Pro purchase* → snackbar · stays on *Welcome back*
+      - id: C-MON-071
+        text: "Pro bought → *Pro restored* · *Start a new book* → setup · back → *Restore a backup* → file restores · Pro unlocked"
+      - id: C-MON-072
+        text: "Cloud bought → *Cloud found* · Google and email sign-in only · sign in → books download"
+      - id: C-MON-073
+        text: "Local book closed by a sign-out + Pro → *Pro restored* offers *Continue without an account* → that book opens"
 
   - id: launch
     title: Launch price

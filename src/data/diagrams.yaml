@@ -1,0 +1,372 @@
+# One entry per src/diagrams/<id>.mmd. `page` is the How it works page that shows it; `areas`
+# also embed it at the bottom of those areas' overviews. `checked` is the day it was compared
+# with its sources — update the diagram and the date together.
+
+# The whole system
+- id: system
+  title: How the pieces fit
+  page: overview
+  areas: [platform]
+  caption: |
+    - app: full SQLite copy of the open book · pushes via an outbox
+    - web: reads + writes Supabase directly
+    - book without account: never talks to Supabase
+  sources:
+    - {repo: supabase, file: CLAUDE.md}
+    - {repo: web, file: CLAUDE.md}
+  checked: 2026-10-17
+- id: request-lifecycle
+  title: Every request, scoped to one book
+  page: overview
+  areas: [books]
+  caption: |
+    - open book = `X-Tenant-Id` header · membership re-checked every request
+    - row-level security does the rest
+  sources:
+    - {repo: supabase, file: CLAUDE.md}
+  checked: 2026-10-17
+
+# Database
+- id: db-books
+  title: People, books and plans
+  page: database
+  caption: |
+    - profile = one person across all books · `tenant_member` adds the role
+    - dotted line = column without a foreign key
+    - settings rows always exist · web row + entitlement may not
+  sources:
+    - {repo: supabase, file: supabase/migrations/20260629000000_family_accounts.sql}
+    - {repo: supabase, file: supabase/migrations/20261013140000_profile_setting.sql}
+    - {repo: supabase, file: supabase/migrations/20261005120000_offline_tier.sql}
+  checked: 2026-10-17
+- id: db-ledger
+  title: The ledger
+  page: database
+  caption: |
+    - every table also has `tenant_id` (book) + `profile_id` (creator)
+    - booking: categorized · transfer (`to_account_id`) · correction (`reconciliation_id`)
+    - `receipt_id` has no foreign key
+  sources:
+    - {repo: supabase, file: supabase/migrations/20251017000005_booking.sql}
+    - {repo: supabase, file: supabase/migrations/20260929120000_reconciliation.sql}
+    - {repo: supabase, file: supabase/migrations/20260925120000_transaction_tags.sql}
+  checked: 2026-10-17
+- id: db-planning
+  title: Budgets, goals, loans, forecast and shopping
+  page: database
+  caption: |
+    - budgets, income goals, savings goals = `goal` rows · `goal_type`
+    - every table has `tenant_id` + `profile_id`
+  sources:
+    - {repo: supabase, file: supabase/migrations/20260727090000_budget_goals.sql}
+    - {repo: supabase, file: supabase/migrations/20260927120000_forecast.sql}
+    - {repo: supabase, file: supabase/migrations/20260706000000_shopping_list.sql}
+  checked: 2026-10-17
+- id: db-investments
+  title: Investments and prices
+  page: database
+  caption: |
+    - positions belong to a book
+    - assets, quotes, `price_*` = global, server-written
+  sources:
+    - {repo: supabase, file: supabase/migrations/20260809160000_investments.sql}
+    - {repo: supabase, file: supabase/migrations/20261003180000_price_provenance.sql}
+  checked: 2026-10-17
+- id: db-ops
+  title: Sync journal and operations
+  page: database
+  caption: |
+    - `sync_log` = change journal for the delta sync
+    - rest: releases · feedback · opt-in stats · admin · QR sign-in
+  sources:
+    - {repo: supabase, file: supabase/migrations/20251017000006_sync.sql}
+    - {repo: supabase, file: supabase/migrations/20261015140000_changelog_app_and_web.sql}
+    - {repo: supabase, file: supabase/migrations/20261013200000_usage_stats.sql}
+  checked: 2026-10-17
+
+# Offline-first — shown in this order on /offline/how-it-works/
+- id: offline-overview
+  title: The big picture
+  page: offline-first
+  caption: |
+    - you only talk to your phone · the rest runs in the background
+    - no internet → the outbox waits · nothing lost
+    - book without account → no outbox, no server
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+    - {repo: app, file: .agents/references/OFFLINE_TIER_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: sync-engine
+  title: The sync engine on the phone
+  page: offline-first
+  caption: |
+    - screens read only SQLite
+    - writes → SQLite first → outbox if the book syncs
+    - pull brings everyone else's changes
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+    - {repo: app, file: .agents/references/OFFLINE_TIER_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: write-path
+  title: One booking, from your phone to your partner's
+  page: offline-first
+  caption: |
+    - last push wins · no field merging
+    - unsent rows are never overwritten by a pull
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: outbox
+  title: The outbox, item by item
+  page: offline-first
+  caption: |
+    - one item per record · one at a time
+    - held = waits, never dropped
+    - survives an app kill and a restart
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: row-status
+  title: A row's sync status
+  page: offline-first
+  caption: |
+    - failed → retried each app start · offline → waits
+    - bookings + their tags keep a trash tombstone
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: pull-triggers
+  title: What starts a pull
+  page: offline-first
+  caption: |
+    - fresh pull: something just changed · never skipped
+    - plain pull: shares a running one · at most 1 per 5 s
+    - book without account: never pulls
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: pull-loop
+  title: The pull, page by page
+  page: offline-first
+  caption: |
+    - push before pull · one cursor per entity per book
+    - big first pull walks in pages
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+    - {repo: supabase, file: CLAUDE.md}
+  checked: 2026-10-17
+- id: resume-ladder
+  title: When the connection breaks
+  page: offline-first
+  caption: |
+    - pages land oldest first · bookmark saved per page
+    - killed app → continues where it stopped
+    - logout or book switch stops the walk
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: realtime-flow
+  title: "Realtime: a nudge, not the data"
+  page: offline-first
+  caption: |
+    - the event only starts a pull
+    - accounts, categories, receipts: no event · next pull
+    - book without account: no channel
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: conflict
+  title: Two phones, one booking
+  page: offline-first
+  caption: |
+    - last push wins · whole record, no merge
+    - a pull never overwrites an unsent edit
+    - a delete beats an older edit
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+    - {repo: app, file: test/edge_cases/offline_conflict_edge_cases_test.dart}
+  checked: 2026-10-17
+- id: delete-kinds
+  title: What a delete does
+  page: offline-first
+  caption: |
+    - shopping item: undo = a new item
+    - book without account: deleted at once, children too
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+    - {repo: app, file: .agents/references/OFFLINE_TIER_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: book-switch
+  title: Switching books
+  page: offline-first
+  caption: |
+    - a switch deletes nothing
+    - each book keeps its own bookmarks
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_FIRST_AI_CONTEXT.md}
+    - {repo: app, file: .agents/references/FAMILY_ACCOUNTS_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: sync-gate
+  title: Does this book sync?
+  page: offline-first
+  areas: [monetization]
+  caption: |
+    - per book · writes per row's own book
+    - Cloud belongs to the book → free member syncs a paid shared book
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_TIER_AI_CONTEXT.md}
+  checked: 2026-10-17
+
+# Accounts & books
+- id: book-states
+  title: A book's life on the phone
+  page: accounts-books
+  areas: [accounts]
+  caption: |
+    - **nothing** deleted on any arrow · not logout, not pause
+    - upload (claim) still behind developer mode
+  sources:
+    - {repo: app, file: .agents/references/OFFLINE_TIER_AI_CONTEXT.md}
+    - {repo: app, file: .agents/references/MONETIZATION_AI_CONTEXT.md}
+  checked: 2026-10-21
+- id: invite
+  title: Inviting someone into a book
+  page: accounts-books
+  areas: [books]
+  caption: invites reach devices only via `sync_all` (email-scoped) · not realtime
+  sources:
+    - {repo: supabase, file: CLAUDE.md}
+    - {repo: app, file: .agents/references/BOOK_AI_CONTEXT.md}
+  checked: 2026-10-17
+
+# Plans & purchases
+- id: feature-gate
+  title: Is this feature on?
+  page: plans
+  areas: [monetization]
+  caption: |
+    - every gate asks `Feature.x.isActive`
+    - never a tier, store flag or sync mode · plan = one line in `feature.dart`
+  sources:
+    - {repo: app, file: .agents/references/MONETIZATION_AI_CONTEXT.md}
+    - {repo: app, file: lib/features/monetization/domain/feature.dart}
+  checked: 2026-10-21
+- id: purchase
+  title: A purchase, from the store to the server
+  page: plans
+  areas: [monetization]
+  caption: |
+    - webhook = only store writer of `entitlement`
+    - subscriptions never set Pro (`plus`)
+  sources:
+    - {repo: app, file: .agents/references/MONETIZATION_AI_CONTEXT.md}
+    - {repo: supabase, file: CLAUDE.md}
+  checked: 2026-10-21
+
+# Scanner
+- id: scanner-flow
+  title: From photo to bookings
+  page: scanner
+  areas: [scanner]
+  caption: |
+    - all recognition on the phone (ML Kit) · no cloud OCR
+    - shop from the RKSV/TSE QR or printed text
+  sources:
+    - {repo: app, file: .agents/references/SCANNER_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: scanner-states
+  title: The scanner's steps
+  page: scanner
+  caption: "`ScannerCubit` states · restaurant + one-category shops skip to review"
+  sources:
+    - {repo: app, file: .agents/references/SCANNER_AI_CONTEXT.md}
+  checked: 2026-10-17
+
+# Money flows
+- id: balances
+  title: How balances stay right
+  page: money
+  areas: [ledger]
+  caption: |
+    - server: triggers keep balance columns
+    - phone: no balance columns · derived from synced rows
+  sources:
+    - {repo: supabase, file: CLAUDE.md}
+    - {repo: app, file: .agents/references/ANALYTICS_AI_CONTEXT.md}
+  checked: 2026-10-17
+- id: recurring
+  title: How a rule becomes bookings
+  page: money
+  areas: [recurring]
+  caption: |
+    - client never generates · except a no-account book, same generator
+    - future dates = projection only
+  sources:
+    - {repo: app, file: .agents/references/RECURRING_BOOKINGS_AI_CONTEXT.md}
+    - {repo: supabase, file: CLAUDE.md}
+  checked: 2026-10-17
+- id: forecast-ladder
+  title: The forecast's attribution ladder
+  page: money
+  areas: [forecast]
+  caption: |
+    - a derivation, never a booking
+    - higher rungs dated + specific · lower ones fill the rest
+  sources:
+    - {repo: app, file: .agents/references/FORECAST_AI_CONTEXT.md}
+  checked: 2026-10-17
+
+# Backup & data
+- id: restore-routes
+  title: Where a restore goes
+  page: data
+  areas: [data]
+  caption: never merges · new book · book it came from · or replaces a phone book
+  sources:
+    - {repo: app, file: .agents/references/BACKUP_RESTORE_AI_CONTEXT.md}
+  checked: 2026-10-17
+
+# Web
+- id: web-arch
+  title: How the web dashboard works
+  page: web
+  areas: [home]
+  caption: client pages over React Query · no server-side fetching · no book copy
+  sources:
+    - {repo: web, file: CLAUDE.md}
+  checked: 2026-10-17
+- id: web-sign-in
+  title: Signing a computer in with the phone
+  page: web
+  areas: [privacy]
+  caption: |
+    - computer gets its own session
+    - QR address not an app link · only the app's scanner approves
+  sources:
+    - {repo: supabase, file: CLAUDE.md}
+    - {repo: web, file: .agents/references/AUTH_PROFILE_WEB_AI_CONTEXT.md}
+  checked: 2026-10-18
+
+# Investments
+- id: price-pipeline
+  title: Where prices come from
+  page: investments
+  areas: [investments]
+  caption: |
+    - prod: ECB fetches, not serving · gold-api.com serves metals
+    - CoinGecko + metals.dev until replaced · open steps = investments tasks
+  sources:
+    - {repo: supabase, file: INVESTMENT_PRICES_AI_CONTEXT.md}
+  checked: 2026-10-17
+
+# Notifications
+- id: notifications
+  title: How reminders are armed
+  page: notifications
+  areas: [notifications]
+  caption: |
+    - all local · no push server
+    - scheduled channels cancelled + rebuilt, never diffed
+  sources:
+    - {repo: app, file: .agents/references/NOTIFICATIONS_AI_CONTEXT.md}
+  checked: 2026-10-17

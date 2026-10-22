@@ -1,0 +1,9 @@
+flowchart LR
+  sw(["You switch book"]) --> reads["Screens show the new book<br/>every book stays on the phone"]
+  sw --> rt["Realtime follows the new book"]
+  sw --> out{"Unsent writes of the old book"}
+  out -- "your Cloud book" --> push["still sent"]
+  out -- "otherwise" --> held["held until it is open again"]
+  sw --> pull["Pull of the new book<br/>with its own bookmarks"]
+  pull -- "offline" --> later["waits for back online"]
+  sw --> old["A pull for the old book<br/>stops after its page"]

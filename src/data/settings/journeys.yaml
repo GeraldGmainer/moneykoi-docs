@@ -35,8 +35,15 @@ items:
   - id: J-SET-02
     group: Support
     title: Sends feedback
-    from: Settings → Support → Feedback
+    from: Drawer or Settings → *Feedback*
     steps:
-      - kind · message · consent
+      - kind · message
+      - "account: *Attach email address*"
+      - "no account: optional reply email"
     result: row in the admin inbox
-    checks: [C-SET-002]
+    note: No account works since 2026-10-21 · needs the server migration (T-SET-01)
+    tests:
+      - file: test/features/feedback/bloc/feedback_cubit_test.dart
+        name: send passes the draft, the locale and the account to the use case and flags isSent
+    checks: [C-SET-002, C-SET-010, C-SET-011]
+    related: [R-SET-30, R-SET-33]

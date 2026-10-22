@@ -4,36 +4,36 @@ items:
   # App lock
   - id: E-PRIV-01
     group: App lock
-    title: The biometric prompt backgrounds the app
-    when: The OS face or fingerprint sheet opens over the app.
-    then: The lock ignores that trip away — otherwise it would re-lock and re-prompt in a loop.
+    title: Biometric prompt backgrounds the app
+    when: OS face/fingerprint sheet opens over the app
+    then: ignored · else it re-locks in a loop
     risk: high
     tests:
       - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
         name: ignores lifecycle events while a biometric prompt is up
   - id: E-PRIV-02
     group: App lock
-    title: Only one method fails open
-    when: PIN and biometrics are on, and the fingerprint is removed from the phone.
-    then: Biometrics turn off, the PIN keeps the app locked.
+    title: One method fails open
+    when: PIN + biometrics on · fingerprint removed
+    then: biometrics off · PIN keeps it locked
     risk: medium
     tests:
       - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
         name: keeps the lock on when only one of the two methods fails open
   - id: E-PRIV-03
     group: App lock
-    title: A cancelled prompt with biometrics only
-    when: The user cancels the biometric prompt and there is no PIN.
-    then: The lock screen shows an *Unlock* button that asks again.
+    title: Prompt cancelled, biometrics only
+    when: prompt cancelled, no PIN
+    then: "*Unlock* button asks again"
     risk: low
     tests:
       - file: test/features/app_lock/ui/screens/lock_screen_test.dart
         name: the fingerprint key only shows when biometrics can be used, and retries them
   - id: E-PRIV-04
     group: App lock
-    title: Force-kill during the cooldown
-    when: The user kills the app to skip the 30 s.
-    then: The cooldown is still running on relaunch.
+    title: Kill during the cooldown
+    when: app killed to skip the 30 s
+    then: cooldown still running
     risk: medium
     tests:
       - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
@@ -43,41 +43,41 @@ items:
   - id: E-PRIV-10
     group: Hide amounts
     title: Handed over mid-peek
-    when: The user peeks, then backgrounds the app and hands the phone over.
-    then: The peek ended on leaving; everything is hidden again.
+    when: peek → background → hand over
+    then: peek ended · all hidden
     risk: medium
     tests:
       - file: test/features/amount_privacy/bloc/amount_privacy_cubit_test.dart
         name: ends when the app leaves the foreground
   - id: E-PRIV-11
     group: Hide amounts
-    title: The width gives the size away
-    when: A blurred balance next to a short one.
-    then: 8 blurred characters vs. 4 — the magnitude is visible. Accepted, to keep the layout still.
+    title: Width shows the size
+    when: blurred balance next to a short one
+    then: 8 vs 4 characters visible · accepted for a still layout
     status: by-design
     risk: low
   - id: E-PRIV-12
     group: Hide amounts
-    title: Always mode and row taps
-    when: In *Always*, the user taps a booking row on its amount.
-    then: The row opens — *Always* installs no tap handler on figures, so it never swallows a tap.
+    title: "*Always* and row taps"
+    when: "*Always* · tap a row on its amount"
+    then: row opens · no tap handler on figures
     risk: low
 
   # Usage statistics
   - id: E-PRIV-20
     group: Usage statistics
     title: Erase while offline
-    when: The user switches statistics off without a connection.
-    then: The install id waits and the erase is retried on each launch until it succeeds.
+    when: stats switched off without connection
+    then: erase retried each launch until done
     risk: medium
     tests:
       - file: test/features/usage_stats/use_cases/usage_consent_use_case_test.dart
         name: an erase that fails waits for the next launch
   - id: E-PRIV-21
     group: Usage statistics
-    title: The prompt never showed (fixed)
-    when: Before 2026-10-14 the booking count it used answered at most 1.
-    then: The count is real now; the prompt appears after 3 bookings.
+    title: Prompt never showed · fixed
+    when: "before 2026-10-14: count stuck at 1"
+    then: real count now · shows after 3 bookings
     status: fixed
     risk: low
     tests:
@@ -87,67 +87,75 @@ items:
   # Web sign-in
   - id: E-PRIV-30
     group: Web sign-in
-    title: A phishing page relays a real code
-    when: A fake site shows a real MoneyKoi QR it got from my.moneykoi.app.
-    then: The confirm step names the browser and warns "only if you opened this page on your own computer just now" — that is the user's only cue.
+    title: Phishing page relays a real code
+    when: fake site shows a real Money Koi QR
+    then: confirm names the browser + warns · user's only cue
     status: by-design
     risk: high
   - id: E-PRIV-31
     group: Web sign-in
-    title: Camera permission denied
-    when: The user denies the camera, then comes back to the scanner.
-    then: Never asked again on resume (that loops the dialog) — only re-read, so a grant in system settings works.
+    title: Camera denied
+    when: camera denied, back to the scanner
+    then: never re-asked on resume · only re-read
     risk: low
     tests:
       - file: test/features/web_sign_in/ui/qr_camera_view_test.dart
         name: a denied camera is never asked for again on resume, only re-read
   - id: E-PRIV-32
     group: Web sign-in
-    title: The code ran out
-    when: More than 3 minutes pass before *Sign in*.
-    then: "*Expired* with *Scan again*."
+    title: Code ran out
+    when: "> 3 min before *Sign in*"
+    then: "*Expired* + *Scan again*"
     risk: low
     tests:
       - file: test/features/web_sign_in/ui/web_sign_in_scan_page_test.dart
         name: an expired code offers to scan again
   - id: E-PRIV-33
     group: Web sign-in
-    title: An unused magic link is replaced
-    when: The user asked for a login email, then signed in by QR.
-    then: The QR sign-in replaces the emailed link. Accepted.
+    title: Unused magic link replaced
+    when: login email asked, then QR sign-in
+    then: QR replaces the email link · accepted
     status: by-design
     risk: low
+  - id: E-PRIV-34
+    group: Web sign-in
+    title: Old app, new address
+    when: app before the moneykoi.com release scans the QR on `my.moneykoi.com`
+    then: read as a foreign code · update the app
+    status: known-issue
+    risk: medium
+    related: [T-PLAT-02]
 
   # Web
   - id: E-PRIV-40
     group: Web security issues
-    title: Open redirect after sign-in (web)
-    when: '`/login?next=/\evil.example`'
-    then: Passes the guard and leaves the site after sign-in. Pinned as a failing test (review-2026-09 #5).
+    title: Web open redirect
+    when: "`/login?next=/\\evil.example`"
+    then: leaves the site after sign-in · failing test pinned (review 5)
     status: known-issue
     risk: high
     related: [T-PRIV-05]
   - id: E-PRIV-41
     group: Web security issues
-    title: Any URL as an avatar (web)
-    when: A user writes any URL to `profile.avatar_url`.
-    then: Co-members' browsers load it (review #21).
+    title: "Web: any URL as avatar"
+    when: any URL written to `profile.avatar_url`
+    then: co-members' browsers load it (review 21)
     status: known-issue
     risk: medium
     related: [T-PRIV-05]
   - id: E-PRIV-42
     group: Web security issues
-    title: Dev login credentials in the web code
-    when: '`DEV_USERS` is committed in `login/page.tsx`.'
-    then: Open (review #20).
+    title: Web dev logins in code
+    when: "`DEV_USERS` committed in `login/page.tsx`"
+    then: open (review 20)
     status: known-issue
     risk: medium
     related: [T-PRIV-05]
   - id: E-PRIV-43
     group: Web security issues
     title: CSV formula injection
-    when: A description or name starts with `=`, `+`, `-`, `@`, tab or CR, and a member exports to CSV.
-    then: The cell is written raw and a spreadsheet may run it. Open in the web and the app's encoder (review #10).
+    when: text starts with `=` `+` `-` `@`, tab or CR · exported
+    then: written raw → a spreadsheet may run it · open in web + app (review 10)
     status: known-issue
     risk: high
     related: [T-DATA-03]
