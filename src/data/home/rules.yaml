@@ -138,6 +138,7 @@ items:
     text: |
       - sidebar (drawer on phones) · ⌘K: pages, actions, records
       - sidebar footer: *Add Booking* full width · *Quick entry* · *Enter Receipt*
+      - window ≤ 900px tall: the three in one row · *Quick entry* and *Enter Receipt* as icons, label and key in the tooltip
       - keys **N** · **Q** · **R**, shown on the buttons and in ⌘K · not while typing
       - long press mobile + → quick entry
       - dark only · no offline
