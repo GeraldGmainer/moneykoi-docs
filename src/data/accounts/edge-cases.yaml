@@ -188,9 +188,13 @@ items:
     group: On the web
     title: Profile without a name
     when: user without display name opens `/profile`
-    then: '"Loading..." forever · save writes empty name · open (review 26)'
-    status: known-issue
+    then: the card shows the email · the editor refuses an empty name (review 26, fixed 2026-10-23)
+    status: fixed
     risk: low
+    tests:
+      - file: src/app/(main)/profile/page.test.tsx
+        repo: web
+        name: shows the email in place of a missing name, and refuses to save an empty one
   - id: E-ACC-52
     group: On the web
     title: Any URL as an avatar

@@ -106,6 +106,8 @@ groups:
         text: Web logout → phone stays signed in
       - id: C-ACC-072
         text: Set password on web → works in app · delete account on web → app shows Welcome next start
+      - id: C-ACC-073
+        text: Profile *Edit* → new email → *Save changes* → *Confirmation pending for …* · mail(s) arrive · follow → header + Profile show the new address, pending line gone · app signs in with it
 
   - id: small
     title: Small phone (Small_Phone AVD, 360×640 dp)

@@ -376,3 +376,22 @@ items:
       - always account + connection
       - local book · claim · pause · outbox → phone only
     source: web 01_OVERVIEW, catalog
+  - id: R-ACC-65
+    group: On the web
+    title: "Web profile: edit in a side panel"
+    text: |
+      - name and email shown as text · *Edit* → panel from the right · *Cancel* / *Save changes* (off until something changed)
+      - leaving with an edit pending (X, Esc, outside, *Cancel*) → *Discard your changes?* · *Keep editing* / *Discard*
+      - new email → confirmation mail · applies once confirmed · *Confirmation pending for …* until then · app has no email change
+      - empty name refused · language picker on the page too (same row as Settings, shared with the app)
+    source: AUTH_PROFILE_WEB §1, §4.6, §4.9, §5
+    tests:
+      - file: src/app/(main)/profile/components/profile-edit-sheet.test.tsx
+        repo: web
+        name: asks before closing with an edit pending, and Keep editing returns to it
+      - file: src/app/(main)/profile/page.test.tsx
+        repo: web
+        name: asks GoTrue to move the account to a new email and shows it as pending
+      - file: src/app/(main)/profile/page.test.tsx
+        repo: web
+        name: changes the interface language right here and saves it in my settings row
