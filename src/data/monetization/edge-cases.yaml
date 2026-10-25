@@ -225,7 +225,7 @@ items:
     risk: high
   - id: E-MON-37
     group: Accounts & claim
-    title: Free accounts before Jan 17
+    title: Free accounts before Nov 8
     when: you need a free account to test
     then: |
       - every new account = early adopter with Cloud

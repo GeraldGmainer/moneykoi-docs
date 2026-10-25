@@ -1,42 +1,52 @@
 items:
   - id: J-FC-01
     group: Reading
-    title: How much can I spend until payday?
-    from: Home's forecast card or the Forecast page (Pro)
+    title: How much until payday?
+    from: Home card or Forecast page · Pro
     steps:
-      - safe to spend, the committed bar, the line with its band
-      - the month strip → a month page
-    result: the money left and the lowest point ahead
+      - safe to spend · committed bar · line + band
+      - month strip → month page
+    result: money left + lowest point
     checks: [C-FC-010]
   - id: J-FC-02
     group: Planning
     title: Pencils in a payment
     from: Forecast → a day → *Plan*
     steps:
-      - amount, category, date (optionally repeating)
-    result: the line dips on that day; nothing is booked
+      - amount, category, date · repeat?
+    result: line dips · nothing booked
     checks: [C-FC-011]
   - id: J-FC-03
     group: Planning
     title: Skips one bill
     from: a projected rule occurrence → *Skip*
     steps:
-      - '*Skip* (Undo on the page)'
-    result: that day without the bill; the rule still books every other date
+      - "*Skip* · Undo on the page"
+    result: that day without the bill · rule books the rest
     checks: [C-FC-012]
   - id: J-FC-04
     group: Planning
     title: Can I afford this?
     from: Forecast → *Can I afford this*
     steps:
-      - an amount and a date
-    result: the line with it, and the lowest point after
+      - amount + date
+    result: line with it + lowest point after
   - id: J-FC-05
     group: Review
     title: Settles a planned payment
     from: the review card on the page
     steps:
-      - '*Booked early?* → confirm the match, or *Not this booking*'
-      - '*Overdue* → *Book it now* / *It didn''t happen*'
-    result: the planned payment stops counting; Undo offered
+      - "*Booked early?* → confirm or *Not this booking*"
+      - "*Overdue* → *Book it now* / *It didn't happen*"
+    result: stops counting · Undo
     checks: [C-FC-013]
+  - id: J-FC-06
+    group: Reading
+    title: Reads how a number is made
+    from: Forecast → *What's in this forecast*
+    steps:
+      - coverage · *Last 3 months* was vs will be
+      - a row → calculation sheet · parts = row
+      - balance card on the page → safe to spend sheet
+    result: every figure explained on the phone
+    checks: [C-FC-017]

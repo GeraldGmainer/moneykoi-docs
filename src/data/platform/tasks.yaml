@@ -1,4 +1,5 @@
-# Source: Gerald's Trello board (1.19.0), 2026-10-17; _RELEASE_SCHEDULE.md §7 (the site); D-PRIV-7.
+# Source: Gerald's Trello board (1.19.0), 2026-10-17; _RELEASE_SCHEDULE.md §7 (the site); D-PRIV-7;
+# ASO_STORE_LISTING_PLAN.md §5.4, §10, §15a (the Play listing), 2026-10-24.
 items:
   - id: T-PLAT-01
     title: Rewrite the marketing site
@@ -29,6 +30,27 @@ items:
       cd moneykoi-supabase
       supabase secrets list --project-ref dpmemqshhdnanywcvsod   # dev · prod: cwheprirreyscppmbybp
       supabase secrets set SMTP_FROM_NAME="Money Koi" --project-ref dpmemqshhdnanywcvsod
+  - id: T-PLAT-05
+    title: Store-review sign-in
+    owner: gerald
+    detail: |
+      - Play Console → Monitor and improve → Policy and programs → App content → App access → *Any other information* → text below · email + password fields stay
+      - *full access incl. paid content* ticked → the review account needs a Cloud grant on prod · else untick
+      - the password switch (E-ACC-70) ships with the next build · builds already out still send links
+      - pre-launch report crawler can't read instructions · only the build fix stops it, or turn the report off
+      - optional, `moneykoi.app` DNS: null MX `MX 0 .` → mail fails at once, no 48 h retry notices · or forwarding (Cloudflare Email Routing, ImprovMX) to read it
+    command: |
+      Most of the app needs no account: tap "Get started" on the first screen.
+
+      To sign in with the review account:
+      1. On the first screen, tap "I already use Money Koi"
+      2. Tap "Sign in with Email"
+      3. Tap the "Password" tab at the top
+      4. Enter the email and password above, then tap "Login"
+
+      Do not tap "Send Email Link". This address has no inbox, so no link or code can arrive.
+
+      Money Koi is a manual budget book. No bank accounts are linked.
   - id: T-PLAT-04
     title: Rewrite *MoneyKoi* in old release notes
     owner: ai
@@ -36,3 +58,53 @@ items:
     detail: Only if D-PLAT-2 says yes · Gerald pushes the migration after
     prompt: |
       New migration in moneykoi-supabase (never edit an applied one): in public.changelog, replace "MoneyKoi" with "Money Koi" inside the notes JSONB of every row and language (the 16 occurrences come from 20261015140000_changelog_app_and_web.sql, which rebuilt the table); URLs and file names stay; the rows must still pass internal.changelog_notes_valid. Hand Gerald the push command.
+  - id: T-PLAT-06
+    title: Ship the Supabase publishable key before the launch build
+    owner: gerald
+    detail: |
+      - every build up to 1.17.2 still runs on the legacy `anon` key · `.env.dev` / `.env.prod` have no `SUPABASE_PUBLISHABLE_KEY`
+      - the legacy keys stop working at JWT Phase D (Dec 20 at the earliest · Supabase retires them by the end of 2026) · a build without the new key then fails at launch until updated
+      - in `.env.prod` before 1.19.0 is built → every launch install is safe · later → launch installs break at Phase D too
+      - the app no longer falls back to `SUPABASE_ANON_KEY` (removed 2026-10-24) · a build without the new key reaches no server at all: no sign-in, no sync
+      - order and the rest of the deploy (secrets, Vault, cron, web + admin env): `JWT_SIGNING_KEYS_PLAN.md` §3.6, dev first, prod ≥ 48 h later
+      - check after: Sentry tag `supabase_key` reads `publishable` on the new build
+    command: |
+      # Dashboard → Project Settings → API Keys → create the publishable + secret key (dev, then prod)
+      # moneykoi-app/.env.dev and .env.prod (SUPABASE_ANON_KEY is no longer read; delete the line):
+      SUPABASE_PUBLISHABLE_KEY=sb_publishable_…
+  - id: T-PLAT-07
+    title: Put the Play listing live
+    owner: gerald
+    detail: |
+      - text, feature graphic + 8 screenshots × de/en/ja are in `android/fastlane/metadata/android/` · read them first
+      - before Nov 1: fresh prod sign-up gets Cloud · else cut the Cloud paragraph + `family` frame
+      - ⚖️ read: *stored only on the phone* · *never sold* · *servers in the EU*
+      - `ja` names no scanner: yen books have none (R-SCN-12) · its set opens on Home, quick booking second · Home still shows the scan tile (D-SCN-03)
+      - D-PLAT-3 clears the upload check · Data safety + deletion URL first (T-PRIV-03, site S-04)
+      - then `fastlane production` ships listing + build · from then on the repo **is** the listing
+      - steps in order: `ASO_STORE_LISTING_PLAN.md` §15a
+    command: |
+      cd android
+      fastlane supply init --metadata_path /tmp/play-listing \
+        --json_key /Users/gerald/Projects/moneykoi/moneykoi-app/android/fastlane/play-store-credentials.json
+      ls /tmp/play-listing                                          # the console's languages
+      diff -r /tmp/play-listing/de-DE fastlane/metadata/android/de-DE  # old vs new
+      fastlane metadata                                             # the listing alone, no build
+  - id: T-PLAT-08
+    title: Name the plans in the listing on Nov 8
+    owner: ai
+    detail: |
+      - with the 1.20.0 release · paywall live
+      - one paragraph per language above *What Money Koi does not do*
+      - text ready: `ASO_STORE_LISTING_PLAN.md` §5.4
+    prompt: |
+      Insert the three "Free, Pro and Cloud" paragraphs from ASO_STORE_LISTING_PLAN.md §5.4 into android/fastlane/metadata/android/{de-DE,en-US,ja-JP}/full_description.txt, each above the "Was Money Koi nicht macht" / "What Money Koi does not do" / "Money Koi がしないこと" heading, separated by a blank line. Re-read the plan's §1.2 first: if a plan's content changed, fix the paragraph. Check every file stays ≤ 4000 characters, mark §5.4 done in the plan, hand Gerald the git block.
+  - id: T-PLAT-09
+    title: Press round after the listing
+    owner: gerald
+    waitsFor: [T-PLAT-07]
+    detail: |
+      - one page per outlet: `store/press/kit.md` · pitches + facts ready
+      - Kuketz only after an Exodus scan + the lawyer's read
+      - ifun.de · appgefahren wait for iOS
+

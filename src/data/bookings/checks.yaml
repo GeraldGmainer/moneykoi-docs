@@ -13,6 +13,10 @@ groups:
         text: Quick booking widget → keyboard comes up
       - id: C-BKG-012
         text: "`#italien` created on Save · `#Italien` reuses it · trip mode → new bookings only"
+      - id: C-BKG-013
+        text: "*New Income* → picker → an expense favorite (also a recent) → form switches to *Expense* with it · saved as an expense"
+      - id: C-BKG-031
+        text: "Web: double-click *Save* · ⌘↵ twice · Enter in the note → one booking · receipt with a 0 item → refused · receipt save fails → retry books each item once"
   - id: fixing
     title: Fixing
     items:

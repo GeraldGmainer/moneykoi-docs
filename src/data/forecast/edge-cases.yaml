@@ -1,51 +1,94 @@
 items:
   - id: E-FC-10
     group: Line
-    title: A rule occurrence dated today
-    when: The server already booked today's occurrence.
-    then: Projected only if no booking exists for it — never counted twice.
+    title: Rule occurrence dated today
+    when: server already booked today's occurrence
+    then: projected only without a booking · never twice
     risk: high
     tests:
       - file: test/features/forecast/forecast_engine_test.dart
         name: a rule occurrence dated today is projected unless a booking already exists for it
   - id: E-FC-11
     group: Line
-    title: A whole-book budget zeroes the estimate
-    when: An active whole-book budget exists.
-    then: The everyday estimate is zero by construction; the sheet says the budget covers it instead of "0 a day".
+    title: Whole-book budget zeroes the estimate
+    when: active whole-book budget
+    then: estimate 0 by design · sheet says the budget covers it
     status: by-design
     risk: low
   - id: E-FC-12
     group: Line
-    title: Home total vs. the forecast anchor
-    when: Bookings are dated in the future.
-    then: The Home total contains them, the forecast starts from today and adds them on their days — the sheet states the difference; do not "fix" the Home total.
+    title: Home total ≠ forecast start
+    when: future-dated bookings exist
+    then: |
+      - Home total includes them · forecast adds them on their days
+      - sheet explains · **don't** "fix" Home
     status: by-design
     risk: medium
+  - id: E-FC-14
+    group: Line
+    title: Bill inside a sub-budget stacked on the whole-book cap
+    when: whole-book budget + sub-budget + rule inside the sub-budget
+    then: |
+      - fixed 2026-10-22 · next month = cap, not cap + bill
+      - was ≈ 1 286 a month too low on Gerald's book → −781 instead of +500
+      - current month was already right · Goals tab *spent* counts every budget
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a bill inside a sub-budget consumes the whole-book cap too
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: 'three nested budgets with a bill in the innermost: every enclosing cap absorbs it once'
+  - id: E-FC-15
+    group: Web
+    title: Web still stacks the bill on the whole-book cap
+    when: same book opened on the web
+    then: web line lower than the app's from next month on · port pending
+    status: known-issue
+    risk: high
+    related: [E-FC-14]
+  - id: E-FC-16
+    group: Web
+    title: Web reads the old recurring toggle only
+    when: app switched bills off, income on
+    then: |
+      - web shows the one toggle **on** · counts bills too
+      - no income estimate, no monthly figures, no pay rule, no counted accounts on the web
+      - port pending (plan phase 4)
+    status: known-issue
+    risk: medium
+    related: [E-FC-15]
+  - id: E-FC-17
+    group: Line
+    title: Restore keeps the five new settings at defaults
+    when: a backup restored on the server
+    then: income/bills toggles, estimate mode, monthly figures → defaults · `restore_book_apply` not redefined
+    status: known-issue
+    risk: low
   - id: E-FC-13
     group: Web
-    title: A member's settings change on the web
-    when: A member with an existing setting row changes forecast settings on the web.
-    then: Nothing saves and no message shows; the value snaps back. Unreported until this doc.
+    title: Member changes settings on web
+    when: member with a setting row edits on the web
+    then: nothing saves, no message, value snaps back · unreported
     status: known-issue
     risk: low
   - id: E-FC-01
     group: Forecast
-    title: Day feed and month card disagree with an income goal
-    when: An active monthly income goal exists.
-    then: The day feed shows a net, the month card outflow only — they can disagree (release-note risk).
+    title: Day feed vs month card
+    when: active monthly income goal
+    then: feed shows net, card outflow only → may disagree
     status: known-issue
     risk: medium
   - id: E-FC-02
     group: Forecast
-    title: An exact-zero net is tinted green
-    when: A month's net change is exactly 0.
-    then: Shown green (release-note "minor"). The money-sign rule says an exact zero stays bare.
-    status: known-issue
+    title: Exact-zero net tinted green
+    when: month net exactly 0
+    then: fixed 2026-10-22 · zero bare · negative plain · positive green · strip and month page agree
+    status: fixed
     risk: low
   - id: E-FC-03
     group: Forecast
     title: Last day of a month
-    when: The per-day figure is read on the month's last day.
-    then: All four places still agree (C-FC-003).
+    when: per-day read on the last day
+    then: all four places agree (C-FC-003)
     risk: medium

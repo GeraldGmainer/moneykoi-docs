@@ -1,4 +1,5 @@
-# Source: moneykoi-app CLAUDE.md (UX copy · product name), 2026-10-21.
+# Source: moneykoi-app CLAUDE.md (UX copy · product name), 2026-10-21;
+# ASO_STORE_LISTING_PLAN.md §15 (D6, D9), 2026-10-24.
 items:
   - id: D-PLAT-1
     question: Where does the name read *Money Koi*?
@@ -16,3 +17,19 @@ items:
       - users read it in *Changelog* · app + web
       - yes → new migration (T-PLAT-04) · no → old notes keep it
     related: [R-PLAT-25, T-PLAT-04]
+  - id: D-PLAT-3
+    question: Drop *en-GB* from the Play listing?
+    status: open
+    answer: |
+      - repo has only its old release notes · no listing text
+      - the upload check stays red while the folder exists → no listing upload
+      - recommended: drop in console + repo · `en-US` serves every English store
+    related: [T-PLAT-07]
+  - id: D-PLAT-4
+    question: Early-adopter offer in the Play listing?
+    status: open
+    answer: |
+      - *account before 8 Nov → Cloud for life* · true one week only
+      - ⚖️ · must leave again with the Nov 8 upload
+      - recommended: no · the app's *Get Cloud free* row + the site carry it
+    related: [T-PLAT-07, T-PLAT-08]

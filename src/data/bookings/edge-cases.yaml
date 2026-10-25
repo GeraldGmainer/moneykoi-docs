@@ -60,10 +60,17 @@ items:
   - id: E-BKG-20
     group: Web
     title: Web double submit
-    when: double-click Save on `/add` or `/add-receipt`
-    then: books twice · failing test pinned
-    status: known-issue
+    when: double-click Save, ⌘↵ or Enter again on `/add` or `/add-receipt` while saving
+    then: books once · Save greyed until the insert answers (fixed 2026-10-24)
+    status: fixed
     risk: high
+    tests:
+      - file: src/app/(main)/add/page.test.tsx
+        repo: web
+        name: saves one booking when the save button is clicked again while the first save is in flight
+      - file: src/app/(main)/add-receipt/page.test.tsx
+        repo: web
+        name: books the receipt once when save is clicked again while the first save is in flight
   - id: E-BKG-21
     group: Web
     title: Web grouped amounts
@@ -84,9 +91,19 @@ items:
     group: Web
     title: Web receipt split
     when: an item fails while saving `/add-receipt`
-    then: retry re-books others · ≤ 0 items booked · no receipt row · failing test
+    then: |
+      - all items go in one insert · a failure books none, a retry books each once (fixed 2026-10-24)
+      - an item of 0 or below is refused (fixed 2026-10-24)
+      - still no receipt row · open
     status: known-issue
     risk: medium
+    tests:
+      - file: src/app/(main)/add-receipt/page.test.tsx
+        repo: web
+        name: "does not book an item twice when a save is retried after the insert failed: every line goes in one all-or-none insert"
+      - file: src/app/(main)/add-receipt/page.test.tsx
+        repo: web
+        name: does not book a negative item, even when the lines still add up to the total
   - id: E-BKG-24
     group: Web
     title: Corrections in the web ledger
@@ -94,3 +111,13 @@ items:
     then: on balance check + dashboard, not `/bookings` · by design for now
     status: by-design
     risk: low
+  - id: E-BKG-25
+    group: Booking form
+    title: Favorite of the other type
+    when: "*New Income* → picker → an expense favorite or recent"
+    then: form switches to *Expense* with that category · before 2026-10-23 it saved an expense under *Income*
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/booking/ui/modal/category_picker_modal_interaction_test.dart
+        name: a pick of the other type switches the form type before reporting the category

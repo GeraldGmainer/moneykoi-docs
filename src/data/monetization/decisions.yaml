@@ -17,12 +17,25 @@ items:
     question: Price A/B or €24.99?
     status: open
     answer: €24.99 until download-to-paid is known
-  - id: D4
-    question: Launch window end date
-    status: open
-    answer: 90 days after the paywall release · stores + constant same day (T-MON-21)
 
   # Decided
+  - id: D13
+    question: Paywall day
+    status: decided
+    date: 2026-10-23
+    answer: |
+      - **Nov 8 2026** · 1.20.0 · Android · iOS sells from its first release
+      - Cloud for life ends the same instant (E-ADOPT) · launch price from day one (D4)
+      - Gerald: "on nov 8, i want to earn money"
+    related: [T-MON-08, T-MON-24]
+  - id: D4
+    question: Launch window end date
+    status: decided
+    date: 2026-10-23
+    answer: |
+      - last day **Jan 16 2027** · Nov 8 → Jan 16, 70 days · regular prices from Jan 17
+      - was: 90 days after the paywall release
+      - stores + offering metadata on Nov 8 (T-MON-09, T-MON-21)
   - id: D5
     question: When does the claim open to all?
     status: decided
@@ -116,11 +129,12 @@ items:
   - id: E-ADOPT
     question: Early adopters
     status: decided
-    date: 2026-10-07
+    date: 2026-10-23
     answer: |
-      - Cloud for life · **account created** before Jan 17
+      - Cloud for life · **account created** before **Nov 8 2026** 00:00 Vienna, the paywall (D13)
+      - was Jan 17 (decided 2026-10-07) · code moved 2026-10-24 (T-MON-24) · on prod before Nov 8 (T-MON-01)
       - not install date · server can't see installs
-      - copy: "create an account before Jan 17" · Terms define "for life"
+      - copy: "create an account before 8 November" · Terms define "for life"
 
   # Dropped — do not re-plan
   - id: X1

@@ -46,7 +46,7 @@ groups:
       - id: C-ACC-016
         text: "*Back up this book*: koi top, buttons bottom · airplane + Google → error, page stays"
       - id: C-ACC-017
-        text: "Drawer before Jan 17: *Get Free Cloud* row above Settings"
+        text: "Drawer before Nov 8: *Get Free Cloud* row above Settings"
 
   - id: per-book
     title: Cloud per book
@@ -108,6 +108,8 @@ groups:
         text: Set password on web → works in app · delete account on web → app shows Welcome next start
       - id: C-ACC-073
         text: Profile *Edit* → new email → *Save changes* → *Confirmation pending for …* · mail(s) arrive · follow → header + Profile show the new address, pending line gone · app signs in with it
+      - id: C-ACC-074
+        text: "After the cutover: fresh Google account on the web → *Get the app*, no setup · scan the QR → Play listing · app: *Get started* → get Cloud → sign in with that account → book uploads · web *Check again* → the book opens, no second book"
 
   - id: small
     title: Small phone (Small_Phone AVD, 360×640 dp)

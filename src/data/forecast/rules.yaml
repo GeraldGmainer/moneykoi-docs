@@ -30,13 +30,16 @@ items:
       4. what budgets leave, per day
       5. everyday estimate for the unbudgeted rest
 
-      A rule inside a budget uses up the cap, doesn't stack.
-    source: FORECAST §5
+      A rule inside a budget uses up **every** cap around it, doesn't stack.
+      Whole book 3600 + Housing 1600 + bill 117 → month = 3600, not 3717.
+    source: FORECAST §5, §5.2
     tests:
       - file: test/features/forecast/forecast_engine_test.dart
         name: a materialised future booking and its rule are counted once
       - file: test/features/forecast/forecast_engine_test.dart
         name: a recurring rule inside a budget consumes the cap instead of stacking on it
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a bill inside a sub-budget consumes the whole-book cap too
       - file: test/features/forecast/forecast_engine_test.dart
         name: a budgeted category contributes nothing to the baseline residual
   - id: R-FC-03
@@ -67,6 +70,56 @@ items:
     tests:
       - file: test/features/forecast/forecast_engine_test.dart
         name: a recurring rule that already books the installment wins; the loan is not charged twice
+  - id: R-FC-14
+    group: The line
+    title: Income and bills switch separately
+    text: |
+      - *Recurring income* · *Recurring bills* · two rows, two toggles
+      - bills off + whole-book budget → month total unchanged · cap spread in full
+      - a bill no budget covers leaves the line · the row says how many
+    source: FORECAST §5.0, plan D1–D2
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: 'switch separately: bills off keeps the salary, income off keeps the rent'
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: 'bills off under a whole-book budget: the cap is spread in full'
+  - id: R-FC-15
+    group: The line
+    title: Income estimate
+    text: |
+      - median monthly income **no rule** booked · last months · spread per day
+      - *From history* · *A monthly figure* · *Off* · default from history
+      - book without rules → line no longer only falls
+    source: FORECAST §5.5, plan D3
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: spread from tomorrow
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: leaves out income a rule booked
+  - id: R-FC-16
+    group: The line
+    title: Monthly figures by hand
+    text: |
+      - *Spent per month* · *Received per month*
+      - ÷ the days of each month · February ≠ March · month ends hold
+      - an old daily figure stays until a monthly one is typed
+    source: FORECAST §4, plan D4
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: divides by the days of each month and wins over an old daily figure
+  - id: R-FC-17
+    group: The line
+    title: Accounts that count
+    text: |
+      - settings → one switch per account
+      - off → not in the balance · not in safe to spend · its rules, plans, bookings leave the line
+      - transfer into an excluded account = money leaving
+    source: FORECAST §5.0, §7, plan D11
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a rule, a booking and a planned item on an excluded account leave the line
+      - file: test/features/forecast/use_cases/get_forecast_use_case_test.dart
+        name: an excluded account is left out of the anchor
   - id: R-FC-13
     group: The line
     title: Horizon follows your history
@@ -80,10 +133,13 @@ items:
     title: Safe to spend
     text: |
       - today's balance − due until payday or month end − everyday − buffer
-      - the hero says which end
+      - payday = next occurrence of the **largest** income rule · not the first income
+      - the hero says which end · tap the balance card → the calculation
       - negative → red shortfall, never 0
-    source: FORECAST §6
+    source: FORECAST §6, plan D8
     tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: safe to spend ends at the next occurrence of the largest income rule
       - file: test/features/forecast/domain/forecast_entities_test.dart
         name: safe to spend clamps the display amount and flags a shortfall
   - id: R-FC-21
@@ -91,6 +147,33 @@ items:
     title: Lowest point never smoothed
     text: low point, first day < 0, first day < buffer → from the due-date line, even with *spread evenly*
     source: FORECAST §6
+  - id: R-FC-23
+    group: The numbers
+    title: Trend, low, coverage
+    text: |
+      - hero: *≈ +X a month* under the closing · average of complete months
+      - month tile: *Low X · date* when below the closing
+      - *Coverage %* replaces *Forecast quality* · share from rules, budgets, plans
+      - accuracy line when a snapshot ≥ 14 days old predicted today
+    source: FORECAST §6, §9, plan D6, D9, D10
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: the monthly net averages the complete months
+      - file: test/features/forecast/use_cases/get_forecast_use_case_test.dart
+        name: the accuracy line reads the oldest snapshot inside the window
+  - id: R-FC-24
+    group: The numbers
+    title: Every row shows its calculation
+    text: |
+      - *What's in this forecast* is a page · each row opens a sheet
+      - parts add up to the row **to the cent**
+      - *Last n months*: was · will be — income, spending, net
+    source: FORECAST §9, plan D5, D7
+    tests:
+      - file: test/features/forecast/ui/calculation_specs_test.dart
+        name: every summing sheet adds up to its row
+      - file: test/features/forecast/ui/forecast_sources_page_test.dart
+        name: a row opens its calculation sheet, whose parts meet the row figure
   - id: R-FC-04
     group: The numbers
     title: One "per day" figure
@@ -141,11 +224,11 @@ items:
       - Home card · only with recurring bookings or planned payments
       - Analytics card · Pro
       - drawer *Forecast*, after *Recurring* · always there
-      - Free: drawer row wears the lock → paywall at Forecast
+      - Free: dimmed in the drawer's Pro group → paywall at Forecast
     source: FORECAST §9, NAVIGATION §8
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart
-        name: 'Free: listed with a lock, and a tap opens the paywall at Forecast'
+        name: 'Free: listed dimmed in the Pro group, and a tap opens the paywall at Forecast'
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: 'Pro: no lock, and a tap opens the forecast without a Home card or Analytics'
   - id: R-FC-40

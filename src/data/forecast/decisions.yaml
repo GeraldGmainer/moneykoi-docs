@@ -1,9 +1,71 @@
 items:
   - id: D-FC-1
-    question: Setup coach, nudges, accuracy scorecard, per-account forecast
+    question: Setup coach, nudges, scorecard, per-account
     status: open
-    answer: Not built — parked in `plan_later/FORECAST_PLAN.md` (FORECAST §12). The accuracy data is already recorded daily.
+    answer: |
+      - not built · parked in `plan_later/FORECAST_PLAN.md`
+      - accuracy data already recorded daily
+  - id: D-FC-3
+    question: Recurring · one row or two?
+    status: decided
+    date: 2026-10-22
+    answer: "two rows, two toggles · *Recurring income* · *Recurring bills* · built"
+  - id: D-FC-4
+    question: Budget only · what does *bills off* do?
+    status: decided
+    date: 2026-10-22
+    answer: "no new mode · bills toggle off + whole-book budget · row names bills no budget covers · built"
+  - id: D-FC-5
+    question: No rules, no budgets · where does income come from?
+    status: decided
+    date: 2026-10-22
+    answer: "income estimate · median of the last months, spread per day · auto / manual / off · built"
+  - id: D-FC-6
+    question: Monthly figures by hand for a fresh book?
+    status: decided
+    date: 2026-10-22
+    answer: "*Spent per month* + *Received per month* · engine divides by the month's days · built"
+  - id: D-FC-7
+    question: History averages in the sheet?
+    status: decided
+    date: 2026-10-22
+    answer: "*Last n months* block · was vs will be · built"
+  - id: D-FC-8
+    question: Rename *Forecast quality* + show accuracy?
+    status: decided
+    date: 2026-10-22
+    answer: "*Coverage* + accuracy line from the daily snapshot · built"
+  - id: D-FC-9
+    question: Sources as a page · calculations as its sheets?
+    status: decided
+    date: 2026-10-22
+    answer: "page replaces the sheet · calculation sheet per row · toggles view-only · built"
+  - id: D-FC-10
+    question: Safe to spend · which income ends the window?
+    status: decided
+    date: 2026-10-22
+    answer: "next occurrence of the largest income rule · no setting · built"
+  - id: D-FC-11
+    question: Hero · show the per-month net?
+    status: decided
+    date: 2026-10-22
+    answer: "*≈ +X a month* under the closing · built"
+  - id: D-FC-12
+    question: Month tiles · show the low too?
+    status: decided
+    date: 2026-10-22
+    answer: "*Low X · date* as a second figure · built"
+  - id: D-FC-13
+    question: Which accounts count?
+    status: decided
+    date: 2026-10-22
+    answer: "settings row *Accounts that count* · built"
+  - id: D-FC-14
+    question: Horizon chips in one row?
+    status: decided
+    date: 2026-10-22
+    answer: "`3 · 6 · 12 · 24` + *Months* caption · built"
   - id: D-FC-2
     question: Match a booked payment automatically?
     status: decided
-    answer: No — suggest only; a false automatic match would drop a payment the user still counts on.
+    answer: No · suggest only · a wrong match drops a payment you count on

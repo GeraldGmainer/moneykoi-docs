@@ -383,8 +383,8 @@ items:
     text: |
       - Free → *Get Pro* in the Pro group, last in the drawer
       - Pro, only sync locked → *Get Cloud* row · Cloud or Cloud book → none
-      - Nov 1 → Jan 17: *Get Cloud free* row · Pro group without button
-      - simulator *Enforce plans* = after Jan 17 → no *Get Cloud free*
+      - until Nov 8: *Get Cloud free* row · Pro group without button
+      - simulator *Enforce plans* = from Nov 8 → no *Get Cloud free*
     source: §3b, §7, §9a · NAVIGATION §8
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart

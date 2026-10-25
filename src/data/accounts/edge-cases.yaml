@@ -124,7 +124,7 @@ items:
   - id: E-ACC-25
     group: Pause & renewal
     title: New sign-up without a grant
-    when: account created after Jan 17
+    when: account created from Nov 8 on
     then: |
       - paused right after onboarding
       - onboarding's pull still runs, else the book is server-only
@@ -177,8 +177,8 @@ items:
     group: On the web
     title: Open redirect after sign-in
     when: "`?next=/\\evil.example` in a sign-in link"
-    then: passes the guard → off-site · open, failing test pinned (review 5)
-    status: known-issue
+    then: dashboard · the path is parsed, not prefix-matched (review 5, fixed 2026-10-24)
+    status: fixed
     risk: high
     tests:
       - file: src/app/login/page.test.tsx
@@ -261,3 +261,21 @@ items:
     then: "*Willkommen zurück,* fills both lines · name cut off · open"
     status: known-issue
     risk: low
+  - id: E-ACC-70
+    group: Store review
+    title: Review account gets no mail
+    when: "`google-review@moneykoi.app` on *Sign in with Email* · typed, or the remembered address"
+    then: |
+      - form switches to *Password* · no link sent
+      - *Send Email Link* after switching back → back to *Password*, still no link
+      - before: every link bounced to the SMTP sender for 48 h
+      - list: `FeatureConstants.passwordOnlyEmails`
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/auth/ui/pages/email_signin_page_test.dart
+        name: typing it switches to the password form
+      - file: test/features/auth/ui/pages/email_signin_page_test.dart
+        name: never sends a link, even after switching back to the link form
+      - file: test/features/auth/ui/pages/email_signin_page_test.dart
+        name: as the remembered address it opens on the password form

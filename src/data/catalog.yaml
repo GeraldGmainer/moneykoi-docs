@@ -93,7 +93,7 @@
   web: partial
   webNote: auto-deposits linked on the phone only
   docs: budgets
-  note: milestones · what-if · round-ups
+  note: milestones · what-if · round-ups · date ↔ monthly amount · Christmas preset
 - id: loans
   name: Loans
   area: money
@@ -440,7 +440,7 @@
   area: app
   tier: free
   web: partial
-  webNote: no balances, no variability
+  webNote: no balances, no variability · only with a Cloud book, else *Get the app*
   docs: settings
   note: currency · starter accounts + categories
 - id: app-lock
@@ -528,7 +528,7 @@
   area: app
   tier: free
   status: planned
-  note: T2–T4 · T1 = the budget calculator
+  note: T3–T4 left · T1 = the budget calculator · T2 = the goal form's date ↔ monthly amount, built 2026-10-24
 - id: koi-pond
   name: Koi pond (gamification)
   area: app

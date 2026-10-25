@@ -18,6 +18,18 @@ items:
     tests:
       - file: test/features/demo/demo_use_cases_test.dart
         name: is cleared on Welcome, a finished demo is not
+  - id: E-DEMO-09
+    group: Starting
+    title: Back from onboarding
+    when: "*Get started* tapped, then back to Welcome"
+    then: |
+      - demo button gone · the phone holds a book now
+      - before: it stayed and failed with an unknown error (fixed 2026-10-24)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/auth/ui/pages/welcome_page_test.dart
+        name: "coming back from onboarding no longer offers the demo: the phone has a book now"
   - id: E-DEMO-03
     group: Starting
     title: Started on the 1st

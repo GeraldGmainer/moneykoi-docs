@@ -106,3 +106,27 @@ items:
     when: parent below its subs, or whole book below the plan
     then: shown before Save
     risk: low
+  - id: E-BUD-07
+    group: Savings-goal calculator
+    title: Done on an untouched keypad
+    when: "*Per month* opened, Done pressed without typing"
+    then: fixed · nothing changes · re-deriving from the rounded cents nudged the date a day
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: Done on the untouched keypad leaves the date alone
+  - id: E-BUD-08
+    group: Savings-goal calculator
+    title: Christmas preset on Dec 24–26
+    when: preset picked on the Eve or the two days after
+    then: next year's Eve · the site still counts this year until the 26th
+    status: by-design
+    risk: low
+  - id: E-BUD-09
+    group: Savings-goal calculator
+    title: A typed amount is not kept
+    when: goal saved from a typed *Per month*, then reopened
+    then: shows the figure read off the date · a cent or so off the typed one
+    status: by-design
+    risk: low

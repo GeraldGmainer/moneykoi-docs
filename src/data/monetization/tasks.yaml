@@ -12,11 +12,12 @@ items:
         - `20261013120000_cloud_tenants.sql`
         - `20261013140000_profile_setting.sql`
         - `20261013160000_public_price_read.sql`
+        - `20261023120000_early_adopter_cutover_nov_8.sql` · **prod before Nov 8 00:00 Vienna**, or new accounts in between keep Cloud for life (D13)
       - ⚠️ **prod + `profile_setting`**: older app builds fail to sync → push in the same hour as the app release, web + admin too
       - dev needs them before testing a dev build
     command: |
       cd moneykoi-supabase
-      for t in early_adopter_grant store_entitlement cloud_tenants profile_setting; do
+      for t in early_adopter_grant store_entitlement cloud_tenants profile_setting early_adopter_cutover_nov_8; do
         psql "$DEV_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/$t.sql
       done
       SECRET="$(openssl rand -hex 32)" && echo "$SECRET"   # the same value goes into RevenueCat's webhook Authorization header
@@ -44,7 +45,7 @@ items:
       - regional prices → [Pricing](/monetization/pricing/) · euro rows all the same price
       - real-time notifications → `Play-Store-Notifications` → RevenueCat
       - still to confirm: license testing + internal testers (plan A2.2, A2.3)
-      - left for later: T-MON-09 (January discount) · T-MON-10 (Family Library)
+      - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library)
   - id: T-MON-04
     title: RevenueCat · project and webhook
     owner: gerald
@@ -84,19 +85,20 @@ items:
       # needs REVENUECAT_API_KEY_ANDROID in .env.prod, build number above production's
       ./publish.sh internal monetization
   - id: T-MON-08
-    title: The release · Jan 17
+    title: The release · Nov 8
     owner: gerald
-    waitsFor: [T-MON-05, T-MON-07, D4]
+    waitsFor: [T-MON-05, T-MON-07, T-MON-24]
     detail: |
+      - **Nov 8 2026** · 1.20.0 · Android only (D13)
+      - launch price the same day: T-MON-09 + T-MON-21
       - trade registered (T-MON-11) · build `--dart-define=MONETIZATION=true` · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
       - watch RevenueCat + store consoles: download-to-paid < 1.5 % · annual → lifetime · Y1 retention
       - no analytics SDK · until then only the simulator shows locks
   - id: T-MON-09
-    title: Google · launch discount in January
+    title: Google · launch discount from Nov 8
     owner: gerald
-    waitsFor: [D4]
     detail: |
-      - first discount day: *Add offer* on `cloud.lifetime` (€49.99) and `cloud.lifetime.upgrade` (€24.99), 90 days
+      - Nov 8: *Add offer* on `cloud.lifetime` (€49.99) and `cloud.lifetime.upgrade` (€24.99) · last day Jan 16 2027 (D4)
       - Play adds VAT to a bulk price: base = target ÷ 1.20 · then the euro rows by hand
       - same day: RevenueCat offering metadata `launch_until` + `regular_prices` for EUR, USD, GBP, CHF, JPY (R-MON-48 area, plan A7)
       - no build needed
@@ -123,10 +125,10 @@ items:
   - id: T-MON-21
     title: Set the launch window in RevenueCat
     owner: gerald
-    waitsFor: [D4, T-MON-04]
+    waitsFor: [T-MON-04]
     detail: |
-      - first day of the store's price change → offering metadata, no build:
-      - `"launch_until": "<last day, YYYY-MM-DD>"`
+      - Nov 8, the first day of the store's price change → offering metadata, no build:
+      - `"launch_until": "2027-01-16"` (the last day, D4)
       - `"regular_prices": {"cloud.lifetime": {"EUR": 69.99}, "cloud.lifetime.upgrade": {"EUR": 44.99}}` · one amount per currency sold
       - after the last day → remove both (R-MON-42)
   - id: T-MON-22
@@ -143,3 +145,12 @@ items:
     detail: Only if D3 says test · after the products exist
     prompt: |
       Let `StorePlan.productId` be a set of ids and map `pro.lifetime.1999` / `pro.lifetime.2999` to `StorePlan.pro`; nothing else changes.
+  - id: T-MON-24
+    title: Move Cloud for life to Nov 8
+    owner: ai
+    status: done
+    detail: |
+      - **done 2026-10-24** · plan B3 in `PLAY_LICENSE_TESTING_PLAN.md`
+      - `20261023120000_early_adopter_cutover_nov_8.sql` + `supabase/tests/manual/early_adopter_cutover_nov_8.sql`
+      - app `FeatureConstants.earlyAdopterCutover` / `earlyAdopterCutoverDay` · `claim_entry_test.dart`
+      - left: Gerald pushes it before Nov 8 00:00 (T-MON-01) · the constant ships in a build before Nov 8

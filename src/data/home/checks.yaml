@@ -21,6 +21,8 @@ groups:
         text: Budget Book opened 3× with 7 entries → *See the month day by day* above the tabs · tap → Calendar · × → gone for the visit · opening Calendar first → never
       - id: C-HOM-015
         text: "Small_Phone, Free → drawer: *Settings* on screen without scrolling · scroll → *Pro features* + *Get Pro*, 4 dimmed pages · German + Japanese: button not clipped"
+      - id: C-HOM-016
+        text: "Web, window ≤ 900 px tall (1440×900) → sidebar footer one row: *Add Booking* + 2 icon squares, keys in tooltips · taller → stacked · collapsed → rail · phone drawer stacked"
   - id: widgets
     title: Android widgets
     setup: HOME_WIDGET §12 · what only a person can judge

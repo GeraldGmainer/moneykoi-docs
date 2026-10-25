@@ -34,19 +34,25 @@
 - id: v1-20-0
   title: 1.20.0
   date: 2026-11-08
-  goal: Demo mode · store setup
+  goal: Paywall on · Android · demo mode
   items:
     - ref: demo-mode
       size: M
       why: built 2026-10-19 · waits for its device test (T-DEMO-01)
+    - ref: T-MON-01
+      why: the cutover migration on prod before Nov 8 00:00 · Cloud for life ends with the paywall
     - ref: T-MON-03
       why: Play billing · days of lead time
-    - ref: T-MON-02
-      why: the same on Apple
     - ref: T-MON-04
       why: RevenueCat project + webhook
     - ref: T-MON-07
       why: gates + paywall stay flag-off until these pass
+    - ref: T-MON-05
+      why: a lawyer reads the paywall first
+    - ref: T-MON-09
+      why: launch price from day one · through Jan 16
+    - ref: T-MON-08
+      why: the paywall release (D13)
 
 - id: nov
   title: Nov 15 → Nov 29
@@ -60,9 +66,11 @@
       why: small · rides along with split
     - ref: calculator-tools
       size: S each
-      why: T1 built · T2–T4 left
+      why: T1 + T2 built · T3 waits on the subscription check-up · T4 optional
     - ref: ios-widgets
       why: iPhone gets what Android has
+    - ref: T-MON-02
+      why: Apple products · iOS sells from its first release
 
 - id: dec
   title: Dec 6 → Dec 20
@@ -81,12 +89,10 @@
 
 - id: jan
   title: Jan 2027
-  goal: Paywall on · Jan 17
+  goal: Regular prices · Jan 17
   items:
-    - ref: T-MON-05
-      why: a lawyer reads the paywall first
-    - ref: T-MON-08
-      why: nothing else ships that week
+    - ref: T-MON-21
+      why: launch price ends Jan 16 · remove the offering metadata
 
 - id: feb-apr
   title: Feb → Apr 2027

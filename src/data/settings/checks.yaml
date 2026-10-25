@@ -25,3 +25,5 @@ groups:
         text: "No account → drawer *Feedback* → reply email field, no checkbox · `a@b` → error, *Send* off · valid address → sent → admin shows it"
       - id: C-SET-011
         text: "No account, email left empty → sent → admin inbox row reads *no account* · dev server without the migration → error, draft kept"
+      - id: C-SET-012
+        text: "Web: budget spent exactly to its cap → left *0.00*, never *−0.00* · chart axis at 999,950 → *1.0M*, not *1000.0k* · investment quantity 100 at scale 0 → *100*, not *1*"

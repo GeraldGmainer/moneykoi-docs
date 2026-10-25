@@ -15,9 +15,9 @@ import { Aside } from '@astrojs/starlight/components';
 | **Pro** · once | `pro.lifetime` | €24.99 | €17.70 | = one year of Cloud |
 | **Cloud monthly** | `cloud.monthly` | €2.99 | €2.12 | yearly saves 30 % |
 | **Cloud yearly** | `cloud.yearly` | €24.99 | €17.70 | **1-month trial** |
-| **Cloud lifetime** | `cloud.lifetime` | €69.99 | €49.56 | launch **€49.99** · 90 days |
+| **Cloud lifetime** | `cloud.lifetime` | €69.99 | €49.56 | launch **€49.99** · Nov 8 → Jan 16 |
 | **Pro → Cloud lifetime** | `cloud.lifetime.upgrade` | €44.99 · launch €24.99 | €31.86 | Pro owners only |
-| **Early adopters** | — | free | — | Cloud for life · account before Jan 17 |
+| **Early adopters** | — | free | — | Cloud for life · account before Nov 8 |
 
 **Paywall line:** own it for €24.99, or everything + sync for €24.99 a year.
 
@@ -43,14 +43,15 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## Launch price
 
-- lifetime €49.99 · upgrade €24.99 · **90 days** after the paywall ships
+- lifetime €49.99 · upgrade €24.99 · from the paywall release **Nov 8 2026** through **Jan 16 2027** (70 days) · regular from Jan 17
 - shows *Launch price until \{date\}* + *then \{regular\}*
 - **never** strikethrough or "was" → [Legal](/monetization/legal/)
-- end date not set (D4) · regular price per currency from RevenueCat offering metadata (D8): EUR, USD, GBP, CHF, JPY
+- last day Jan 16 2027 (D4) · regular price per currency from RevenueCat offering metadata (D8): EUR, USD, GBP, CHF, JPY
 
 ## Early adopters
 
-- **Cloud for life** · **account** created before Jan 17
+- **Cloud for life** · **account** created before **Nov 8 2026** 00:00 Vienna, the paywall release (D13)
+- moved in `20261023120000_early_adopter_cutover_nov_8.sql` + the app constant (T-MON-24) · on prod before Nov 8 00:00 (T-MON-01)
 - not install date · server can't see installs
 - server backfill `20261007120000_early_adopter_grant.sql`
 - Terms must define "for life"

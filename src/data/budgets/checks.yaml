@@ -16,6 +16,10 @@ groups:
         text: 25 % → celebrated once · withdraw + redeposit → again · offline to target → *reached* at once
       - id: C-BUD-032
         text: Round-ups → rest to the goal · edit adds nothing · web booking rounds there, not twice
+      - id: C-BUD-033
+        text: "Deadline goal: *Per month* = goal page's *Needed per month* · type 150 → date moves · open keypad + Done → nothing changes · 0 → error, Save off"
+      - id: C-BUD-034
+        text: "New goal → *Christmas* → name, gift, Dec 24 · edit a goal → no presets · DE/JA labels fit"
   - id: loans
     title: Loans
     items:

@@ -49,7 +49,7 @@ items:
     group: Web
     title: Web manual split
     when: receipt split on `/add-receipt`
-    then: no receipt record · merchant lost · not atomic · retry re-books · open
+    then: no receipt record · merchant lost · open · items saved all or none since 2026-10-24
     status: known-issue
     risk: medium
     related: [E-BKG-23]

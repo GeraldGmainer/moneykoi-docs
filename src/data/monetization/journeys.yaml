@@ -49,7 +49,7 @@ items:
     checks: [C-MON-050]
   - id: J-MON-11
     group: Buy
-    title: Buys Cloud after Jan 17
+    title: Buys Cloud from Nov 8
     from: Local Free or Local Pro
     steps:
       - "drawer *Get Cloud* · Free: *Get Pro*"
@@ -65,8 +65,8 @@ items:
     related: [J-ACC-10]
   - id: J-MON-12
     group: Buy
-    title: Early adopter until Jan 17
-    from: Local book, Nov 1 → Jan 17
+    title: Early adopter until Nov 8
+    from: Local book, before Nov 8
     steps:
       - drawer *Get Cloud free*
       - sign in
@@ -75,6 +75,7 @@ items:
     status: waiting
     note: |
       - counts: **account created** before cutover, not install date
+      - cutover Nov 8 (D13) · its migration on prod before then (T-MON-01)
       - server grant written · Gerald applies it (T-MON-01)
   - id: J-MON-13
     group: Buy

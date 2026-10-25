@@ -224,3 +224,45 @@ items:
     title: Free
     text: No gate · decided 2026-10-16 (D13)
     source: BUDGET_GOALS §5b, MONETIZATION §4
+
+  # Savings-goal calculator
+  - id: R-BUD-07
+    group: Savings-goal calculator
+    title: Target date ↔ monthly amount
+    text: |
+      - deadline goals only · under *Target date*
+      - date set → *Per month* + *Per week* + 4 milestone dates
+      - amount typed → target date moves · date edited → amount dropped
+      - same figure as *Needed per month* on the goal page · nothing new is stored
+    source: BUDGET_GOALS §5c
+    tests:
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: a typed monthly amount sets the target date, and Save writes it
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: a typed amount follows a new target, and editing the date drops it
+  - id: R-BUD-08
+    group: Savings-goal calculator
+    title: Days, not months · no interest
+    text: |
+      - site: whole months · app: days ÷ 30.4375 → a few cents or days apart
+      - 0, or slower than 1200 months → *Not reachable at this amount* · Save blocked
+      - no interest · a goal stores no rate
+    source: BUDGET_GOALS §5c
+    tests:
+      - file: test/features/budget_goals/savings_plan_math_test.dart
+        name: the monthly rate counts days like the goal header, where the site divides by 12 months (183.33)
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: an amount that never gets there is an error and blocks Save
+  - id: R-BUD-09
+    group: Savings-goal calculator
+    title: Christmas preset
+    text: |
+      - new goal only · *Start from* → *Christmas*
+      - name, gift icon, deadline, Dec 24
+      - from Dec 24 on → next year · no gift checklist (a shopping list does that)
+    source: BUDGET_GOALS §5c
+    tests:
+      - file: test/features/budget_goals/goal_preset_test.dart
+        name: from the Eve on it aims at next year, where the site waits for the 27th
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: a new goal can start from the Christmas preset

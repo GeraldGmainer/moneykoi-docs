@@ -1,0 +1,124 @@
+# App 1.18.0 and web 1.6.0, prepared 2026-10-24 from the release notes
+# (moneykoi-supabase 20261024120000_release_notes_app_1_18_0_web_1_6_0.sql). One item per note,
+# app first (1–9), web after (10–13). 1.17.1 and 1.17.2 had no notes, so their changes are here.
+# Every test step is a check in its area (ticks are shared with the area's *What to test* page).
+version: 1.18.0
+status: testing
+source: From the release notes (2026-10-24) · app 1.18.0 items 1–9, web 1.6.0 items 10–13 · ticks shared with each area's *What to test*
+items:
+  - n: 1
+    title: Getting started · checklist, hints, empty screens
+    area: home
+    what: |
+      - fresh setup → *Getting started* card on Home · ticks from data · 14 days, then off
+      - hints: quick add · make recurring · scan nudge · calendar · book switch
+      - *Tips & features* in drawer + Settings
+      - empty Home, Book, Analytics → what fills them + own koi
+    checks: [C-HOM-010, C-HOM-011, C-HOM-012, C-HOM-013, C-HOM-014, C-BKG-041, C-SET-008, C-ANL-006, C-BB-007, C-PLAT-003]
+    related: [R-HOM-42, J-HOM-04, J-HOM-05, R-SET-13]
+    screens: [getting_started_card.dart, hint_bubble.dart, hint_chip.dart, tips_page.dart, koi_empty_state.dart]
+  - n: 2
+    title: Sample data · demo mode
+    area: demo
+    what: |
+      - Welcome → *Look around with sample data* · empty phone only
+      - several books · every feature unlocked · banner at the bottom
+      - *Start a real book* / *Leave demo* → everything deleted
+    checks: [C-DEMO-001, C-DEMO-002, C-DEMO-004, C-DEMO-005, C-DEMO-021, C-DEMO-030]
+    related: [R-DEMO-01, R-DEMO-05, R-DEMO-12, J-DEMO-01]
+    screens: [welcome_page.dart, welcome_demo_button.dart, demo_banner.dart, leave_demo_flow.dart]
+  - n: 3
+    title: Setup · Personalize in six steps
+    area: settings
+    what: |
+      - accounts with starting balances · week/month start + date format · *Sub-categories* switch + preview
+      - Quick Start unchanged, one tap
+      - signed-in account: *Log out* on step 1 · invitee skips the setup
+    checks: [C-SET-004, C-SET-005, C-SET-006, C-SET-007, C-ACC-007, C-ACC-082, C-BOOK-033]
+    related: [R-SET-12, J-SET-03]
+    screens: [onboarding_page.dart, onboarding_accounts_screen.dart, onboarding_calendar_screen.dart, onboarding_categories_screen.dart]
+  - n: 4
+    title: Forecast · sources page, calculations, new settings
+    area: forecast
+    what: |
+      - *What's in this forecast* page · every row → calculation sheet
+      - recurring income / bills apart · income estimate · monthly figures by hand
+      - *Accounts that count* · safe to spend until the largest income
+      - hero *≈ +X a month* · month tiles show *Low*
+    checks: [C-FC-016, C-FC-017, C-FC-018, C-FC-019, C-FC-020, C-FC-021, C-FC-022]
+    related: [R-FC-14, R-FC-15, R-FC-17, R-FC-20, R-FC-23, R-FC-24]
+    screens: [forecast_sources_page.dart, calculation_sheet.dart, forecast settings page, forecast hero, month strip]
+  - n: 5
+    title: Savings-goal calculator · Christmas preset
+    area: budgets
+    what: |
+      - deadline goal: *Per month* ↔ target date · per week + milestones
+      - *Not reachable at this amount*
+      - new goal → *Start from* → *Christmas*
+    checks: [C-BUD-033, C-BUD-034]
+    related: [J-BUD-22, J-BUD-23, R-BUD-09]
+    screens: [goal_save_page.dart, goal_plan_calculator.dart, goal_plan_milestones.dart, goal_preset_chips.dart]
+  - n: 6
+    title: Scanner · three review tips
+    area: scanner
+    what: first review → three inline tips, no carousel over the result · help sheet still replays all steps
+    checks: [C-SCN-009]
+    related: [R-SCN-21]
+    screens: [review screen, hint_chip.dart]
+  - n: 7
+    title: Back up & sync · join · open to every install
+    area: accounts
+    what: |
+      - Profile → *Back up & sync* → sign in → book uploads (no developer mode)
+      - Profile *Sign in* on a local book
+      - invite link without an account → *Join {book}*
+    checks: [C-ACC-010, C-ACC-011, C-ACC-012, C-ACC-033, C-BOOK-001, C-BOOK-005]
+    related: [R-ACC-36, J-ACC-10, J-ACC-11, J-BOOK-13]
+    screens: [profile_settings_page.dart, cloud_sync_tiles.dart, claim_intro_page.dart, join_book_page.dart]
+  - n: 8
+    title: Feedback without an account
+    area: settings
+    what: drawer *Feedback* for everyone · optional reply email · needs `20261021120000_feedback_without_account` on the server
+    checks: [C-SET-010, C-SET-011]
+    related: [R-SET-33, J-SET-02]
+    screens: [feedback_page.dart, feedback_email_field.dart]
+  - n: 9
+    title: Fixes · favorite type, lock + screen reader, themed icon
+    area: platform
+    what: |
+      - picker: favorite of the other type → form switches type
+      - app lock hides the app from TalkBack / VoiceOver
+      - Android 13+ themed icon · small-phone layouts · chart edge labels
+    checks: [C-BKG-013, C-PRIV-006, C-PLAT-005, C-HOM-009, C-BB-006]
+    related: [E-BKG-25, E-PRIV-44]
+  - n: 10
+    title: "Web · profile: side panel, email change, language"
+    area: accounts
+    what: Profile *Edit* → name + email in a side panel · new email waits for confirmation · language picker on the page
+    checks: [C-ACC-073]
+    related: [R-ACC-65]
+    screens: [profile/page.tsx, profile-edit-sheet.tsx, language-picker.tsx]
+  - n: 11
+    title: "Web · sign-in: Google Play link, own QR page"
+    area: accounts
+    what: |
+      - under the card: *New to Money Koi?* → Google Play · QR from 1024 px
+      - *Sign in with the app* → `/login/app`
+    checks: [C-PRIV-030]
+    related: [R-ACC-60, J-ACC-42]
+    screens: [login/page.tsx, login/app/page.tsx, get-the-app.tsx]
+  - n: 12
+    title: "Web · sidebar fits a short window"
+    area: home
+    what: ≤ 900 px tall → quick actions in one row, keys in tooltips
+    checks: [C-HOM-016]
+    related: [R-HOM-30]
+    screens: [(main)/layout.tsx]
+  - n: 13
+    title: "Web · fixes: one save per submit, no −0.00, quantities"
+    area: bookings
+    what: |
+      - booking + receipt saved once · receipt items in one insert, each above zero
+      - no −0.00 · 999,950 → 1.0M · quantity 100 at scale 0 stays 100
+    checks: [C-BKG-031, C-SET-012]
+    screens: [add/page.tsx, add-receipt/page.tsx, display-settings/format.ts]

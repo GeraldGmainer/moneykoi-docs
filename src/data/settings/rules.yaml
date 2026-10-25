@@ -155,6 +155,20 @@ items:
     tests:
       - file: test/features/settings/domain/changelog_test.dart
         name: reads the language the release was written in
+  - id: R-SET-41
+    group: Support
+    title: Support by email
+    text: |
+      - Settings → Support & info → *Support by email* · app + web
+      - opens the mail app with `support@moneykoi.com` · same address as the website's contact page
+      - privacy requests: `privacy@moneykoi.com`, named in the privacy policy
+    source: app `AppUrls.supportEmail`, web settings page · addresses since 2026-10-24
+    tests:
+      - file: test/features/settings/ui/pages/settings_page_test.dart
+        name: groups the settings into their six sections
+      - file: src/app/(main)/settings/page.test.tsx
+        name: offers the support address as a mail link
+        repo: web
   - id: R-SET-32
     group: Support
     title: Developer mode

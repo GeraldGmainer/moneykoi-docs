@@ -14,7 +14,24 @@ groups:
       - id: C-FC-014
         text: Alerts on · outflow below zero next week → one notification with date, no amount
       - id: C-FC-015
-        text: "Drawer *Forecast* after *Recurring* · Pro: opens with no Home card · Free: lock → paywall at Forecast"
+        text: "Drawer *Forecast* after *Recurring* · Pro: opens with no Home card · Free: dimmed in the Pro group → paywall at Forecast"
+  - id: calculation
+    title: Calculation · 2026-10-22
+    items:
+      - id: C-FC-016
+        text: "Whole-book budget + sub-budget + bill inside → next month's outflow = cap · sheet: budgets = cap − bills inside"
+      - id: C-FC-017
+        text: "Sources page: tap every row → sheet · parts sum to the row · budgets sheet names cap − bills inside − nested"
+      - id: C-FC-018
+        text: "Bills toggle off → whole-book month unchanged · a bill without budget: row says *n bills outside any budget*"
+      - id: C-FC-019
+        text: "Child benefit on the 8th + salary on the 30th → *Free until 30.* from the 1st, not *until 8.*"
+      - id: C-FC-020
+        text: "Settings → Accounts that count → savings off → balance card and hero drop its money · its rules gone"
+      - id: C-FC-021
+        text: "Income estimate: book without a salary rule, 2 full months → line rises · *Received per month* by hand works"
+      - id: C-FC-022
+        text: "Hero *≈ +X a month* ≈ month tiles' nets · tile shows *Low* · chips one row · chart labels *Nov* when opened late in a month"
   - id: release-1-17
     title: Forecast fixes · 1.17.0
     items:

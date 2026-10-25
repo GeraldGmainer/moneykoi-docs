@@ -321,8 +321,10 @@ items:
     title: "Web: same sign-in, no sign-up page"
     text: |
       - magic link (default) · email code signs in at the 6th digit
-      - password · Google · new address → web onboarding
+      - password · Google · new address → an account (can't be blocked per client; invites need it)
+      - onboarding only with a Cloud book · else → *Get the app* (R-ACC-66)
       - ≥ 1024 px: *Sign in with the app* → QR page, the phone approves
+      - under the card: *New to Money Koi?* → Google Play · QR from 1024 px
     source: AUTH_PROFILE_WEB §1, §5
     tests:
       - file: src/app/login/page.test.tsx
@@ -334,7 +336,33 @@ items:
       - file: src/app/login/app/page.test.tsx
         repo: web
         name: lands on the ?next= path once the app approves the code
+      - file: src/app/login/page.test.tsx
+        repo: web
+        name: points a newcomer to the app on Google Play, with a code a phone can scan
     related: [J-PRIV-30]
+  - id: R-ACC-66
+    group: On the web
+    title: "Web: a new account without Cloud goes to the app"
+    text: |
+      - unfinished setup + no Cloud book (own Cloud or a shared Cloud book) → *Get the app*, not onboarding
+      - steps: install · set up the book in the app · get Cloud there, sign in with **this** address
+      - Google Play button · QR from 1024 px · *The iPhone app is on its way*
+      - **writes nothing**: the empty book lets the app's claim move the phone's book in (a filled one → `BOOK_NOT_EMPTY`, two books)
+      - *Check again* asks the server fresh → Cloud → setup · *Log out*
+      - no verdict / failed read → setup as before
+      - before Nov 8 every new account has Cloud → nobody lands here
+    source: ONBOARDING_WEB §1a · BOOKS_WEB §4.11
+    tests:
+      - file: src/app/onboarding/page.test.tsx
+        repo: web
+        name: sends an account without a Cloud book to the app instead, setting nothing up
+      - file: src/app/get-app/page.test.tsx
+        repo: web
+        name: asks the server again and moves on once the account has Cloud
+      - file: e2e/onboarding.spec.ts
+        repo: web
+        name: a fresh account without Cloud is sent to the app, and nothing is set up
+    related: [J-ACC-42, D13, R-MON-02]
   - id: R-ACC-61
     group: On the web
     title: Web logout keeps the phone signed in
@@ -347,7 +375,7 @@ items:
     title: "`?next=` returns to the invite"
     text: |
       - only same-origin paths · else → dashboard
-      - backslash path still slips through (E-ACC-50)
+      - backslash and tab tricks → dashboard too (E-ACC-50)
     source: AUTH_PROFILE_WEB §4.2
     tests:
       - file: src/app/login/page.test.tsx

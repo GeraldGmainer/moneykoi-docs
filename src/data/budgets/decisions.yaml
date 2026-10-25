@@ -8,3 +8,7 @@ items:
     question: Website deep link into the in-app calculator
     status: open
     answer: Open (BUDGET_GOALS §5b, D14) · no recommendation
+  - id: D-BUD-15
+    question: Savings-goal calculator and Christmas preset — Free?
+    status: open
+    answer: "Built ungated inside the Free goal form (2026-10-24) · recommendation: Free, like goals · Rule 1 makes it final"

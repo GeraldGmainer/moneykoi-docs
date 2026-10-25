@@ -73,6 +73,18 @@ items:
       - one migration with `changelog` rows
       - commits are Gerald's, one per feature
     source: skills/prepare-release, skills/split-commits
+  - id: R-PLAT-31
+    group: Releases
+    title: "Publishing: internal → test → promote"
+    text: |
+      - `./publish.sh internal` · build + release notes · listing never (it is global, not per track)
+      - test from Play as an internal tester
+      - `./publish.sh promote` · same AAB to production · release notes + listing · no rebuild
+      - = publishing straight to production · Play's review starts at promote
+      - bug found → bump build number → `internal` again · a version code is used once
+      - a paywall build promotes only as `promote monetization`
+      - `./publish.sh production` still skips internal · both ask before production
+    source: app README.md (Publish), android/fastlane/Fastfile
   - id: R-PLAT-01
     group: Builds
     title: iOS 15.5 minimum

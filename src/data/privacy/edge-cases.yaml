@@ -159,3 +159,13 @@ items:
     status: known-issue
     risk: high
     related: [T-DATA-03]
+  - id: E-PRIV-44
+    group: App lock
+    title: Screen reader behind the lock
+    when: PIN gate or app-switcher shield up · TalkBack on
+    then: the app behind it is hidden from the screen reader · before 2026-10-23 balances were readable
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/app_lock/ui/widgets/app_lock_gate_test.dart
+        name: a screen reader reaches the app only while it is unlocked and in front

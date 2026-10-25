@@ -288,3 +288,13 @@ items:
     then: 3 English starter names match exact only · fix in app vocabulary first
     status: known-issue
     risk: low
+  - id: E-DATA-65
+    group: CSV import
+    title: Import into a book without sync
+    when: CSV import finishes in a book that does not sync
+    then: "*The bookings are on this phone now* · no upload sentence"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/data_import/ui/booking_import_page_test.dart
+        name: a book without sync says nothing about uploading

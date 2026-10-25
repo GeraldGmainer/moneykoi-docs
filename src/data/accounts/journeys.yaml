@@ -16,6 +16,26 @@ items:
         name: a local book that finished onboarding opens straight into the app
     checks: [C-ACC-001]
     related: [J-MON-01]
+  - id: J-ACC-42
+    group: Start
+    title: Finds Money Koi on the web first
+    from: no app · my.moneykoi.com, from Nov 8
+    steps:
+      - login → Google or email → an account + an empty book
+      - "*Get the app* · Google Play / QR"
+      - app → *Get started* → local book → *Get Cloud* → sign in with the same account
+      - claim moves the phone's book into the empty one
+      - web → *Check again*
+    result: the web opens the book
+    note: |
+      - the web sets nothing up for an account without Cloud (R-ACC-66)
+      - iPhone: no app yet · *The iPhone app is on its way*
+    tests:
+      - file: e2e/onboarding.spec.ts
+        repo: web
+        name: a fresh account without Cloud is sent to the app, and nothing is set up
+    checks: [C-ACC-074]
+    related: [J-MON-11, J-ACC-01]
   - id: J-ACC-02
     group: Start
     title: Backs out of onboarding

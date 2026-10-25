@@ -33,6 +33,31 @@ items:
       - milestones, streak
     result: progress, pace, finish date
     checks: [C-BUD-030, C-BUD-031]
+  - id: J-BUD-22
+    group: Goals
+    title: Plans a goal by what goes in each month
+    from: Goals → + (or a deadline goal → edit)
+    steps:
+      - "*With deadline* · target amount"
+      - "*Per month* → 150"
+      - target date + milestones follow
+    result: goal saved with that date · goal page shows ≈ 150 needed per month
+    tests:
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: a typed monthly amount sets the target date, and Save writes it
+    checks: [C-BUD-033]
+  - id: J-BUD-23
+    group: Goals
+    title: Saves for Christmas
+    from: Goals → +
+    steps:
+      - "*Start from* → *Christmas*"
+      - target amount
+    result: deadline goal on Dec 24 · per month + per week shown
+    tests:
+      - file: test/features/budget_goals/ui/pages/goal_save_page_test.dart
+        name: a new goal can start from the Christmas preset
+    checks: [C-BUD-034]
   - id: J-BUD-21
     group: Goals
     title: Rounds up spare change
