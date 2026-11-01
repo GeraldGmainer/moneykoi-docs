@@ -52,6 +52,8 @@ groups:
         text: "Pro owner: no Pro price, Cloud **upgrade** · Cloud owner: *Manage subscription*, no buy button"
       - id: C-MON-023
         text: "Free → drawer *Get Pro* → paywall top: Pro disc, *Money Koi Pro*, *Paid once, kept for good. Works offline.*, two columns of Pro features · no scroll"
+      - id: C-MON-074
+        text: "Free → drawer, tap the *Pro features* row itself → same paywall top as *Get Pro* · also with *Get Cloud free* showing and no button in the row"
       - id: C-MON-024
         text: "Pro → drawer *Get Cloud* → *Money Koi Cloud* overview starts with *Everything in Pro* · a lock still opens on its feature"
       - id: C-MON-025

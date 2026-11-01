@@ -3,6 +3,12 @@ items:
     question: Enforce "never book a parent" on the server?
     status: decided
     answer: No · clients only (D10) · fix-it notice repairs others
+  - id: D-LED-4
+    question: A parent whose subs are all hidden — bookable?
+    status: decided
+    date: 2026-10-27
+    answer: No · still has subs · pickers drop it, except budgets and while editing a booking already on it
+    related: [R-LED-01, R-LED-07]
   - id: D-LED-2
     question: Category balances from the server column?
     status: decided

@@ -1,0 +1,125 @@
+# App 1.19.0 and web 1.7.0, prepared 2026-10-31 from the release notes
+# (moneykoi-supabase 20261031220000_release_notes_app_1_19_0_web_1_7_0.sql). One item per note,
+# app first (1–7), web after (8–12). 1.18.1 and 1.18.2 were internal, so their changes are here.
+# Every test step is a check in its area (ticks are shared with the area's *What to test* page).
+version: 1.19.0
+status: testing
+source: From the release notes (2026-10-31) · app 1.19.0 items 1–7, web 1.7.0 items 8–12 · ticks shared with each area's *What to test*
+items:
+  - n: 1
+    title: Offline books
+    area: books
+    what: |
+      - *New book* → *Offline book* · phone only · never server, never web
+      - *Move to cloud* · one way
+      - badge *Offline book* / *Cloud book* / *Upload pending*
+      - limit 3 · offline + cloud together
+    checks: [C-BOOK-040, C-BOOK-041, C-BOOK-042, C-BOOK-043, C-BOOK-044, C-BOOK-045, C-BOOK-046, C-BOOK-047]
+    related: [R-BOOK-60, R-BOOK-61, J-BOOK-40, J-BOOK-41]
+    screens: [create_book_page.dart, book_card.dart, book_sync_badge.dart]
+  - n: 2
+    title: Categories · parent never an automatic pick
+    area: ledger
+    what: |
+      - parent with subs → quick booking skips it
+      - scanner guess → inside the parent or blank
+      - all subs hidden → parent gone from the pickers
+    checks: [C-LED-012]
+    related: [R-LED-01, R-BKG-14, E-SCN-08]
+    screens: [category picker, quick booking, receipt review]
+  - n: 3
+    title: Forecast · income estimate, lent loan
+    area: forecast
+    what: |
+      - month breakdown counts the income estimate
+      - lent loan = own + line in the loans sheet
+    checks: [C-FC-004, C-FC-028]
+    related: [E-FC-19, E-FC-20]
+    screens: [month breakdown sheet, calculation_sheet.dart]
+  - n: 4
+    title: Investments · sale + transfer checks
+    area: investments
+    what: |
+      - sale checked against the holding on its own date
+      - transfer → same measure only · weight converted
+      - leg read-only · deleted with its partner
+      - day counts survive a clock change
+    checks: [C-INV-050, C-INV-051, C-INV-052]
+    related: [E-INV-09, E-INV-12]
+    screens: [transaction sheet, transfer sheet]
+  - n: 5
+    title: Backup · forecast settings, offline book
+    area: data
+    what: |
+      - restore keeps the five forecast settings
+      - offline book → restore into a new book
+      - needs `20261027150000_restore_forecast_sources` on the server
+    checks: [C-DATA-053]
+    related: [E-DATA-66]
+    screens: [backup_restore_page.dart]
+  - n: 6
+    title: Getting started · tick by hand
+    area: home
+    what: Tap a checklist item's circle → ticked, counts as done · tap again → open
+    checks: [C-HOM-017]
+    screens: [getting_started_card.dart]
+  - n: 7
+    title: Fixes · format, keyboard, header, widget, keypad, licenses
+    area: home
+    what: |
+      - amounts follow the money format, not the app language
+      - tap on empty space closes the keyboard
+      - tab header stays away from the clock
+      - widget pinned with the app open fills on its tap
+      - keypad crash on back or tap as it opens
+      - *About* → *Open-source licenses*
+    checks: [C-ANL-009, C-PLAT-017, C-HOM-019, C-HOM-020, C-BKG-042, C-SET-013]
+    related: [E-ANL-06, E-HOM-07, E-HOM-08, E-BKG-26]
+    screens: [unfocus_on_tap.dart, calculator_sheet.dart, about page]
+  - n: 8
+    title: "Web · forecast: app's calculation, planned payments"
+    area: forecast
+    what: |
+      - same numbers as the app, same book
+      - *Planned payments to check* under the hero
+      - *Book it now* → new tab, booking prefilled
+    checks: [C-FC-023, C-FC-024, C-FC-025, C-FC-026, C-FC-027]
+    screens: [forecast/page.tsx, item-review.tsx]
+  - n: 9
+    title: "Web · investments: the app's pages"
+    area: investments
+    what: |
+      - *Holdings* / *Performance* / *Allocation* · *Returns* · *Movers*
+      - detail period row net of money in and out
+      - asset groups in the form · other unit or total in a transaction
+    checks: [C-INV-040, C-INV-041, C-INV-042, C-INV-043, C-INV-044, C-INV-045]
+    screens: [investments/page.tsx, "investments/[id]/page.tsx", position-form-sheet.tsx, transaction-sheet.tsx]
+  - n: 10
+    title: "Web · Home pill, net worth, category rows"
+    area: home
+    what: |
+      - card pill sets the range
+      - net worth incl. investments
+      - analytics category row → activity, same period
+    checks: [C-HOM-018, C-ANL-008]
+    screens: [card-pill-menu.tsx, net-worth-card.tsx, category-drilldown.tsx]
+  - n: 11
+    title: "Web · ledger: corrections, initial balances, search"
+    area: bookings
+    what: |
+      - *Balance correction* + *Initial balance* listed · never counted
+      - search = description or merchant
+    checks: [C-BKG-043]
+    related: [R-BKG-53]
+    screens: [bookings/page.tsx, opening-balances.ts]
+  - n: 12
+    title: "Web · fixes: duplicate budget, currency, dates, sign"
+    area: budgets
+    what: |
+      - duplicate budget refused
+      - currency change asks first
+      - income category shows its total
+      - German month names · minus ahead of the symbol
+    checks: [C-BUD-020, C-SET-012]
+    related: [R-BUD-31]
+    screens: [budget-form-sheet.tsx, display-settings-form.tsx, category-card.tsx, money.tsx]

@@ -46,3 +46,71 @@ items:
     then: web inserts a duplicate · open (review 26)
     status: known-issue
     risk: low
+  - id: E-INV-07
+    group: Web
+    title: "Web: sold out, line kept at 0"
+    when: buy 0.1 + buy 0.2, sell 0.3
+    then: value line ends on the last day held · was a 0 line, *All* read −100 % (fixed 2026-10-27)
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/investments/lib/portfolio-series.test.ts
+        repo: web
+        name: ends the value line when a float sum sells the holding to exactly zero
+  - id: E-INV-08
+    group: Web
+    title: "Web: a 2nd buy read as return"
+    when: buy again inside the chart's period
+    then: period figure nets the buy out, as the app · was the raw value change (fixed 2026-10-27)
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/investments/[id]/page.test.tsx
+        repo: web
+        name: counts a second buy as money in, not as a return
+  - id: E-INV-09
+    group: App
+    title: "App: a day lost across DST"
+    when: flows or a spot lookup span a clock change
+    then: |
+      - XIRR + yield counted 30 days where the web counts 31 (Europe/Vienna, 1 Mar → 1 Apr)
+      - a Friday close read on Tuesday after spring-forward: app *exact*, web *≈*
+      - now calendar days on both (fixed 2026-10-28)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/domain/services/dst_day_count_test.dart
+        name: two days held across the spring change still counts as two days for local ledger dates
+  - id: E-INV-10
+    group: App
+    title: "App: transfer copied the number"
+    when: 10 g moved onto an ounce position
+    then: arrived as 10 oz t · a back-dated transfer could leave a later sell short · a leg was edited and deleted alone (fixed 2026-10-28)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/investment/domain/services/transfer_and_rebalance_test.dart
+        name: refuses a back-dated transfer that would leave a later sell short
+  - id: E-INV-11
+    group: Prices
+    title: A −100 % day read as a gain
+    when: a delisted coin's quote reports −100 % for the day
+    then: hero *Today* is the loss of the whole value · was +value on app and web (fixed 2026-10-28)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/view_models/view_model_extras_test.dart
+        name: a -100 % day is a loss of the whole position, never a gain
+      - file: src/app/(main)/investments/lib/portfolio-overview.test.ts
+        repo: web
+        name: treats a -100 % day as a loss of the whole value, not a division by zero
+  - id: E-INV-12
+    group: App
+    title: "App: oversell message threw"
+    when: a sell of more than is held
+    then: the inline "Only … held" now shows · tapping Save used to throw instead (fixed 2026-10-28)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/investment/ui/pages/transaction_save_page_flow_test.dart
+        name: selling more than is held is refused, not clamped

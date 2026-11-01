@@ -49,14 +49,21 @@ items:
     title: No two budgets on one scope
     text: |
       - same type + category + period → refused, reason shown
-      - other period ok · archived = history
-      - app only · web has no guard yet
-    source: BUDGET_GOALS §3
+      - other period ok · archived = history · paused still counts
+      - reason waits until a scope is picked (or *Save*)
+      - web the same since 2026-10-28
+    source: BUDGET_GOALS §3, BUDGETS_WEB §1
     tests:
       - file: test/features/budget_goals/budget_duplicate_rule_test.dart
         name: same type, category and period is a duplicate
       - file: test/features/budget_goals/budget_duplicate_rule_test.dart
         name: an archived budget is history, not a duplicate
+      - file: src/app/(main)/budgets/components/budget-form-sheet.test.tsx
+        repo: web
+        name: says so once the scope is picked, and refuses to save
+      - file: src/app/(main)/budgets/lib/budget-duplicate.test.ts
+        repo: web
+        name: ignores the budget being edited and archived ones, never paused ones
   - id: R-BUD-32
     group: Budgets
     title: One number for every screen
@@ -200,12 +207,19 @@ items:
       - archived cap: never touched · row makes a new cap
       - paused cap: prefilled, active after Save
       - row says *Turns your paused budget back on*
-    source: BUDGET_GOALS §5b (2026-10-16)
+      - web: same since 2026-10-28 (it used to prefill from an archived cap and turn it back on)
+    source: BUDGET_GOALS §5b (2026-10-16), BUDGETS_WEB §4.15
     tests:
       - file: test/features/budget_goals/budget_plan_changes_test.dart
         name: 'an archived cap is history: it is neither brought back nor counted, so the row creates a new cap'
       - file: test/features/budget_goals/budget_plan_changes_test.dart
         name: a paused monthly cap is turned back on even at the planned amount, and the update says so
+      - file: src/app/(main)/budgets/planner/lib/budget-plan.test.ts
+        repo: web
+        name: 'an archived cap is history: never prefilled, updated or deleted, so the plan creates a new one'
+      - file: src/app/(main)/budgets/planner/page.test.tsx
+        repo: web
+        name: no budget to remove, no switch; a paused cap the plan rewrites says it turns back on
   - id: R-BUD-05
     group: Budget calculator
     title: Replace keeps ids
@@ -213,12 +227,19 @@ items:
       - rewritten cap keeps its id · Home + widget hold ids
       - deletes only live caps no row keeps
       - never archived caps or income goals · writes first, deletes last
-    source: BUDGET_GOALS §5b
+      - web: same since 2026-10-28 (it used to delete every cap first, archived ones too, and recreate them)
+    source: BUDGET_GOALS §5b, BUDGETS_WEB §4.15
     tests:
       - file: test/features/budget_goals/budget_plan_changes_test.dart
         name: replacing updates the cap on a planned category in place and deletes only what the plan does not keep
       - file: test/features/budget_goals/use_cases/budget_plan_use_cases_test.dart
         name: a failed write deletes nothing
+      - file: src/app/(main)/budgets/planner/lib/budget-plan.test.ts
+        repo: web
+        name: replacing keeps the cap a row rewrites and deletes the other spending caps, never an income target
+      - file: src/app/(main)/budgets/planner/services/budget-planner.service.test.ts
+        repo: web
+        name: updates, then inserts every new cap at sparse positions, and deletes last
   - id: R-BUD-06
     group: Budget calculator
     title: Free

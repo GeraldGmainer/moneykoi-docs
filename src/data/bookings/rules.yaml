@@ -121,10 +121,13 @@ items:
     title: Guessed category saves directly
     text: |
       - your history first → category names → keyword tables
+      - never a parent with subs · not even from an old booking on one
       - no "guess" marker
       - Save locked only while no category
     source: QUICK_BOOKING §3–§4
     tests:
+      - file: test/shared/categorization/category_suggestion_engine_test.dart
+        name: a booking left on a parent that has since got subs is not suggested
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
         name: a guessed category saves without being confirmed
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
@@ -236,9 +239,13 @@ items:
     title: Web filters live in the URL
     text: |
       - shareable, restored on return
-      - type · account · category · tag · member · cost type
-      - search: description, merchant, names, amounts, dates
+      - type · account (both ends of a transfer) · category · tag · member · cost type
+      - search: description or merchant, as the app (since 2026-10-28)
     source: BOOKINGS_WEB §4.2, §4.4
+    tests:
+      - file: src/app/(main)/bookings/services/bookings.service.test.ts
+        repo: web
+        name: ORs the description and the receipt merchant, and looks up nothing else
   - id: R-BKG-51
     group: Web ledger
     title: "Web bulk edit: only what changes"
@@ -252,3 +259,28 @@ items:
     title: Deleted occurrence stays skipped
     text: date stays taken → rule never re-creates it
     source: BOOKINGS_WEB §4.8
+  - id: R-BKG-53
+    group: Web ledger
+    title: Corrections + opening balances listed, never counted
+    text: |
+      - *Balance correction* → opens its balance check · *Initial balance* → opens the account
+      - not income, not expense · no checkbox, no menu · *Select all N* counts bookings only
+      - calendar: opening balance on its day, not summed · corrections left out, as the app
+      - CSV: both rows, as the app's file · signed amounts add up to the balances
+    source: BOOKINGS_WEB §4.1 (decided 2026-10-28, D-BKG-6)
+    tests:
+      - file: src/app/(main)/bookings/page.test.tsx
+        repo: web
+        name: asks for corrections and lists each opening balance where the order puts it, counted in the total
+      - file: src/app/(main)/bookings/page.test.tsx
+        repo: web
+        name: offers to select only the bookings among what matches
+      - file: src/app/(main)/bookings/page.test.tsx
+        repo: web
+        name: lists an opening balance on its calendar day without counting it
+      - file: src/app/(main)/bookings/lib/export-csv.test.ts
+        repo: web
+        name: "writes an opening balance as the app's opening_balance row: signed by itself, no category, no id"
+      - file: e2e/bookings.spec.ts
+        repo: web
+        name: lists a balance correction and an opening balance, each opening what it belongs to

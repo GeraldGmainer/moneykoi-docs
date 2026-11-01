@@ -17,3 +17,7 @@ groups:
         text: New book → every Analytics segment = koi + *Add entry* + *Scan a receipt* · one entry → KPI, breakdown, heatmap drawn · Merchants + Receipts headings gone, their cards named in *Unlocks as you record* with *Scan a receipt*
       - id: C-ANL-007
         text: Young book on *This week* vs *This year* → the same cards unlock (period never matters) · a card unlocked with nothing in the window says *nothing in this period*, not the unlock reason
+      - id: C-ANL-008
+        text: "Web: book with investments → net worth *incl. investments* · leaderboard or treemap row → category activity, same period"
+      - id: C-ANL-009
+        text: English app + money format `1.234,56 €` → insights, chart legends, Home budget card, quick-booking chip follow the format · quick-booking date follows the date format

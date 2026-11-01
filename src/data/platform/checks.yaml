@@ -4,6 +4,30 @@ groups:
     items:
       - id: C-PLAT-001
         text: Clean iOS build (CocoaPods) → scanner reads text + barcodes
+      - id: C-PLAT-006
+        text: "`fvm flutter run --flavor dev` and `--flavor prod` on one iPhone → *Money Koi Dev* + *Money Koi* side by side · both with the blue koi icon · dev talks to the dev backend"
+      - id: C-PLAT-007
+        text: Sign in with Google on iOS → Safari → back in the app, signed in (custom scheme) · the magic link from the mail app opens the app signed in
+      - id: C-PLAT-008
+        text: "`https://my.moneykoi.com/open/book` tapped in Notes → the app's book list, not Safari (universal link · needs the association file live on the web, T-PLAT-10)"
+      - id: C-PLAT-009
+        text: German and Japanese iPhone → the camera, photo and Face ID prompts read in that language · indirect voice
+      - id: C-PLAT-010
+        text: A `.moneykoi` file in Files or Mail → *Open in Money Koi* → Backup & restore with the file
+      - id: C-PLAT-011
+        text: Reminders off → first launch shows no notification prompt · turning reminders on in Settings asks
+      - id: C-PLAT-012
+        text: Settings › About › Changelog with a newer version listed → the update row opens Money Koi in the App Store (R-SET-43)
+      - id: C-PLAT-013
+        text: Delete the app, reinstall → still signed in · app lock off · setting a new PIN works (E-PLAT-02)
+      - id: C-PLAT-014
+        text: iPhone → *Continue with Apple* heads the welcome-back, claim and join lists → Face ID sheet → signed in · *Hide my email* → relay address, the name still shows in the profile and member list · close the sheet → nothing happens · *Sign back in* reopens the Apple sheet (R-ACC-67)
+      - id: C-PLAT-015
+        text: Cold start → the koi sits centred on the dark launch screen at the same size as on Android, not stretched
+      - id: C-PLAT-016
+        text: Music playing → scanner onboarding clips → the music keeps playing
+      - id: C-PLAT-017
+        text: Percent, decimal or amount field on the number pad (no Done key) → tap empty space → the keyboard closes · a tap on a button or tile still works
 
   - id: look
     title: Shared look

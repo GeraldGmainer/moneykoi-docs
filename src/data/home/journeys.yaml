@@ -41,8 +41,9 @@ items:
     result: "*All set* once, then the card is gone"
     note: |
       - × hides it at once · Undo in the snackbar
+      - an item not wanted (e.g. scan) → tap its circle → ticked, the next one opens
       - after 14 days it is gone whatever was done
-    checks: [C-HOM-010, C-HOM-011]
+    checks: [C-HOM-010, C-HOM-011, C-HOM-017]
     related: [R-HOM-40]
   - id: J-HOM-05
     group: New users

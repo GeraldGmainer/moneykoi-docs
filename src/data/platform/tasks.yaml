@@ -79,7 +79,8 @@ items:
       - text, feature graphic + 8 screenshots × de/en/ja are in `android/fastlane/metadata/android/` · read them first
       - before Nov 1: fresh prod sign-up gets Cloud · else cut the Cloud paragraph + `family` frame
       - ⚖️ read: *stored only on the phone* · *never sold* · *servers in the EU*
-      - `ja` names no scanner: yen books have none (R-SCN-12) · its set opens on Home, quick booking second · Home still shows the scan tile (D-SCN-03)
+      - `ja` names no scanner: yen books have none (R-SCN-12) · quick booking takes the scanner's place · Home still shows the scan tile (D-SCN-03)
+      - screenshots re-shot 2026-11-01: Home first, scanner third, Pro / Cloud badges on Stats and shared books — the App Store order
       - D-PLAT-3 clears the upload check · Data safety + deletion URL first (T-PRIV-03, site S-04)
       - then `fastlane production` ships listing + build · from then on the repo **is** the listing
       - steps in order: `ASO_STORE_LISTING_PLAN.md` §15a
@@ -108,3 +109,50 @@ items:
       - Kuketz only after an Exodus scan + the lawyer's read
       - ifun.de · appgefahren wait for iOS
 
+  - id: T-PLAT-10
+    title: iOS launch — the Apple side
+    owner: gerald
+    detail: |
+      - project side done 2026-10-29: bundle id `com.psyren.moneykoi` (+ `.dev`), flavors, URL schemes, universal links, en/de/ja permission texts, privacy manifest, fastlane lanes (R-PLAT-03, R-PLAT-04)
+      - App Store Connect account exists (2026-10-31) · team `97YRVYQ66A` (the project and the association file switched from `7FEWE4FPER` that day) · Xcode › Settings › Accounts: refresh, it still lists the team as a free Personal Team · signing certificates come from automatic signing, none made by hand
+      - iOS sells from its first release → steps 1 and 8 gate the submission · start them first, they take days
+      - 1 · ASC › Business: Paid Apps agreement + bank account + tax forms → *Active* · then apply to the Small Business Program (15 %)
+      - 2 · ASC › Business › DSA trader status: trader (it sells in-app) → address, phone, email verified, shown on EU listings · an individual membership publishes the personal address unless a business address is given · without it no EU storefront
+      - 3 · developer.apple.com › Identifiers: App IDs `com.psyren.moneykoi` + `.dev`, capabilities Sign in with Apple + Associated Domains · or let the first `flutter build ipa --flavor prod` register them · **one iPhone registered** in the team (Xcode › the iPhone as run destination › Build, or developer.apple.com › Devices) · without it the archive fails with *Your team has no devices*
+      - 4 · ✓ 2026-10-31, Apple ID `6829288599` in `AppUrls.appStoreListing` · ASC › Apps › New app: iOS, name *Money Koi*, primary language English (U.S.) (fallback for every unlocalized storefront), bundle id `com.psyren.moneykoi`, SKU `moneykoi-ios` · the Apple ID number (App Information) → AI sets `AppUrls.appStoreListing` (turns on the store rows, R-SET-43)
+      - 5 · ASC API key: Users and Access › Integrations › App Store Connect API › Team keys, role App Manager · the .p8 downloads once → `~/.appstoreconnect/private_keys/` · `ios/fastlane/.env` (gitignored): `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_PATH`, `SENTRY_AUTH_TOKEN` · `cd ios && bundle install`
+      - 6 · deploy `moneykoi-web`: `my.moneykoi.com/.well-known/apple-app-site-association` answered **404** on 2026-10-31 → universal links dead until it answers 200 `application/json`, no redirect (command)
+      - 7 · Supabase Auth › Providers › Apple, dev + prod: enabled, *Client IDs* = `com.psyren.moneykoi,com.psyren.moneykoi.dev` (native sign-in needs no secret) · branch push `moneykoi-supabase` with `20261029120000_profile_name_after_apple_sign_in.sql` · redirect URLs: nothing, `com.psyren.moneykoi://login-callback/` is already allowed
+      - 8 · ✓ products + group 2026-10-31, open: sandbox testers, the price re-check (US / Montenegro / the launch line) · in-app purchases + the *Money Koi Cloud* subscription group per `MONETIZATION_AI_CONTEXT.md` §11 step 2 (ids, prices, family sharing Pro only, trial, en/de/ja, a paywall screenshot per product) · sandbox testers
+      - 9 · RevenueCat: iOS app `com.psyren.moneykoi` + ASC's In-App Purchase key (Users and Access › Integrations) · ASC › App Information › App Store Server Notifications V2 → RevenueCat's URL · products → entitlements `pro` / `cloud` + the offering's packages like Android · the public `appl_…` key → `REVENUECAT_API_KEY_IOS` in `.env.prod` only (dev keeps the fake gateway, like Android; `.dev` has no products) · every package of the current offering gets its iOS product, or the paywall never sees it
+      - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: no third-party content · App Privacy: `ASO_STORE_LISTING_PLAN.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
+      - 11 · decide D-PLAT-8 (iPad) · D-PLAT-7 decided: no France · D-PLAT-6 is built, D-PLAT-5 mostly · T-PLAT-11 (Apple token revoke) before submitting
+      - 12 · `./publish.sh ios testflight monetization` → TestFlight internal testers → device pass: D-PLAT-5's list, Sign in with Apple, a sandbox purchase per product, restore, the universal link (C-PLAT checks)
+      - 13 · listing ✓ written 2026-11-01: `ios/fastlane/metadata/` (name, subtitle, keywords, promo text, description, URLs per language, Finance / Productivity, review notes) · screenshots iPhone 6.9" + iPad 13" × de/en/ja in `ios/fastlane/screenshots/<locale>/` · product page header 3840×1646 in `ios/fastlane/header/<locale>/` → version page › *Header and Search Results* › Header, no search-results asset (ASO plan §7.4) · open: read them (D5), then `./publish.sh ios metadata` · drag each screenshot folder and header into ASC (the lanes skip both) · iPad set is moot if D-PLAT-8 drops iPad · first version: if `deliver` refuses *What's New*, enter the text by hand
+      - 14 · `./publish.sh ios promote <build>` → version page: add the in-app purchases (the first ones only reach review with a version) · App Review: sign-in required, the review account + T-PLAT-05 text + *the scanner needs the camera* + where the paywall opens · release manually · Submit
+    command: |
+      cd /Users/gerald/Projects/moneykoi/moneykoi-app
+      fvm flutter build ipa --flavor prod                      # registers the ids if step 3 was skipped, needs the team signed in to Xcode
+      curl -sI https://my.moneykoi.com/.well-known/apple-app-site-association | grep -iE "content-type|location|HTTP/"
+      curl -s https://app-site-association.cdn-apple.com/a/v1/my.moneykoi.com | head -c 400   # Apple's CDN copy
+      ./publish.sh ios testflight monetization
+  - id: T-PLAT-12
+    title: Bring the iOS app to France
+    owner: gerald
+    detail: |
+      - France unticked 2026-11-01 · backup AES runs in Dart → French declaration needed (D-PLAT-7)
+      - 1 · ANSSI declaration: `demarche.numerique.gouv.fr/commencer/declaration-relative-a-un-moyen-de-cryptologie` · official 1 month
+      - needs: company presentation · K bis or foreign equivalent · commercial + technical brochure · user manual if any
+      - 2 · App Information › App Encryption Documentation › + → France *Yes* → upload · Apple ~2 business days → key value
+      - 3 · AI: `Info.plist` → `ITSAppUsesNonExemptEncryption = true` + `ITSEncryptionExportComplianceCode` = key value → new build
+      - 4 · Pricing and Availability: tick France · in-app purchases stayed ticked
+  - id: T-PLAT-11
+    title: Revoke the Apple sign-in when an account is deleted
+    owner: ai
+    detail: |
+      - Apple: an app with Sign in with Apple revokes the user's Apple token on account deletion (App Review 5.1.1(v), Apple's account-deletion guidance) · not built
+      - review rarely tests it · a rejection costs a review cycle
+      - needs from Gerald first: developer.apple.com › Keys › new key with Sign in with Apple → Key ID + .p8 into Supabase secrets, dev + prod
+    prompt: |
+      Apple requires apps offering Sign in with Apple to revoke the user's Apple token when the account is deleted. Read OFFLINE_TIER_AI_CONTEXT.md and MONETIZATION_AI_CONTEXT.md §9a/§9b (delete account) and the Sign in with Apple notes in 03_TECHNICAL_ARCHITECTURE.md first. At Apple sign-in, send the credential's authorizationCode to a new moneykoi-supabase edge function that exchanges it at https://appleid.apple.com/auth/token (client_id = the bundle id, client_secret = an ES256 JWT from team 97YRVYQ66A and the secrets APPLE_SIGNIN_KEY_ID / APPLE_SIGNIN_P8) and stores the refresh token server-side only; account deletion calls https://appleid.apple.com/auth/revoke with it before the user is deleted, and a failed revoke never blocks the deletion. Never keep the token on the phone. Tests, context doc, docs site; hand Gerald the secrets and deploy commands.
+    related: [T-PLAT-10, D-PLAT-6]

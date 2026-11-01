@@ -17,6 +17,8 @@ groups:
         text: "*New Income* → picker → an expense favorite (also a recent) → form switches to *Expense* with it · saved as an expense"
       - id: C-BKG-031
         text: "Web: double-click *Save* · ⌘↵ twice · Enter in the note → one booking · receipt with a 0 item → refused · receipt save fails → retry books each item once"
+      - id: C-BKG-042
+        text: "*New booking* → back or a tap on another field as the keypad slides up → form stays, no crash · same on the recurring form"
   - id: fixing
     title: Fixing
     items:
@@ -29,5 +31,7 @@ groups:
     items:
       - id: C-BKG-040
         text: Search finds account · subcategory · goal · loan · merchant · *Show all* · web ⌘K same
+      - id: C-BKG-043
+        text: "Web ledger: *Balance correction* + *Initial balance* rows listed · neither income nor expense in the totals · search = description or merchant only"
       - id: C-BKG-041
         text: Fresh setup → book *Rent* (fixed category) → snackbar *Does this repeat every month?* replaces *saved* · *Make recurring* → rule form prefilled · a rule in that category → no question · 5th typed entry with no scan → *Got a receipt?* line under the amount · after one scan → never

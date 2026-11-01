@@ -15,6 +15,8 @@ groups:
         text: Alerts on · outflow below zero next week → one notification with date, no amount
       - id: C-FC-015
         text: "Drawer *Forecast* after *Recurring* · Pro: opens with no Home card · Free: dimmed in the Pro group → paywall at Forecast"
+      - id: C-FC-028
+        text: Lent loan next to a borrowed one → loans row → lent loan is its own + line · lines add up to the row
   - id: calculation
     title: Calculation · 2026-10-22
     items:
@@ -32,6 +34,19 @@ groups:
         text: "Income estimate: book without a salary rule, 2 full months → line rises · *Received per month* by hand works"
       - id: C-FC-022
         text: "Hero *≈ +X a month* ≈ month tiles' nets · tile shows *Low* · chips one row · chart labels *Nov* when opened late in a month"
+      - id: C-FC-023
+        text: "Web vs app, same book: Free until, *a month*, 12-month closing, low, month tiles, every sources row equal · web sources rows open their sums"
+      - id: C-FC-024
+        text: "Web settings: bills off / savings account off → app shows the same toggles after sync · and back"
+  - id: web-review
+    title: Web review · 2026-10-28
+    items:
+      - id: C-FC-025
+        text: "Web: book a planned payment 2 days early → *Planned payments to check* under the hero · *Yes, that's it* → card gone, plan off the line · Undo brings it back · app shows it *Happened* after sync"
+      - id: C-FC-026
+        text: "Web: planned date passed → *Book it now* → new tab, title, category, amount and date filled · save · *Mark as happened* → gone · repeating plan *It didn't happen* → only that date gone, next one still on the line"
+      - id: C-FC-027
+        text: "Web: *Not this booking* → suggestion gone at once, past date then asks *did it happen?* · reload keeps it · other book or the phone still asks"
   - id: release-1-17
     title: Forecast fixes · 1.17.0
     items:
@@ -44,4 +59,4 @@ groups:
       - id: C-FC-004
         text: "Month breakdown: income · outflows · net · per day → net = tile"
       - id: C-FC-005
-        text: "Copy: *How the line is built* · *Covered by your whole-book budget* · *Everyday estimate*"
+        text: "Copy: *How the line is built* · *Covered by the whole-book budget* · *Everyday estimate*"

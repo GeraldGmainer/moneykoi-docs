@@ -36,7 +36,7 @@ items:
     text: |
       - market value · unpriced at cost · depot buy not doubled
       - chart = account history → its last point ≠ headline
-      - web: without investments
+      - web: same since 2026-10-28 · *Investments* tile · the chart says it tracks accounts only
     source: ANALYTICS §2, ANALYTICS_WEB §7
     tests:
       - file: test/features/analytics/net_worth_portfolio_test.dart
@@ -111,6 +111,18 @@ items:
       - budget-vs-actual = the budgets' own progress
       - Goals 93 % vs card 91 % = a bug
     source: ANALYTICS §8
+  - id: R-ANL-12
+    group: Cross-feature
+    title: A category row opens its activity
+    text: |
+      - leaderboard · favorites · fixed costs · movers · treemap tile · sub-category sheet → *View all bookings*
+      - same period · the category covers its subs
+      - web the same since 2026-10-28
+    source: ANALYTICS (AnalyticsDrilldown) · ANALYTICS_WEB §1
+    tests:
+      - file: src/app/(main)/analytics/components/spending/spending-tab.test.tsx
+        repo: web
+        name: "opens a category's activity from the cards and from the sheet, over the analytics period"
   - id: R-ANL-20
     group: Export
     title: "Period report: CSV · PDF · image"
@@ -128,7 +140,7 @@ items:
   - id: R-ANL-31
     group: Web
     title: Web differences
-    text: one baseline picker · whole-unit insights · biggest expense incl. fixed · forecast under Accounts · static treemap · no image
+    text: one baseline picker · whole-unit insights · forecast under Accounts · static treemap · no image · no *Unlocks as you record*
     source: ANALYTICS_WEB §7
   - id: R-ANL-40
     group: New users

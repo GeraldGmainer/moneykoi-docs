@@ -21,7 +21,7 @@ items:
     title: Finds Money Koi on the web first
     from: no app · my.moneykoi.com, from Nov 8
     steps:
-      - login → Google or email → an account + an empty book
+      - login → Google or email → an account + an empty book (the web has no Apple button, R-ACC-67)
       - "*Get the app* · Google Play / QR"
       - app → *Get started* → local book → *Get Cloud* → sign in with the same account
       - claim moves the phone's book into the empty one
@@ -71,7 +71,7 @@ items:
     from: Local book
     steps:
       - Settings → *Back up & sync* → *Back up this book*
-      - Google or email sign-in
+      - Google, Apple (iPhone) or email sign-in
       - progress with counts
     result: book syncs · web shows all
     status: waiting
@@ -117,7 +117,8 @@ items:
     steps:
       - Cloud bought or granted
       - relaunch
-    result: upload starts by itself
+      - "*Move {book} to the cloud?* → *Move to cloud* (or *Keep offline*, J-BOOK-42)"
+    result: upload runs on the *Moving*/*Uploading* page
     tests:
       - file: test/features/cloud_tier/claim_book_use_case_test.dart
         name: Cloud later uploads a moved book from `retenanted`, and its local stretch ends with it

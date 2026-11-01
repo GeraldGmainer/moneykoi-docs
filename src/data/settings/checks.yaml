@@ -27,3 +27,7 @@ groups:
         text: "No account, email left empty → sent → admin inbox row reads *no account* · dev server without the migration → error, draft kept"
       - id: C-SET-012
         text: "Web: budget spent exactly to its cap → left *0.00*, never *−0.00* · chart axis at 999,950 → *1.0M*, not *1000.0k* · investment quantity 100 at scale 0 → *100*, not *1*"
+      - id: C-SET-013
+        text: About → *Open-source licenses* → koi mark, *Money Koi*, version · Inter, Poppins, Noto Sans JP, AssetGlyphs open with their license text · German + Japanese titles
+      - id: C-SET-014
+        text: Profile → *Language* row → Deutsch → page and drawer German at once · Settings → *Language* shows Deutsch · restart keeps it · back to English the same way · phone, tablet and landscape

@@ -5,8 +5,8 @@ items:
     title: Starts the demo
     from: first-run Welcome
     steps:
-      - "*Look around with sample data*"
-      - spinner on the button
+      - "*Try demo mode*"
+      - spinner in place of the link
       - Home with months of data
     result: demo book + banner
     tests:

@@ -11,6 +11,8 @@ items:
     tests:
       - file: test/core/notifications/notification_service_test.dart
         name: a permission request is refused without asking
+      - file: test/core/notifications/notification_service_ios_test.dart
+        name: switching reminders on asks for alert, badge and sound
   - id: R-NTF-02
     group: The five rules
     title: Everything is local

@@ -42,6 +42,14 @@ items:
     answer: |
       - yes · for a book without an account only
       - Cloud books sync to Supabase (EU) · never claim it there
+  - id: D-PRIV-9
+    question: Crash reports on by default, or asked first?
+    status: decided
+    date: 2026-10-28
+    answer: |
+      - **stay on by default** · off in Privacy & legal → Crash reports · switching off = objection (Art. 21)
+      - confirms the risk call of 2026-10-14 · consent (asked at first start) is the safer route under § 165 TKG
+      - the lawyer reads it (S-25 of the site, T-MON-05)
   - id: D-PRIV-8
     question: "Self-hosting: your data, your server?"
     status: open

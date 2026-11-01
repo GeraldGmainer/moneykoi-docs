@@ -33,3 +33,41 @@ items:
       - ⚖️ · must leave again with the Nov 8 upload
       - recommended: no · the app's *Get Cloud free* row + the site carry it
     related: [T-PLAT-07, T-PLAT-08]
+  - id: D-PLAT-5
+    question: A Cupertino look on iOS?
+    status: open
+    answer: |
+      - recommended: **no fork** · the app is its own design (KoiScaffold, cards, Inter), not stock Material · Apple reviews behavior, not widget style
+      - a Cupertino tree doubles widgets, 10k tests, screenshots, docs
+      - done 2026-10-29 without a fork: dark system sheets + keyboard + status bar, a tap on empty space closes the keyboard, the launch screen centred, music keeps playing through the onboarding clips (R-PLAT-03, C-PLAT-015–017)
+      - still a device pass after TestFlight: `.adaptive` dialogs and spinners, native date/time pickers, swipe-back on every route
+    related: [T-PLAT-10]
+  - id: D-PLAT-6
+    question: Sign in with Apple?
+    status: decided
+    date: 2026-10-29
+    answer: |
+      - yes: App Review 4.8 wants Apple's login next to Google's · built 2026-10-29 (R-ACC-67): Apple's button first on iPhone, `signInWithIdToken` with a nonce, the name kept, a closed sheet is no error
+      - left for Gerald: the Apple provider in Supabase dev + prod with both bundle ids as client ids, the capability on the App ID (automatic signing adds it), the profile-name migration (T-PLAT-10)
+      - Google stays the browser flow: its native SDK was dropped from the iOS build (it clashed with the scanner's ML Kit libraries)
+    related: [T-PLAT-10, R-ACC-67]
+  - id: D-PLAT-7
+    question: Export compliance answer for TestFlight?
+    status: decided
+    date: 2026-11-01
+    answer: |
+      - launch **without France** · untick done in Pricing and Availability 2026-11-01
+      - the app uses HTTPS and AES-256 for passphrase backups · both standard algorithms
+      - the AES runs in Dart (`archive`), not in iOS → Apple's table: *industry standard algorithm, not provided within the OS*
+      - that row → French encryption declaration, only if sold in France
+      - set 2026-11-01: `ITSAppUsesNonExemptEncryption = false` in `Info.plist` → the question stops from the next build · build 37 stays manual
+      - without France → no document needed · `false` stays · ⚖️ Apple puts liability on the developer
+      - France later: T-PLAT-12
+    related: [T-PLAT-10, T-PLAT-12]
+  - id: D-PLAT-8
+    question: Ship on iPad too?
+    status: open
+    answer: |
+      - the target allows iPad (tablet layouts exist) · costs a 13" screenshot set per language + review on iPad
+      - recommended: **keep** · the share sheet already anchors on iPad · drop only if the screenshot set is not worth a day
+    related: [T-PLAT-10]

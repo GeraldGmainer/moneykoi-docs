@@ -30,6 +30,32 @@ groups:
       - id: C-INV-011
         text: Pick from the hidden tail → back → group still expanded
 
+  - id: web
+    title: On the web
+    items:
+      - id: C-INV-040
+        text: 'List: *Holdings* / *Performance* / *Allocation* tabs · *Returns* card · *Movers* opens on 1M, its tabs leave the chart alone'
+      - id: C-INV-041
+        text: 'Detail: chart opens on 1M · row 1M 3M 1Y 5Y All · a 2nd buy at a flat price reads 0 %'
+      - id: C-INV-042
+        text: 'New position: nothing picked, Save off · *Show all* in a long class · pick a glyph, switch asset → glyph kept'
+      - id: C-INV-043
+        text: 'Gold: g/oz/kg chips convert the typed amount · Bitcoin: no chips, no fineness · edit: no unit chips'
+      - id: C-INV-044
+        text: 'Transaction on a gram position: type in oz → saved in g · total ↔ price · gift *Value when received*'
+      - id: C-INV-045
+        text: 'Edit a position: Save stays off until something changes'
+
+  - id: guards
+    title: Oversell + transfers (app and web)
+    items:
+      - id: C-INV-050
+        text: 'Sell dated before the first buy → "Only 0 … held" on the quantity, nothing saved'
+      - id: C-INV-051
+        text: 'Transfer 10 g onto an ounce position → arrives as 0.32 oz t · a counted position is not offered'
+      - id: C-INV-052
+        text: 'Tap a transfer leg → read-only, no Save · delete → both legs gone, both positions recalculated'
+
   - id: wizard
     title: Investment wizard steps
     items:

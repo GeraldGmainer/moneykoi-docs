@@ -37,8 +37,36 @@ items:
     group: Saving
     title: Category doesn't exist
     when: keyword resolves to a missing bucket
-    then: Save refuses *category not found* · Categories hint prevents it
+    then: line → *Tap to categorise* · Save waits for a pick · Categories hint warns ahead
+    status: fixed
     risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/scanner_intelligence_service_test.dart
+        name: a guess only a parent with subcategories matches leaves the line uncategorised
+  - id: E-SCN-08
+    group: Saving
+    title: Only a parent with subs matches
+    when: guess names a parent that has subs (German sub-category book · *Wohnen*, *Gesundheit*, *Transport*)
+    then: a fitting sub of that parent (*Möbel*, *Apotheke*, *Tanken*) · none → *Tap to categorise*, never a leaf elsewhere (D-SCN-04) · fixed 2026-10-27
+    status: fixed
+    risk: high
+    related: [R-LED-01, R-SCN-03, D-SCN-04]
+    tests:
+      - file: test/features/receipt/domain/services/scanner_intelligence_service_test.dart
+        name: never resolves to a parent that has subcategories
+      - file: test/features/receipt/domain/services/scanner_intelligence_service_test.dart
+        name: a parent whose subs are all hidden still takes no line
+  - id: E-SCN-09
+    group: Saving
+    title: Restaurant scan re-picked to its own dining sub
+    when: German book · restaurant scan · user picks *Auswärts essen* or another sub of the dining parent
+    then: venue stays a restaurant · only a pick outside that branch unlearns it · fixed 2026-10-27
+    status: fixed
+    risk: medium
+    related: [R-SCN-10]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+        name: a pick inside the branch Dining resolves to keeps the venue a restaurant
   - id: E-SCN-05
     group: Saving
     title: Long receipts + retakes
@@ -53,3 +81,19 @@ items:
     status: known-issue
     risk: medium
     related: [E-BKG-23]
+  - id: E-SCN-10
+    group: Saving
+    title: Photo with its boxes on an iPad
+    when: iPad · scan review · tap the photo tile (*Photo #1 · 6 items*)
+    then: the photo runs past the dialog's bottom · 113 px on a 13" iPad · clipped in a release build · found by the App Store screenshot run 2026-11-01 · open
+    status: known-issue
+    risk: low
+    related: [E-SCN-11]
+  - id: E-SCN-11
+    group: Reading
+    title: iPhone reads one line fewer than Android
+    when: iOS · the website's demo receipt *Markt am Eck* imported from the gallery
+    then: 6 of 7 items · *Joghurt natur 250g 0,99* missed · *Math mismatch* by 0.99 · Android reads all 7 · found by the App Store screenshot run 2026-11-01 · not yet checked on a real iPhone · open
+    status: known-issue
+    risk: medium
+    related: [E-SCN-10]

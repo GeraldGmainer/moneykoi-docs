@@ -17,3 +17,12 @@ items:
     status: decided
     date: 2026-10-17
     answer: Show *not available yet* · all currencies without 2 decimals (R-SCN-12)
+  - id: D-SCN-04
+    question: "A guess names a parent with subs: where does the line go, and does the hint warn?"
+    status: decided
+    date: 2026-10-27
+    answer: |
+      - look for a fitting sub inside that parent · none → no category, picked in review
+      - never a leaf outside that parent
+      - the parent covers its bucket · no hint
+    related: [R-LED-01, R-LED-20, E-SCN-08]

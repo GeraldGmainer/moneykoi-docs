@@ -23,6 +23,12 @@ groups:
         text: "Small_Phone, Free → drawer: *Settings* on screen without scrolling · scroll → *Pro features* + *Get Pro*, 4 dimmed pages · German + Japanese: button not clipped"
       - id: C-HOM-016
         text: "Web, window ≤ 900 px tall (1440×900) → sidebar footer one row: *Add Booking* + 2 icon squares, keys in tooltips · taller → stacked · collapsed → rail · phone drawer stacked"
+      - id: C-HOM-018
+        text: "Web Home, month anchor ≠ 1 → *Cash flow* pill → menu under the pill, dates follow the anchor, current ticked · pick *Last 6 months* → figures reload, pill renamed · reload → kept · *Customize* shows it · *Forecast* pill → horizons · *More settings* → the card's sheet · phone width: menu on screen · arrow keys + Enter work"
+      - id: C-HOM-017
+        text: "*Getting started* → tap the circle of *Scan a receipt* → ticked, count goes up, next item expands · tap again → open · a data-ticked item's circle does nothing · restart → still ticked · tick the last open item → *All set* + Undo restores the list · row still opens its feature"
+      - id: C-HOM-019
+        text: Budget Book, Analytics, Goals on a phone → scroll down → header gone behind a plain strip · nothing under the clock
   - id: widgets
     title: Android widgets
     setup: HOME_WIDGET §12 · what only a person can judge
@@ -39,3 +45,5 @@ groups:
         text: Change category icon/color → widget updates · archive → placeholder · reboot → still there
       - id: C-HOM-008
         text: "`adb shell bmgr backupnow` + restore → categories kept · dev + prod → two picker entries"
+      - id: C-HOM-020
+        text: App open → pin a balance, budget, goal or shopping widget → tap it → widget fills · no *Tap to open the app once* left

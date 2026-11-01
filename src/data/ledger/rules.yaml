@@ -8,8 +8,14 @@ items:
       - parent with subs = container · nothing books onto it
       - bookings, rules, planned payments → a sub
       - a budget may cap a parent · only leaves can be favorites
-    source: CATEGORY §1, §6a
+      - scanner + quick booking never guess one · hidden subs still count
+      - all subs hidden → gone from booking pickers (D-LED-4)
+    source: CATEGORY §1, §6a · SCANNER §4.9
     tests:
+      - file: test/features/category/domain/category_entity_test.dart
+        name: a parent with subcategories is not bookable, even when every sub is hidden
+      - file: test/features/booking/service/category_filter_service_test.dart
+        name: is not offered as a leaf, in either view or in search
       - file: test/features/category/domain/category_entity_test.dart
         name: parent with subcategories cannot be favorited
   - id: R-LED-02
@@ -64,6 +70,18 @@ items:
     tests:
       - file: test/features/category/ui/pages/category_parent_save_page_test.dart
         name: the same name is fine under the other type
+  - id: R-LED-09
+    group: Categories
+    title: Totals on the category screens
+    text: |
+      - all-time · a parent includes its subs
+      - expense → *Spent* · income → *Income*
+      - web: income since 2026-10-28 · shares compare a card with its own side only
+    source: CATEGORY · CATEGORIES_WEB §4 rule 7
+    tests:
+      - file: src/app/(main)/categories/components/category-card.test.tsx
+        repo: web
+        name: shows an income category its total income, with its share of the income side
   - id: R-LED-07
     group: Categories
     title: Hide = new entries only
@@ -109,12 +127,15 @@ items:
     title: Warns before a scan would fail
     text: |
       - hint per receipt bucket with no expense category
+      - a parent with subs covers its bucket · no hint even when no sub fits (D-SCN-04)
       - *Create "…"* pre-filled · dismiss = 7 days per book
       - owners + admins only
     source: CATEGORY §8a
     tests:
       - file: test/features/category/domain/service/scanner_category_coverage_service_test.dart
         name: matches as loosely as scan time does, so a near miss is not flagged
+      - file: test/features/category/domain/service/scanner_category_coverage_service_test.dart
+        name: a parent with subcategories covers its bucket even when no sub fits, so its lines stay blank unhinted
       - file: test/features/category/domain/service/scanner_coverage_snooze_test.dart
         name: snoozing hides a bucket for the snooze duration and no longer
     related: [R-SCN-03]

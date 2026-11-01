@@ -44,8 +44,12 @@ items:
       - starter categories come classified
       - no account → fully offline · invitees skip it
       - *Quick Start*: one tap · 4 accounts, 48 categories, no balances → Home keeps *Set starting balances*
+      - signed in with the wrong account → *Log out* on the first step (web since 2026-10-28)
     source: OFFLINE_TIER §3, ONBOARDING §1, ONBOARDING_WEB §1
     tests:
+      - file: src/app/onboarding/page.test.tsx
+        repo: web
+        name: logs out on this device from the first step and goes to the login page
       - file: test/features/onboarding/domain/service/onboarding_initial_state_factory_test.dart
         name: maps an English locale to USD
       - file: test/features/onboarding/domain/service/category_generation_service_test.dart
@@ -178,6 +182,19 @@ items:
       - web: only *Simulate an ended subscription*
     source: MONETIZATION §3b, APP_SHELL_WEB §6a
     related: [R-MON-53]
+  - id: R-SET-42
+    group: Support
+    title: Open-source licenses
+    text: |
+      - About → *Open-source licenses* · app only
+      - every pub package · bundled fonts + icon set: Inter, Poppins, Noto Sans JP, AssetGlyphs
+      - native Android/iOS libraries (ML Kit, RevenueCat, Sentry) not listed
+    source: MONETIZATION §8 (9)
+    tests:
+      - file: test/main/service/bundled_licenses_test.dart
+        name: every font file under assets/fonts has a registered license
+      - file: test/features/settings/ui/pages/about_page_test.dart
+        name: the licenses row opens the license list with the app version
   - id: R-SET-40
     group: Copy
     title: Three languages, one voice
@@ -187,3 +204,15 @@ items:
       - labels: no period · 2+ sentences: every one
     source: CLAUDE.md (UX copy)
     related: [R-PLAT-24, R-PLAT-25]
+  - id: R-SET-43
+    group: Settings
+    title: Changelog's update row opens this platform's store
+    text: |
+      - Android → the Play page · iOS → the App Store page (Apple ID `6829288599`, set 2026-10-31)
+      - the paywall's *Update app* button opens the same page
+    source: AppUrls.storeListing, 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target
+    tests:
+      - file: test/core/constants/app_urls_test.dart
+      - file: test/features/settings/ui/pages/changelog_page_test.dart
+        name: on iOS the update row opens the App Store page
+    related: [E-PLAT-03, T-PLAT-10]

@@ -27,6 +27,8 @@ groups:
         text: New book's **first** booking → onboarding card gone at once
       - id: C-ACC-007
         text: "*I already use Money Koi* → new account → setup step 1 → *Log out* → Welcome · sign in again → setup from step 1"
+      - id: C-ACC-084
+        text: "Welcome, regular phone → koi in a soft glow · three key points in one row · only *Get started* orange, *Free, no account needed* under it · *Try demo mode* and *I already use Money Koi* as white links · in de / ja a key point that wraps stays centred under its icon"
 
   - id: claim
     title: Back up & sync (the claim)

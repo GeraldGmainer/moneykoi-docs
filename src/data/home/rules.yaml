@@ -147,10 +147,23 @@ items:
     group: Web shell
     title: "Web dashboard: 17 card types"
     text: |
-      - own layout · *Customize* · settings only in the editor
+      - own layout · *Customize* · every card's settings in the editor
+      - a card's pill (its range · the forecast's horizon) opens a menu under it, no dialog · each range shows its dates · a pick is saved at once
+      - the pill menu's *More settings* → that card's settings · cards without a pill: the editor only
+      - summary tiles open *Balance* · *Analytics* for that month · all time
       - default = the app's without quick add · add it from *Customize* · it sits in a column
       - no cash-flow sheet · 3 cards need a server migration
-    source: web 02_FEATURES (DASHBOARD §1, §4.11)
+    source: web 02_FEATURES (DASHBOARD §1, §4.11, §4.20)
+    tests:
+      - file: src/app/(main)/dashboard/components/card-pill-menu.test.tsx
+        repo: web
+        name: drops the ranges from the pill and writes the pick into the card's config
+      - file: src/app/(main)/dashboard/components/card-pill-menu.test.tsx
+        repo: web
+        name: opens the card's settings from the menu, only when it has more than the range
+      - file: e2e/dashboard.spec.ts
+        repo: web
+        name: a card's range pill switches its range in place and saves it
   # New-user layer
   - id: R-HOM-40
     group: New users
@@ -158,7 +171,8 @@ items:
     text: |
       - only after setup on *this* phone · gone after 14 days, when done, or on ×
       - 5 items: first entry · scan · regular payment · monthly budget · widget (Android) · ticked from data, also from the web
-      - next open item expanded with its button · *All set* once, then gone · × has Undo
+      - tap an open item's circle → ticked by hand (skip) · tap again → open · a tick from data cannot be taken back
+      - next open item expanded with its button · *All set* once, then gone · × has Undo · hand-ticking the last item has Undo
       - never for a read-only member · an existing account on a new phone never sees it
     source: GETTING_STARTED §1–§3
     tests:
@@ -168,6 +182,10 @@ items:
         name: "ticks come from data: a booking, a scan, an active rule, an active budget, a placed widget"
       - file: test/features/getting_started/ui/getting_started_card_test.dart
         name: × dismisses with an undo
+      - file: test/features/getting_started/bloc/getting_started_cubit_test.dart
+        name: a hand tick skips an open item at once and records it; a second tap takes it back
+      - file: test/features/getting_started/ui/getting_started_card_test.dart
+        name: ticking the last open item by hand offers an undo
     related: [R-HOM-01, R-SET-12]
   - id: R-HOM-41
     group: New users

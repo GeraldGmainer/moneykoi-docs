@@ -5,7 +5,7 @@ groups:
     setup: Fresh install, or *Delete all data* first
     items:
       - id: C-DEMO-001
-        text: Welcome → *Look around with sample data* → Home full within ~2 s · banner at the bottom
+        text: Welcome → *Try demo mode* → spinner in place of the link → Home full within ~2 s · banner at the bottom
       - id: C-DEMO-002
         text: Every Home card shows data · Analytics, Forecast, Investments, Shopping open unlocked
       - id: C-DEMO-003

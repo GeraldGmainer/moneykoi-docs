@@ -22,6 +22,19 @@ items:
       - back from accounts → method choice, counter back to 2
     checks: [C-SET-005, C-SET-006, C-SET-007]
     related: [R-SET-12]
+  - id: J-SET-05
+    group: Setup
+    title: Switches the app language
+    from: Profile (drawer header or Settings → profile card) · or Settings → *Language*
+    steps:
+      - "Profile: *Language* row · English · Deutsch · 日本語 · one tap"
+      - "Settings: *Language* → sheet → pick"
+    result: whole app in the new language at once · this device only
+    tests:
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: a tap switches the app language and remembers it
+    checks: [C-SET-014]
+    related: [R-SET-02]
   - id: J-SET-04
     group: Support
     title: Looks up a feature

@@ -22,3 +22,21 @@ items:
     status: decided
     date: 2026-10-06
     answer: Never · **=** opens the missing From/To instead
+  - id: D-BKG-6
+    question: Balance corrections and opening balances in the ledger — and as income?
+    status: decided
+    date: 2026-10-28
+    answer: Listed in the Budget Book and the web ledger · never income or expense · the app still counts an opening balance as income (E-BB-10)
+    related: [R-BKG-53, E-BB-10]
+  - id: D-BKG-7
+    question: Ledger search on the web — wider than the app's?
+    status: decided
+    date: 2026-10-28
+    answer: No · description or merchant, as the app · names, amounts, dates have their own filters
+    related: [R-BB-06, R-BKG-50]
+  - id: D-BKG-8
+    question: Account filter — both ends of a transfer?
+    status: decided
+    date: 2026-10-28
+    answer: Yes · both balances move · the web already does · the app's source-only filter is to change (E-BB-11)
+    related: [R-BKG-50, E-BB-11]

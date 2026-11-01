@@ -108,9 +108,13 @@ items:
     group: Web
     title: Corrections in the web ledger
     when: balance check booked corrections
-    then: on balance check + dashboard, not `/bookings` · by design for now
-    status: by-design
+    then: listed in `/bookings` since 2026-10-28 · opens its check · counted as neither side (D-BKG-6)
+    status: fixed
     risk: low
+    tests:
+      - file: src/app/(main)/bookings/components/bookings-table.test.tsx
+        repo: web
+        name: names a balance correction and opens its balance check; no checkbox, no menu
   - id: E-BKG-25
     group: Booking form
     title: Favorite of the other type
@@ -121,3 +125,17 @@ items:
     tests:
       - file: test/features/booking/ui/modal/category_picker_modal_interaction_test.dart
         name: a pick of the other type switches the form type before reporting the category
+  - id: E-BKG-26
+    group: Booking form
+    title: Back or a tap as the keypad opens
+    when: "*New booking* · back, or a tap on another field, in the frame the keypad slides up · also recurring form, keypad amount fields"
+    then: |
+      - keypad closes or never shows · the form stays · no crash
+      - before 2026-10-31 a crash (Play pre-launch robot, `1.18.0+34`)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/ui/calculator/calculator_sheet_test.dart
+        name: closed in the frame it was opened in, it never shows and reports closed
+      - file: test/shared/ui/calculator/calculator_sheet_test.dart
+        name: a back press in the frame it was opened in does not throw

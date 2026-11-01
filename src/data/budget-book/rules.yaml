@@ -68,9 +68,10 @@ items:
     group: Views
     title: "Summary: categorized money only"
     text: |
-      - no transfers (net 0) · no corrections
-      - both still in Transactions + balances
-    source: BUDGET_BOOK §9 (decided 2026-10-04)
+      - no transfers (net 0) · no corrections · no opening balances (D-BKG-6)
+      - all still in Transactions + balances
+      - app still counts an opening balance as income (E-BB-10) · web doesn't
+    source: BUDGET_BOOK §9 (decided 2026-10-04, 2026-10-28)
     related: [R-BC-04]
   - id: R-BB-11
     group: Views

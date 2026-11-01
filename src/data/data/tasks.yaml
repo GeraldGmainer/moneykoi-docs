@@ -13,6 +13,17 @@ items:
     detail: |
       - uncommitted: `settings.json`, `photos/`, passphrase
       - review + commit in `moneykoi-supabase`
+  - id: T-DATA-04
+    title: Restore keeps the forecast settings · server
+    owner: gerald
+    detail: |
+      - `20261027150000_restore_forecast_sources.sql` · after `20261022120000_forecast_sources.sql`
+      - dev first (push `develop`), then the hand-run check (rolls back, prints PASS) · then prod the way 1.15.2 was applied
+      - until then a restore resets the five forecast settings (E-DATA-66)
+    command: |
+      cd moneykoi-supabase
+      psql "$DEV_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/restore_forecast_sources.sql
+      # prod: after the migration, the same check with $PROD_DATABASE_URL
   - id: T-DATA-03
     title: CSV formula injection
     owner: ai

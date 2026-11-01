@@ -92,5 +92,5 @@ items:
     title: "Web: one transaction + stale guard"
     text: |
       - balance moved after load → save refused
-      - corrections not in the web ledger · no reminder
+      - corrections listed in the web ledger, never counted (R-BKG-53) · no reminder
     source: RECONCILIATION §5, RECONCILIATION_WEB §9

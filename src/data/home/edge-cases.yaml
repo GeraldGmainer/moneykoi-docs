@@ -42,3 +42,20 @@ items:
     then: no error page · blank screen, no recovery
     status: known-issue
     risk: medium
+  - id: E-HOM-07
+    group: Widgets
+    title: Widget pinned while the app runs
+    when: balance, budget, goal or shopping widget placed with the app open · then tapped
+    then: the tap resumes the app → the widget fills · before 2026-10-28 it kept *Tap to open the app once* until a cold start or a data change
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home_widget/widget_snapshot_service_test.dart
+        name: a resume refreshes the placed widgets, so one pinned while the app ran fills on its tap
+  - id: E-HOM-08
+    group: Bar
+    title: Tab header under the status bar
+    when: Budget Book, Analytics or Goals tab scrolled down on a phone
+    then: the header scrolls away behind a plain status-bar strip · nothing shows under the clock · before 2026-10-28 the title and the menu button slid under it and the button could not be tapped
+    status: fixed
+    risk: low

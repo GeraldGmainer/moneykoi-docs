@@ -33,7 +33,7 @@ items:
       - prices per Pricing · family sharing **Pro on, Cloud off** (one-way)
       - launch price = scheduled price change with a real end date
       - en/de/ja · Server Notifications V2 → RevenueCat · sandbox testers · review note: how to reach the paywall
-      - App Store id → tell the next AI pass: *Update app* on the paywall needs it on iOS (E-MON-15)
+      - ✓ 2026-10-31: app record, Apple ID `6829288599` in the app (E-MON-15) · the 3 one-time products · group *Money Koi Cloud* with both subscriptions
   - id: T-MON-03
     title: Google · payments and products
     owner: gerald
@@ -62,9 +62,10 @@ items:
     title: Legal · terms, privacy, lawyer
     owner: gerald
     detail: |
-      - Terms: define "lifetime" + early adopters' "for life"
-      - privacy policy names RevenueCat · Sentry (opt-out) · anonymous price fetch · opt-in usage stats
+      - ~~Terms: define "lifetime" + early adopters' "for life"~~ · done 2026-10-28, terms 4 + 5: features as offered · bound to the account · 6 months' notice · Pro needs no server · no cash value
+      - ~~privacy policy names RevenueCat · Sentry (opt-out) · anonymous price fetch · opt-in usage stats~~ · done 2026-10-28 (T-PRIV-02)
       - lawyer, one hour: legal page + lapse + delete-account billing line
+      - and the 2026-10-28 asks (site `OPEN_DECISIONS.md` S-25): refund when Cloud lifetime ends — none stated · crash reports on by default · Cloud feature changes (§ 27 VGG) · 7 years for purchase events
       - and: every export Pro · free way out for server data? (D-DATA-13)
       - see [Legal](/monetization/legal/)
   - id: T-MON-06
@@ -94,6 +95,24 @@ items:
       - trade registered (T-MON-11) · build `--dart-define=MONETIZATION=true` · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
       - watch RevenueCat + store consoles: download-to-paid < 1.5 % · annual → lifetime · Y1 retention
       - no analytics SDK · until then only the simulator shows locks
+  - id: T-MON-25
+    title: Purchase data leaves with the account · server
+    owner: gerald
+    detail: |
+      - `moneykoi-supabase` `20261028140000_account_delete_purchase_data.sql` · dev first (push `develop`), prod before Nov 8
+      - Vault, per project: RevenueCat → Project settings → API keys → new **secret** key (V1, `sk_…`) · never the `goog_…` key
+      - then the daily purge (cron) and the hand-run check (rolls back, prints PASS)
+      - check once on dev: delete a test account that opened the plans → RevenueCat dashboard no longer finds the customer
+      - check once: Pro bought, account deleted, *Restore Pro purchase* on a fresh install still brings Pro back
+      - until the key is in Vault, a deletion only warns and skips RevenueCat · the stripping works without it (D15)
+    command: |
+      -- SQL editor, dev then prod
+      select vault.create_secret('sk_…', 'revenuecat_secret_key');
+      select cron.schedule('store-event-purge-daily', '27 3 * * *', 'select internal.store_event_purge()');
+      # then
+      cd moneykoi-supabase
+      psql "$DEV_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/account_delete_purchase_data.sql
+    related: [D15]
   - id: T-MON-09
     title: Google · launch discount from Nov 8
     owner: gerald

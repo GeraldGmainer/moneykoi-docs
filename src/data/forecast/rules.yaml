@@ -235,7 +235,40 @@ items:
     group: Web
     title: "Web: same engine"
     text: |
-      - port in integer thousandths
+      - port in integer thousandths · same numbers as the app since 2026-10-27
+      - recurring income + bills apart · income estimate · monthly figures · pay rule · accounts that count
+      - sources sheet: coverage, *Last n months*, every row opens its calculation · committed bar opens safe to spend
       - settings sheet: owners + admins
+      - planned-item review since 2026-10-28 (R-FC-41) · not on the web: alerts, accuracy line
       - budget period from server clock · rule with deleted account still projected
     source: FORECAST_WEB §7
+    tests:
+      - file: src/app/(main)/forecast/lib/calculation-specs.test.ts
+        repo: web
+        name: every summing sheet adds up to its row
+  - id: R-FC-41
+    group: Web
+    title: "Web: planned payments to check"
+    text: |
+      - same review as the app: ±5 days · 15 % · same category or one level up/down · never automatic
+      - card right under the hero, only when something needs an answer
+      - match: *Yes, that's it* · *Not this booking* · overdue: *Book it now* · *Move to another date* · *It didn't happen* · each with Undo
+      - repeating plan: settles that one date, the series keeps running · no *Move*
+      - *Book it now* opens booking entry in a new tab, prefilled (title, category, amount, date) → *Mark as happened* retires it
+      - *Not this booking* is remembered per browser and per book, like the app's per device
+      - *Move* has no paywall on the web (no Pro gate there)
+    source: FORECAST_WEB §4 rule 31, §7
+    related: [R-FC-30, E-FC-21]
+    tests:
+      - file: src/app/(main)/forecast/lib/item-matcher.test.ts
+        repo: web
+        name: rule-generated bookings, transfers and balance corrections are never candidates
+      - file: src/app/(main)/forecast/services/forecast.service.test.ts
+        repo: web
+        name: "a repeating item settles only that date, through its own exdates — never a rule's"
+      - file: src/app/(main)/forecast/components/item-review.test.tsx
+        repo: web
+        name: '"book it now" opens the booking form in a new tab and retires the item only when it is marked as happened'
+      - file: src/app/(main)/forecast/page.test.tsx
+        repo: web
+        name: '"not this booking" is remembered on this device, per book, and the suggestion leaves at once'

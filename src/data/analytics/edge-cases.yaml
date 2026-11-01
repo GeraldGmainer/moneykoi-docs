@@ -34,3 +34,13 @@ items:
     status: known-issue
     risk: medium
     related: [T-ANL-01]
+  - id: E-ANL-06
+    group: Numbers
+    title: Amounts in sentences and labels
+    when: money format differs from the app language · e.g. English app, `1.234,56 €`
+    then: insights, chart centres and legends, the Home budget card, the quick-booking chip and the balance-check snackbar follow the money format, like every other amount · the quick-booking date chip follows the date format · before 2026-10-28 they followed the app language
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/currency/extensions/currency_formatting_extension_test.dart
+        name: follows the money format, not the app language

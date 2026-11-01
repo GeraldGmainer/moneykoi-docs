@@ -6,3 +6,23 @@ items:
     then: no update past 1.16.x
     status: by-design
     risk: medium
+  - id: E-PLAT-02
+    group: Builds
+    title: Reinstall on iPhone keeps the keychain
+    when: app deleted and installed again on the same iPhone
+    then: |
+      - the Supabase session and the old PIN hash survive (iOS keychain) · the app opens signed in
+      - app lock is off: its switch is a pref, which the uninstall did wipe · a new PIN overwrites the old hash
+      - Android starts clean
+    status: by-design
+    risk: low
+  - id: E-PLAT-03
+    group: Builds
+    title: iOS build lags the Android release
+    when: Android 1.x is out, the same iOS version still in review, the App Store id set
+    then: |
+      - the changelog on iOS shows *update available* with the store page still on the old build
+      - the `upgrader` prompt stays quiet (it reads the store's version)
+    status: known-issue
+    risk: low
+    related: [R-SET-43]

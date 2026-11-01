@@ -121,9 +121,9 @@ items:
     title: iPhone below the version floor
     when: an iOS build below `min_app_version`
     then: |
-      - *New version needed* shows, **no** *Update app* button
-      - button needs the App Store id (T-MON-02)
-    status: known-issue
+      - *New version needed* shows · *Update app* opens the App Store page
+      - the button arrived with the App Store id, 2026-10-31
+    status: fixed
     risk: low
   - id: E-MON-16
     group: Paywall & store
@@ -283,3 +283,15 @@ items:
       - happened in internal build `1.17.1+32` · fixed 2026-10-19: `.env` loads first
     status: fixed
     risk: high
+  - id: E-MON-53
+    group: Paywall & store
+    title: Phone without Play billing
+    when: paywall on an emulator, a phone without a Google account, or purchases barred
+    then: |
+      - *store unavailable* + retry · Free, Pro and Cloud cards still shown
+      - no crash report · before 2026-10-31 each open sent one
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/monetization/data/revenue_cat_purchase_gateway_test.dart
+        name: a device without billing is the store unavailable, a warning kept out of the crash reports

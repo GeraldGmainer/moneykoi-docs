@@ -91,6 +91,8 @@ groups:
     items:
       - id: C-DATA-050
         text: Web backup (passphrase) → restore in app · app backup → restore on web · both compare
+      - id: C-DATA-053
+        text: "Forecast: bills off, *Spent per month* 300, income estimate *off* → web backup → restore in app (and the reverse) → all three kept"
       - id: C-DATA-051
         text: "Web book export → 14 CSVs + README · member: no export"
       - id: C-DATA-052

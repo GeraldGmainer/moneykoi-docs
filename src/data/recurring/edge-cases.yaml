@@ -23,14 +23,14 @@ items:
     group: Web
     title: "Web: moved start date"
     when: web *Make recurring*, start date moved
-    then: later → first never made · earlier → booked twice · app pins it · not reproduced
-    status: known-issue
+    then: fixed 2026-10-28 · the cursor is the booking's own date, as the app pins it · a later start no longer skips its first occurrence
+    status: fixed
     risk: high
   - id: E-REC-05
     group: Web
     title: Web amount separators
     when: "`1,250.00` or German `1.500`"
-    then: rejected or 1.5 · 3-decimal loses a digit · open
+    then: rejected or 1.5 · open · the 3rd decimal is kept since 2026-10-28 (rounds to the book's currency, as the app)
     status: known-issue
     risk: medium
   - id: E-REC-06

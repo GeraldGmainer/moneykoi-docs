@@ -96,10 +96,18 @@ items:
     title: Every line needs a category
     text: |
       - unresolved → *Tap to categorise* · **no** silent "Other"
+      - guess names a parent with subs → a fitting sub inside it · none → blank · never the parent (D-SCN-04)
       - Save off until: all categorized + sum = total + account picked
       - Categories page warns ahead
-    source: SCANNER §4.15d, CATEGORY §8a
-    related: [R-LED-20]
+    source: SCANNER §4.9, §4.15d, CATEGORY §8a
+    related: [R-LED-01, R-LED-20]
+    tests:
+      - file: test/features/receipt/domain/services/scanner_intelligence_service_test.dart
+        name: never resolves to a parent that has subcategories
+      - file: test/features/receipt/domain/services/scanner_intelligence_service_test.dart
+        name: a guess only a parent with subcategories matches leaves the line uncategorised
+      - file: test/features/receipt/domain/services/scanner_intelligence_service_test.dart
+        name: a guess naming a parent stays inside it, even when a leaf elsewhere would fit
   - id: R-SCN-07
     group: Review & save
     title: One booking per line
@@ -129,11 +137,13 @@ items:
     title: The scanner learns
     text: |
       - category fixes remembered on the device · quick booking uses them
-      - restaurant venue learned from its QR
+      - restaurant venue learned from its QR · a pick outside the dining category unlearns it
     source: SCANNER §4.21, QUICK_BOOKING §3
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
         name: recategorising a restaurant scan away from Dining learns it is not one
+      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+        name: a pick inside the branch Dining resolves to keeps the venue a restaurant
   - id: R-SCN-20
     group: Accuracy
     title: Measured on real receipts

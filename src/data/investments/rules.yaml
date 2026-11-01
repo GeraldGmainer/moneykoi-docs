@@ -155,3 +155,55 @@ items:
     text: positions readable + banner · add/edit → paywall
     source: MONETIZATION §3a (D9)
     related: [R-MON-20]
+
+  # On the web
+  - id: R-INV-40
+    group: On the web
+    title: "Web: same pages, same numbers (2026-10-27)"
+    text: |
+      - list: hero · *Holdings* / *Performance* / *Allocation* tabs · *Returns* card (realized, ROI, invested, income, fees)
+      - *Movers*: own period, opens on 1M · 1M–5Y = the asset's move · *All* from the position's first day held
+      - detail: 1M chart · period row 1M…All net of money in/out, over the whole holding
+      - new position: pick an asset or *Custom asset* first · *Show all* past 8 · glyph follows the asset until picked
+      - unit fixed after create · metals g/kg/oz only · fineness for metals · manual price only where no feed prices
+      - transaction: total ↔ unit price · g/oz/kg entry, saved in the position's unit · gift *Value when received*
+      - no Pro gate: the web opens only Cloud books
+      - web extra: value-vs-cost chart on *Performance*
+    source: INVESTMENTS_WEB §7
+    tests:
+      - file: src/app/(main)/investments/lib/period-change.test.ts
+        repo: web
+        name: a price rise is measured on the capital at work, a buy weighted by how long it was invested
+      - file: src/app/(main)/investments/lib/movers.test.ts
+        repo: web
+        name: measures "All" from the first day the position held anything, not from the series start
+      - file: src/app/(main)/investments/[id]/page.test.tsx
+        repo: web
+        name: reads every period at once over the whole holding, whatever the chart shows
+      - file: src/app/(main)/investments/page.test.tsx
+        repo: web
+        name: lays the portfolio out in three tabs, holdings first
+      - file: src/app/(main)/investments/components/position-form-sheet.test.tsx
+        repo: web
+        name: moves the glyph with the asset until one is picked, then keeps the pick
+    related: [R-INV-22, R-INV-04]
+  - id: R-INV-41
+    group: What you hold
+    title: Sells + transfers can't oversell any day
+    text: |
+      - checked against the lowest holding from that day on, not today's total
+      - transfer only between same-measure positions · a weight arrives converted (10 g → 0.32 oz t)
+      - transfer leg read-only, deleted as a pair
+      - app + web the same since 2026-10-28 · web still books the cash before the trade
+    source: INVESTMENTS §4.5, §11 (2026-10-28) · INVESTMENTS_WEB §4.3, §4.11
+    tests:
+      - file: test/features/investment/domain/services/sellable_test.dart
+        name: keeps room for a later sell that must still fit
+      - file: test/features/investment/domain/services/transfer_and_rebalance_test.dart
+        name: lands a weight converted into the destination unit, its basis unchanged
+      - file: test/features/investment/ui/pages/transaction_save_page_flow_test.dart
+        name: "a transfer leg opens read-only: the pair is only deleted as a whole"
+      - file: src/app/(main)/investments/lib/sellable.test.ts
+        repo: web
+        name: keeps room for a later sell that must still fit
+    related: [E-INV-10]

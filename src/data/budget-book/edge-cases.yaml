@@ -65,6 +65,22 @@ items:
     then: no day grouping · no day/week calendar · outcome total tinted (open)
     status: known-issue
     risk: low
+  - id: E-BB-10
+    group: Counts
+    title: Opening balance counted as income
+    when: account has a starting balance in the period · Summary or calendar
+    then: |
+      - app adds it to income · analytics doesn't · web lists it, counts neither (D-BKG-6)
+      - app to change: the virtual row carries an income category
+    status: known-issue
+    risk: medium
+  - id: E-BB-11
+    group: Filters
+    title: Account filter misses incoming transfers
+    when: filter by Savings · a transfer Checking → Savings
+    then: app hides it (source account only) · web shows it · app to change (D-BKG-8)
+    status: known-issue
+    risk: low
   - id: E-BB-07
     group: Web
     title: Web dates west of UTC

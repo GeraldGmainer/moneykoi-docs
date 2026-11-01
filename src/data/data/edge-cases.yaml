@@ -14,6 +14,23 @@ items:
     tests:
       - file: test/features/backup/backup_archive_extras_test.dart
         name: a first entry that does not decrypt reads as a wrong passphrase, whatever archive says
+  - id: E-DATA-66
+    group: Backup & restore
+    title: Forecast settings lost in backup and restore
+    when: income or bills switched off, a monthly figure typed, or the income estimate set → backup → restore
+    then: |
+      - fixed 2026-10-27 · app, web and server keep all five
+      - was: a restore reset them to the defaults · an app backup read from the server wrote the defaults · a web backup left them out
+      - restore needs `20261027150000_restore_forecast_sources.sql` on the server (T-DATA-04)
+    status: fixed
+    risk: medium
+    related: [E-FC-16]
+    tests:
+      - file: test/features/forecast/data/forecast_data_layer_test.dart
+        name: name their table, columns and delete RPC and parse a row
+      - file: src/lib/backup/backup-row-codec.test.ts
+        repo: web
+        name: carry every forecast setting, the split recurring flags and both monthly figures too
   - id: E-DATA-02
     group: Backup & restore
     title: Passphrase with umlauts

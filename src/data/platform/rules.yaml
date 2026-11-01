@@ -48,14 +48,16 @@ items:
     source: app CLAUDE.md
   - id: R-PLAT-24
     group: Copy
-    title: The app never addresses the user
+    title: App and web never address the user
     text: |
       - decided 2026-10-17 · all three languages read like Japanese UI
       - en: no *you / your* · de: no *du / dein*, never *Sie* · ja: no あなた
       - name the thing or the outcome: *Current plan*, *this phone*, *Delete this booking?*
       - buttons stay verbs: *Save goal* / *Ziel speichern* / *保存する*
-      - all copy converted 2026-10-21 · ≈590 keys + 105 German imperatives
-    source: app CLAUDE.md
+      - app copy converted 2026-10-21 · ≈590 keys + 105 German imperatives
+      - web copy converted 2026-10-28 · 401 en · 506 de · 27 ja keys · app wording reused where the message is the same
+      - web Japanese keeps ブック for a book (app: 帳簿)
+    source: app CLAUDE.md · web CLAUDE.md
   - id: R-PLAT-25
     group: Copy
     title: The name is *Money Koi*
@@ -90,6 +92,31 @@ items:
     title: iOS 15.5 minimum
     text: since 1.17.0, CocoaPods · iOS 15.0–15.4 can't update
     source: Trello item 13
+  - id: R-PLAT-03
+    group: Builds
+    title: "iOS: dev + prod, like Android"
+    text: |
+      - `--flavor prod` → *Money Koi*, `com.psyren.moneykoi` · `--flavor dev` → *Money Koi Dev*, `com.psyren.moneykoi.dev` · both on one iPhone
+      - no flavor = dev identity + dev backend · can't reach App Store Connect by accident
+      - same blue koi icon as Android on both
+      - permission texts (camera, photos, Face ID) in en/de/ja · the microphone one never shows
+      - test on an iPhone: the scanner libraries have no Apple-silicon simulator build
+      - system sheets, keyboard and status bar dark like the app (no light theme yet) · a tap on empty space closes the keyboard
+      - launch screen: the koi centred at the Android size
+    source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target
+    tests:
+      - file: test/ios/ios_project_test.dart
+    related: [T-PLAT-10, C-PLAT-006]
+  - id: R-PLAT-04
+    group: Releases
+    title: "iOS publishing: testflight → promote"
+    text: |
+      - `./publish.sh ios testflight` · build + release notes → TestFlight internal testers
+      - `./publish.sh ios promote` · the same build → the App Store version · submit for review in App Store Connect
+      - `./publish.sh ios appstore` skips TestFlight · `ios metadata` = listing text alone
+      - the build runs outside fastlane's bundler, so Flutter's `pod install` works without CocoaPods in the Gemfile (first run 2026-10-31)
+    source: app README.md (Publish to the App Store), ios/fastlane/Fastfile
+    related: [T-PLAT-10]
   - id: R-PLAT-02
     group: Builds
     title: "Android backup: DB + prefs"

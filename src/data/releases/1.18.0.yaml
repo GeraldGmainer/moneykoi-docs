@@ -21,12 +21,12 @@ items:
     title: Sample data · demo mode
     area: demo
     what: |
-      - Welcome → *Look around with sample data* · empty phone only
+      - Welcome → *Try demo mode* · empty phone only
       - several books · every feature unlocked · banner at the bottom
       - *Start a real book* / *Leave demo* → everything deleted
-    checks: [C-DEMO-001, C-DEMO-002, C-DEMO-004, C-DEMO-005, C-DEMO-021, C-DEMO-030]
+    checks: [C-DEMO-001, C-DEMO-002, C-DEMO-004, C-DEMO-005, C-DEMO-021, C-DEMO-030, C-ACC-084]
     related: [R-DEMO-01, R-DEMO-05, R-DEMO-12, J-DEMO-01]
-    screens: [welcome_page.dart, welcome_demo_button.dart, demo_banner.dart, leave_demo_flow.dart]
+    screens: [welcome_page.dart, welcome_link_button.dart, demo_banner.dart, leave_demo_flow.dart]
   - n: 3
     title: Setup · Personalize in six steps
     area: settings

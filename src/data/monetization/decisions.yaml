@@ -28,6 +28,27 @@ items:
       - Cloud for life ends the same instant (E-ADOPT) · launch price from day one (D4)
       - Gerald: "on nov 8, i want to earn money"
     related: [T-MON-08, T-MON-24]
+  - id: D14
+    question: Refund if Money Koi Cloud ends
+    status: decided
+    date: 2026-10-28
+    answer: |
+      - **pro rata over 5 years** from a Cloud lifetime purchase · the upgrade from Pro too · e.g. ends after 3 years → 40 % back
+      - after 5 years nothing is owed · early adopters paid nothing, so nothing back
+      - not chosen: no refund (lawyer may call it unfair, § 879 ABGB) · full refund within 2 years
+      - in the terms (4) since 2026-10-28 · the lawyer reads it (T-MON-05)
+      - paid by Gerald directly: the store's refund windows are long closed by then
+    related: [T-MON-05]
+  - id: D15
+    question: Purchase data when an account is deleted
+    status: decided
+    date: 2026-10-28
+    answer: |
+      - our server: user ID, aliases, transaction IDs stripped at once · product, date, price, country kept 7 years (tax law) · a daily purge
+      - RevenueCat: the customer is deleted with the account, from the server
+      - not chosen: delete the rows with the account · keep the full payload · RevenueCat on request only · never
+      - privacy policy 11 says so · server steps T-MON-25
+    related: [T-MON-25, R-ACC-50]
   - id: D4
     question: Launch window end date
     status: decided

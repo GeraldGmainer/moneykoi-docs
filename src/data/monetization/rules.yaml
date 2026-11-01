@@ -467,11 +467,16 @@ items:
     title: Upgrade entry opens on the plan
     text: |
       - drawer *Get Pro* / *Get Cloud* → plan overview on top
+      - drawer *Pro features* row → same Pro overview · also while *Get Cloud free* hides the button
       - disc · *Money Koi Pro* / *Money Koi Cloud* · one-line promise
       - 2 columns: every live feature · Cloud starts with *Everything in Pro*
       - stays at the top · no scroll · from a lock → that feature instead
-    source: §7 (decided 2026-10-21, D10)
+    source: §7 (decided 2026-10-21, D10; *Pro features* row 2026-10-31) · NAVIGATION §8
     tests:
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: 'Free: tapping the Pro features row itself opens the paywall on the Pro overview'
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: during the early-adopter offer the Pro features row has no button but still opens the Pro overview
       - file: test/features/monetization/ui/paywall_page_test.dart
         name: 'Get Pro opens on an overview of Pro: its name, its promise and every Pro feature'
       - file: test/features/monetization/ui/paywall_page_test.dart

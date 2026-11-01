@@ -43,21 +43,91 @@ items:
     group: Web
     title: Web still stacks the bill on the whole-book cap
     when: same book opened on the web
-    then: web line lower than the app's from next month on · port pending
-    status: known-issue
+    then: |
+      - fixed 2026-10-27 · web claims every enclosing cap, as the app does
+      - was: web line lower than the app's from next month on
+    status: fixed
     risk: high
     related: [E-FC-14]
+    tests:
+      - file: src/app/(main)/forecast/lib/forecast-engine.test.ts
+        repo: web
+        name: 'a bill inside a sub-budget consumes the whole-book cap too: a complete month closes exactly one cap lower'
   - id: E-FC-16
     group: Web
     title: Web reads the old recurring toggle only
     when: app switched bills off, income on
     then: |
-      - web shows the one toggle **on** · counts bills too
-      - no income estimate, no monthly figures, no pay rule, no counted accounts on the web
-      - port pending (plan phase 4)
-    status: known-issue
+      - fixed 2026-10-27 · web reads and writes both toggles · old toggle off still switches both off
+      - income estimate, monthly figures, pay rule, counted accounts now on the web too
+    status: fixed
     risk: medium
     related: [E-FC-15]
+    tests:
+      - file: src/app/(main)/forecast/services/forecast.service.test.ts
+        repo: web
+        name: reads each recurring direction through the old single toggle, as the app does
+      - file: src/app/(main)/forecast/lib/forecast-engine.test.ts
+        repo: web
+        name: 'switch separately: bills off keeps the salary, income off keeps the rent'
+  - id: E-FC-18
+    group: Web
+    title: Web counted a changed occurrence on top of its booking
+    when: '*Change this one* on a rule, then the server books that occurrence early'
+    then: |
+      - fixed 2026-10-27 · the real booking replaces the change, as in the app since 2026-10-07
+      - was: both counted on the web until the date passed
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/forecast/lib/forecast-engine.test.ts
+        repo: web
+        name: an amount override stops counting once the rule materialised that occurrence
+  - id: E-FC-19
+    group: Line
+    title: Month breakdown left out the income estimate
+    when: income estimate on (auto with income history, or *Received per month*)
+    then: |
+      - fixed 2026-10-27 in app + web · *Income* includes the estimate · net = month tile
+      - was: breakdown net lower than the tile
+    status: fixed
+    risk: low
+    related: [E-FC-01]
+    tests:
+      - file: test/features/forecast/ui/forecast_more_widgets_test.dart
+        name: the income estimate is income too, so the net still equals the month net
+      - file: src/app/(main)/forecast/lib/month-breakdown.test.ts
+        repo: web
+        name: the income estimate is income too, so the net still equals the month net
+  - id: E-FC-20
+    group: Line
+    title: Loans breakdown hid a lent loan
+    when: a lent loan next to a borrowed one, loans row tapped
+    then: |
+      - fixed 2026-10-27 in app + web · the lent loan is its own + line · the lines add up to the row
+      - was: lent repayment missing, taken off the largest borrowed loan (car loan −150 shown as −50)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/forecast/ui/calculation_specs_test.dart
+        name: a lent loan is its own line, paid back to the book, and the sheet still adds up
+      - file: src/app/(main)/forecast/lib/calculation-specs.test.ts
+        repo: web
+        name: a lent loan is its own line, paid back to the book, and the sheet still adds up
+  - id: E-FC-21
+    group: Web
+    title: "*Book it now* on the web retires on a second click"
+    when: overdue planned payment → *Book it now* on the web
+    then: |
+      - booking entry opens in a new tab, prefilled: title, category, side, amount, planned date
+      - retired on *Mark as happened*, not on save · the app retires it on save
+    status: known-issue
+    risk: low
+    related: [R-FC-41]
+    tests:
+      - file: src/app/(main)/forecast/components/item-review.test.tsx
+        repo: web
+        name: 'hands /add the title, category, amount and the planned date'
   - id: E-FC-17
     group: Line
     title: Restore keeps the five new settings at defaults

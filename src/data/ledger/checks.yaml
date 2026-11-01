@@ -13,6 +13,8 @@ groups:
         text: No Snacks category → hint · *Create* pre-filled · dismiss → gone 7 days
       - id: C-LED-005
         text: Fixed on a parent → sub *Same as parent* · Analytics + Budget Book filter agree
+      - id: C-LED-012
+        text: Old booking on a parent that has subs → quick booking never picks that parent · hide all its subs → parent gone from the pickers
   - id: accounts
     title: Accounts
     items:
