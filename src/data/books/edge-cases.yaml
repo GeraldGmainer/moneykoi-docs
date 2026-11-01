@@ -124,3 +124,82 @@ items:
     then: "web offers *Remove* → server refuses · app: plain members only"
     status: known-issue
     risk: low
+
+  # Offline books
+  - id: E-BOOK-40
+    group: Offline books
+    title: Stuck inside an offline book
+    when: an offline book is open · the open book does not sync
+    then: switcher chip, Home avatar tap and Settings › Books stay (they need any book of the account to sync, not this one) · same fix for a free member inside their own local book
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: inside the offline book the account still syncs somewhere, so the switcher stays
+  - id: E-BOOK-41
+    group: Offline books
+    title: Kept offline, but registered before
+    when: a free account's own book or a restored own book is kept offline on *Keep offline*
+    then: its empty server row stays (the last own book cannot be deleted) but is flagged `is_offline` · hidden on the web, not Cloud, never listed on another phone · *Move to cloud* reuses it instead of creating a second book · offline, *Keep offline* asks again next launch
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: "a kept book comes back on its own server row: flagged back, no second book, nothing moved"
+      - file: test/features/book/domain/service/book_members_service_offline_test.dart
+        name: lists the offline books this phone holds, never one kept on another phone of the account
+    related: [D-BOOK-5, T-BOOK-04]
+  - id: E-BOOK-43
+    group: Offline books
+    title: Nothing generated inside an offline book
+    when: an offline book is open · relaunch, resume, day change
+    then: recurring bookings, reminders and the budget watcher run as in a book without an account · before the 2026-10-27 review only saving a rule generated anything
+    status: fixed
+    risk: high
+    tests:
+      - file: test/app/lifecycle/session_life_cycle_manager_test.dart
+        name: the session runs the local materializer on start and on resume, and never pulls the book
+  - id: E-BOOK-44
+    group: Offline books
+    title: Deleting a kept book
+    when: a book kept offline after a join or restore is deleted
+    then: its flagged server row goes too, so the 3-book cap gets the slot back · the last server book is refused as always
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/book/use_cases/delete_book_use_case_test.dart
+        name: a kept book takes its flagged server row with it, so the cap gets the slot back
+  - id: E-BOOK-45
+    group: Offline books
+    title: Keep offline after a partial upload
+    when: an upload stopped half way · Cloud later · *Keep offline*
+    then: refused (`BOOK_NOT_EMPTY`) · snack says part of the book is already in the cloud and *Move to cloud* finishes it · asked again next launch
+    status: by-design
+    risk: low
+    tests:
+      - file: test/app/ui/supabase_container_test.dart
+        name: a book partly uploaded already cannot stay offline, and the snack says Move to cloud finishes it
+    related: [D-BOOK-6]
+  - id: E-BOOK-46
+    group: Offline books
+    title: Limit with a book kept on another phone
+    when: phone B shows 2 own books, a third is kept offline on phone A
+    then: "*New book* or *Move to cloud* refused · message: limit reached, counting books kept offline on another phone · web: same, *New book* disabled at three"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/book/use_cases/create_book_use_case_test.dart
+        name: the server cap says whether books kept on another phone are counted
+      - file: test/features/book/ui/pages/book_page_test.dart
+        name: the cap on a move to the cloud names books kept on another phone
+    related: [D-BOOK-6]
+  - id: E-BOOK-42
+    group: Offline books
+    title: Killed while moving to the cloud
+    when: the app dies after the server book exists and before the upload page
+    then: the book waits as one owing its upload · the next launch asks *Move {book} to the cloud?* · nothing is lost
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: creates the server book, marks it, moves the rows and the bottom bar onto it, opens it and hands the upload to the claim

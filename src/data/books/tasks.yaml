@@ -22,3 +22,14 @@ items:
       - 3: `tenant_member` fallback in accounts, shopping, recurring
       - 7: writes right after a switch → previous book
       - no prompt written yet
+  - id: T-BOOK-04
+    title: Deploy the offline-book flag
+    owner: gerald
+    detail: |
+      - order: migration first, then the app · the web reads `tenant.is_offline` and, since 2026-10-28, falls back to listing every book on a server without the column, so it may ship before or after
+      - `moneykoi-supabase`: commit `20261027120000_offline_books.sql` and push `develop` (dev), `main` with the app release that ships offline books (prod)
+      - then `psql "$DEV_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/offline_books.sql` (prod: `$PROD_DATABASE_URL`)
+      - `moneykoi-web`: deploy the build that hides `is_offline` books after the migration is on that project
+      - until the server has the RPC, *Keep offline* leaves a plain empty book the web lists, and *Move to cloud* uploads a kept book as a new one (E-BOOK-41)
+    related: [E-BOOK-41, D-BOOK-5]
+

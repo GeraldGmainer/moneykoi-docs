@@ -223,6 +223,45 @@ items:
       - file: test/features/book/bloc/book_members_cubit_test.dart
         name: creator badges only show other people in a shared book with company
 
+  # Offline books
+  - id: R-BOOK-60
+    group: Offline books
+    title: An offline book never leaves the phone
+    text: |
+      - Cloud account only · wizard kind step: *Offline book* · *Cloud book* · *Shared book*
+      - no server row, no name on the server, not on the web, not on another phone
+      - hidden on logout like every book · wiped with *Delete account*
+      - features inside = the owner's own tier (a Cloud owner: the Pro set)
+      - counts toward the 3 created books on this phone
+      - badge *Offline book* / *Cloud book* / *Upload pending* on every card and switcher row of a Cloud account · *Upload pending* = moved under the account, never uploaded
+      - rename, currency, delete: on the phone · no book photo · recurring bookings generated on the phone
+      - a kept book (join, restore) keeps an empty server row, flagged `is_offline` → not Cloud, hidden on the web, never listed on another phone, reused when it moves to the cloud, deleted with the book
+      - *Delete*: a book created offline anytime · a book the server holds only while the server holds another (R-BOOK-05)
+      - limit message names books kept offline on another phone (hidden there, still counted) · app and web
+    source: BOOK §9
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: keeps an offline book local whatever the owner pays for
+      - file: test/features/book/use_cases/local_book_creator_test.dart
+        name: writes the book, its owner, then reads the owners, then the seed rows, and announces the book
+      - file: test/features/book/ui/widgets/book_card_test.dart
+        name: a Cloud account sees where each book lives (BOOK_AI_CONTEXT.md §9)
+    related: [R-BOOK-04, R-MON-03]
+  - id: R-BOOK-61
+    group: Offline books
+    title: Offline → cloud, never back
+    text: |
+      - *Move to cloud* on the card menu and the offline page · Cloud needed, else the paywall
+      - one-way confirm · everything uploads in chunks on the *Moving to the cloud* page
+      - at the server's cap: the limit message, nothing moves
+      - a kill mid-way: the next launch asks *Move {book} to the cloud?*
+    source: BOOK §9
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: creates the server book, marks it, moves the rows and the bottom bar onto it, opens it and hands the upload to the claim
+      - file: test/features/book/ui/book_card_menu_test.dart
+        name: only an offline book offers the move to the cloud (BOOK_AI_CONTEXT.md §9)
+
   # Web
   - id: R-BOOK-50
     group: Web

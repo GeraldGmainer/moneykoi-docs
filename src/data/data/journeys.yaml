@@ -22,8 +22,10 @@ items:
     steps:
       - "*Restore from a backup* → file"
       - preview + comparison
+      - "*Where the book goes*: *Cloud book* (default) or *Offline book*"
       - red confirm
-    result: new book "… (restored)" · photos follow
+    result: new book "… (restored)" · photos follow · an offline book stays on the phone
+    note: the offline pick is new (2026-10-27, BOOK §9)
     tests:
       - file: test/features/backup/restore_backup_use_case_test.dart
         name: a clean restore stages every row, applies once and opens the new book

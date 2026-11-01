@@ -16,7 +16,7 @@
   area: money
   tier: free
   web: partial
-  webNote: no income totals
+  webNote: no *Move to…* on the detail page
   docs: ledger
   note: parent/sub · income/expense · favorite · hide · move
 - id: bookings
@@ -71,7 +71,7 @@
   area: money
   tier: free
   web: partial
-  webNote: no duplicate guard, no alerts
+  webNote: no alerts
   docs: budgets
 - id: budget-calculator
   name: Budget calculator
@@ -91,7 +91,7 @@
   area: money
   tier: free
   web: partial
-  webNote: auto-deposits linked on the phone only
+  webNote: auto-deposits linked on the phone only · no date ↔ monthly calculator or Christmas preset
   docs: budgets
   note: milestones · what-if · round-ups · date ↔ monthly amount · Christmas preset
 - id: loans
@@ -143,7 +143,7 @@
   feature: forecast
   note: page, Home card, Analytics card
   web: partial
-  webNote: no nested-cap fix, income/bills split, income estimate, monthly figures, pay rule or counted accounts yet (E-FC-15, E-FC-16)
+  webNote: same calculation as the app since 2026-10-27 · planned-item review since 2026-10-28 (*Book it now* opens booking entry prefilled in a new tab, retired on *Mark as happened*) · no alerts or accuracy line
   docs: forecast
 - id: investments
   name: Investments
@@ -151,7 +151,7 @@
   feature: investments
   note: metals · crypto · currencies · readable after the plan
   web: parity
-  webNote: one form, no wizard
+  webNote: one form, no wizard · Performance tab also charts value vs. cost
   docs: investments
 - id: shopping-list
   name: Shopping lists
@@ -199,7 +199,7 @@
   tier: free
   note: periods · summary · transactions · filters · calendar
   web: partial
-  webNote: no day grouping
+  webNote: no day grouping or period paging · corrections + opening balances listed, counted as neither (app counts opening balances as income)
   docs: budget-book
 - id: budget-calendar
   name: Budget Book calendar
@@ -240,7 +240,7 @@
   tier: free
   note: picked at onboarding · free cards only
   web: partial
-  webNote: own layout · no quick add by default · settings in the editor
+  webNote: own layout · no quick add by default · range from the card's pill, settings in the editor
   docs: home
 - id: bottom-bar-default
   name: Bottom bar Home · Budget Book
@@ -258,7 +258,7 @@
   note: the whole tab locks
   since: Pro since 2026-10-17 · parts were free before
   web: partial
-  webNote: net worth without investments · no share image
+  webNote: no share image · no *Unlocks as you record*
   docs: analytics
 - id: analytics-custom-range
   name: Analytics custom date range
@@ -410,6 +410,22 @@
   area: sync
   feature: multipleBooks
   web: parity
+  docs: books
+- id: offline-books
+  name: Offline books · a book kept on this phone, never on the server
+  area: sync
+  feature: multipleBooks
+  note: Cloud accounts · promoted one-way to a cloud book · badge *Offline book* / *Cloud book*
+  web: app-only
+  webNote: never on the web, by design
+  docs: books
+- id: offline-books-pro
+  name: Offline books without an account (Pro) · several books on one phone
+  area: sync
+  tier: pro
+  status: planned
+  note: phase 2 of offline books · after the Nov 8 paywall release (D-BOOK-6)
+  web: app-only
   docs: books
 - id: switch-books
   name: Switching books

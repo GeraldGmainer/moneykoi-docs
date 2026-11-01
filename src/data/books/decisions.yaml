@@ -31,3 +31,20 @@ items:
     question: Export a non-active book?
     status: decided
     answer: No · may be stale · hint *switch to this book* · never auto-switch
+  - id: D-BOOK-5
+    question: Offline books — where do they live, who gets them, what about a kept book's server row?
+    status: decided
+    answer: |
+      - 2026-10-27: Cloud accounts only (Pro without an account is phase 2) · phone only, no server row, not on the web, not on another phone
+      - count toward the 3 created books · promotion one-way, needs Cloud · labels *Offline book* / *Cloud book*
+      - a kept book (join or restore) that stays offline keeps its empty server row — the last own book cannot be deleted, so the row is flagged (`set_book_offline`, 2026-10-27): hidden on the web, not Cloud, reused by *Move to cloud*
+    related: [R-BOOK-60, R-BOOK-61, E-BOOK-41, T-BOOK-04]
+  - id: D-BOOK-6
+    question: Offline books — the four open points after the review
+    status: decided
+    answer: |
+      - 2026-10-28 · *Keep offline* after a partial upload: explain with a snack, keep asking
+      - a book that owes its upload: badge *Upload pending*, not *Cloud book*
+      - a book kept on another phone at the limit: the limit message names it
+      - phase 2 (Pro without an account, several offline books): after the Nov 8 paywall release
+    related: [E-BOOK-45, E-BOOK-46, R-BOOK-60]

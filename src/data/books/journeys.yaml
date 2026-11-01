@@ -9,7 +9,7 @@ items:
     steps:
       - Book page → *New book*
       - name + currency
-      - private or shared
+      - "*Offline book* · *Cloud book* · *Shared book*"
       - starter set or empty
     result: new book opens + confirmation
     tests:
@@ -217,3 +217,48 @@ items:
     result: shared books gone
     checks: [C-BOOK-004]
     related: [J-ACC-40]
+
+  # Offline books
+  - id: J-BOOK-40
+    group: Offline books
+    title: Creates an offline book
+    from: Cloud account
+    steps:
+      - Book page → *New book* → name + currency
+      - "*Offline book*"
+      - starter set or empty
+    result: opens · badge *Offline book* · nothing sent anywhere
+    tests:
+      - file: test/features/book/ui/pages/create_book_page_test.dart
+        name: the offline card submits a private book kept on this phone (BOOK_AI_CONTEXT.md §9)
+      - file: test/features/book/use_cases/create_book_use_case_test.dart
+        name: is written on the phone and opened, with nothing sent to the server
+    checks: [C-BOOK-040, C-BOOK-041]
+  - id: J-BOOK-41
+    group: Offline books
+    title: Moves an offline book to the cloud
+    from: owner, Cloud account, online
+    steps:
+      - card ⋮ → *Move to cloud* · or the offline page's button
+      - one-way confirm
+      - "*Moving to the cloud* · chunked upload"
+    result: a cloud book · on the web and every device · badge *Cloud book*
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: creates the server book, marks it, moves the rows and the bottom bar onto it, opens it and hands the upload to the claim
+      - file: test/features/cloud_tier/claim_book_use_case_test.dart
+        name: a promotion names its book and its purpose, whichever book the record lists first (BOOK_AI_CONTEXT.md §9)
+    checks: [C-BOOK-042, C-BOOK-043]
+  - id: J-BOOK-42
+    group: Offline books
+    title: Cloud arrives for a kept book
+    from: free account's own book, kept on the phone · Cloud bought or granted
+    steps:
+      - "*Move {book} to the cloud?*"
+      - "*Move to cloud* · *Keep offline* · *Decide later*"
+    result: upload, or an offline book, or the next launch asks again
+    tests:
+      - file: test/features/cloud_tier/offline_book_test.dart
+        name: flags the server row first, then the book, and drops its pause marker and its attached record
+    checks: [C-BOOK-044]
+    related: [J-ACC-13, D-BOOK-5]

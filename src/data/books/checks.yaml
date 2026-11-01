@@ -60,3 +60,24 @@ groups:
         text: Form footer creator avatar = 20 px (was 16)
       - id: C-BOOK-033
         text: Invite link on a fresh phone → sign in → loading screen only, no language/currency/method step → *Join* → shared book active · Home checklist ticks from its entries · Books list shows the private book with the starter set
+
+  - id: offline-books
+    title: Offline books
+    setup: Cloud account A with one cloud book
+    items:
+      - id: C-BOOK-040
+        text: New book → *Offline book* → quick start → opens with the starter set · card badge *Offline book*, the cloud book's reads *Cloud book* · switcher rows say the same · web and a second phone of A never list it
+      - id: C-BOOK-041
+        text: In the offline book → bookings, a recurring rule (occurrences appear on relaunch), a receipt photo (stays on the phone), rename, currency change · no pending badges · switcher and Settings › Books still open · log out → log in → the book is back
+      - id: C-BOOK-042
+        text: Card ⋮ → *Move to cloud* → confirm → *Moving to the cloud* with counts → main · badge *Cloud book* · web shows everything · airplane mode mid-upload → *Try again* resumes · kill mid-upload → relaunch → *Move {book} to the cloud?* → *Move to cloud* finishes
+      - id: C-BOOK-043
+        text: Three created books (any mix) → *New book* reads the limit · *Move to cloud* with 3 cloud books on the server → the limit message, the book stays offline
+      - id: C-BOOK-045
+        text: Cloud account, a book that owes its upload → *Decide later* → card and switcher read *Upload pending* · after *Move to cloud* they read *Cloud book*
+      - id: C-BOOK-046
+        text: Upload stopped half way (airplane mode) → *Continue offline* → relaunch → *Keep offline* → snack *Part of this book is already in the cloud…* · asked again next launch · *Move to cloud* finishes it
+      - id: C-BOOK-047
+        text: Phone A keeps a book offline · phone B with 2 own books → *New book* → limit message names books kept offline on another phone · web *New book* disabled, same line
+      - id: C-BOOK-044
+        text: Free account B with a kept book → grant Cloud → relaunch → *Move {book} to the cloud?* · *Keep offline* → badge *Offline book*, Settings shows no *Finish backup* · *Decide later* → asked again on the next launch · delete the offline book → gone from this phone only
