@@ -1,0 +1,10 @@
+# Source: iOS simulator round 2026-11-02 (moneykoi-app .agents/plans/IOS_SIMULATOR_FINDINGS_PLAN.md).
+items:
+  - id: D-REC-1
+    question: Default day of a new monthly rule
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - the start date's day · created on the 2nd → *Every month on day 2*
+      - *Make recurring* keeps taking the booking's date
+      - source: iOS simulator round, IOS-12-2

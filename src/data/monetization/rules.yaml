@@ -162,7 +162,7 @@ items:
     text: |
       - plan ends → records stay **readable**
       - only create + edit lock
-      - investments, shopping lists → read-only + banner + *See plans* (D9)
+      - investments, shopping lists, forecast → read-only + banner + *See plans* (D9, D18)
     source: §3 rule 5, §3a
     tests:
       - file: test/features/investment/ui/pages/investments_page_test.dart

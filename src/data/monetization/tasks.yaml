@@ -113,6 +113,18 @@ items:
       cd moneykoi-supabase
       psql "$DEV_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/account_delete_purchase_data.sql
     related: [D15]
+  - id: T-MON-26
+    title: Give the agent a real store and dev access
+    owner: gerald
+    detail: |
+      - the 2026-11-01 round ran on the test store · no real purchase, refund or webhook seen
+      - F1 + F2 fixes need it: webhook delay, what a refund looks like (C-MON-075, C-MON-076)
+      - connect the Supabase MCP on dev: the session had none
+      - `.env.dev`: `REVENUECAT_API_KEY_IOS` + a sandbox tester · or allow a read-only prod-flavor paywall run
+      - a throwaway dev account, or OK to use `member2`: claim, join, early-adopter grant
+      - RevenueCat → App Store Server Notifications on: Apple refunds of Pro arrive only that way
+      - check prod has `20261023120000_early_adopter_cutover_nov_8.sql` before Nov 8: not checked
+    related: [D16, D17, E-MON-54, E-MON-55]
   - id: T-MON-09
     title: Google · launch discount from Nov 8
     owner: gerald

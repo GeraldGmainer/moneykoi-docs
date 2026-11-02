@@ -56,3 +56,11 @@ items:
     answer: |
       - idea from the Trello board
       - no plan yet · decide if it is worth one
+  - id: D-PRIV-10
+    question: Turning app lock off or changing the PIN
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - asks for the current PIN or Face ID / fingerprint first
+      - applies to turning a method off and to *Change PIN*
+      - source: iOS simulator round, IOS-8-3

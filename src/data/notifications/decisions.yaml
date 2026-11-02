@@ -12,3 +12,11 @@ items:
     question: Synced or per-device switches?
     status: decided
     answer: Synced · per-device override later if needed
+  - id: D-NTF-4
+    question: Where does a tap on a notification land?
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - on its subject: *Over budget* → that budget · bill reminder → the rule / upcoming · goal or loan → its page · forecast alert → Forecast
+      - backup reminder keeps its route · the inbox rows stay untappable
+      - source: iOS simulator round, IOS-9-1

@@ -195,6 +195,23 @@ items:
         name: every font file under assets/fonts has a registered license
       - file: test/features/settings/ui/pages/about_page_test.dart
         name: the licenses row opens the license list with the app version
+  - id: R-SET-44
+    group: Support
+    title: Price data sources
+    text: |
+      - About → *Price data sources* · app only · every plan
+      - one row per price kind on the phone → its provider's site
+      - follows the synced prices · a server cutover needs no release
+      - no prices downloaded → *No prices on this phone yet*
+    source: INVESTMENTS §7d, supabase INVESTMENT_PRICES §13.3
+    related: [R-INV-20]
+    tests:
+      - file: test/features/settings/ui/pages/about_page_test.dart
+        name: the row opens the provider of every price on this phone
+      - file: test/features/settings/ui/pages/about_page_test.dart
+        name: once ECB rates are on the phone the exchange rates quote the ECB
+      - file: test/features/investment/domain/services/price_credits_test.dart
+        name: a provider without a credit, an unknown asset or a hand-priced class names nobody
   - id: R-SET-40
     group: Copy
     title: Three languages, one voice

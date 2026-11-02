@@ -19,11 +19,10 @@ items:
   - id: T-OFF-01
     title: Unskip 3 conflict tests that pass
     owner: ai
+    status: done
     detail: |
-      - EC-SYNC-2 ×2 + EC-SYNC-3 ×1 still marked `skip`
-      - all 3 pass with `--run-skipped` · fixed 2026-09-23
-    prompt: |
-      In moneykoi-app/test/edge_cases/offline_conflict_edge_cases_test.dart, three tests carry a `skip:` for EC-SYNC-2 (two) and EC-SYNC-3 (one), but they pass since saveAllNotSynced stopped overwriting rows the outbox owns (OFFLINE_FIRST_AI_CONTEXT.md §6 step 4, 2026-09-23). Verify with `flutter test --run-skipped test/edge_cases/offline_conflict_edge_cases_test.dart`, remove those three skips and their EC comments, and mark EC-SYNC-2/3 fixed in .agents/reports/edge-cases-2026-09.md. Leave EC-SYNC-1 and EC-SYNC-4 skipped — they still fail. Then link the three tests from E-OFF-04 / E-OFF-05 in ../moneykoi-docs/src/data/offline/edge-cases.yaml.
+      - **done 2026-11-02** · EC-SYNC-2 ×2 + EC-SYNC-3 ×1 un-skipped · fixed 2026-09-23
+      - linked from E-OFF-04 / E-OFF-05 · EC-SYNC-1 and EC-SYNC-4 still skipped
   - id: T-OFF-02
     title: Clear the ghost after a stale push
     owner: ai

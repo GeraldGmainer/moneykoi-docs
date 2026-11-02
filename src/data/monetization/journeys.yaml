@@ -207,7 +207,7 @@ items:
     from: Cloud with investments and shopping lists
     steps:
       - plan ends
-      - investments, shopping lists → read-only + *See plans*
+      - investments, shopping, forecast → read-only + *See plans*
       - add, edit → paywall
     result: nothing hidden, nothing new
     note: Decided 2026-10-17 (D9) · no records → paywall as before
@@ -235,8 +235,9 @@ items:
     from: Local Pro
     steps:
       - store revokes it
-      - next store read or webhook clears Pro
+      - daily store read finds it gone · same customer
     result: new Pro records lock · old ones readable
+    note: Decided 2026-11-01 (D17) · no real refund run yet (C-MON-076)
   - id: J-MON-55
     group: Lapse & downgrade
     title: Long lapse

@@ -1,6 +1,6 @@
 # Source: OFFLINE_FIRST_AI_CONTEXT.md §3a, §5–§7, §12; .agents/reports/edge-cases-2026-09.md (EC-SYNC-1…4);
 # test/edge_cases/offline_conflict_edge_cases_test.dart run with --run-skipped on 2026-10-17
-# (EC-SYNC-2 and EC-SYNC-3 pass, EC-SYNC-1 and EC-SYNC-4 still fail).
+# (EC-SYNC-2 and EC-SYNC-3 pass, un-skipped 2026-11-02; EC-SYNC-1 and EC-SYNC-4 still fail).
 # E-ACC-30…37 moved here from accounts on 2026-10-17 and keep their ids.
 items:
   # Conflicts
@@ -57,6 +57,8 @@ items:
     tests:
       - file: test/core/offline_first/data_sources/local_data_source_test.dart
         name: saveAllNotSynced keeps a pending delete hidden instead of resurrecting it
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: a delta pull before the delete is pushed keeps the booking hidden
     related: [T-OFF-01]
   - id: E-OFF-05
     group: Conflicts
@@ -68,6 +70,10 @@ items:
     tests:
       - file: test/core/offline_first/data_sources/local_data_source_test.dart
         name: saveAllNotSynced never overwrites a row the outbox still owns
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: a delta pull does not overwrite the unsynced local edit
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: 'pull first, then flush: device and server end on the same text'
     related: [R-ACC-12, T-OFF-01]
 
   # Peer timing

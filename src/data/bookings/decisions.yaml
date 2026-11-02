@@ -40,3 +40,11 @@ items:
     date: 2026-10-28
     answer: Yes · both balances move · the web already does · the app's source-only filter is to change (E-BB-11)
     related: [R-BKG-50, E-BB-11]
+  - id: D-BKG-9
+    question: iOS edge swipe on a form with unsaved changes?
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - blocked while the form has changes · the *×* asks *Discard / Keep editing*
+      - a clean form swipes back like any page
+      - source: iOS simulator round, IOS-2-1

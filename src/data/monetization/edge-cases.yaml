@@ -295,3 +295,104 @@ items:
     tests:
       - file: test/features/monetization/data/revenue_cat_purchase_gateway_test.dart
         name: a device without billing is the store unavailable, a warning kept out of the crash reports
+  - id: E-MON-54
+    group: Paywall & store
+    title: Cloud bought, nothing unlocked
+    when: signed-in free account buys Cloud · webhook not there yet
+    then: |
+      - was: paywall closes silently · plan row + locks stay
+      - fixed 2026-11-01: features on at once for 10 minutes
+      - sync waits for the server · *Sync starts soon*
+      - real webhook delay not measured (C-MON-075)
+    status: fixed
+    risk: high
+    related: [D16, C-MON-075, T-MON-26]
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: unlocks at once, announces it, and leaves sync to the server
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: asks the server again until the webhook has landed, then stops
+  - id: E-MON-55
+    group: Downgrade & lapse
+    title: Refunded Pro stayed
+    when: Pro or Cloud lifetime refunded by the store
+    then: |
+      - was: Pro never left the phone
+      - fixed 2026-11-01: same store customer without Pro → Pro off
+      - other customer or failed read → Pro stays
+      - no real refund run yet (C-MON-076)
+    status: fixed
+    risk: high
+    related: [D17, C-MON-076, T-MON-26]
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: from the customer who held it is a refund
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: from another customer keeps Pro
+  - id: E-MON-56
+    group: Downgrade & lapse
+    title: Forecast items out of reach
+    when: planned payments made on Pro · plan ends
+    then: |
+      - was: paywall only · no way to the items
+      - fixed 2026-11-01: page opens read-only · D7's actions reachable
+    status: fixed
+    risk: medium
+    related: [D7, D18, C-MON-034]
+    tests:
+      - file: test/shared/ui/drawer/app_drawer_test.dart
+        name: after the plan ends, planned payments open read-only instead of the paywall
+      - file: test/features/forecast/ui/forecast_pages_test.dart
+        name: after the plan ends the page stays readable
+  - id: E-MON-57
+    group: Gates
+    title: Tips skipped read-only
+    when: Free with records · *Tips & features* → that tip
+    then: was paywall · fixed 2026-11-01 → read-only, as the drawer
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/getting_started/ui/tips_page_test.dart
+        name: a locked row with records opens the page read-only
+  - id: E-MON-58
+    group: Downgrade & lapse
+    title: Former subscriber read *Cloud ended*
+    when: own Cloud ended · active book is Cloud through its owner
+    then: was *Cloud ended, sync is paused* · fixed 2026-11-01 → *Cloud through {book}*
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/monetization/data/entitlement_service_test.dart
+        name: a former subscriber standing in a Cloud book reads it through the book
+  - id: E-MON-59
+    group: Paywall & store
+    title: Back from the claim lost the paywall
+    when: no account · Cloud plan picked · buy → claim intro → back
+    then: was Home, pick gone · fixed 2026-11-01 → paywall, pick kept
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: buying Cloud without an account goes to the claim first
+  - id: E-MON-60
+    group: Paywall & store
+    title: Trial hid when billing starts
+    when: yearly with a trial picked
+    then: |
+      - was: renewal note only · App Review asks for it
+      - fixed 2026-11-01: *then €24.99 per year · billing starts when the trial ends*
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a trial says when billing starts
+  - id: E-MON-61
+    group: Paywall & store
+    title: Simulated lapse wider than a real one
+    when: developer mode · *Simulate an ended subscription* in a shared Cloud book
+    then: |
+      - features lock · book keeps syncing
+      - a real lapse keeps the features there
+      - dev tool only · left as is
+    status: by-design
+    risk: low

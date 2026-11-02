@@ -77,3 +77,20 @@ items:
     question: Import presets, QIF, remembered mappings
     status: dropped
     answer: Dropped 2026-10-03 · no preset without a real sample file
+  - id: D-DATA-14
+    question: Currency column in the bookings CSV export
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - the ISO code (`USD`, `EUR`), not the symbol `$`
+      - the import has no currency field, so files keep importing
+      - source: iOS simulator round, IOS-5-7
+  - id: D-DATA-15
+    question: Bank CSV without a category column
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - **replaces D11** (no category column → no import)
+      - allowed · each row gets a category guessed from payee and description, same engine as quick booking and the scanner
+      - rows without a guess are picked by hand in *Review*
+      - source: iOS simulator round, IOS-11-1

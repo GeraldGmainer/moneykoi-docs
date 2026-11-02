@@ -27,6 +27,8 @@ items:
   - id: T-DATA-03
     title: CSV formula injection
     owner: ai
-    detail: Open in web `csv.ts` `field()` + app encoder (review-2026-09, item 10)
-    prompt: |
-      Prefix every text cell that starts with =, +, -, @, a tab or a CR with ' in the app's CsvEncoder and in moneykoi-web src/lib/export/csv.ts field(); leave numeric columns untouched. Add tests on both sides, including that bookings.csv still re-imports through the booking import (booking_export_round_trip_test.dart).
+    status: done
+    detail: |
+      - **done 2026-11-02** · app `CsvEncoder.guard` + backup `bookings.csv` · web `csv.ts` `field()` (review-2026-09, item 10)
+      - number columns stay raw · declared per table (`numericColumns`) · `-12.5` stays a number
+      - import strips the `'` again, app + web · E-PRIV-43, R-DATA-52

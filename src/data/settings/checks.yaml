@@ -31,3 +31,5 @@ groups:
         text: About → *Open-source licenses* → koi mark, *Money Koi*, version · Inter, Poppins, Noto Sans JP, AssetGlyphs open with their license text · German + Japanese titles
       - id: C-SET-014
         text: Profile → *Language* row → Deutsch → page and drawer German at once · Settings → *Language* shows Deutsch · restart keeps it · back to English the same way · phone, tablet and landscape
+      - id: C-SET-015
+        text: About → *Price data sources* → metal, crypto, exchange-rate rows · each opens its provider's site · German + Japanese titles

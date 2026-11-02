@@ -62,7 +62,11 @@ items:
   - id: T-INV-10
     title: About → data sources entry in the app
     owner: ai
-    detail: ECB · gold-api.com · later Coinranking · en/de/ja · after open translation work is committed
+    status: done
+    detail: |
+      - **done 2026-11-02** · About → *Price data sources* · en/de/ja · R-SET-44
+      - names the providers of the prices on the phone · today gold-api.com · CoinGecko · metals.dev
+      - ECB replaces metals.dev at the FX cutover (T-INV-06) · Coinranking needs one app entry first (T-INV-08)
   - id: T-INV-01
     title: Turn currency positions on
     owner: gerald

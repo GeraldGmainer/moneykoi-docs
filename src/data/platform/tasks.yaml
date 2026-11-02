@@ -80,7 +80,7 @@ items:
       - before Nov 1: fresh prod sign-up gets Cloud · else cut the Cloud paragraph + `family` frame
       - ⚖️ read: *stored only on the phone* · *never sold* · *servers in the EU*
       - `ja` names no scanner: yen books have none (R-SCN-12) · quick booking takes the scanner's place · Home still shows the scan tile (D-SCN-03)
-      - screenshots re-shot 2026-11-01: Home first, scanner third, Pro / Cloud badges on Stats and shared books — the App Store order
+      - screenshots re-shot 2026-11-01: Home first, scanner third, Pro / Cloud badges on Stats and shared books — the App Store order · 7" and 10" tablet sets added (6 frames each, `sevenInchScreenshots/`, `tenInchScreenshots/`)
       - D-PLAT-3 clears the upload check · Data safety + deletion URL first (T-PRIV-03, site S-04)
       - then `fastlane production` ships listing + build · from then on the repo **is** the listing
       - steps in order: `ASO_STORE_LISTING_PLAN.md` §15a
@@ -94,12 +94,11 @@ items:
   - id: T-PLAT-08
     title: Name the plans in the listing on Nov 8
     owner: ai
+    status: done
     detail: |
-      - with the 1.20.0 release · paywall live
-      - one paragraph per language above *What Money Koi does not do*
-      - text ready: `ASO_STORE_LISTING_PLAN.md` §5.4
-    prompt: |
-      Insert the three "Free, Pro and Cloud" paragraphs from ASO_STORE_LISTING_PLAN.md §5.4 into android/fastlane/metadata/android/{de-DE,en-US,ja-JP}/full_description.txt, each above the "Was Money Koi nicht macht" / "What Money Koi does not do" / "Money Koi がしないこと" heading, separated by a blank line. Re-read the plan's §1.2 first: if a plan's content changed, fix the paragraph. Check every file stays ≤ 4000 characters, mark §5.4 done in the plan, hand Gerald the git block.
+      - **done 2026-11-02** · one paragraph per language above *What Money Koi does not do* · `ASO_STORE_LISTING_PLAN.md` §5.4
+      - re-checked against `feature.dart`: text unchanged · `ja` names no scanner
+      - ⚠️ in the repo now, live only with 1.20.0 · a `fastlane production` / `promote` / `metadata` before it (a 1.19.x hotfix, T-PLAT-07's upload) puts the plans up before Pro is on sale
   - id: T-PLAT-09
     title: Press round after the listing
     owner: gerald
@@ -125,10 +124,10 @@ items:
       - 7 · Supabase Auth › Providers › Apple, dev + prod: enabled, *Client IDs* = `com.psyren.moneykoi,com.psyren.moneykoi.dev` (native sign-in needs no secret) · branch push `moneykoi-supabase` with `20261029120000_profile_name_after_apple_sign_in.sql` · redirect URLs: nothing, `com.psyren.moneykoi://login-callback/` is already allowed
       - 8 · ✓ products + group 2026-10-31, open: sandbox testers, the price re-check (US / Montenegro / the launch line) · in-app purchases + the *Money Koi Cloud* subscription group per `MONETIZATION_AI_CONTEXT.md` §11 step 2 (ids, prices, family sharing Pro only, trial, en/de/ja, a paywall screenshot per product) · sandbox testers
       - 9 · RevenueCat: iOS app `com.psyren.moneykoi` + ASC's In-App Purchase key (Users and Access › Integrations) · ASC › App Information › App Store Server Notifications V2 → RevenueCat's URL · products → entitlements `pro` / `cloud` + the offering's packages like Android · the public `appl_…` key → `REVENUECAT_API_KEY_IOS` in `.env.prod` only (dev keeps the fake gateway, like Android; `.dev` has no products) · every package of the current offering gets its iOS product, or the paywall never sees it
-      - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: no third-party content · App Privacy: `ASO_STORE_LISTING_PLAN.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
+      - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: **yes, with the rights** — Investments shows third-party prices (metals.dev, ECB, the crypto feed), credited in `price_sources_footer.dart` · App Privacy: `ASO_STORE_LISTING_PLAN.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
       - 11 · decide D-PLAT-8 (iPad) · D-PLAT-7 decided: no France · D-PLAT-6 is built, D-PLAT-5 mostly · T-PLAT-11 (Apple token revoke) before submitting
       - 12 · `./publish.sh ios testflight monetization` → TestFlight internal testers → device pass: D-PLAT-5's list, Sign in with Apple, a sandbox purchase per product, restore, the universal link (C-PLAT checks)
-      - 13 · listing ✓ written 2026-11-01: `ios/fastlane/metadata/` (name, subtitle, keywords, promo text, description, URLs per language, Finance / Productivity, review notes) · screenshots iPhone 6.9" + iPad 13" × de/en/ja in `ios/fastlane/screenshots/<locale>/` · product page header 3840×1646 in `ios/fastlane/header/<locale>/` → version page › *Header and Search Results* › Header, no search-results asset (ASO plan §7.4) · open: read them (D5), then `./publish.sh ios metadata` · drag each screenshot folder and header into ASC (the lanes skip both) · iPad set is moot if D-PLAT-8 drops iPad · first version: if `deliver` refuses *What's New*, enter the text by hand
+      - 13 · listing ✓ written 2026-11-01: `ios/fastlane/metadata/` (name, subtitle, keywords, promo text, description, URLs per language, Finance / Productivity, review notes) · screenshots iPhone 6.3" (`iphone63_*`, the slot ASC asks for) + 6.9" (`iphone69_*`, Media Manager) + iPad 13" × de/en/ja in `ios/fastlane/screenshots/<locale>/` · product page header 3840×1646 in `ios/fastlane/header/<locale>/` → version page › *Header and Search Results* › Header, no search-results asset (ASO plan §7.4) · open: read them (D5), then `./publish.sh ios metadata` · drag each screenshot folder and header into ASC (the lanes skip both) · iPad set is moot if D-PLAT-8 drops iPad · first version: if `deliver` refuses *What's New*, enter the text by hand
       - 14 · `./publish.sh ios promote <build>` → version page: add the in-app purchases (the first ones only reach review with a version) · App Review: sign-in required, the review account + T-PLAT-05 text + *the scanner needs the camera* + where the paywall opens · release manually · Submit
     command: |
       cd /Users/gerald/Projects/moneykoi/moneykoi-app

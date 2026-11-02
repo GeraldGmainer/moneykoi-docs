@@ -71,3 +71,20 @@ items:
       - the target allows iPad (tablet layouts exist) · costs a 13" screenshot set per language + review on iPad
       - recommended: **keep** · the share sheet already anchors on iPad · drop only if the screenshot set is not worth a day
     related: [T-PLAT-10]
+  - id: D-PLAT-9
+    question: First person in the UI copy (*I owe*, *Owed to me*, *Can I afford this?*)
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - labels, buttons, toggles and section titles: indirect · *Borrowed / Lent*, *Round up expenses into this goal*, *Create the budget*
+      - questions the user asks themselves keep first person · *Can I afford this?*, *What if I save more?*
+      - en + de · ja has no first person in these
+      - source: iOS simulator round, IOS-13-3
+  - id: D-PLAT-10
+    question: Japanese 家計簿 or 帳簿?
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - 家計簿 = the Budget Book view and the app genre · stays in the tab, page and welcome line
+      - 帳簿 = a book · the onboarding button becomes 帳簿を作成する
+      - source: iOS simulator round, IOS-22-1

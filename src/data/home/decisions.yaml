@@ -24,3 +24,11 @@ items:
       - Gerald: "a pro group on bottom, so that settings is still visible"
       - early-adopter window → header without button
     related: [R-HOM-13]
+  - id: D-HOM-6
+    question: Balance-check card on a book created this month?
+    status: decided
+    date: 2026-11-02
+    answer: |
+      - not shown until the book has lived through one full period
+      - a book set up on Nov 2 first sees it at the next month start
+      - source: iOS simulator round, IOS-3-5

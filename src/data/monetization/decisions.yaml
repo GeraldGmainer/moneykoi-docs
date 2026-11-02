@@ -19,6 +19,36 @@ items:
     answer: €24.99 until download-to-paid is known
 
   # Decided
+  - id: D16
+    question: "Cloud just bought, server hasn't heard yet: unlock at once?"
+    status: decided
+    date: 2026-11-01
+    answer: |
+      - **yes**, features for 10 minutes · only a purchase on this phone
+      - sync waits for the server · verdict retried for about a minute
+      - not chosen: wait for the server with a message
+      - taken when Gerald said "do the fixes" · change it here if not
+    related: [E-MON-54]
+  - id: D17
+    question: Does a refunded Pro lock again?
+    status: decided
+    date: 2026-11-01
+    answer: |
+      - **yes**, when the same store customer no longer has it
+      - another customer or a failed read keeps Pro
+      - one store read a day for Pro owners · a new RevenueCat call · Free stays silent
+      - taken when Gerald said "do the fixes" · needs a real refund (C-MON-076)
+    related: [E-MON-55]
+  - id: D18
+    question: "Forecast after a lapse: read-only page or paywall?"
+    status: decided
+    date: 2026-11-01
+    answer: |
+      - **read-only** with planned payments, like investments + shopping
+      - D7's actions reachable · no planned payments → paywall
+      - not chosen: paywall, D7 + C-MON-034 retired
+      - taken when Gerald said "do the fixes" · change it here if not
+    related: [E-MON-56, D7]
   - id: D13
     question: Paywall day
     status: decided

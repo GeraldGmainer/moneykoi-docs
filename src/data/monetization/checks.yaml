@@ -10,6 +10,7 @@ groups:
       - *Plan simulator*: *Enforce plans* · *Plan* · *Test purchases succeed* · *Forget test purchases* · *Simulate an ended subscription*
       - after switching a plan → *Reopen the app*
       - *Enforce plans* on = the app from Nov 8 (paywall, prices) · off = today's free app, *Get Cloud free*
+      - `MONETIZATION=true` build: always on
       - before Nov 8 every new account has Cloud → free account = *Simulate an ended subscription* or `admin_set_cloud_entitlement`
     items:
       - id: C-MON-001
@@ -23,7 +24,7 @@ groups:
     title: Locks & paywall · Free
     items:
       - id: C-MON-009
-        text: "*Free* → *Reopen the app* → locked: Analytics · Home edit · card gallery · Forecast · Investments · exports · *Create backup* · Books"
+        text: "*Free* → *Reopen the app* → locked: Analytics · Home edit · card gallery · Forecast · Investments · exports · *Create backup* · with account: Books"
       - id: C-MON-010
         text: "Drawer: **Analytics**, **Shopping list**, **Investments**, **Forecast** dimmed in the Pro group, last, no padlock → tap opens that feature's paywall"
       - id: C-MON-011
@@ -37,7 +38,7 @@ groups:
       - id: C-MON-015
         text: "*Create a backup* → paywall · *Restore from a backup* → free"
       - id: C-MON-016
-        text: "Forecast page + card → paywall · with account: *Use on computer* locked → paywall"
+        text: "No planned payments: Forecast → paywall · with account: *Use on computer* locked → paywall"
       - id: C-MON-017
         text: Home nudge once → *Not now* hides it · simulator *Show the Pro nudge again* brings it back
       - id: C-MON-018
@@ -76,7 +77,7 @@ groups:
       - id: C-MON-033
         text: No lists at all → locked panel, not an empty state
       - id: C-MON-034
-        text: "Pro forecast on Free: *confirm* · *it didn't happen* · *book it now* work · *move* → paywall (D7)"
+        text: "Pro forecast on Free: page read-only + banner · *confirm* · *it didn't happen* · *book it now* work · *move* → paywall (D7, D18)"
 
   - id: store
     title: Store sandbox · real products
@@ -111,6 +112,10 @@ groups:
         text: "Pro owner → *Cloud lifetime upgrade* offered, plain *Cloud lifetime* not"
       - id: C-MON-068
         text: "Cloud purchase → `public.store_event` has the event · `public.entitlement` the expiry · sync starts"
+      - id: C-MON-075
+        text: "Signed-in free account buys Cloud → *Cloud is active* at once · *Sync starts soon* → sync starts · note the seconds (E-MON-54)"
+      - id: C-MON-076
+        text: "Pro bought → refund → next day reopen → Pro locks · airplane mode → Pro stays · note the seconds (E-MON-55)"
 
   - id: welcome-back
     title: Welcome back · Restore Pro purchase

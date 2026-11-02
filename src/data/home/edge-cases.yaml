@@ -59,3 +59,11 @@ items:
     then: the header scrolls away behind a plain status-bar strip · nothing shows under the clock · before 2026-10-28 the title and the menu button slid under it and the button could not be tapped
     status: fixed
     risk: low
+  - id: E-HOM-09
+    group: Bar
+    title: Bottom bar under the quick-booking sheet on an Android tablet
+    when: Android tablet (10", 800 dp) · long-press + · the quick-booking sheet is open
+    then: the bottom bar overflows by 3.5–13 px behind the sheet · clipped in a release build · iPad and phones fine · found by the Play tablet screenshot run 2026-11-01 · open
+    status: known-issue
+    risk: low
+    related: [E-SCN-10]

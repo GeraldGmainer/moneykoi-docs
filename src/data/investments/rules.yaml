@@ -61,8 +61,10 @@ items:
     text: |
       - fetched server-side · no keys in the app
       - converted at read time · "as of" shown
-      - metals: gold-api.com · currencies: ECB · crypto: CoinGecko
-    source: INVESTMENTS §1 (D1, D4), supabase §13.1
+      - metals: gold-api.com · crypto: CoinGecko · FX: metals.dev → ECB at cutover
+      - credited under Investments + About → *Price data sources*
+    source: INVESTMENTS §1 (D1, D4), §7d, supabase §13.1
+    related: [R-SET-44]
   - id: R-INV-21
     group: What it's worth
     title: Feed > manual > nothing

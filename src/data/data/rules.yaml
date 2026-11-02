@@ -338,12 +338,16 @@ items:
     text: |
       - plain table · no metadata, no booking id
       - transfers + opening balances → skipped on import
-    source: BOOKING_EXPORT §1
+      - text starting `=` `+` `-` `@`, tab or CR → leading `'` · import strips it · amounts stay bare
+    source: BOOKING_EXPORT §1, DATA_PORTABILITY §1a
     tests:
       - file: test/features/booking_export/booking_export_round_trip_test.dart
         name: every booking comes back field by field, transfers and opening balances listed as skipped
       - file: test/features/booking_export/booking_export_round_trip_test.dart
         name: no booking id is written, in the header or in a row
+      - file: test/features/booking_export/booking_export_round_trip_test.dart
+        name: reads back as written, amounts untouched
+    related: [E-PRIV-43]
   - id: R-DATA-53
     group: Booking export (CSV)
     title: "Filters: OR within, AND across"

@@ -155,10 +155,18 @@ items:
     group: Web security issues
     title: CSV formula injection
     when: text starts with `=` `+` `-` `@`, tab or CR · exported
-    then: written raw → a spreadsheet may run it · open in web + app (review 10)
-    status: known-issue
+    then: "leading `'` → a spreadsheet shows it, never runs it · amounts stay bare · import strips the `'` · app + web (review 10, fixed 2026-11-02)"
+    status: fixed
     risk: high
-    related: [T-DATA-03]
+    tests:
+      - file: test/shared/export/service/csv_encoder_test.dart
+        name: a text cell starting with = + - @, a tab or a CR gets a leading quote
+      - file: test/shared/export/service/csv_encoder_test.dart
+        name: a numeric column is written raw, so a negative amount stays a number
+      - file: src/lib/export/csv.test.ts
+        name: quotes a text cell starting with = + - @, a tab or a CR
+        repo: web
+    related: [T-DATA-03, R-DATA-52]
   - id: E-PRIV-44
     group: App lock
     title: Screen reader behind the lock
