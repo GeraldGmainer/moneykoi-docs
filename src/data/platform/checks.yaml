@@ -28,6 +28,8 @@ groups:
         text: Music playing → scanner onboarding clips → the music keeps playing
       - id: C-PLAT-017
         text: Percent, decimal or amount field on the number pad (no Done key) → tap empty space → the keyboard closes · a tap on a button or tile still works
+      - id: C-PLAT-018
+        text: "Fresh Apple ID on the iPhone → *Continue with Apple* → signed in · SQL: one `apple_sign_in_token` row, `client_id` = the build's bundle id · Profile › *Delete account* → Welcome · the `account` log reads *Apple tokens revoked 1 of 1* · the row is gone · iPhone Settings › Apple ID › Sign-In & Security › Sign in with Apple: Money Koi no longer listed · *Continue with Apple* again → Apple's first-time sheet (name, *Hide my email*) (R-ACC-68, T-PLAT-13)"
 
   - id: look
     title: Shared look

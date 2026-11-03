@@ -125,7 +125,7 @@ items:
       - 8 · ✓ products + group 2026-10-31, open: sandbox testers, the price re-check (US / Montenegro / the launch line) · in-app purchases + the *Money Koi Cloud* subscription group per `MONETIZATION_AI_CONTEXT.md` §11 step 2 (ids, prices, family sharing Pro only, trial, en/de/ja, a paywall screenshot per product) · sandbox testers
       - 9 · RevenueCat: iOS app `com.psyren.moneykoi` + ASC's In-App Purchase key (Users and Access › Integrations) · ASC › App Information › App Store Server Notifications V2 → RevenueCat's URL · products → entitlements `pro` / `cloud` + the offering's packages like Android · the public `appl_…` key → `REVENUECAT_API_KEY_IOS` in `.env.prod` only (dev keeps the fake gateway, like Android; `.dev` has no products) · every package of the current offering gets its iOS product, or the paywall never sees it
       - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: **yes, with the rights** — Investments shows third-party prices (metals.dev, ECB, the crypto feed), credited in `price_sources_footer.dart` · App Privacy: `ASO_STORE_LISTING_PLAN.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
-      - 11 · decide D-PLAT-8 (iPad) · D-PLAT-7 decided: no France · D-PLAT-6 is built, D-PLAT-5 mostly · T-PLAT-11 (Apple token revoke) before submitting
+      - 11 · decide D-PLAT-8 (iPad) · D-PLAT-7 decided: no France · D-PLAT-6 is built, D-PLAT-5 mostly · T-PLAT-13 (Apple revoke: key, secrets, deploy) before submitting
       - 12 · `./publish.sh ios testflight monetization` → TestFlight internal testers → device pass: D-PLAT-5's list, Sign in with Apple, a sandbox purchase per product, restore, the universal link (C-PLAT checks)
       - 13 · listing ✓ written 2026-11-01: `ios/fastlane/metadata/` (name, subtitle, keywords, promo text, description, URLs per language, Finance / Productivity, review notes) · screenshots iPhone 6.3" (`iphone63_*`, the slot ASC asks for) + 6.9" (`iphone69_*`, Media Manager) + iPad 13" × de/en/ja in `ios/fastlane/screenshots/<locale>/` · product page header 3840×1646 in `ios/fastlane/header/<locale>/` → version page › *Header and Search Results* › Header, no search-results asset (ASO plan §7.4) · open: read them (D5), then `./publish.sh ios metadata` · drag each screenshot folder and header into ASC (the lanes skip both) · iPad set is moot if D-PLAT-8 drops iPad · first version: if `deliver` refuses *What's New*, enter the text by hand
       - 14 · `./publish.sh ios promote <build>` → version page: add the in-app purchases (the first ones only reach review with a version) · App Review: sign-in required, the review account + T-PLAT-05 text + *the scanner needs the camera* + where the paywall opens · release manually · Submit
@@ -148,10 +148,38 @@ items:
   - id: T-PLAT-11
     title: Revoke the Apple sign-in when an account is deleted
     owner: ai
+    status: done
     detail: |
-      - Apple: an app with Sign in with Apple revokes the user's Apple token on account deletion (App Review 5.1.1(v), Apple's account-deletion guidance) · not built
-      - review rarely tests it · a rejection costs a review cycle
-      - needs from Gerald first: developer.apple.com › Keys › new key with Sign in with Apple → Key ID + .p8 into Supabase secrets, dev + prod
-    prompt: |
-      Apple requires apps offering Sign in with Apple to revoke the user's Apple token when the account is deleted. Read OFFLINE_TIER_AI_CONTEXT.md and MONETIZATION_AI_CONTEXT.md §9a/§9b (delete account) and the Sign in with Apple notes in 03_TECHNICAL_ARCHITECTURE.md first. At Apple sign-in, send the credential's authorizationCode to a new moneykoi-supabase edge function that exchanges it at https://appleid.apple.com/auth/token (client_id = the bundle id, client_secret = an ES256 JWT from team 97YRVYQ66A and the secrets APPLE_SIGNIN_KEY_ID / APPLE_SIGNIN_P8) and stores the refresh token server-side only; account deletion calls https://appleid.apple.com/auth/revoke with it before the user is deleted, and a failed revoke never blocks the deletion. Never keep the token on the phone. Tests, context doc, docs site; hand Gerald the secrets and deploy commands.
-    related: [T-PLAT-10, D-PLAT-6]
+      - **done 2026-11-02** · App Review 5.1.1(v) · R-ACC-68 · C-PLAT-018
+      - Apple sign-in → the app sends the authorization code to the new `account` function → Apple's refresh token kept on the server only (`apple_sign_in_token`, closed to clients) · a failed exchange never fails the sign-in
+      - *Delete account*, app and web → the same function: revoke at Apple, then `delete_current_user` · a failed revoke never blocks
+      - both bundle ids of the Apple provider (`com.psyren.moneykoi`, `.dev`), each revoked under its own
+      - left: Gerald's key, secrets and deploy (T-PLAT-13)
+    related: [T-PLAT-10, T-PLAT-13, D-PLAT-6]
+  - id: T-PLAT-13
+    title: Turn on the Apple revoke
+    owner: gerald
+    waitsFor: [T-PLAT-11]
+    detail: |
+      - ⚠️ **the `account` function goes to prod before the next app build or web deploy** · both delete accounts through it now · without it *Delete account* fails on both
+      - without the key the function still deletes · it only keeps and revokes no Apple token (logged)
+      - 1 · developer.apple.com › Certificates, IDs & Profiles › Keys › + · name *Money Koi Sign in with Apple* · tick **Sign in with Apple** › Configure › primary App ID `com.psyren.moneykoi` · Register · download `AuthKey_<KEY_ID>.p8` (once only) · note the Key ID
+      - 1b · Identifiers › `com.psyren.moneykoi.dev` › Sign in with Apple › Edit → *Group with an existing primary App ID* = `com.psyren.moneykoi` · else the one key answers `invalid_client` for dev builds
+      - 2 · secrets on dev, then prod (commands) · the function also reads a one-line `.p8` with `\n`
+      - 3 · push the migration `20261102200000_apple_sign_in_token.sql` · `develop` → dev, `main` → prod (CI runs `db push` + `functions deploy`) · or by hand (commands) · then `supabase/tests/manual/apple_sign_in_token.sql` in the SQL editor → *PASS*
+      - 4 · deploy the `account` function, dev then prod · CI does it with step 3, or by hand (commands)
+      - 5 · iPhone device check C-PLAT-018 · dev flavor on dev first, then prod via TestFlight
+      - then T-PLAT-10 can go to review
+    command: |
+      cd /Users/gerald/Projects/moneykoi/moneykoi-supabase
+      # 2 · secrets (dev, then prod: cwheprirreyscppmbybp)
+      supabase secrets set APPLE_SIGNIN_KEY_ID=<KEY_ID> --project-ref dpmemqshhdnanywcvsod
+      supabase secrets set APPLE_SIGNIN_P8="$(cat ~/Downloads/AuthKey_<KEY_ID>.p8)" --project-ref dpmemqshhdnanywcvsod
+      supabase secrets list --project-ref dpmemqshhdnanywcvsod | grep APPLE_SIGNIN
+      # 3 · migration by hand (instead of the branch push)
+      supabase link --project-ref dpmemqshhdnanywcvsod && supabase db push
+      # 4 · function by hand
+      supabase functions deploy account --project-ref dpmemqshhdnanywcvsod
+      # after the device check: the token row of the test account (never prints the token)
+      #   select client_id, apple_sub, length(refresh_token), updated_at from public.apple_sign_in_token order by updated_at desc limit 5;
+    related: [T-PLAT-10, T-PLAT-11, R-ACC-68, C-PLAT-018]

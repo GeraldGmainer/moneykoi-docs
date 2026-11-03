@@ -295,6 +295,27 @@ items:
         name: removes the books the account owned, its rows and cursors, and drops its prefs instead of parking them
       - file: test/core/offline_first/wiper_test.dart
         name: keeps the other accounts
+  - id: R-ACC-68
+    group: Deleting
+    title: "*Delete account* revokes the Apple sign-in"
+    text: |
+      - an Apple account: Money Koi leaves the Apple ID's *Sign in with Apple* list (iPhone Settings) · the next Apple sign-in starts fresh
+      - app and web alike · runs before the account is deleted
+      - Apple unreachable or refusing → the account is deleted anyway
+      - the Apple token never reaches the phone · kept only on the server, gone with the account
+      - a failed token handover at sign-in never blocks the sign-in · that account is then deleted without a revoke
+    source: 03_TECHNICAL_ARCHITECTURE.md › Sign in with Apple; moneykoi-supabase CLAUDE.md §11 (`account`, `deno test` in `supabase/functions/account/`), 20261102200000_apple_sign_in_token.sql
+    tests:
+      - file: test/features/auth/data/user_remote_source_apple_test.dart
+        name: the authorization code goes to the server with the bundle id the identity token names, never further
+      - file: test/features/auth/data/user_remote_source_apple_test.dart
+        name: a failed exchange never fails the sign-in, and the name still lands
+      - file: test/features/auth/data/remote_sources/user_remote_source_test.dart
+        name: deleting the account goes through the account function, which revokes Apple before it deletes
+      - file: src/app/(main)/delete-account/page.test.tsx
+        repo: web
+        name: deletes only after the confirmation word is typed
+    related: [R-ACC-50, R-ACC-67, T-PLAT-11, T-PLAT-13]
   - id: R-ACC-51
     group: Deleting
     title: "*Delete this book* next to kept books"
