@@ -15,11 +15,14 @@ items:
     title: Books a transfer
     from: the booking form → *Transfer*
     steps:
-      - amount
+      - amount → *Transfer* → keypad closes · or *Transfer* first → keypad stays up for the amount
       - From + To · or ⇅
       - "*Save*"
     result: transfer · not income or expense
-    checks: [C-BKG-002]
+    tests:
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: tapping Transfer after an amount closes the keypad onto From and To
+    checks: [C-BKG-002, C-BKG-048]
   - id: J-BKG-03
     group: Entering
     title: Quick booking
@@ -38,7 +41,7 @@ items:
     title: Deletes and undoes
     from: a booking's edit page
     steps:
-      - delete
+      - "⋮ → *Delete* → *Delete booking?* · *The booking moves to the trash for 30 days* → *Delete*"
       - "*Undo* · or later Trash → restore"
     result: booking back as a new row
     tests:

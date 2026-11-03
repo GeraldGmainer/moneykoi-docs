@@ -139,3 +139,105 @@ items:
         name: closed in the frame it was opened in, it never shows and reports closed
       - file: test/shared/ui/calculator/calculator_sheet_test.dart
         name: a back press in the frame it was opened in does not throw
+  - id: E-BKG-27
+    group: Booking form
+    title: Last snackbar over the next keypad
+    when: save a booking → **+** again within ~4 s · also the recurring form
+    then: |
+      - the form opens clean · the old bar and any queued one are cleared
+      - before 2026-11-03 *Booking created* / *Make recurring* sat over the keypad's last row · a tap on ✓ opened a rule from the previous booking (iOS round, IOS-2-6)
+    status: fixed
+    risk: high
+    related: [R-BKG-02]
+    tests:
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: a snackbar from the page below is cleared once the form opens, action and all
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: a snackbar from the page below is cleared once the form opens
+  - id: E-BKG-28
+    group: Booking form
+    title: Paste on an iPhone
+    when: iOS 16+ · long-press the amount → *Paste*
+    then: |
+      - the system *Paste* menu · no *Allow Paste?* alert · Android keeps the app's own menu
+      - before 2026-11-03 the app read the clipboard itself → the alert every time, the app frozen until answered (iOS round, IOS-2-2)
+    status: fixed
+    risk: medium
+    related: [C-BKG-045]
+    tests:
+      - file: test/utils/helper/paste_helper_test.dart
+        name: shows the system Paste item and never reads the clipboard itself
+      - file: test/utils/helper/paste_helper_test.dart
+        name: the text iOS pastes into the hidden field is parsed and applied
+  - id: E-BKG-29
+    group: Booking form
+    title: No swipe-back on iPhone
+    when: iPhone · edge swipe on a booking, goal, budget, loan, settings page, rule editor…
+    then: |
+      - goes back like any iOS page · a form with changes stays put, its *×* asks (D-BKG-9)
+      - before 2026-11-03 nothing happened on 52 pages (iOS round, IOS-2-1)
+    status: fixed
+    risk: high
+    related: [R-BKG-02, D-BKG-9, C-BKG-044]
+    tests:
+      - file: test/app/navigation/slide_route_swipe_back_test.dart
+        name: on iOS a SlideRightRoute goes back on an edge swipe
+  - id: E-BKG-30
+    group: Booking form
+    title: Transfer picked with the keypad up
+    when: "*New booking* · keypad up → *Transfer* · also the recurring form"
+    then: |
+      - amount already typed → keypad closes, From and To in view
+      - no amount yet → keypad stays up · camera key gone, back on *Expense* / *Income*
+      - before 2026-11-03 the keypad stayed up over From and To, with the camera key still on it
+    status: fixed
+    risk: medium
+    related: [J-BKG-02, C-BKG-048]
+    tests:
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: tapping Transfer after an amount closes the keypad onto From and To
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: tapping Transfer before an amount keeps the keypad up, without the scan key
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: switching to a transfer closes the keypad once an amount is typed, and keeps it up before
+  - id: E-BKG-40
+    group: Quick booking
+    title: Everyday English words get no category
+    when: English book · `milk 2`, `taxi 20`, `bus ticket 2`, `gas 40`, `starbucks 5`, `cinema 12`, `rewe 30` · Japanese `パン 200`
+    then: |
+      - Groceries · Public Transit · Public Transit · Fuel · Dining Out · Movie · Groceries · 食料品
+      - before 2026-11-03 most got no category and `bus ticket` saved as *Fuel* (iOS round, IOS-4-1)
+    status: fixed
+    risk: medium
+    related: [R-BKG-14, E-SHP-05]
+    tests:
+      - file: test/shared/categorization/everyday_words_test.dart
+        name: a ticket without a transit leaf is no guess, never Fuel
+      - file: test/shared/categorization/everyday_words_test.dart
+        name: "keyword map: everyday en/ja words"
+  - id: E-BKG-41
+    group: Quick booking
+    title: Return key on an incomplete prompt
+    when: "`bread 2.40` (no category) → keyboard **done** · or an empty prompt"
+    then: |
+      - keyboard stays · the category picker opens · more missing → those chips red and shaking · empty prompt → nothing else
+      - a Return within the 200 ms parse delay saves what is on screen
+      - before 2026-11-03 the keyboard dropped and nothing said what was missing (iOS round, IOS-4-2)
+    status: fixed
+    risk: low
+    related: [R-BKG-14]
+    tests:
+      - file: test/features/quick_add/ui/sheets/quick_booking_submit_test.dart
+        name: a prompt missing more than the category keeps the keyboard and flags the gaps
+      - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
+        name: a return key inside the debounce saves the prompt on screen, not the last parse
+  - id: E-BKG-42
+    group: Amount
+    title: Typed trailing zero
+    when: keypad `1 2 . 5 0`
+    then: hero shows *12.50* while typing · *12.50* after ✓ · before 2026-11-03 *12.5* · IOS-2-4
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking/ui/widgets/amount_display_test.dart
+        name: keeps a typed trailing zero

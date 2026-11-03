@@ -47,4 +47,6 @@ items:
     answer: |
       - blocked while the form has changes · the *×* asks *Discard / Keep editing*
       - a clean form swipes back like any page
+      - built 2026-11-03 · *swipe → Discard / Keep editing* is Android back only
       - source: iOS simulator round, IOS-2-1
+    related: [R-BKG-02, E-BKG-29]
