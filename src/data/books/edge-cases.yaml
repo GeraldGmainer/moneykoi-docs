@@ -116,6 +116,20 @@ items:
       - file: test/edge_cases/book_switch_sync_edge_cases_test.dart
         name: "an unsent edit made in A before the switch survives A's late response"
     related: [E-OFF-05]
+  - id: E-BOOK-25
+    group: Switching & sync
+    title: Old book's money under the new book's name
+    when: book switch · Home already shows the new book's avatar
+    then: |
+      - fixed 2026-11-03 · Home, Budget Book and Analytics show skeletons until the new book's figures load · never the last book's total (IOS-20-1)
+      - the skeleton lasts as long as the switch's server call and realtime restart (5–8 s on the simulator) · making it near-instant is open (D-BOOK-7)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/home/ui/screens/home_tab_test.dart
+        name: a book switch hides the old book
+      - file: test/features/book/ui/widgets/book_switch_curtain_test.dart
+        name: hides the figures from the switch until the new book
 
   # Web
   - id: E-BOOK-30

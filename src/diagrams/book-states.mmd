@@ -1,6 +1,6 @@
 stateDiagram-v2
   [*] --> NoAccount: Get started
-  [*] --> Cloud: I already use Money Koi + Cloud
+  [*] --> Cloud: Sign in or restore + Cloud
   state "Book without an account<br/>(Free or Pro, only on this phone)" as NoAccount
   state "Uploading<br/>adopted → retenanted → pushed" as Claim
   state "Under a free account<br/>(kept on this phone)" as Kept
