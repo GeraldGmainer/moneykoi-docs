@@ -200,9 +200,37 @@ items:
     group: CSV import
     title: Multi-currency export
     when: rows in several currencies
-    then: all at face value · nothing converted or flagged
+    then: |
+      - all at face value · nothing converted
+      - a currency column with another code → warning on *Columns* (2026-11-03) · was: nothing flagged
     status: by-design
     risk: medium
+    tests:
+      - file: test/features/data_import/domain/import_currency_check_test.dart
+        name: a mixed file lists the codes that are not the book
+  - id: E-DATA-67
+    group: CSV import
+    title: Bank CSV without a category column
+    when: German bank export · *Buchungsdatum; Empfänger/Auftraggeber; Verwendungszweck; Betrag; Währung*
+    then: |
+      - fixed 2026-11-03 · imports · categories guessed from payee + purpose · rest picked in Review
+      - was: *Next* stayed off · *Empfänger/Auftraggeber* not detected
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/data_import/domain/import_column_detector_test.dart
+        name: 'a German bank export: the purpose is the description, Empfänger/Auftraggeber the payee'
+    related: [D-DATA-15, R-DATA-40]
+  - id: E-DATA-68
+    group: CSV import
+    title: File without an account column
+    when: credit-card export, no account column
+    then: |
+      - fixed 2026-11-03 · *Into which account?* on the Accounts step
+      - was: the first account picked without a word
+    status: fixed
+    risk: low
+    related: [R-DATA-31]
   - id: E-DATA-35
     group: CSV import
     title: Import stops part-way

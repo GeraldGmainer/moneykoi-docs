@@ -6,7 +6,7 @@ groups:
     setup: Pro (simulator) + owner or admin
     items:
       - id: C-DATA-001
-        text: "*Include receipt photos* → progress → *Save to device* → file in Files · *last backup* updates"
+        text: "*Include receipt photos* → progress → *Save to device* → *Choose where to save* (iPhone: names the Files app, iCloud Drive or a folder on this device · Android: a folder like Downloads) → file in Files · *last backup* updates"
       - id: C-DATA-015
         text: Photos on, offline → *N photos could not be included* · backup made
       - id: C-DATA-016

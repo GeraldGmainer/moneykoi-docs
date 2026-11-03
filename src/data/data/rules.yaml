@@ -252,7 +252,11 @@ items:
     text: |
       - same name, any case, hidden ones too
       - **never** fuzzy · "Giro" ≠ "Giro alt"
+      - no row names an account → *Into which account?* (2026-11-03) · preset = last used
     source: BOOKING_IMPORT §7
+    tests:
+      - file: test/features/data_import/ui/booking_import_page_test.dart
+        name: a file without an account column asks into which account
   - id: R-DATA-32
     group: CSV import
     title: "Categories: exact → synonym → new"
@@ -265,10 +269,30 @@ items:
     group: CSV import
     title: Skipped + listed
     text: |
-      - no category · transfers · opening balances
+      - transfers · opening balances
       - bad dates or amounts · zero amounts
       - each with row number + reason
+      - **no category is not a skip** since 2026-11-03 (D-DATA-15) → R-DATA-40
     source: BOOKING_IMPORT §5
+    related: [R-DATA-40]
+  - id: R-DATA-40
+    group: CSV import
+    title: No category → guessed, else picked in Review
+    text: |
+      - category column optional · a bank CSV imports (D-DATA-15, replaces D11)
+      - guess from payee, then description · same engine as quick booking · only existing categories, same side
+      - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* … · only a clue, never the booking text
+      - Review: the category is a pill, tap → change it · no guess → *Choose a category*, unticked, can't be ticked
+      - nothing imports without a category
+    source: BOOKING_IMPORT §4, §8a
+    tests:
+      - file: test/features/data_import/use_cases/prepare_import_use_case_test.dart
+        name: asks the engine with the payee first, then the description, within the row's side, once per text
+      - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
+        name: without a guess it is never selected, by a tap or by Select all
+      - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
+        name: a category picked in Review selects it and stays with the draft
+    related: [D-DATA-15]
   - id: R-DATA-34
     group: CSV import
     title: Duplicates start unticked
@@ -282,8 +306,13 @@ items:
   - id: R-DATA-36
     group: CSV import
     title: No currency handling
-    text: currency column ignored · all in the book's currency
+    text: |
+      - currency column ignored · all in the book's currency
+      - a currency column naming another code → one warning on *Columns* (2026-11-03) · nothing converted
     source: BOOKING_IMPORT §5
+    tests:
+      - file: test/features/data_import/domain/import_currency_check_test.dart
+        name: a currency column naming another code is reported with its header
   - id: R-DATA-37
     group: CSV import
     title: Limits
@@ -339,15 +368,21 @@ items:
       - plain table · no metadata, no booking id
       - transfers + opening balances → skipped on import
       - text starting `=` `+` `-` `@`, tab or CR → leading `'` · import strips it · amounts stay bare
+      - `currency` = ISO code (`USD`) since 2026-11-03 · older files with `$` still import (D-DATA-14)
+      - last row ends with a line break
     source: BOOKING_EXPORT §1, DATA_PORTABILITY §1a
     tests:
       - file: test/features/booking_export/booking_export_round_trip_test.dart
         name: every booking comes back field by field, transfers and opening balances listed as skipped
+      - file: test/features/budget_book/service/booking_csv_builder_test.dart
+        name: writes the ISO code, not the symbol, so a dollar is never ambiguous
+      - file: test/shared/export/service/csv_encoder_test.dart
+        name: ends the last row with a line break, so no tool drops or merges it
       - file: test/features/booking_export/booking_export_round_trip_test.dart
         name: no booking id is written, in the header or in a row
       - file: test/features/booking_export/booking_export_round_trip_test.dart
         name: reads back as written, amounts untouched
-    related: [E-PRIV-43]
+    related: [E-PRIV-43, D-DATA-14]
   - id: R-DATA-53
     group: Booking export (CSV)
     title: "Filters: OR within, AND across"

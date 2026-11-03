@@ -63,7 +63,10 @@ items:
     question: Bank CSV without categories
     status: decided
     date: 2026-09-28
-    answer: Can't import · statement import must revisit this
+    answer: |
+      - was: can't import (D11)
+      - **replaced** 2026-11-02 → guessed per row, picked in Review (D-DATA-15)
+    related: [D-DATA-15]
   - id: D-DATA-9
     question: Export default period
     status: decided
@@ -93,4 +96,6 @@ items:
       - **replaces D11** (no category column → no import)
       - allowed · each row gets a category guessed from payee and description, same engine as quick booking and the scanner
       - rows without a guess are picked by hand in *Review*
+      - built 2026-11-03 · R-DATA-40 · *Empfänger/Auftraggeber* read as the payee
       - source: iOS simulator round, IOS-11-1
+    related: [R-DATA-40, D-DATA-8]

@@ -49,7 +49,7 @@ items:
     title: New phone, no account
     from: fresh install
     steps:
-      - "*I already use Money Koi* → *Restore a backup*"
+      - "*Sign in or restore* → *Restore a backup*"
       - lands on this phone + settings
       - store asked for Pro, silently
     result: book back · nothing uploaded · no doubles
@@ -166,6 +166,7 @@ items:
     from: owner or admin
     steps:
       - File → Columns → Accounts → Categories → Review
+      - no category column → categories guessed · *Choose a category* on the rest in Review
       - "*Import*"
       - "*Undo* while on the result"
     result: bookings in · skipped rows listed
