@@ -81,12 +81,16 @@ items:
     title: Home card + monthly reminder
     text: |
       - first 7 days of a budget month → *Check balances* card · owners + admins
+      - not on a book created in the current period (payday anchor included) · a book set up on Nov 2 first sees it on Dec 1 (D-HOM-6)
       - dismiss per period
       - opt-in reminder on the next 3 month starts
     source: RECONCILIATION §7
+    related: [D-HOM-6]
     tests:
       - file: test/features/reconciliation/balance_check_nudge_test.dart
         name: is due in the first days of a period nobody has counted
+      - file: test/features/reconciliation/balance_check_nudge_test.dart
+        name: a book created in this period has no last period to count
   - id: R-BC-10
     group: Web
     title: "Web: one transaction + stale guard"

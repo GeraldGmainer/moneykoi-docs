@@ -36,3 +36,15 @@ items:
     status: known-issue
     risk: medium
     related: [T-ANL-01]
+  - id: E-BC-06
+    group: Counting
+    title: The count slot read like a label
+    when: "*Check balances* · an account not counted yet"
+    then: |
+      - a filled field with its hint (*Counted balance* / *Amount owed*) on one line
+      - before 2026-11-03 small grey text wrapped over two lines (iOS round, IOS-17-1)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/reconciliation/ui/count_widgets_test.dart
+        name: the empty slot looks like a field and keeps its hint on one line
