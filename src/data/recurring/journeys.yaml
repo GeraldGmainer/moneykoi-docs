@@ -4,8 +4,8 @@ items:
     title: Creates a monthly bill
     from: Recurring → +
     steps:
-      - amount, category, account
-      - "*Repeat* → monthly on the 1st / *last day*"
+      - type, amount, category, account
+      - "*Repeat* → monthly on the start date's day / *last day*"
       - "*Ends* → never · date · after N"
       - preview chips → *Save*
     result: rule · server books each day

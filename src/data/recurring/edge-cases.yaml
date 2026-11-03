@@ -47,3 +47,23 @@ items:
     then: still in Upcoming + 30-day stat until paused
     status: known-issue
     risk: low
+  - id: E-REC-08
+    group: List
+    title: Numeric *Next* date on a rule
+    when: rules list · next run Dec 1
+    then: "*Next: Dec 1* · year only when it differs · before 2026-11-03 *12/1/2026* · IOS-12-3"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/recurring_booking/ui/widgets/recurring_booking_tile_test.dart
+        name: a next date in another year names the year
+  - id: E-REC-09
+    group: Editor
+    title: "*day(s)* beside the interval"
+    when: custom interval 1 or more
+    then: "*1 month* · *3 months* · de *Monat / Monate* · IOS-19-2"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/app/i18n/pseudo_plurals_test.dart
+        name: no English string fakes a plural

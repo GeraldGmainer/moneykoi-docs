@@ -94,6 +94,30 @@ items:
     tests:
       - file: test/features/recurring_booking/ui/screens/recurring_rules_view_test.dart
         name: a live rule gets its next date and an exhausted one reads as ended
+  - id: R-REC-14
+    group: Screens
+    title: New monthly rule runs on the start date's day
+    text: |
+      - created on the 2nd → *Every month on day 2* · *Make recurring* → the booking's day
+      - start date moved before the day is touched → the day follows · a picked day stays
+      - start-date ‹ › step by the rule's period: a week · a month · a year (a day for daily)
+    source: RECURRING §3, §8
+    tests:
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: an untouched rule's day follows a new start date
+      - file: test/features/recurring_booking/domain/recurrence/recurrence_config_test.dart
+        name: a month or year step clamps to the last day of a shorter month
+    related: [D-REC-1]
+  - id: R-REC-15
+    group: Screens
+    title: Paused shows on the form at once
+    text: |
+      - ⋮ → *Pause* → *Paused* banner with *Resume* · next dates dimmed
+      - still saved with *Save* · × asks to discard
+    source: RECURRING §8
+    tests:
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: pause shows the paused state at once and dims the next dates; resume on the banner undoes it
   - id: R-REC-11
     group: Screens
     title: Only future skips removable
