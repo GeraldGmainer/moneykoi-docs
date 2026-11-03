@@ -62,7 +62,9 @@ items:
     group: Web
     title: Web calendar + list gaps
     when: ledger on the web
-    then: no day grouping · no day/week calendar · outcome total tinted (open)
+    then: |
+      - no day/week calendar · outcome total tinted (open)
+      - no day grouping: fixed 2026-11-02, the list has day headers with each day's total
     status: known-issue
     risk: low
   - id: E-BB-10
@@ -88,3 +90,45 @@ items:
     then: "`toISOString()` shifts a day · only dashboard shows it"
     status: known-issue
     risk: medium
+  - id: E-BB-12
+    group: Small screens
+    title: "*Custom* off the right edge"
+    when: Budget Book → period (*October ▾*) or *Filters* → the *View* chips · iPhone SE (375 pt), German
+    then: |
+      - the chips wrap onto a second line · *Custom* on screen without swiping
+      - before 2026-11-03 one row scrolled sideways and *Custom* sat past the edge (iOS round, IOS-5-3)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/budget_book/ui/modal/facet_filters_test.dart
+        name: wraps instead of scrolling, so Custom is on screen at SE width in German
+  - id: E-BB-13
+    group: Calendar
+    title: Light number on a light tint
+    when: a day's tint near half strength
+    then: ink with the better contrast · ≥ 3.5:1 · amounts larger · IOS-5-5
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/budget_book/ui/calendar/calendar_shading_test.dart
+        name: every tint step gets the ink with the better WCAG contrast
+  - id: E-BB-14
+    group: Calendar
+    title: Year page opened at January
+    when: period *Year* · data only Aug–Nov
+    then: opens scrolled to this month · else the last month with bookings · IOS-5-6
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/budget_book/ui/calendar/calendar_view_test.dart
+        name: scrolls past the empty months instead of opening at January
+  - id: E-BB-15
+    group: Charts
+    title: '"30" and "31" collided'
+    when: category trend chart · 31-day month
+    then: axis *5 … 25 30* · last day only with room · IOS-5-1
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/chart/trend_bar_chart_labels_test.dart
+        name: a 31-day month does not print 31 against 30

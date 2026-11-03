@@ -123,5 +123,10 @@ items:
     text: |
       - from a summary row or search
       - breakdown/trend + bookings · inherits the tab's filter
+      - title = the category's name (2026-11-03)
+      - one category on the page (a sub, or a category without subs) → rows titled by description · no description → category
       - web: own presets
-    source: 02_FEATURES, CATEGORIES_WEB §7
+    source: 02_FEATURES, CATEGORY §8, CATEGORIES_WEB §7
+    tests:
+      - file: test/features/category_activity/ui/pages/sub_category_activity_page_test.dart
+        name: the title names the subcategory and each row is titled by its description
