@@ -114,3 +114,35 @@ items:
     tests:
       - file: test/features/investment/ui/pages/transaction_save_page_flow_test.dart
         name: selling more than is held is refused, not clamped
+  - id: E-INV-13
+    group: Portfolio
+    title: Today's loss that did not happen
+    when: prices stale · or position bought today at the latest price
+    then: position left out of *Today* · row hidden when none left · IOS-19-3
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/investment/ui/view_models/portfolio_overview_test.dart
+        name: a position opened on or after the latest price day
+      - file: test/features/investment/ui/view_models/portfolio_overview_test.dart
+        name: a stale quote has no move today
+  - id: E-INV-14
+    group: Portfolio
+    title: Up-triangle on a zero gain
+    when: gain exactly *$0.00*
+    then: no caret · no sign · no colour · *0%*
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/widgets/investments_summary_header_test.dart
+        name: a zero gain stays bare
+  - id: E-INV-15
+    group: New position
+    title: Raw unit price in the wizard
+    when: step 2 · gold spot 140.4987625
+    then: "*$140.50* · symbol per money format · crypto under 1 keeps 4 digits · IOS-19-1"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/widgets/opening_buy_card_test.dart
+        name: the prefilled unit price reads as money
