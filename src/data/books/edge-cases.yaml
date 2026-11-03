@@ -105,18 +105,40 @@ items:
     then: export disabled + *switch to this book* · never switches by itself
     status: by-design
     risk: low
+  - id: E-BOOK-24
+    group: Switching & sync
+    title: Unsent edit, then a switch
+    when: edit in A not pushed yet · switch to B · A's pull answers late
+    then: the edit stays, pushed once A is open again · before 2026-09-23 the late pull overwrote it and marked it sent (EC-BOOK-1)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/edge_cases/book_switch_sync_edge_cases_test.dart
+        name: "an unsent edit made in A before the switch survives A's late response"
+    related: [E-OFF-05]
 
   # Web
   - id: E-BOOK-30
     group: Web
     title: Web write right after a switch
-    when: write on the web just after switching
+    when: booking saved on the web the moment the book switches · the new book's accounts not loaded yet
     then: |
-      - may land in the previous book (review 7)
-      - create, leave, delete, accept don't clear the old book (review 2)
-    status: known-issue
+      - fixed 2026-11-02 · refused (*That account belongs to another book…*), never filed in the previous book · once the new book's accounts load, `/add` picks one of them and the save goes into the new book
+      - new book, leave, delete, join clear the old book's data like a switch · leaving or deleting a book that isn't open switches nothing
+      - was: could land in the previous book (review 7) · the old book's data under the new book's name (review 2) · a new account, list or rule filed in another book (review 3)
+    status: fixed
     risk: high
-    related: [T-BOOK-03]
+    related: [T-BOOK-03, E-BOOK-32]
+    tests:
+      - file: e2e/books.spec.ts
+        repo: web
+        name: a booking saved the moment the book switches never lands in the previous book
+      - file: src/lib/books/hooks.test.tsx
+        repo: web
+        name: drops what a request still in flight for the previous book brings back
+      - file: src/app/(main)/books/page.test.tsx
+        repo: web
+        name: stays in the active book when the deleted book is no longer the active one
   - id: E-BOOK-31
     group: Web
     title: Web offers a refused *Remove*
@@ -124,6 +146,20 @@ items:
     then: "web offers *Remove* → server refuses · app: plain members only"
     status: known-issue
     risk: low
+  - id: E-BOOK-32
+    group: Web
+    title: Joined in the invite's own tab
+    when: web used in the last 15 min · invite email opened in a new tab · *Join* → *Continue on the web*
+    then: |
+      - fixed 2026-11-02 · the joined book opens, under its own name
+      - was: the book list stored by the earlier tab lacked it, so the header named another book over the joined book's data
+    status: fixed
+    risk: medium
+    related: [E-BOOK-30]
+    tests:
+      - file: src/lib/books/hooks.test.tsx
+        repo: web
+        name: fetches instead of trusting a persisted list that lacks the active book
 
   # Offline books
   - id: E-BOOK-40

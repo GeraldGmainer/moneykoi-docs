@@ -16,12 +16,13 @@ items:
   - id: T-BOOK-03
     title: Web book-switch issues
     owner: ai
+    status: done
     detail: |
-      From `BOOKS_WEB_AI_CONTEXT.md` §8, review-2026-09:
-      - 2: create/leave/delete/accept don't clear the old book
-      - 3: `tenant_member` fallback in accounts, shopping, recurring
-      - 7: writes right after a switch → previous book
-      - no prompt written yet
+      - **done 2026-11-02** · `BOOKS_WEB_AI_CONTEXT.md` §4.3, §4.4, §8 · E-BOOK-30, E-BOOK-32
+      - 2: new book, leave, delete, join run the full switch · leaving or deleting a book that isn't open stays put
+      - 3: already fixed 2026-10-03 for accounts, shopping, recurring · the last private resolver copy (investments) removed
+      - 7: requests in flight for the old book cancelled on switch · the write check (2026-10-03) pinned end to end · `/add` picks the new book's account
+    related: [E-BOOK-30, E-BOOK-32]
   - id: T-BOOK-04
     title: Deploy the offline-book flag
     owner: gerald
