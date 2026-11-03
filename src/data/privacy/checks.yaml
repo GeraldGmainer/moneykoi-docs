@@ -16,6 +16,10 @@ groups:
         text: Logout → lock stays · *Delete all data* (nothing else) → lock off
       - id: C-PRIV-006
         text: TalkBack on → PIN gate up → swipe through → only the lock is read, no balances · app switcher shield same · unlock → app readable again
+      - id: C-PRIV-007
+        text: "iPhone with Face ID → the switch reads *Face ID* with the face icon · iPhone SE → *Touch ID* · Android fingerprint phone → *Fingerprint unlock* · Face ID enrolled in iOS Settings while the app runs → back in App lock the switch is there, no restart"
+      - id: C-PRIV-008
+        text: "PIN on → *PIN unlock* off → current PIN asked · wrong → *Wrong PIN* · right → off · Face ID on too → the face key on the pad confirms · biometrics alone → off asks Face ID, cancel keeps it on · *Change PIN* → current PIN or Face ID first"
 
   - id: hide-amounts
     title: Hide amounts

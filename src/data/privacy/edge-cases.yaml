@@ -212,3 +212,25 @@ items:
     tests:
       - file: test/features/app_lock/ui/widgets/app_lock_gate_test.dart
         name: a screen reader reaches the app only while it is unlocked and in front
+  - id: E-PRIV-46
+    group: App lock
+    title: Lock turned off by whoever holds the open app
+    when: app unlocked · Settings → App lock → *PIN unlock* off (or *Change PIN*)
+    then: asks for the current PIN or biometrics first · before 2026-11-03 nothing was asked · found by the iOS simulator round (IOS-8-3)
+    status: fixed
+    risk: high
+    related: [R-PRIV-08, D-PRIV-10]
+    tests:
+      - file: test/features/settings/ui/pages/app_lock_settings_page_test.dart
+        name: a cancelled PIN check leaves the lock on
+  - id: E-PRIV-47
+    group: App lock
+    title: Face ID set up while the app runs
+    when: Face ID enrolled in iOS Settings with the app open · back to Settings → App lock
+    then: the biometric switch is offered on return · before 2026-11-03 only after a restart (IOS-8-2)
+    status: fixed
+    risk: low
+    related: [R-PRIV-09]
+    tests:
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: a resume offers biometrics enrolled in the background, with their kind

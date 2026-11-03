@@ -27,6 +27,18 @@ items:
       - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
         name: a correct PIN unlocks and resets the attempt counter
     checks: [C-PRIV-001, C-PRIV-003]
+  - id: J-PRIV-04
+    group: App lock
+    title: Turns the lock off
+    from: Settings → App lock → a switch off, or *Change PIN*
+    steps:
+      - current PIN, or Face ID / fingerprint
+      - right → off, or on to the new PIN · cancel → stays on
+    result: only the owner can remove the lock
+    tests:
+      - file: test/features/app_lock/ui/pages/pin_setup_page_test.dart
+        name: the right current PIN closes the page with true and changes nothing
+    checks: [C-PRIV-008]
   - id: J-PRIV-03
     group: App lock
     title: Forgets the PIN

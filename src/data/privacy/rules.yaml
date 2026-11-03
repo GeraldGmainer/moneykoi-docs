@@ -76,6 +76,40 @@ items:
       - file: test/core/offline_first/wiper_test.dart
         name: keeps secure storage, which holds the app lock
     related: [R-ACC-04]
+  - id: R-PRIV-08
+    group: App lock
+    title: Off or a new PIN · confirm first
+    text: |
+      - turning PIN or biometrics off, and *Change PIN*, first ask for the current PIN or Face ID / fingerprint
+      - PIN on → the PIN pad, with the biometric key when biometrics are on · biometrics alone → their prompt
+      - the PIN asked here spends the lock screen's tries: 5 misses → 30 s, shared
+      - nothing left that could confirm (biometrics removed while the app ran) → goes off unasked, the lock fails open on the next start anyway
+    source: APP_LOCK §2
+    tests:
+      - file: test/features/settings/ui/pages/app_lock_settings_page_test.dart
+        name: turning the PIN off asks for the current PIN first
+      - file: test/features/settings/ui/pages/app_lock_settings_page_test.dart
+        name: turning biometrics off when it was the only lock asks for them first, then says so
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: a wrong current PIN spends the lock screen
+      - file: test/features/app_lock/ui/pages/pin_setup_page_test.dart
+        name: "change: biometrics stand in for the current PIN"
+    related: [D-PRIV-10, R-PRIV-04]
+  - id: R-PRIV-09
+    group: App lock
+    title: Biometrics by their own name
+    text: |
+      - the switch says what the phone has: *Face ID* · *Touch ID* (iPhone) · *Fingerprint unlock* (Android, fingerprint only) · else *Biometric unlock*
+      - icon to match, on the lock screen too
+      - Face ID or a fingerprint set up while the app runs is offered on return, no restart
+    source: APP_LOCK §2
+    tests:
+      - file: test/features/app_lock/domain/service/biometric_service_test.dart
+        name: an iPhone with Face ID says Face ID, one with a home button Touch ID
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: a resume offers biometrics enrolled in the background, with their kind
+      - file: test/features/settings/ui/pages/app_lock_settings_page_test.dart
+        name: the biometric row names what the phone has
   - id: R-PRIV-07
     group: App lock
     title: Not in v1

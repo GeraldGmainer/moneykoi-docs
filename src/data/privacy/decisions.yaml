@@ -64,3 +64,4 @@ items:
       - asks for the current PIN or Face ID / fingerprint first
       - applies to turning a method off and to *Change PIN*
       - source: iOS simulator round, IOS-8-3
+      - built 2026-11-03 · R-PRIV-08
