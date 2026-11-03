@@ -18,7 +18,7 @@ items:
       - "*Sub-categories* switch · preview → *Create budget book*"
     result: book with the chosen accounts, balances dated today, calendar settings, categories
     note: |
-      - *Quick Start* skips all of it · step counter reads 2 there, 6 here
+      - *Quick start* skips all of it · step counter reads 2 there, 6 here
       - back from accounts → method choice, counter back to 2
     checks: [C-SET-005, C-SET-006, C-SET-007]
     related: [R-SET-12]

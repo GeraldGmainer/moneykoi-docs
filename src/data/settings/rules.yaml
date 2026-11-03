@@ -43,7 +43,7 @@ items:
       - language → currency suggested (English → USD)
       - starter categories come classified
       - no account → fully offline · invitees skip it
-      - *Quick Start*: one tap · 4 accounts, 48 categories, no balances → Home keeps *Set starting balances*
+      - *Quick start*: one tap · 4 accounts, 48 categories, no balances → Home keeps *Set starting balances*
       - signed in with the wrong account → *Log out* on the first step (web since 2026-10-28)
     source: OFFLINE_TIER §3, ONBOARDING §1, ONBOARDING_WEB §1
     tests:
@@ -90,6 +90,7 @@ items:
       - drawer → *Tips & features* · Settings → Support → *Tips & features* · never opens by itself
       - one row per feature: one line of payoff + *Open* · groups Everyday · Plan · Together · More
       - a tick on what is already in use (bookings, scans, rules, budgets, goals, loans, lists, positions, widgets, app lock, hidden amounts, quick entry, calendar)
+      - *Receipt scanner* ticks on a scan or on any saved receipt, one typed in through *Add receipt* too (2026-11-03) · the Home checklist's *Scan a receipt* still needs a scan
       - locked rows keep the lock and open the paywall first · no row for a feature the plan cannot offer · widgets row Android only
       - the scanner row replays the pre-scan intro
     source: GETTING_STARTED §5
@@ -98,6 +99,8 @@ items:
         name: a locked feature keeps its row, with the lock; an absent one loses it
       - file: test/features/getting_started/use_cases/get_tips_usage_use_case_test.dart
         name: every tick comes from its own trace
+      - file: test/features/getting_started/use_cases/get_tips_usage_use_case_test.dart
+        name: a receipt typed in by hand ticks the receipt scanner too
       - file: test/features/getting_started/ui/tips_page_test.dart
         name: "a destination row goes through the navigator: a tab is switched with its focus, a page is pushed"
     related: [R-HOM-40]
@@ -233,3 +236,19 @@ items:
       - file: test/features/settings/ui/pages/changelog_page_test.dart
         name: on iOS the update row opens the App Store page
     related: [E-PLAT-03, T-PLAT-10]
+  - id: R-SET-45
+    group: Formatting
+    title: Dates and percents follow the locale
+    text: |
+      - *System* date → locale medium: *Nov 2, 2026* · *2. Nov. 2026* · *2026年11月2日*
+      - long dates in the locale's order: *Monday, November 2, 2026*
+      - numeric dates **only** with a numeric date format picked
+      - percents: *27%* en/ja · *27 %* de · a zero is bare
+    source: 04_COMPONENT_REFERENCE.md › Dates, percents and compact money · iOS round IOS-2-5, IOS-13-4
+    tests:
+      - file: test/shared/ui/calendar/date_converter_test.dart
+        name: puts weekday, day, month and year in the locale
+      - file: test/shared/ui/calendar/date_converter_test.dart
+        name: reads AppDateFormat.system as the locale
+      - file: test/shared/utils/number_format_test.dart
+        name: follows each locale
