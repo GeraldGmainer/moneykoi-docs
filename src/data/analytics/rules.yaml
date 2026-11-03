@@ -45,15 +45,25 @@ items:
     group: Numbers
     title: Comparisons go quiet
     text: |
-      - previous = equal window before · last year = same calendar dates
+      - previous = the calendar period before · *Last month* vs the whole month before it, anchor day to anchor day
+      - a running period → the same span to date · *This month* on Nov 2 = Nov 1–2 vs Oct 1–2 · on Mar 30 vs Feb 1–28 · *This year* vs last year to the same day · *This week* vs last week to the same weekday
+      - last year = same calendar dates · for *This month* still the whole month last year (open: D-ANL-2)
       - *All time* → no comparison
       - from zero → no percent, never "+∞ %"
-    source: ANALYTICS §4
+      - web: still the equal window before · not ported
+    source: ANALYTICS §4 Period math rules · web `analytics/lib/period.ts` resolveBaseline
     tests:
+      - file: test/features/home/service/date_range_service_test.dart
+        name: this month on Nov 2 compares with Oct 1–2, so a salary on both 1sts lines up
+      - file: test/features/home/service/date_range_service_test.dart
+        name: last month is the whole calendar month before it, not an equal-length window
+      - file: test/features/analytics/use_cases/get_analytics_kpi_use_case_test.dart
+        name: this month on Nov 2 with a salary on Oct 1 and Nov 1 reads no change, not +1018 %
       - file: test/features/analytics/analytics_period_math_test.dart
         name: has no baseline, for either mode
       - file: test/features/analytics/analytics_period_math_test.dart
         name: is null rather than infinite when the base was zero or absent
+    related: [D-ANL-1, E-ANL-07]
   - id: R-ANL-06
     group: Numbers
     title: Months = budget months

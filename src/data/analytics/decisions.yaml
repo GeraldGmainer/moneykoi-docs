@@ -1,0 +1,23 @@
+items:
+  - id: D-ANL-1
+    question: What does a period compare with?
+    status: decided
+    date: 2026-11-03
+    answer: |
+      - **calendar + to date**
+      - a finished period → the calendar period before it, anchor day to anchor day
+      - a running period (this month, this year…) → the same span of the previous period to date · Nov 1–2 vs Oct 1–2 · end clamped in shorter months (Mar 1–30 vs Feb 1–28)
+      - a custom range keeps the equal window before
+      - *Last 2/3/6/12 months* end with this month, so they count as running → to date (Sep 1–Nov 2 vs Jun 1–Aug 2) · Gerald to confirm
+      - built 2026-11-03 · web not ported
+      - source: iOS simulator round, IOS-15-1
+    related: [R-ANL-05, E-ANL-07]
+  - id: D-ANL-2
+    question: '*Same period last year* for a running period: whole month or to date?'
+    status: open
+    answer: |
+      - today: *This month* on Nov 2 vs the **whole** November last year · reads as a drop until month end
+      - a) to date as well (Nov 1–2 vs Nov 1–2 last year) · same rule as the previous period
+      - b) keep the whole month
+      - *This year* already compares to date
+    related: [R-ANL-05]

@@ -44,3 +44,61 @@ items:
     tests:
       - file: test/features/currency/extensions/currency_formatting_extension_test.dart
         name: follows the money format, not the app language
+  - id: E-ANL-07
+    group: Numbers
+    title: Salary on the 1st, early in a month
+    when: salary on Oct 1 and Nov 1 · *This month* opened on Nov 2
+    then: "*Income ↑ 1018 %* before 2026-11-03 (Oct 2–31 vs Nov) · now Nov 1–2 vs Oct 1–2 → no change · a finished month vs the whole month before it · iOS round IOS-15-1"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/analytics/use_cases/get_analytics_kpi_use_case_test.dart
+        name: this month on Nov 2 with a salary on Oct 1 and Nov 1 reads no change, not +1018 %
+      - file: test/features/home/service/date_range_service_test.dart
+        name: a day February does not have is clamped to its last day
+    related: [R-ANL-05]
+  - id: E-ANL-08
+    group: Export
+    title: Share card net without a sign
+    when: "*Share or export* · positive net"
+    then: "*+$3,531.06* like the Overview · zero bare and uncoloured · IOS-15-2"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/analytics/ui/widgets/analytics_summary_card_test.dart
+        name: a zero net stays bare and uncoloured
+  - id: E-ANL-09
+    group: Export
+    title: PDF read like a spreadsheet
+    when: "*Share or export* → *PDF*"
+    then: money format · no *Section* / *Currency* column · dates in the date format · *Private book* · IOS-15-3
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/analytics/analytics_csv_builder_test.dart
+        name: has no Section or Currency column
+      - file: test/shared/export/pdf_encoder_test.dart
+        name: a person reads dates in the date-format setting
+  - id: E-ANL-10
+    group: Numbers
+    title: Uneven axis steps and two rates
+    when: "*In & out by account* · savings rate 61.94 %"
+    then: ticks *2k · 4k* · rate *62%* in Overview and PDF · CSV keeps 61.9 · IOS-15-4
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/chart/nice_axis_test.dart
+        name: steps are round numbers
+      - file: test/features/analytics/analytics_csv_builder_test.dart
+        name: rounds the savings rate the way the Overview does
+  - id: E-ANL-11
+    group: Numbers
+    title: To-date window labelled as a month
+    when: "*This month* on Nov 2 · comparison card"
+    then: columns *Nov 1 – Nov 2* vs *Oct 1 – Oct 2* · whole months stay *Oct 2026*
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/analytics/ui/widgets/period_comparison_card_test.dart
+        name: a to-date window is labelled by its days
+    related: [E-ANL-07]

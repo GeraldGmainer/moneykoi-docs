@@ -21,3 +21,5 @@ groups:
         text: "Web: book with investments → net worth *incl. investments* · leaderboard or treemap row → category activity, same period"
       - id: C-ANL-009
         text: English app + money format `1.234,56 €` → insights, chart legends, Home budget card, quick-booking chip follow the format · quick-booking date follows the date format
+      - id: C-ANL-010
+        text: Salary booked on the 1st of last month and this month · on the 2nd → *This month* income shows no change (not +1000 %) · *Last month* compares the whole month before · month start 25 → periods run 25 → 24 on both sides
