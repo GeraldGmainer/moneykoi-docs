@@ -6,7 +6,7 @@ Human-facing docs for MoneyKoi: features, tiers, business rules, journeys, edge 
 Same as `moneykoi-app/CLAUDE.md`: keyword-style bullets, answer first, `file:line` instead of prose.
 
 ## 🚫 Git
-Same as `moneykoi-app/CLAUDE.md`: **you never write git history or move a ref.** Read-only git is fine. When work is ready, end with one `bash` block of `git add <paths>` + `git commit -m "…"` for Gerald to paste.
+**This repo is the one place an agent commits** (decided 2026-11-03). When your docs work is done and `npm run check` passes, run `git add <paths>` + `git commit -m "<area>: <what changed>"` yourself: every path named, only files you changed, never another session's. Nothing else writes here either: no push, branch, checkout, restore, reset, stash, rebase, amend or history rewrite. Read-only git is fine. The code repos stay Gerald's (`moneykoi-app/CLAUDE.md` › Git).
 
 ## Where things live
 | What | Where | Rule |
@@ -121,8 +121,8 @@ A server migration belongs to the area of the feature it serves. One fact lives 
 
 ### Finishing
 1. `npm run check` in this repo passes (Node 24: `export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:$PATH"`).
-2. The git block gets a **separate** commit for this repo — `git -C ../moneykoi-docs add <paths>` + `git -C ../moneykoi-docs commit -m "<area>: <what changed>"` — next to the code repo's commit. Every path named.
-3. Say in the reply which docs entries changed (ids), or "docs: nothing user-visible changed".
+2. Commit it yourself (see *Git*): `git -C ../moneykoi-docs add <paths>` + `git -C ../moneykoi-docs commit -m "<area>: <what changed>"`, one commit per feature, every path named, only your own files. The code repo's commit stays in the git block for Gerald.
+3. Say in the reply which docs entries changed (ids) and the commit hash, or "docs: nothing user-visible changed".
 
 ## Commands
 ```sh
