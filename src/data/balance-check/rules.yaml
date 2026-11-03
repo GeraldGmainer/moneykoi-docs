@@ -82,15 +82,23 @@ items:
     text: |
       - first 7 days of a budget month → *Check balances* card · owners + admins
       - not on a book created in the current period (payday anchor included) · a book set up on Nov 2 first sees it on Dec 1 (D-HOM-6)
+      - starting balances count as a check · set on Nov 3 → first card on Dec 1 (D-HOM-8)
+      - not while the *Set starting balance* card is open (D-HOM-8)
       - dismiss per period
       - opt-in reminder on the next 3 month starts
     source: RECONCILIATION §7
-    related: [D-HOM-6]
+    related: [D-HOM-6, D-HOM-8]
     tests:
       - file: test/features/reconciliation/balance_check_nudge_test.dart
         name: is due in the first days of a period nobody has counted
       - file: test/features/reconciliation/balance_check_nudge_test.dart
         name: a book created in this period has no last period to count
+      - file: test/features/reconciliation/balance_check_nudge_test.dart
+        name: starting balances typed in at the end of the last period count as its closing count
+      - file: test/features/reconciliation/balance_check_nudge_use_case_test.dart
+        name: starting balances count as a check, the earliest one for the book
+      - file: test/features/home/use_cases/get_dashboard_layout_use_case_test.dart
+        name: the balance check waits while the starting-balance card is showing
   - id: R-BC-10
     group: Web
     title: "Web: one transaction + stale guard"
