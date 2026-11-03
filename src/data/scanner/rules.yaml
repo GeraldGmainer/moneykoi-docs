@@ -46,7 +46,25 @@ items:
     text: |
       - one or more, top to bottom
       - unreadable photo fails alone · no total anywhere → step 1
+      - also without a camera: *Pick photos* on the camera-declined and error cards
     source: SCANNER §4.30
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
+        name: and an unreadable photo is reported there
+  - id: R-SCN-22
+    group: The flow
+    title: Camera declined · ask again before Settings
+    text: |
+      - *Not now* in the app's own camera dialog → card *Allow camera*, which shows the phone's real prompt
+      - *Open Settings* only once the phone itself refused (iOS lists the switch only after it asked once)
+      - Android: the first refusal can still be asked again, the second sends to Settings
+    source: SCANNER §4.15g
+    tests:
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: a decline in the app rationale offers the real request, never Settings
+      - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
+        name: a refusal the OS will not ask again about sends the user to Settings
+    checks: [C-SCN-010]
   - id: R-SCN-11
     group: The flow
     title: German TSE QR = like RKSV
@@ -166,3 +184,29 @@ items:
       - file: test/features/receipt/service/scanner_onboarding_progress_test.dart
         name: whoever saw the old carousel is shown nothing
     related: [R-SCN-13, R-SCN-03]
+  - id: R-SCN-23
+    group: Review & save
+    title: Amounts on the app keypad
+    text: |
+      - *Total* and an item's *Price* are typed on the app's own keypad, like every other amount
+      - ✓ hands the sheet back · the item sum and *still missing* stay above the keys
+      - the *Total* row shows a neutral money icon, never a currency sign of its own
+    source: SCANNER §4.27, §4.17
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_total_edit_sheet_test.dart
+        name: the sheet opens on the keypad, never on the OS number pad
+      - file: test/features/booking/ui/widgets/add_receipt/review_item_edit_sheet_test.dart
+        name: the price is keyed on the app keypad, the name is the only text field
+    checks: [C-SCN-012]
+  - id: R-SCN-24
+    group: Review & save
+    title: A receipt typed in starts neutral
+    text: |
+      - total entered, no item yet → *Add items up to {total}*, grey
+      - *Math mismatch* in red only once items exist and still disagree
+    source: SCANNER §4.17
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: a hand-entered receipt with a total and no item yet starts neutral, not red
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: a hand-entered receipt turns red once its items disagree with the total

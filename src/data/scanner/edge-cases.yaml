@@ -97,3 +97,46 @@ items:
     status: known-issue
     risk: medium
     related: [E-SCN-10]
+  - id: E-SCN-12
+    group: Camera
+    title: "*Not now* led to a Settings page without a camera switch"
+    when: iPhone · camera dialog → *Not now*
+    then: card *Allow camera* fires the iOS prompt · *Open Settings* only after iOS refused · before 2026-11-03 straight to Settings, where iOS shows no switch until it asked once (IOS-7-1)
+    status: fixed
+    risk: high
+    related: [R-SCN-22]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
+        name: declining the app rationale leaves the real request open
+  - id: E-SCN-13
+    group: Camera
+    title: No camera, no way in
+    when: camera declined, broken, or none (simulator)
+    then: "*Pick photos* on the card reads gallery photos · before 2026-11-03 only *Open Settings* / *Try again* (IOS-7-2)"
+    status: fixed
+    risk: medium
+    related: [R-SCN-06]
+    tests:
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: a scanner without a working camera offers photos from the gallery
+  - id: E-SCN-14
+    group: Review
+    title: Euro icon in a dollar book
+    when: any non-euro book · *Add receipt* or the scan review
+    then: neutral money icon on the *Total* row · before 2026-11-03 a € glyph next to $23.45 (IOS-7-3)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: the total row carries no currency glyph of its own
+  - id: E-SCN-15
+    group: Review
+    title: A receipt typed in started with a red error
+    when: "*Add receipt* → total entered, no item yet"
+    then: grey *Add items up to …* · red *Math mismatch* only once items disagree · before 2026-11-03 red banner and red footer from the start (IOS-7-5)
+    status: fixed
+    risk: low
+    related: [R-SCN-24]
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: a hand-entered receipt with a total and no item yet starts neutral, not red

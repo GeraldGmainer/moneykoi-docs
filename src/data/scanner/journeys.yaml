@@ -24,11 +24,11 @@ items:
   - id: J-SCN-03
     group: Scanning
     title: Imports from the gallery
-    from: scanner → gallery button
+    from: scanner → gallery button, or *Pick photos* when the camera is declined or missing
     steps:
       - pick photos top to bottom
     result: review, like from the camera
-    checks: [C-SCN-003]
+    checks: [C-SCN-003, C-SCN-011]
   - id: J-SCN-04
     group: Scanning
     title: Receipt for an existing booking
