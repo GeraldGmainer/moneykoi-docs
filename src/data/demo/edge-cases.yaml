@@ -78,3 +78,14 @@ items:
     when: Backup & restore opened in a demo
     then: no restore row · a tapped file asks to leave
     risk: medium
+  - id: E-DEMO-10
+    group: Time
+    title: Demo started on the 1st or 2nd
+    when: fresh install on Nov 2 → *Try demo mode*
+    then: "before 2026-11-03: November with income $0, balance −$1,838, *Income ↓ 100 %* · now: a salary on the 1st and a few days of spending · iOS round IOS-21-1"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: the month so far holds a pay and everyday spending
+    related: [R-DEMO-14]

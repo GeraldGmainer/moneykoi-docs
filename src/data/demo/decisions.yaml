@@ -56,3 +56,13 @@ items:
     answer: |
       - **no**
       - the paywall shows the plans after leaving
+  - id: D-DEMO-9
+    question: Early in a month the demo opens on an almost empty month — what then?
+    status: decided
+    date: 2026-11-03
+    answer: |
+      - **fill the current month** · not: open on the last complete month
+      - the generator always puts a salary and typical bookings before today in this month
+      - built 2026-11-03 · a generator rule, the YAML files unchanged
+      - source: iOS simulator round, IOS-21-1
+    related: [R-DEMO-14, E-DEMO-10]

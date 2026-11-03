@@ -137,6 +137,24 @@ items:
         name: a demo is stale a week after it was made, or when the generator changed
       - file: test/features/demo/demo_use_cases_test.dart
         name: a stale demo is made again in place on cold start, the inbox left as it was
+  - id: R-DEMO-14
+    group: The data
+    title: The current month is never empty
+    text: |
+      - every book's month so far holds a **pay** and at least four days' worth of everyday spending · even on the 1st
+      - the biggest salary still ahead this month moves to the **1st** for the whole history · a fortnightly paycheck moves to the latest weekday it can (its own Friday, else a workday)
+      - once a salary of that kind is in (de: Lena's on the 25th), every rule keeps its own day
+      - calendar month · a month start equal to the payday is covered too
+      - running demos are made again on the next cold start (generator version 2)
+    source: DEMO §4a
+    tests:
+      - file: test/features/demo/demo_generator_test.dart
+        name: the month so far holds a pay and everyday spending
+      - file: test/features/demo/demo_generator_test.dart
+        name: on Nov 2 the larger salary moves to the 1st for the whole history
+      - file: test/features/demo/demo_generator_test.dart
+        name: once a salary is in, every rule keeps its own day
+    related: [D-DEMO-9, E-DEMO-10]
   # Leaving
   - id: R-DEMO-12
     group: Leaving
