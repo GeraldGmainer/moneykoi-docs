@@ -17,3 +17,9 @@ items:
     question: Delete with bookings → trash them?
     status: decided
     answer: No · gone for good (D14)
+  - id: D-LED-5
+    question: Delete an account that bookings still use?
+    status: decided
+    date: 2026-11-03
+    answer: Checked before any confirm · offer *Hide instead* · no *delete with bookings* for accounts (not decided) · unused → destructive confirm
+    related: [R-LED-42, E-LED-12]

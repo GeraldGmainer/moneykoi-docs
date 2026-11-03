@@ -61,3 +61,54 @@ items:
     tests:
       - file: test/features/account/ui/pages/account_list_page_test.dart
         name: no amount shows before the balances have loaded
+  - id: E-LED-12
+    group: Accounts
+    title: Delete an account with bookings
+    when: Accounts → *Cash* (≈60 bookings) → ⋮ → *Delete*
+    then: |
+      - *Still in use* → *Hide instead* / *Cancel* before any confirm
+      - a booking landing between the check and the delete → the same dialog
+      - before 2026-11-03 *Delete this account?* → OK → *Cannot delete account … delete those bookings first* (iOS round, IOS-6-5)
+    status: fixed
+    risk: medium
+    related: [R-LED-42, D-LED-5]
+    tests:
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: an account with bookings offers hiding before any delete confirm
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: a booking that lands between the count and the delete shows the in-use dialog
+  - id: E-LED-13
+    group: Accounts
+    title: Starting balance without a date
+    when: new account → type a starting balance
+    then: |
+      - date set to today · *Save* off while one of the two is missing
+      - before 2026-11-03 *No date · This field is required* in red with *Save* still on (iOS round, IOS-6-6)
+    status: fixed
+    risk: low
+    related: [R-LED-40]
+    tests:
+      - file: test/features/account/domain/account_draft_test.dart
+        name: clearing the balance clears its date, so the form stays valid
+  - id: E-LED-14
+    group: Accounts
+    title: Account type sheet cut off
+    when: account form → *Type*
+    then: |
+      - the sheet grows to its content (up to 80 % of the screen) · *Loan* and its hint visible without scrolling · same for every pick-one sheet
+      - before 2026-11-03 Loan's *Counts against net worth* sat below the fold (iOS round, IOS-6-7)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/common/select_bottom_sheet_test.dart
+        name: sizes to its content, so a list taller than half the screen needs no scroll
+  - id: E-LED-15
+    group: Categories
+    title: List totals without a period
+    when: "*Categories* list · *Food & Drink −$3,264*"
+    then: caption *All time* above the list · whole units stay · edit page keeps cents · IOS-16-1
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/category/ui/pages/category_list_page_test.dart
+        name: the expense tab lists expense parents

@@ -169,11 +169,17 @@ items:
     text: |
       - name (20) · type · icon · color · hide
       - starting balance **with its date**, both or neither
+      - balance typed → date = today (Today / Yesterday / 2 days ago in the sheet) · balance cleared → date too
+      - *Save* off while only one of the two is set
       - credit cards + loans = liabilities
-    source: 02_FEATURES, ACCOUNTS_WEB §1
+    source: 02_FEATURES, ACCOUNTS_WEB §1, FORMS (DateFieldTile)
     tests:
       - file: test/features/account/account_balance_anchor_test.dart
         name: a balance without a date flags the date row
+      - file: test/features/account/domain/account_draft_test.dart
+        name: a balance entered without a date is dated today
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: a balance without a date keeps save disabled
   - id: R-LED-41
     group: Accounts
     title: Balances never summed on screen
@@ -190,10 +196,17 @@ items:
     group: Accounts
     title: Delete only unused accounts
     text: |
-      - in use (either side of a transfer) → refused
-      - last account → refused · *Hide* instead
-    source: AccountDeleteRule, ACCOUNTS_WEB §4.5
+      - checked **before** any confirm · in use = either side of a transfer
+      - in use → *Still in use · Cash holds 60 bookings* → **Hide instead** (Undo) or *Cancel* · no delete with bookings (D-LED-5)
+      - unused → red *Delete* confirm
+      - last account → refused
+    source: AccountDeleteRule, CATEGORY_AI_CONTEXT §6, ACCOUNTS_WEB §4.5
+    related: [D-LED-5, J-LED-11]
     tests:
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: an account with bookings offers hiding before any delete confirm
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: is titled as an edit and deletes after confirming
       - file: test/features/account/domain/account_delete_rule_test.dart
         name: throws TranslatedWarning(accountStillUsed) when account is referenced by a booking
       - file: test/features/account/domain/account_delete_rule_test.dart

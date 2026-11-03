@@ -51,3 +51,17 @@ items:
       - file: test/features/account/ui/pages/account_save_page_test.dart
         name: naming it and saving creates it, closes the page and offers undo
     checks: [C-LED-010]
+  - id: J-LED-11
+    group: Accounts
+    title: Retires an account that has bookings
+    from: Accounts → account → ⋮ → *Delete*
+    steps:
+      - "*Still in use · Cash holds 60 bookings*"
+      - "*Hide instead*"
+    result: "*Account hidden · Undo* · gone from the pickers, history kept · an unused account gets a red *Delete* confirm instead"
+    tests:
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: an account with bookings offers hiding before any delete confirm
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: cancelling the in-use dialog keeps the account as it is
+    risk: low
