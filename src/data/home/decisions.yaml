@@ -32,3 +32,13 @@ items:
       - not shown until the book has lived through one full period
       - a book set up on Nov 2 first sees it at the next month start
       - source: iOS simulator round, IOS-3-5
+  - id: D-HOM-7
+    question: Tapping the open tab again — scroll to the top?
+    status: decided
+    date: 2026-11-03
+    answer: |
+      - **yes** · iOS + Material convention
+      - every page that can sit in the bar · the tablet rail too
+      - built 2026-11-03
+      - source: iOS simulator round, IOS-3-3
+    related: [R-HOM-14]
