@@ -23,13 +23,19 @@ groups:
       - id: C-PLAT-014
         text: iPhone → *Continue with Apple* heads the welcome-back, claim and join lists → Face ID sheet → signed in · *Hide my email* → relay address, the name still shows in the profile and member list · close the sheet → nothing happens · *Sign back in* reopens the Apple sheet (R-ACC-67)
       - id: C-PLAT-015
-        text: Cold start → the koi sits centred on the dark launch screen at the same size as on Android, not stretched
+        text: Cold start → the koi sits centred on the dark launch screen at the same size as on Android, not stretched · *MONEY KOI* 60 pt above the edge, not on the home indicator, and it stays put when the app's splash takes over (E-PLAT-07)
       - id: C-PLAT-016
         text: Music playing → scanner onboarding clips → the music keeps playing
       - id: C-PLAT-017
         text: Percent, decimal or amount field on the number pad (no Done key) → tap empty space → the keyboard closes · a tap on a button or tile still works
       - id: C-PLAT-018
         text: "Fresh Apple ID on the iPhone → *Continue with Apple* → signed in · SQL: one `apple_sign_in_token` row, `client_id` = the build's bundle id · Profile › *Delete account* → Welcome · the `account` log reads *Apple tokens revoked 1 of 1* · the row is gone · iPhone Settings › Apple ID › Sign-In & Security › Sign in with Apple: Money Koi no longer listed · *Continue with Apple* again → Apple's first-time sheet (name, *Hide my email*) (R-ACC-68, T-PLAT-13)"
+      - id: C-PLAT-019
+        text: "iPhone 16 Pro → the bottom bar, a form's *Save* bar, the category picker, the keypad, *Transfer to*, the Budget Book filter and the drawer run to the bottom edge, no black strip · tabs, buttons, the last keys above the home indicator · iPhone SE → *Save* a gutter above the edge · save a booking → *Booking created* floats above the bar, the **+** not on it (R-PLAT-32)"
+      - id: C-PLAT-021
+        text: "iPad upright → Home cards, Accounts, Settings, the booking form and its keypad in a centred column, the bar's tabs close together (R-PLAT-34) · landscape → rail, tablet booking screen · Split View ⅓ / ½ / ⅔ and Stage Manager resizing → nothing clipped, layouts switch as the window crosses 600 and 900 pt (D-PLAT-11, IOS-25-1)"
+      - id: C-PLAT-022
+        text: "iPhone → Forecast and Budget Book titles centred like Accounts · Settings › App lock, Edit account › Hide, Backup options → the iOS switch, orange when on · Investments › New position → back is ‹, on every step (R-PLAT-33)"
 
   - id: look
     title: Shared look
@@ -46,3 +52,5 @@ groups:
     items:
       - id: C-PLAT-005
         text: Android 13+ → *Themed icons* on → the Money Koi icon turns one-color like the others (koi silhouette, eye and smile cut out) · prod and dev flavor
+      - id: C-PLAT-020
+        text: "Android 15+, gesture nav and 3-button nav → the bottom bar, *Save* bar, sheets and keypad reach the screen edge behind the nav bar · tabs, buttons and keys clear of it (R-PLAT-32)"

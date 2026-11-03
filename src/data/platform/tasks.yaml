@@ -43,12 +43,12 @@ items:
       Most of the app needs no account: tap "Get started" on the first screen.
 
       To sign in with the review account:
-      1. On the first screen, tap "I already use Money Koi"
-      2. Tap "Sign in with Email"
+      1. On the first screen, tap "Sign in or restore"
+      2. Tap "Sign in with email"
       3. Tap the "Password" tab at the top
-      4. Enter the email and password above, then tap "Login"
+      4. Enter the email and password above, then tap "Sign in"
 
-      Do not tap "Send Email Link". This address has no inbox, so no link or code can arrive.
+      Do not tap "Send email link". This address has no inbox, so no link or code can arrive.
 
       Money Koi is a manual budget book. No bank accounts are linked.
   - id: T-PLAT-04

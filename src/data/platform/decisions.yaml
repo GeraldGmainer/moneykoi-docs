@@ -88,3 +88,14 @@ items:
       - 家計簿 = the Budget Book view and the app genre · stays in the tab, page and welcome line
       - 帳簿 = a book · the onboarding button becomes 帳簿を作成する
       - source: iOS simulator round, IOS-22-1
+  - id: D-PLAT-11
+    question: iPad multitasking — Split View and Slide Over, or full screen only?
+    status: decided
+    date: 2026-11-03
+    answer: |
+      - keep multitasking · no `UIRequiresFullScreen` · Apple deprecated the key with iPadOS 26
+      - the app resizes live from ~320 pt to full width · phone layout below 600 pt, centred column to 900 pt, tablet layouts above (R-PLAT-34)
+      - device check C-PLAT-021 stays open: landscape, Split View ⅓ / ½ / ⅔, Stage Manager
+      - source: iOS simulator round, IOS-25-1
+    related: [D-PLAT-8, C-PLAT-021, R-PLAT-34]
+

@@ -26,3 +26,43 @@ items:
     status: known-issue
     risk: low
     related: [R-SET-43]
+  - id: E-PLAT-04
+    group: Screen & layout
+    title: Black strip under every screen on Face ID iPhones
+    when: any screen on an iPhone with a home indicator
+    then: |
+      - was: the bottom bar, *Save* bar, sheets and drawer ended 34 pt above the edge · pure black below
+      - now: they paint to the edge · their content stays above the indicator (R-PLAT-32)
+    status: fixed
+    risk: low
+    related: [R-PLAT-32, C-PLAT-019]
+  - id: E-PLAT-05
+    group: Screen & layout
+    title: Save button 8 pt off the edge on iPhone SE
+    when: any form on a phone without a home indicator
+    then: |
+      - was: the full-width *Save* sat 8 pt above the edge, its sides on the page gutter
+      - now: the gutter below it too
+    status: fixed
+    risk: low
+    related: [R-PLAT-32]
+  - id: E-PLAT-06
+    group: Screen & layout
+    title: The **+** overlapped snackbars
+    when: a booking saved from Home or the Budget Book
+    then: |
+      - was: *Booking created* sat flush on the bar · the **+** covered its lower edge · the hint snackbar floated · two styles swapping on one spot
+      - now: every snackbar floats above the bar, clear of the **+**
+    status: fixed
+    risk: low
+    related: [R-PLAT-32]
+  - id: E-PLAT-07
+    group: Builds
+    title: Wordmark jumped at the launch handoff on iPhone
+    when: cold start on an iPhone with a home indicator
+    then: |
+      - was: *MONEY KOI* sat on the home indicator on the launch screen, ~60 pt higher once the app's splash took over
+      - now: both draw it 60 pt above the edge · device check C-PLAT-015
+    status: fixed
+    risk: low
+    related: [R-PLAT-03, C-PLAT-015]

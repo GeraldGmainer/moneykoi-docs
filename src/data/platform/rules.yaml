@@ -104,7 +104,7 @@ items:
       - permission texts (camera, photos, Face ID) in en/de/ja · the microphone one never shows
       - test on an iPhone: the scanner libraries have no Apple-silicon simulator build
       - system sheets, keyboard and status bar dark like the app (no light theme yet) · a tap on empty space closes the keyboard
-      - launch screen: the koi centred at the Android size
+      - launch screen: the koi centred at the Android size · the wordmark 60 pt above the bottom edge, where the app's own splash draws it
     source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target
     tests:
       - file: test/ios/ios_project_test.dart
@@ -127,3 +127,45 @@ items:
       - no secure storage · its key doesn't travel
     source: OFFLINE_TIER §11
     related: [E-ACC-41]
+  - id: R-PLAT-32
+    group: Screen & layout
+    title: Bars and sheets reach the screen edge
+    text: |
+      - the bottom bar, the *Save* bar, every sheet, the keypad and the drawer paint down to the screen edge · under the iPhone home indicator and the Android nav bar · no black strip
+      - tabs, buttons, keys and the last row stay above the indicator
+      - no indicator (iPhone SE, Android 3-button bar) → the *Save* button keeps the page gutter from the edge, not 8 pt
+      - snackbars float above the bottom bar, clear of the **+** · one style app-wide
+    source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target (IOS-3-1, IOS-2-8, IOS-2-7)
+    tests:
+      - file: test/shared/ui/common/koi_scaffold_test.dart
+      - file: test/main/ui/main_bottom_navigation_bar_test.dart
+      - file: test/shared/ui/calculator/calculator_sheet_test.dart
+      - file: test/features/budget_book/ui/modal/budget_book_modal_test.dart
+      - file: test/app/ui/theme_test.dart
+    related: [C-PLAT-019, C-PLAT-020, E-PLAT-04, E-PLAT-05, E-PLAT-06]
+  - id: R-PLAT-33
+    group: Screen & layout
+    title: iOS reads as iOS
+    text: |
+      - every page title centred on iPhone and iPad · Android keeps titles at the start
+      - every switch is the iOS switch on iOS · orange when on
+      - back is the iOS chevron ‹ · a wizard's step back too (new position)
+    source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target (IOS-14-3, IOS-3-7, IOS-19-3)
+    tests:
+      - file: test/app/ui/theme_test.dart
+      - file: test/shared/ui/form/form_save_scaffold_test.dart
+    related: [C-PLAT-022]
+  - id: R-PLAT-34
+    group: Screen & layout
+    title: "Upright iPad: one centred column"
+    text: |
+      - an upright iPad or Split View ⅔ → pages in a 600 pt column · Home's header and background stay full width
+      - the bottom bar's tabs and **+** stay within 600 pt
+      - landscape and an upright 13" iPad keep the wide tablet layouts
+      - Budget Book, Analytics and Goals tabs still run full width
+      - Split View and Slide Over stay on (D-PLAT-11)
+    source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target (IOS-25-2)
+    tests:
+      - file: test/shared/ui/common/koi_scaffold_test.dart
+      - file: test/main/ui/main_bottom_navigation_bar_test.dart
+    related: [C-PLAT-021, D-PLAT-11]
