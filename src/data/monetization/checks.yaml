@@ -93,7 +93,7 @@ groups:
       - id: C-MON-051
         text: Fresh install → restore finds the purchase
       - id: C-MON-052
-        text: "*I already use Money Koi* → *Restore Pro purchase* → *Pro restored* → Pro, no login"
+        text: "*Sign in or restore* → *Restore Pro purchase* → *Pro restored* → Pro, no login"
       - id: C-MON-053
         text: Local book → claim → sign in → *See plans* → buy → upload continues by itself
       - id: C-MON-054
@@ -120,7 +120,7 @@ groups:
   - id: welcome-back
     title: Welcome back · Restore Pro purchase
     setup: |
-      - fresh install or *Delete all data* · *I already use Money Koi*
+      - fresh install or *Delete all data* · *Sign in or restore*
       - store sandbox (C-MON-050 bought), or dev flavor with *Test purchases succeed*
     items:
       - id: C-MON-070

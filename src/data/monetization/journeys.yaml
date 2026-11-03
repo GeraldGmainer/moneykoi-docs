@@ -124,7 +124,7 @@ items:
     title: Pro on a new phone
     from: new phone
     steps:
-      - "*I already use Money Koi*"
+      - "*Sign in or restore*"
       - "*Restore Pro purchase* · store account is proof"
       - "*Pro restored* → *Restore a backup*"
       - or *Start a new book*

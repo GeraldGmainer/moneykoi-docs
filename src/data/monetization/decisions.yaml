@@ -6,7 +6,8 @@ items:
     status: open
     answer: |
       - keep *Purchases restored* whatever came back
-      - Free card always says *Current plan* · "Free is always yours"
+      - *Current plan* pill, changed 2026-11-03 (iOS round, IOS-23-1): only the plan held carries it · Free without a paid plan, Pro with Pro, Cloud with Cloud · Gerald to confirm
+      - before: the Free card always said *Current plan* ("Free is always yours") · two pills with Pro, three with Cloud
   - id: D2
     question: "Server-side enforcement: now or on abuse?"
     status: open
