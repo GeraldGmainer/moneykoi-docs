@@ -52,7 +52,7 @@ items:
   - id: J-ACC-03
     group: Start
     title: Logs out of a new account's setup
-    from: Welcome → *I already use Money Koi* → sign in with a new account
+    from: Welcome → *Sign in or restore* → sign in with a new account
     steps:
       - "*Log out* in the first step's app bar (no back there)"
     result: Welcome, signed out · nothing created
@@ -176,7 +176,7 @@ items:
     title: Cloud user on a new phone
     from: new phone
     steps:
-      - '*I already use Money Koi*'
+      - '*Sign in or restore*'
       - sign in
       - books download
     result: Cloud
@@ -185,7 +185,7 @@ items:
     title: Free account on a second phone
     from: free account, second phone
     steps:
-      - "*I already use Money Koi* → sign in"
+      - "*Sign in or restore* → sign in"
       - own book doesn't sync
     result: "Home: *Your book is on your other phone*"
     note: |

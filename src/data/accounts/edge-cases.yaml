@@ -225,7 +225,7 @@ items:
     when: 360×640 dp phone, or a large system font
     then: |
       - key points dropped first
-      - *Get started*, *I already use Money Koi* and the terms stay on screen, no scrolling
+      - *Get started*, *Sign in or restore* and the terms stay on screen, no scrolling
     status: fixed
     risk: medium
     tests:
@@ -274,10 +274,10 @@ items:
   - id: E-ACC-70
     group: Store review
     title: Review account gets no mail
-    when: "`google-review@moneykoi.app` on *Sign in with Email* · typed, or the remembered address"
+    when: "`google-review@moneykoi.app` on *Sign in with email* · typed, or the remembered address"
     then: |
       - form switches to *Password* · no link sent
-      - *Send Email Link* after switching back → back to *Password*, still no link
+      - *Send email link* after switching back → back to *Password*, still no link
       - before: every link bounced to the SMTP sender for 48 h
       - list: `FeatureConstants.passwordOnlyEmails`
     status: fixed
@@ -289,3 +289,37 @@ items:
         name: never sends a link, even after switching back to the link form
       - file: test/features/auth/ui/pages/email_signin_page_test.dart
         name: as the remembered address it opens on the password form
+  - id: E-ACC-71
+    group: Sign-in
+    title: Password sign-in flashes *Check inbox*
+    when: "*Sign in with Email* → *Password* → *Login*, profile slow to load"
+    then: fixed 2026-11-03 · the password form stays, its button spins until Home opens · before, *Check inbox · We sent an email link…* showed for a second though no link was sent (IOS-6-1)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/auth/ui/pages/email_signin_page_test.dart
+        name: a password sign-in keeps the password form and spins until the route changes
+  - id: E-ACC-72
+    group: Sign-in
+    title: Half a koi under the keyboard
+    when: "*Sign in with Email* · keyboard up"
+    then: |
+      - the illustration folds away while the keyboard is up · title and form in view · back when it closes
+      - before 2026-11-03 art and title were cut off under the back button (iOS round, IOS-6-8)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/auth/ui/widgets/sign_in_layout_test.dart
+        name: the email sign-in art folds away while the keyboard is up
+  - id: E-ACC-73
+    group: Sign-in
+    title: "*Continue with Apple* in bigger letters"
+    when: iPhone · Welcome back, purchase restored, *Back up & sync*, join a book
+    then: |
+      - Apple, Google and email buttons share one height (44 pt) and one label size · Apple's 43 % title ratio kept
+      - before 2026-11-03 Apple's label was ~23 pt next to 16 pt on the others (iOS round, IOS-6-8)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/auth/ui/widgets/sign_in_layout_test.dart
+        name: "Apple, Google and email read as one group: same height, same label size"
