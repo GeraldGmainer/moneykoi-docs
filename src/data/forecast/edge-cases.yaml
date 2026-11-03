@@ -114,6 +114,25 @@ items:
       - file: src/app/(main)/forecast/lib/calculation-specs.test.ts
         repo: web
         name: a lent loan is its own line, paid back to the book, and the sheet still adds up
+  - id: E-FC-22
+    group: Line
+    title: This month's income counted twice
+    when: salary typed in by hand on the 1st · no rule · today the 2nd
+    then: fixed 2026-11-03 · the rest of the month adds no second salary (IOS-14-1)
+    status: fixed
+    risk: high
+    related: [R-FC-15, E-FC-23]
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a salary typed in on the 1st is this month
+  - id: E-FC-23
+    group: Web
+    title: Web counts this month's income twice
+    when: salary typed in by hand on the 1st · web forecast
+    then: web still spreads the plain daily rate over the rest of the month (`forecast-engine.ts` `estimatePerDay`) · open
+    status: known-issue
+    risk: high
+    related: [E-FC-22]
   - id: E-FC-21
     group: Web
     title: "*Book it now* on the web retires on a second click"
@@ -162,3 +181,13 @@ items:
     when: per-day read on the last day
     then: all four places agree (C-FC-003)
     risk: medium
+  - id: E-FC-04
+    group: Chart
+    title: Tooltip date and amount
+    when: touch the forecast line
+    then: "*Apr 14, 2027* · *$11k* in the money format · before *4/14/2027* · *$ 11.0k* · IOS-14-3"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/money_plain_test.dart
+        name: places the symbol by the money format

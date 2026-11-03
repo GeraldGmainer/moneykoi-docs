@@ -89,11 +89,15 @@ items:
     text: |
       - median monthly income **no rule** booked · last months · spread per day
       - *From history* · *A monthly figure* · *Off* · default from history
+      - a month's estimate is its total: income already booked that month (hand-typed salary, future-dated too) is taken off · only the rest is spread over the days left
+      - this month not booked yet → the whole month's figure over the days left
       - book without rules → line no longer only falls
     source: FORECAST §5.5, plan D3
     tests:
       - file: test/features/forecast/forecast_engine_test.dart
         name: spread from tomorrow
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: this month gets only what is still missing, spread over the days left
       - file: test/features/forecast/forecast_engine_test.dart
         name: leaves out income a rule booked
   - id: R-FC-16
