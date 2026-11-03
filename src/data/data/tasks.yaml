@@ -2,11 +2,10 @@ items:
   - id: T-DATA-01
     title: Fix two stale data-doc statements
     owner: ai
+    status: done
     detail: |
+      - **done 2026-11-02** · import D14 now matches §5: currency not read since 2026-09-30 · R-DATA-36
       - export doc: **done** 2026-10-21 · §1 + D12 say Pro
-      - left: import decision table contradicts its own §5
-    prompt: |
-      In moneykoi-app/.agents/references/BOOKING_IMPORT_AI_CONTEXT.md, D14 says rows in another currency are skipped; §5 says since 2026-09-30 currency is not read at all. Update D14 to the current rule with its date.
   - id: T-DATA-02
     title: Commit BACKUP_FORMAT.md update
     owner: gerald
