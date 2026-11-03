@@ -11,3 +11,5 @@ groups:
         text: "Two phones, shared book: add here, check off there, live · members can do all"
       - id: C-SHP-004
         text: Pin a list → tab opens it · delete it → all lists
+      - id: C-SHP-005
+        text: Fresh install, Pro → first list with items → tip above the rows (en/de/ja, not clipped on iPhone SE) · *Got it* → gone · leave + reopen → never again · an empty list first → tip waits for the first item

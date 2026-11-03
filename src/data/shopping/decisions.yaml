@@ -1,0 +1,11 @@
+items:
+  - id: D-SHP-1
+    question: Explain the row gestures (swipe right books, swipe left deletes, tap edits)?
+    status: decided
+    date: 2026-11-03
+    answer: |
+      - **yes** · a one-time tip on the first list, like the quick-add bubble
+      - once per phone · dismissible
+      - built 2026-11-03
+      - source: iOS simulator round, IOS-18-2
+    related: [R-SHP-31]

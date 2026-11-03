@@ -27,3 +27,16 @@ items:
     then: looks empty or *list not found* · open (review 14)
     status: known-issue
     risk: low
+  - id: E-SHP-05
+    group: Items
+    title: English item names stay uncategorized
+    when: quick add `2 kg apples`, `milk`, `bread 2x`, `coffee` · Japanese `パン`, `牛乳`
+    then: |
+      - all under *Groceries* · the same everyday en/ja words as quick booking
+      - before 2026-11-03 all four landed in *Uncategorized* while `Eier` worked (iOS round, IOS-18-1)
+    status: fixed
+    risk: low
+    related: [E-BKG-40]
+    tests:
+      - file: test/features/shopping_list/domain/services/shopping_item_categorizer_test.dart
+        name: everyday English and Japanese item names land on groceries

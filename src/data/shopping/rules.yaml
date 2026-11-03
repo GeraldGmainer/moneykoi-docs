@@ -77,6 +77,20 @@ items:
       - form: name (cut to 20) + guessed expense category
       - item removed only after Save · back → item stays
     source: SHOPPING_LIST §7b
+  - id: R-SHP-31
+    group: Booking
+    title: Row gestures explained once
+    text: |
+      - first list with items on a phone → a tip above the rows: *Swipe an item right to book it, left to delete it, or tap it to edit*
+      - once per phone · gone after *Got it* · not back on a later visit, not after logout
+      - not on an empty or read-only list · double-tap and the trash bar left out
+    source: SHOPPING_LIST §7b (decided 2026-11-03)
+    tests:
+      - file: test/features/shopping_list/ui/pages/shopping_list_detail_page_test.dart
+        name: the first list with items explains the row gestures, once per device
+      - file: test/features/shopping_list/ui/pages/shopping_list_detail_page_test.dart
+        name: a later visit does not show it again
+    related: [D-SHP-1]
   - id: R-SHP-40
     group: Web
     title: Board · web only
