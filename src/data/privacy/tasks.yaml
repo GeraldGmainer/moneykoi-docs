@@ -38,6 +38,39 @@ items:
   - id: T-PRIV-05
     title: Web security fixes
     owner: ai
+    status: done
     detail: |
-      - web review-2026-09: open redirect (5) · any avatar URL (21) · `DEV_USERS` (20)
-      - read `AUTH_PROFILE_WEB_AI_CONTEXT.md` §8 first · no prompt yet
+      - **done 2026-11-02** · web review-2026-09 items 5, 20, 21 · `AUTH_PROFILE_WEB_AI_CONTEXT.md` §4.5, §4.8, §8
+      - open redirect (5): already fixed 2026-10-24 · `safeNext` parses `?next=` · `next-path.test.ts` · E-PRIV-40
+      - dev logins (20): out of the source · read from `.env.development.local` under `npm run dev` only · without it no dev buttons · a production build carries none (checked) · E-PRIV-42
+      - avatar URLs (21): web shows a co-member's photo only from our `avatars` bucket, else the initial · server check `profile_avatar_url_chk` refuses any other URL · E-PRIV-41
+      - app still shows any co-member avatar URL (`member_avatar.dart`) until the migration is live · book pictures (`tenant.avatar_url`) unchecked · E-PRIV-45
+      - left: Gerald's push, password rotation and device check (T-PRIV-06)
+    related: [T-PRIV-06, E-PRIV-40, E-PRIV-41, E-PRIV-42, E-PRIV-45]
+  - id: T-PRIV-06
+    title: Close the web security fixes
+    owner: gerald
+    waitsFor: [T-PRIV-05]
+    detail: |
+      - 1 · prod SQL editor, before the push: which avatar hosts are stored (query 1) · every row not on `cwheprirreyscppmbybp.supabase.co` is reset to no photo by the migration (the owner then sees their Google photo again)
+      - 2 · push `20261102210000_profile_avatar_url_own_bucket.sql` · `develop` → dev, `main` → prod (CI runs `db push`) · or by hand (commands)
+      - 3 · `supabase/tests/manual/profile_avatar_url_own_bucket.sql` in the SQL editor of dev → no error
+      - 4 · device check C-PRIV-040, dev then prod
+      - 5 · rotate the old dev-login password on prod · it is in git history of the web and in the app's `dev_logins.dart` · do the three accounts exist there? (query 2) · sign in on `my.moneykoi.com` as each → *Profile* › *Set password* · or delete an unused one
+      - 6 · dev project: rotate once the app's dev logins leave the source too · until then the app's debug buttons keep the old password
+      - 7 · local dev buttons on the web: `moneykoi-web/.env.development.local` (template in `.env.example`) · the web half ships with the next web deploy
+    command: |
+      -- 1 · stored avatar hosts (prod SQL editor)
+      select split_part(avatar_url, '/', 3) as host, count(*) from public.profile where avatar_url <> '' group by 1 order by 2 desc;
+      -- 2 · the dev-login accounts on prod (addresses: moneykoi-app lib/features/auth/ui/widgets/dev_logins.dart)
+      select email, last_sign_in_at from auth.users where email in ('<gerald>', '<member1>', '<member2>');
+
+      # 2 · migration by hand (instead of the branch push)
+      cd /Users/gerald/Projects/moneykoi/moneykoi-supabase
+      supabase link --project-ref dpmemqshhdnanywcvsod && supabase db push
+      supabase link --project-ref cwheprirreyscppmbybp && supabase db push
+
+      # 7 · local dev buttons (no real values in git)
+      cd /Users/gerald/Projects/moneykoi/moneykoi-web
+      printf 'NEXT_PUBLIC_DEV_LOGIN_EMAILS=%s\nNEXT_PUBLIC_DEV_LOGIN_PASSWORD=%s\n' '<a@x,b@y>' '<new password>' > .env.development.local
+    related: [T-PRIV-05, C-PRIV-040, E-PRIV-41, E-PRIV-42]

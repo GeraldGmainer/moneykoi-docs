@@ -131,26 +131,61 @@ items:
     group: Web security issues
     title: Web open redirect
     when: "`/login?next=/\\evil.example`"
-    then: leaves the site after sign-in · failing test pinned (review 5)
-    status: known-issue
+    then: dashboard · `?next=` is parsed, not prefix-matched · only a path on this site is followed (review 5, fixed 2026-10-24)
+    status: fixed
     risk: high
-    related: [T-PRIV-05]
+    tests:
+      - file: src/app/login/page.test.tsx
+        repo: web
+        name: ignores a backslash-prefixed ?next= that browsers resolve off-origin
+      - file: src/app/login/lib/next-path.test.ts
+        repo: web
+    related: [T-PRIV-05, E-ACC-50]
   - id: E-PRIV-41
     group: Web security issues
-    title: "Web: any URL as avatar"
-    when: any URL written to `profile.avatar_url`
-    then: co-members' browsers load it (review 21)
-    status: known-issue
+    title: "Any URL as avatar (tracking pixel)"
+    when: a member writes a foreign URL to their `profile.avatar_url` · co-members open a shared book
+    then: |
+      - web: the photo only from our `avatars` bucket, else the initial · the foreign URL is never requested (review 21, fixed 2026-11-02)
+      - server: `profile_avatar_url_chk` refuses any other URL · stored ones reset to no photo · live after T-PRIV-06
+      - app: shows any URL until then (`member_avatar.dart`)
+    status: fixed
     risk: medium
-    related: [T-PRIV-05]
+    tests:
+      - file: src/lib/profile/avatar-url.test.ts
+        repo: web
+      - file: src/components/shared/member-attribution.test.tsx
+        repo: web
+        name: never requests an avatar from outside our avatars bucket
+      - file: src/app/(main)/shopping/components/item-row.test.tsx
+        repo: web
+        name: never requests a creator's avatar from outside our avatars bucket
+    related: [T-PRIV-05, T-PRIV-06, E-ACC-52, E-PRIV-45]
   - id: E-PRIV-42
     group: Web security issues
     title: Web dev logins in code
-    when: "`DEV_USERS` committed in `login/page.tsx`"
-    then: open (review 20)
-    status: known-issue
+    when: "`DEV_USERS` with one shared password committed in `login/page.tsx`"
+    then: |
+      - out of the source · read from `.env.development.local` under `npm run dev` only · without it no dev buttons (review 20, fixed 2026-11-02)
+      - a production build carries none, even when set
+      - the old password stays in git history · rotated by T-PRIV-06
+    status: fixed
     risk: medium
-    related: [T-PRIV-05]
+    tests:
+      - file: src/app/login/page.test.tsx
+        repo: web
+        name: offers none outside development, even with accounts in the env
+      - file: src/app/login/lib/dev-logins.test.ts
+        repo: web
+    related: [T-PRIV-05, T-PRIV-06, E-ACC-53]
+  - id: E-PRIV-45
+    group: Web security issues
+    title: Any URL as a book picture
+    when: a book owner writes a foreign URL to `tenant.avatar_url`
+    then: the app loads it for every member (book card, switcher) · no server check yet · the web shows no book pictures
+    status: known-issue
+    risk: low
+    related: [E-PRIV-41]
   - id: E-PRIV-43
     group: Web security issues
     title: CSV formula injection

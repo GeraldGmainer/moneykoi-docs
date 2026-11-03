@@ -47,3 +47,10 @@ groups:
         text: "*Cancel* → browser *declined* · wait 3 min → *Expired*"
       - id: C-PRIV-032
         text: Camera app scan → web page saying where to scan
+
+  - id: avatars
+    title: Profile photos
+    setup: After `20261102210000_profile_avatar_url_own_bucket.sql` is live (T-PRIV-06) · a shared book with two accounts
+    items:
+      - id: C-PRIV-040
+        text: "App *Profile* → new photo → saved · web *Profile* → new photo → saved · the other account sees both on the phone and on the web · *Remove photo* in the app → initial everywhere"

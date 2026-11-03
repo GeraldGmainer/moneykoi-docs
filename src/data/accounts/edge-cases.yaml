@@ -199,16 +199,26 @@ items:
     group: On the web
     title: Any URL as an avatar
     when: a client writes any URL to `profile.avatar_url`
-    then: co-members see it · open (review 21)
-    status: known-issue
+    then: web shows a co-member's photo only from our `avatars` bucket, else the initial · server refuses other URLs once T-PRIV-06 is done · details E-PRIV-41 (review 21, fixed 2026-11-02)
+    status: fixed
     risk: medium
+    tests:
+      - file: src/components/shared/member-attribution.test.tsx
+        repo: web
+        name: never requests an avatar from outside our avatars bucket
+    related: [E-PRIV-41]
   - id: E-ACC-53
     group: On the web
     title: Dev logins in source
     when: always
-    then: dev users' credentials in `login/page.tsx`, dev only · open (review 20)
-    status: known-issue
+    then: dev buttons only under `npm run dev`, from `.env.development.local`, none without it · details E-PRIV-42 (review 20, fixed 2026-11-02)
+    status: fixed
     risk: medium
+    tests:
+      - file: src/app/login/page.test.tsx
+        repo: web
+        name: offers none outside development, even with accounts in the env
+    related: [E-PRIV-42]
   - id: E-ACC-60
     group: Small screens
     title: Welcome on a small phone
