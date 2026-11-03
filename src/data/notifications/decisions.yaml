@@ -7,7 +7,7 @@ items:
     question: Tap opens the record?
     status: decided
     date: 2026-10-16
-    answer: Only the backup reminder · others open the app · inbox rows not tappable
+    answer: Only the backup reminder · others open the app · inbox rows not tappable · replaced by D-NTF-4 (2026-11-02)
   - id: D-NTF-3
     question: Synced or per-device switches?
     status: decided
@@ -20,3 +20,4 @@ items:
       - on its subject: *Over budget* → that budget · bill reminder → the rule / upcoming · goal or loan → its page · forecast alert → Forecast
       - backup reminder keeps its route · the inbox rows stay untappable
       - source: iOS simulator round, IOS-9-1
+      - built 2026-11-03 · R-NTF-14 · real taps: C-NTF-005

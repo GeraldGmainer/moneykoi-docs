@@ -24,8 +24,13 @@ items:
   - id: R-NTF-03
     group: The five rules
     title: Own time per channel
-    text: picked in its sheet · bills 9:00 · entry nudge 20:00
-    source: NOTIFICATIONS §10 (2026-10-10)
+    text: |
+      - picked in its sheet · bills 9:00 · entry nudge 20:00
+      - Android: the clock dial · iPhone: the time wheel in a sheet, *Done* saves
+    source: NOTIFICATIONS §3, §10 (2026-10-10)
+    tests:
+      - file: test/features/settings/ui/pages/notification_settings_page_test.dart
+        name: on iOS the time is picked on the wheel in a sheet, not on the clock dial
   - id: R-NTF-04
     group: The five rules
     title: Settings sync · history doesn't
@@ -69,10 +74,31 @@ items:
     text: |
       - goals + loans · balance-check month start
       - forecast below buffer/zero · date, never amount
-      - backup reminder (Pro) · only one whose tap opens a page
+      - backup reminder (Pro) · tap opens Backup & restore
       - shared book stopped · resumed · deleted
     source: NOTIFICATIONS §1, §5
     related: [R-FC-31, R-BC-09, R-BOOK-35]
+  - id: R-NTF-14
+    group: Channels
+    title: A tap lands on the subject
+    text: |
+      - *Over budget* → that budget · several over at once → Budgets
+      - bill reminder → its rule · several rules → *Upcoming*
+      - goal nudge → the goal (several → Goals) · loan reminder → the loan
+      - forecast alert → Forecast · after Pro ended: read-only with plans, else the paywall
+      - record deleted or archived since → its list · a form with changes stays open
+      - backup reminder keeps its route · entry nudge, balance check, shared-book notices only open the app
+      - a reminder armed before the update only opens the app until the next re-arm
+    source: NOTIFICATIONS §6
+    tests:
+      - file: test/app/navigation/notification_subject_tap_test.dart
+        name: Over budget opens that budget
+      - file: test/app/navigation/notification_subject_tap_test.dart
+        name: a record deleted or archived since lands on its list instead
+      - file: test/app/navigation/notification_subject_tap_test.dart
+        name: a list tap never pops past a form that refuses to close
+    checks: [C-NTF-005]
+    related: [D-NTF-4]
   - id: R-NTF-20
     group: Inbox
     title: Bell keeps what was shown

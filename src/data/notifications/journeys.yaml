@@ -5,9 +5,17 @@ items:
     from: Settings → Notifications → *Bill reminders*
     steps:
       - switch on → OS asks
-      - pick the time
+      - pick the time · a wheel on the iPhone
     result: reminder before each next date
-    checks: [C-NTF-001]
+    checks: [C-NTF-001, C-NTF-006]
+  - id: J-NTF-03
+    group: Reminders
+    title: Taps a reminder
+    from: a notification banner or the lock screen
+    steps:
+      - tap
+    result: the app opens on what it is about · budget, rule, goal, loan or Forecast
+    checks: [C-NTF-005]
   - id: J-NTF-02
     group: Inbox
     title: Reads what came in

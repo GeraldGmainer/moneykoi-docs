@@ -11,3 +11,7 @@ groups:
         text: Bell lists fired, not armed · opening clears badge · logout → stop · sign in → re-armed
       - id: C-NTF-004
         text: Daily nudge skipped on a day with a booking, partner's too
+      - id: C-NTF-005
+        text: "Tap each banner, app closed and app open: *Over budget* → that budget's page · bill reminder (one rule) → the rule, (several) → *Upcoming* · goal nudge → the goal · loan → the loan · forecast alert → Forecast · backup reminder → Backup & restore · a form with changes open → it stays, the page opens on top (list taps do nothing then) · budget deleted before the tap → Budgets"
+      - id: C-NTF-006
+        text: "iPhone → Notifications → *Bill reminders* → *Time* → the wheel in a sheet, 12/24 h like the rest of the app · *Done* saves · Android keeps the dial"
