@@ -56,6 +56,26 @@ items:
     then: float math → 30 months, both clients · open (review 23)
     status: known-issue
     risk: low
+  - id: E-BUD-42
+    group: Loans
+    title: Split loses part of a payment
+    when: $250 payment · split on · principal 20, interest left empty
+    then: fixed 2026-11-03 · interest filled with 230 at once · principal + interest always = payment (IOS-13-2)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/budget_goals/ui/view_models/payment_split_draft_test.dart
+        name: keying one portion fills the other with the rest of the payment
+  - id: E-BUD-43
+    group: Budgets
+    title: Header says 100 % at 153 %
+    when: $100 cap, $153.45 spent
+    then: fixed 2026-11-03 · header and Home card say 153 % like the row · bar stays full (IOS-13-1)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/budget_goals/budgets_overview_test.dart
+        name: an overspent total keeps its real ratio; only the bar clamps
   - id: E-BUD-41
     group: Web
     title: German thousands on web forms

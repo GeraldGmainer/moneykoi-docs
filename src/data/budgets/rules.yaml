@@ -144,11 +144,15 @@ items:
     title: "Payment: principal + interest"
     text: |
       - split → principal reduces the balance
+      - principal + interest = payment, always: one portion typed → the other filled with the rest · the one typed last stands · a portion above the payment → Save refused
+      - both portions on the app keypad (no OS number pad)
       - no split → whole amount · over-payment = settled
-    source: BUDGET_GOALS §3
+    source: BUDGET_GOALS §3, §7 (Loan payments)
     tests:
       - file: test/features/budget_goals/domain/entities/loan_payment_test.dart
         name: 'the hybrid rule: the principal portion reduces the balance when entered, the full amount otherwise'
+      - file: test/features/budget_goals/ui/sheets/add_payment_sheet_test.dart
+        name: keying the principal fills the interest with the rest, so the split always adds up
   - id: R-BUD-51
     group: Loans
     title: Payoff + debt strategy
