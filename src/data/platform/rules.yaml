@@ -25,6 +25,8 @@ items:
     text: |
       - tokens from `lib/core/constants/`
       - `tool/check_theme.sh` fails new raw `Colors.*`, `fontSize:`, `EdgeInsets` numbers
+      - debt 0 since 2026-11-02 · the ratchet guards a floor of zero
+      - `Colors.transparent` alone passes · a raw color beside it on the same line fails (since 2026-11-02)
     source: app CLAUDE.md
   - id: R-PLAT-21
     group: Code rules enforced by CI
