@@ -34,3 +34,10 @@ items:
     question: Tax reporting
     status: open
     answer: Out of scope so far
+  - id: D-INV-8
+    question: Deleting a position — Undo and Trash?
+    status: open
+    answer: |
+      - today: delete is final · no Undo snack · not in Trash
+      - a) Undo snack + Trash like bookings · b) keep final, say so in the dialog
+      - source: Android emulator round, AND-19-4

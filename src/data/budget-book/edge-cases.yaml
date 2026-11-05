@@ -74,8 +74,9 @@ items:
     then: |
       - app adds it to income · analytics doesn't · web lists it, counts neither (D-BKG-6)
       - app to change: the virtual row carries an income category
+      - every *Personalize* book with starting balances hits it · November income 5.350 € instead of 3.200 € (Android emulator round, AND-2-2)
     status: known-issue
-    risk: medium
+    risk: high
   - id: E-BB-11
     group: Filters
     title: Account filter misses incoming transfers

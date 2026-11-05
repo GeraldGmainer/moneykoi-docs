@@ -69,3 +69,11 @@ items:
     question: Match a booked payment automatically?
     status: decided
     answer: No · suggest only · a wrong match drops a payment you count on
+  - id: D-FC-15
+    question: Count an overdue planned payment until it is answered?
+    status: open
+    answer: |
+      - today: a planned payment past its date drops out of the line while it waits in *Planned payments to check* · *Already spoken for $0.00* · the forecast reads 260 $ too high
+      - a) count it as due today until it is booked, skipped or moved
+      - b) keep it out, and say on the card what the review holds
+      - source: Android emulator round, AND-14-6

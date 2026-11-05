@@ -100,3 +100,10 @@ items:
       - source: iOS simulator round, IOS-25-1
     related: [D-PLAT-8, C-PLAT-021, R-PLAT-34]
 
+  - id: D-PLAT-12
+    question: "*this phone* on a tablet?"
+    status: open
+    answer: |
+      - ~57 strings say *this phone* / *diesem Handy* / *このスマホ* · reads wrong on a tablet
+      - a) *this device* everywhere · b) pick the word by screen size · c) keep
+      - source: Android emulator round, AND-25-4

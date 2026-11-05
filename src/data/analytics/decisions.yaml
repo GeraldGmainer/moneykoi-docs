@@ -21,3 +21,20 @@ items:
       - b) keep the whole month
       - *This year* already compares to date
     related: [R-ANL-05]
+  - id: D-ANL-3
+    question: "*Avg. per day* in a running period: divide by the days so far or by the whole period?"
+    status: open
+    answer: |
+      - today: *This month* on Nov 5 divides by 30 · *This week* by the days so far · the "at this pace" line by 5 · weekday averages count Sundays still to come
+      - October divides by 32 days (the DST change counts a day twice) — a bug either way
+      - a) days so far, everywhere (matches *month to date*, D-ANL-1)
+      - b) the whole period, everywhere
+      - source: Android emulator round, AND-15-1, AND-15-2
+    related: [D-ANL-1]
+  - id: D-ANL-4
+    question: "*Avg. booking*: leave income out?"
+    status: open
+    answer: |
+      - today: the salary and the coffees go into one average
+      - a) expenses only · b) one average per side · c) keep
+      - source: Android emulator round, AND-15-4
