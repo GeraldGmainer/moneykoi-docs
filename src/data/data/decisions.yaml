@@ -23,6 +23,14 @@ items:
       - free: CSV import · restoring a backup
       - Pro: ZIP · *Download all data* · CSV · PDF · backup file
     related: [R-MON-21, D-DATA-2, D-DATA-13]
+  - id: D-DATA-16
+    question: "iOS: backup asks *Choose where to save* first, the CSV export goes straight to Files — match them?"
+    status: decided
+    date: 2026-11-05
+    answer: |
+      - keep both · the backup's step points at iCloud Drive (a backup on the same phone dies with it)
+      - the CSV export opens the save dialog right after its review step
+      - source: iOS simulator round, IOS-11-4
   - id: D-DATA-13
     question: Free way out for a free account's server data?
     status: open
