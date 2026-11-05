@@ -162,10 +162,12 @@ items:
       - an upright iPad or Split View ⅔ → pages in a 600 pt column · Home's header and background stay full width
       - the bottom bar's tabs and **+** stay within 600 pt
       - landscape and an upright 13" iPad keep the wide tablet layouts
-      - Budget Book, Analytics and Goals tabs still run full width
+      - Budget Book, Analytics and Goals tabs: header full width · period, filters and segments in the column
       - Split View and Slide Over stay on (D-PLAT-11)
     source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target (IOS-25-2)
     tests:
       - file: test/shared/ui/common/koi_scaffold_test.dart
       - file: test/main/ui/main_bottom_navigation_bar_test.dart
+      - file: test/shared/ui/common/tablet_column_test.dart
+      - file: test/features/budget_goals/ui/screens/budget_goals_tab_test.dart
     related: [C-PLAT-021, D-PLAT-11]
