@@ -79,6 +79,7 @@ items:
       - labels, buttons, toggles and section titles: indirect · *Borrowed / Lent*, *Round up expenses into this goal*, *Create the budget*
       - questions the user asks themselves keep first person · *Can I afford this?*, *What if I save more?*
       - en + de · ja has no first person in these
+      - 2026-11-05: the own member's *me* / *ich* / 自分 → *Signed in* / *Angemeldet* / ログイン中 on the member row · filters show the own name (R-BOOK-41)
       - source: iOS simulator round, IOS-13-3
   - id: D-PLAT-10
     question: Japanese 家計簿 or 帳簿?

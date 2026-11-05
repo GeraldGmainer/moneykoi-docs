@@ -218,10 +218,16 @@ items:
       - recurring or receipt glyph wins
       - form footer names the creator · shopping *added by*
       - own bookings show nothing
-    source: FAMILY_ACCOUNTS §5.5, §6
+      - member list: the own row is marked *Signed in* · *Angemeldet* · ログイン中
+      - creator filters (Budget Book, CSV export) name every member by display name · *Signed in* only for an own profile without a name
+    source: FAMILY_ACCOUNTS §5.5, §6 · BOOKING_EXPORT_AI_CONTEXT.md › Members (IOS-13-3)
     tests:
       - file: test/features/book/bloc/book_members_cubit_test.dart
         name: creator badges only show other people in a shared book with company
+      - file: test/features/book/ui/widgets/book_member_tile_test.dart
+      - file: test/features/budget_book/ui/modal/facet_filters_test.dart
+      - file: test/features/booking_export/ui/booking_export_sheets_test.dart
+    related: [D-PLAT-9]
 
   # Offline books
   - id: R-BOOK-60
