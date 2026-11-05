@@ -135,6 +135,17 @@ items:
     tests:
       - file: test/features/forecast/ui/forecast_item_save_page_test.dart
         name: the date chevrons step a day for a one-off and one period once it repeats
+  - id: E-FC-25
+    group: Forecast
+    title: Skipped occurrence next year listed as past
+    when: Planned payments with a skipped Jan 1 occurrence · an overdue payment · a repeat started last month
+    then: fixed 2026-11-05 · three groups *Upcoming* (a running repeat too) · *To check* (date passed) · *Booked or skipped* (IOS-14-4)
+    status: fixed
+    risk: low
+    related: [E-FC-24]
+    tests:
+      - file: test/features/forecast/ui/forecast_pages_test.dart
+        name: splits upcoming, to check and booked or skipped; a tile opens the edit form
   - id: E-FC-23
     group: Web
     title: Web counts this month's income twice
