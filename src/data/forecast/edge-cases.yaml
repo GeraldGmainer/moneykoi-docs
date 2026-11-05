@@ -125,6 +125,16 @@ items:
     tests:
       - file: test/features/forecast/forecast_engine_test.dart
         name: a salary typed in on the 1st is this month
+  - id: E-FC-24
+    group: Forecast
+    title: Planned payment date ‹ › on a repeating item
+    when: planned payment set to repeat monthly → date ‹ ›
+    then: fixed 2026-11-05 · steps one period of the repeat (a week, a month, a year) · a one-off steps a day (IOS-14-3)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/forecast/ui/forecast_item_save_page_test.dart
+        name: the date chevrons step a day for a one-off and one period once it repeats
   - id: E-FC-23
     group: Web
     title: Web counts this month's income twice
