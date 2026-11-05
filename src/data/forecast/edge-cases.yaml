@@ -139,10 +139,17 @@ items:
     group: Web
     title: Web counts this month's income twice
     when: salary typed in by hand on the 1st · web forecast
-    then: web still spreads the plain daily rate over the rest of the month (`forecast-engine.ts` `estimatePerDay`) · open
-    status: known-issue
+    then: fixed 2026-11-05 · each month gets only what its income still misses, the current month its whole figure over the days left (`incomeEstimatePerDay`), as in the app
+    status: fixed
     risk: high
     related: [E-FC-22]
+    tests:
+      - file: src/app/(main)/forecast/lib/forecast-engine.test.ts
+        repo: web
+        name: "a salary typed in on the 1st is this month's income: the rest of the month gets no second one"
+      - file: src/app/(main)/forecast/lib/forecast-engine.test.ts
+        repo: web
+        name: this month gets only what is still missing, spread over the days left
   - id: E-FC-21
     group: Web
     title: "*Book it now* on the web retires on a second click"
