@@ -1,5 +1,13 @@
 # Source: moneykoi-supabase/supabase/migrations/20261021120000_feedback_without_account.sql.
 items:
+  - id: T-SET-02
+    title: Push the changelog punctuation fix
+    owner: gerald
+    detail: |
+      - `20261105120000_changelog_final_sentence_dots.sql` · after `20261031220000_release_notes_app_1_19_0_web_1_7_0.sql`
+      - 19 rows (app 1.4.0–1.19.0, web 1.5.0–1.7.0) · a final `.` / `。` on every note of two or more sentences
+      - dev first, then prod · any time, app and web read the rows as plain text
+      - check: Settings › About › Changelog · *… counts offline and cloud books together.*
   - id: T-SET-01
     title: Push the feedback migration
     owner: gerald
