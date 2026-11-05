@@ -9,7 +9,7 @@ items:
       - a running period (this month, this year…) → the same span of the previous period to date · Nov 1–2 vs Oct 1–2 · end clamped in shorter months (Mar 1–30 vs Feb 1–28)
       - a custom range keeps the equal window before
       - *Last 2/3/6/12 months* end with this month, so they count as running → to date (Sep 1–Nov 2 vs Jun 1–Aug 2) · Gerald to confirm
-      - built 2026-11-03 · web not ported
+      - built 2026-11-03 · web ported 2026-11-05
       - source: iOS simulator round, IOS-15-1
     related: [R-ANL-05, E-ANL-07]
   - id: D-ANL-2
