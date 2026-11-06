@@ -53,4 +53,4 @@ groups:
       - id: C-PLAT-005
         text: Android 13+ → *Themed icons* on → the Money Koi icon turns one-color like the others (koi silhouette, eye and smile cut out) · prod and dev flavor
       - id: C-PLAT-020
-        text: "Android 15+, gesture nav and 3-button nav → the bottom bar, *Save* bar, sheets and keypad reach the screen edge behind the nav bar · tabs, buttons and keys clear of it (R-PLAT-32)"
+        text: "Android 13 and 15+, gesture nav and 3-button nav → the bottom bar, *Save* bar, sheets and keypad reach the screen edge behind the nav bar · no black strip, no darker band behind the 3 buttons · *Welcome* has no status-bar band · tabs, buttons and keys clear of it (R-PLAT-32)"

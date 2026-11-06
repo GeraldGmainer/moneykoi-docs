@@ -135,6 +135,7 @@ items:
       - tabs, buttons, keys and the last row stay above the indicator
       - no indicator (iPhone SE, Android 3-button bar) → the *Save* button keeps the page gutter from the edge, not 8 pt
       - snackbars float above the bottom bar, clear of the **+** · one style app-wide
+      - Android 10–14 as well as 15+ · transparent status and nav bar, no contrast scrim behind 3-button nav (since 2026-11-06, AND-1-2, AND-3-3)
     source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target (IOS-3-1, IOS-2-8, IOS-2-7)
     tests:
       - file: test/shared/ui/common/koi_scaffold_test.dart

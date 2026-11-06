@@ -66,3 +66,25 @@ items:
     status: fixed
     risk: low
     related: [R-PLAT-03, C-PLAT-015]
+  - id: E-PLAT-08
+    group: Screen & layout
+    title: Android tablet held in portrait
+    when: Android tablet (≥ 600 dp) · rotate to landscape, or a cold start in landscape
+    then: |
+      - fixed 2026-11-06 · the tablet rotates and the landscape layouts open · phones stay portrait
+      - before: a letterboxed portrait strip with Android's *See and do more* dialog · the lock was decided on a 0×0 view at startup (AND-25-1)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/main/service/startup_chrome_test.dart
+        name: a 0×0 view locks nothing
+  - id: E-PLAT-09
+    group: Screen & layout
+    title: Splash jumps at the handoff on Android 13
+    when: cold start on Android 10–14
+    then: |
+      - fixed 2026-11-06 with edge to edge · the koi and wordmark stay put from the system splash to the app's
+      - before: the wordmark jumped 24 dp and the nav bar turned black (AND-1-1)
+    status: fixed
+    risk: low
+    related: [R-PLAT-32]
