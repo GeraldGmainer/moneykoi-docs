@@ -23,6 +23,7 @@ items:
     date: 2026-11-06
     answer: |
       - **drop in console + repo** · before the 2.0.0 listing upload
+      - repo folder removed 2026-11-06 · console: default `en-US` first, then remove `en-GB`
       - repo has only its old release notes · no listing text
       - the upload check stays red while the folder exists → no listing upload
       - recommended: drop in console + repo · `en-US` serves every English store

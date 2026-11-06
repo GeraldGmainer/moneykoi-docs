@@ -84,6 +84,6 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **caption the date** · *End of November* · *Ende November* · *11月末* · 12 months → *By Oct 31, 2027* · build: 2.0.0
+      - **caption the date** · *End of November* · *Ende November* · *11月末* · another year → *End of October 2027* · built 2026-11-06
       - horizon stays the month end · matches the month tiles
       - source: Android emulator round, AND-14-5

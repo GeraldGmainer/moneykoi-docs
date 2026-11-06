@@ -17,7 +17,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **b) rename the start to *Balanced*** · 50/30/20 only as the comparison · app + website · build: 2.0.0
+      - **b) rename the start to *Balanced*** · 50/30/20 only as the comparison · app + website · built 2026-11-06
       - before: the per-adult food and transport guides and the rest-to-savings push a single adult to 48/25/28 under a label that says 50/30/20 · the website does the same
       - a) scale the needs and wants rows to hit 50/30/20 · app and website together (the parity table)
       - b) rename the start to *Balanced* and keep 50/30/20 only as the comparison

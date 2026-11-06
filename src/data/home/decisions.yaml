@@ -68,6 +68,6 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **Home** · pop to the main route, select Home · build: 2.0.0
+      - **Home** · pop to the main route, select Home · built 2026-11-06
       - a form with unsaved changes stays open
       - before: the app resumed whatever page was open · source: Android emulator round, AND-26-4

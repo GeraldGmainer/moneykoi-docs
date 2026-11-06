@@ -172,7 +172,7 @@ items:
     title: Calculator = the website's
     text: |
       - same income → same month, web + app
-      - *Balanced* (50/30/20) · *Saver* · per adult + child
+      - *Balanced* · *Saver* · per adult + child · 50/30/20 only as the comparison
       - rounds to 10, drift into savings · per day ÷ 30.4
       - change one side → change both
     source: BUDGET_GOALS §5b

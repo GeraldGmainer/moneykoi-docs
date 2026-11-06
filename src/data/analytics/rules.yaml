@@ -47,7 +47,7 @@ items:
     text: |
       - previous = the calendar period before · *Last month* vs the whole month before it, anchor day to anchor day
       - a running period → the same span to date · *This month* on Nov 2 = Nov 1–2 vs Oct 1–2 · on Mar 30 vs Feb 1–28 · *This year* vs last year to the same day · *This week* vs last week to the same weekday
-      - last year = same calendar dates · for *This month* still the whole month last year (open: D-ANL-2)
+      - last year = same calendar dates · a running period to date too · *This month* on Nov 2 = Nov 1–2 vs Nov 1–2 last year (D-ANL-2) · web not yet
       - *All time* → no comparison
       - from zero → no percent, never "+∞ %"
       - web: the same windows since 2026-11-05 (`previousRange`)
@@ -70,6 +70,20 @@ items:
         name: the running multi-month options compare the same span to date
         repo: web
     related: [D-ANL-1, E-ANL-07]
+  - id: R-ANL-13
+    group: Numbers
+    title: Averages count the days so far
+    text: |
+      - *Avg. per day* in a running period ÷ days so far · Nov 5 → ÷ 5 (D-ANL-3)
+      - weekday + day-of-month averages: only days already passed
+      - *Avg. expense* = expenses ÷ expense bookings · income left out (D-ANL-4)
+      - web not yet
+    source: ANALYTICS §4 Period math rules › Averages
+    tests:
+      - file: test/features/analytics/use_cases/get_analytics_kpi_use_case_test.dart
+        name: a running month divides by the divisor the constant picks
+      - file: test/features/analytics/use_cases/get_analytics_kpi_use_case_test.dart
+        name: derives net, savings rate, daily and per-expense averages from the totals
   - id: R-ANL-06
     group: Numbers
     title: Months = budget months

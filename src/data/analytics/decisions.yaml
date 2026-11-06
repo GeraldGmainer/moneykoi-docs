@@ -17,7 +17,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) to date** · build: 2.0.0
+      - **a) to date** · built 2026-11-06 · web not yet
       - today: *This month* on Nov 2 vs the **whole** November last year · reads as a drop until month end
       - a) to date as well (Nov 1–2 vs Nov 1–2 last year) · same rule as the previous period
       - b) keep the whole month
@@ -28,7 +28,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) days so far, everywhere** · flip `FeatureConstants.analyticsAverageDivisor` · build: 2.0.0
+      - **a) days so far, everywhere** · `FeatureConstants.analyticsAverageDivisor` flipped 2026-11-06 · web not yet
       - before: *This month* on Nov 5 divides by 30 · *This week* by the days so far · the "at this pace" line by 5 · weekday averages count Sundays still to come
       - October divided by 32 days (the DST change counted a day twice) · fixed 2026-11-06 (AND-15-2)
       - built so the answer is one constant: `FeatureConstants.analyticsAverageDivisor` · today b)
@@ -41,7 +41,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) expenses only** · tile renamed *Avg. expense* · build: 2.0.0
+      - **a) expenses only** · tile renamed *Avg. expense* · built 2026-11-06 · web not yet
       - before: the salary and the coffees go into one average
       - source: Android emulator round, AND-15-4
   - id: D-ANL-5
@@ -49,6 +49,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **step in time** · Nov → Oct → Sep · week → previous week · like the Budget Book · build: 2.0.0
+      - **step in time** · Nov → Oct → Sep · week → previous week · like the Budget Book · build: 2.0.1
+      - moved from 2.0.0: the period needs an offset across ~40 cards + labels · not a 2-day change
       - before: ‹ › walk the preset list · *This month* → *This week*
       - source: Android emulator round, AND-15-5
