@@ -67,3 +67,15 @@ items:
     tests:
       - file: test/app/i18n/pseudo_plurals_test.dart
         name: no English string fakes a plural
+  - id: E-REC-10
+    group: Make recurring
+    title: Prefilled rule could not be saved
+    when: a booking › ⋮ › *Make recurring*, or the *Does this repeat?* snackbar · nothing changed
+    then: |
+      - fixed 2026-11-06 · *Save* is on for the complete prefilled rule · backing out asks before discarding it
+      - before: *Save* stayed grey until a field was changed (AND-12-2, in 1.19.0 too)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: backing out of an untouched prefilled rule asks before discarding it
