@@ -140,3 +140,13 @@ items:
     tests:
       - file: test/features/booking/ui/pages/add_receipt_page_test.dart
         name: a hand-entered receipt with a total and no item yet starts neutral, not red
+  - id: E-SCN-16
+    group: Photos
+    title: Grayscale gallery photo
+    when: a grayscale PNG picked from the gallery
+    then: kept gray, white paper stays white · before 2026-11-06 it was stored red (AND-7-2)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/gallery_photo_preparer_test.dart
+        name: a grayscale PNG keeps white paper white instead of red

@@ -38,3 +38,19 @@ items:
     tests:
       - file: test/core/notifications/notification_log_store_test.dart
         name: an alarm the OS still held when cancelled leaves the inbox even if it ran late
+  - id: E-NTF-06
+    group: Permission
+    title: Notifications refused for good
+    when: Android prompt refused twice · a reminder switched on again
+    then: |
+      - fixed 2026-11-06 · the snackbar carries *Open settings* to the system notification setting
+      - before: Android stopped asking and nothing in the app led to the setting (AND-9-1)
+    status: fixed
+    risk: medium
+  - id: E-NTF-07
+    group: Reminders
+    title: Reminder sent again after a time change
+    when: a bill reminder already arrived today · the reminder time is moved later
+    then: the same *due tomorrow* arrives a second time at the new time (AND-9-2)
+    status: known-issue
+    risk: low

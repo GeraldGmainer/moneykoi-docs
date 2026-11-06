@@ -146,3 +146,10 @@ items:
     tests:
       - file: test/features/investment/ui/widgets/opening_buy_card_test.dart
         name: the prefilled unit price reads as money
+  - id: E-INV-16
+    group: Valuation
+    title: "*Today* change on a position bought today"
+    when: a position bought today · the last quote is weeks old
+    then: no *Today* change until the position has a day to compare · before 2026-11-06 the row and detail showed *Today −1.3 %* (AND-19-1)
+    status: fixed
+    risk: medium
