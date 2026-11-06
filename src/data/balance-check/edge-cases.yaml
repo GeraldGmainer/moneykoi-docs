@@ -48,3 +48,15 @@ items:
     tests:
       - file: test/features/reconciliation/ui/count_widgets_test.dart
         name: the empty slot looks like a field and keeps its hint on one line
+  - id: E-BC-07
+    group: Corrections
+    title: Differences that cancel out
+    when: one account +10 and another −10 against the counted balances
+    then: |
+      - fixed 2026-11-06 · *cancel out*, nothing booked · corrections are rounded to the currency's decimals
+      - before: a −0,00 € correction was booked, and amounts like 28.890000000001 appeared (AND-17-3, AND-17-2)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/reconciliation/reconciliation_cubit_test.dart
+        name: +10 and -10 cancel out
