@@ -19,8 +19,10 @@ items:
     related: [R-PLAT-25, T-PLAT-04]
   - id: D-PLAT-3
     question: Drop *en-GB* from the Play listing?
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
+      - **drop in console + repo** · before the 2.0.0 listing upload
       - repo has only its old release notes · no listing text
       - the upload check stays red while the folder exists → no listing upload
       - recommended: drop in console + repo · `en-US` serves every English store
@@ -102,8 +104,10 @@ items:
 
   - id: D-PLAT-12
     question: "*this phone* on a tablet?"
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
+      - **a) *this device* everywhere** · *diesem Gerät* · *この端末* · build: 2.0.1
       - ~57 strings say *this phone* / *diesem Handy* / *このスマホ* · reads wrong on a tablet
       - a) *this device* everywhere · b) pick the word by screen size · c) keep
       - source: Android emulator round, AND-25-4

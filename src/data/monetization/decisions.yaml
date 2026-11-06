@@ -3,21 +3,25 @@ items:
   # Open
   - id: D1
     question: Restore copy + *Current plan* pill on the Free card
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
+      - **keep as built** · no build
       - keep *Purchases restored* whatever came back
-      - *Current plan* pill, changed 2026-11-03 (iOS round, IOS-23-1): only the plan held carries it · Free without a paid plan, Pro with Pro, Cloud with Cloud · Gerald to confirm
+      - *Current plan* pill, changed 2026-11-03 (iOS round, IOS-23-1): only the plan held carries it · Free without a paid plan, Pro with Pro, Cloud with Cloud
       - before: the Free card always said *Current plan* ("Free is always yours") · two pills with Pro, three with Cloud
   - id: D2
     question: "Server-side enforcement: now or on abuse?"
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - on evidence of abuse
+      - **on evidence of abuse** · not for 2.0.0
       - app already stops on the verdict · prompt ready (T-MON-22)
   - id: D3
     question: Price A/B or €24.99?
-    status: open
-    answer: €24.99 until download-to-paid is known
+    status: decided
+    date: 2026-11-06
+    answer: "**€24.99 only** · A/B once download-to-paid is known (T-MON-23 waits)"
 
   # Decided
   - id: D16

@@ -14,10 +14,20 @@ items:
     answer: "Built ungated inside the Free goal form (2026-10-24) · recommendation: Free, like goals · Rule 1 makes it final"
   - id: D-BUD-16
     question: "Budget calculator: the *50/30/20* start lands on 48/25/28"
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - today: the per-adult food and transport guides and the rest-to-savings push a single adult to 48/25/28 under a label that says 50/30/20 · the website does the same
+      - **b) rename the start to *Balanced*** · 50/30/20 only as the comparison · app + website · build: 2.0.0
+      - before: the per-adult food and transport guides and the rest-to-savings push a single adult to 48/25/28 under a label that says 50/30/20 · the website does the same
       - a) scale the needs and wants rows to hit 50/30/20 · app and website together (the parity table)
       - b) rename the start to *Balanced* and keep 50/30/20 only as the comparison
       - c) keep
       - source: Android emulator round, AND-13-4 · an app-only change was built and taken back on 2026-11-06 because it broke site parity
+  - id: D-BUD-17
+    question: Goal *Projected finish* after the first deposit?
+    status: decided
+    date: 2026-11-06
+    answer: |
+      - **wait for a history** · 30 days since the start or deposits in 2 months · as built 2026-11-06
+      - source: Android emulator round, AND-13-1
+    related: [E-BUD-44]

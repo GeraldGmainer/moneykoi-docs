@@ -71,9 +71,19 @@ items:
     answer: No · suggest only · a wrong match drops a payment you count on
   - id: D-FC-15
     question: Count an overdue planned payment until it is answered?
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - today: a planned payment past its date drops out of the line while it waits in *Planned payments to check* · *Already spoken for $0.00* · the forecast reads 260 $ too high
+      - **a) count it as due today** until booked, skipped or moved · build: 2.0.1
+      - before: a planned payment past its date drops out of the line while it waits in *Planned payments to check* · *Already spoken for $0.00* · the forecast reads 260 $ too high
       - a) count it as due today until it is booked, skipped or moved
       - b) keep it out, and say on the card what the review holds
       - source: Android emulator round, AND-14-6
+  - id: D-FC-16
+    question: "Home *IN 1 MONTH* shows the month end: caption the date?"
+    status: decided
+    date: 2026-11-06
+    answer: |
+      - **caption the date** · *End of November* · *Ende November* · *11月末* · 12 months → *By Oct 31, 2027* · build: 2.0.0
+      - horizon stays the month end · matches the month tiles
+      - source: Android emulator round, AND-14-5

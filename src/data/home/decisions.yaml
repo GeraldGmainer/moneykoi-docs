@@ -55,9 +55,19 @@ items:
     related: [D-HOM-6, R-BC-09]
   - id: D-HOM-9
     question: "Android back on a tab other than Home: go to Home or offer to exit?"
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - today: back on the Book tab → *Tap again to exit*
+      - **b) keep the exit prompt on every tab** · no build · AND-3-2 closed
+      - back on the Book tab → *Tap again to exit*
       - a) back goes to Home first, exits from Home (the Android convention)
       - b) keep the exit prompt on every tab
       - source: Android emulator round, AND-3-2
+  - id: D-HOM-10
+    question: Balance or budget widget tap while another page is open?
+    status: decided
+    date: 2026-11-06
+    answer: |
+      - **Home** · pop to the main route, select Home · build: 2.0.0
+      - a form with unsaved changes stays open
+      - before: the app resumed whatever page was open · source: Android emulator round, AND-26-4

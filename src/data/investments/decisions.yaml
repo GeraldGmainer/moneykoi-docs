@@ -36,8 +36,9 @@ items:
     answer: Out of scope so far
   - id: D-INV-8
     question: Deleting a position — Undo and Trash?
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - today: delete is final · no Undo snack · not in Trash
-      - a) Undo snack + Trash like bookings · b) keep final, say so in the dialog
+      - **a) Undo snack + Trash like bookings** · build: 2.0.1
+      - before: delete is final · no Undo snack · not in Trash
       - source: Android emulator round, AND-19-4

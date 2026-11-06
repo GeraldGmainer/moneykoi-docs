@@ -109,18 +109,22 @@ items:
     related: [R-DATA-40, D-DATA-8]
   - id: D-DATA-17
     question: A CSV with older bookings on top of a starting balance — which balance is right?
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - today: the setup's starting balance is *today's* balance · the import adds every older row on top · Bank 2,000 → 8,606.38 €
+      - **a) dated history moves the opening** · the import result says so · build: 2.0.1
+      - before: the setup's starting balance is *today's* balance · the import adds every older row on top · Bank 2,000 → 8,606.38 €
       - a) dated history moves the opening: the account still ends at the typed balance today
       - b) keep adding · the import's *Accounts* step warns and offers to clear the starting balance
       - c) ask per account in the import
       - source: Android emulator round, AND-11-1
   - id: D-DATA-18
     question: "Android: Budget Book CSV/PDF export only shares — add *Save to device*?"
-    status: open
+    status: decided
+    date: 2026-11-06
     answer: |
-      - today: Budget Book › Export → the share sheet only · Settings' CSV export opens the save dialog
+      - **a) save dialog first, *Share* second** · build: 2.0.1
+      - before: Budget Book › Export → the share sheet only · Settings' CSV export opens the save dialog
       - a) save dialog first, *Share* as the second button (as backup)
       - b) keep share only for the Budget Book export
       - source: Android emulator round, AND-5-1

@@ -23,3 +23,10 @@ items:
     date: 2026-11-03
     answer: Checked before any confirm · offer *Hide instead* · no *delete with bookings* for accounts (not decided) · unused → destructive confirm
     related: [R-LED-42, E-LED-12]
+  - id: D-LED-6
+    question: Accounts and Home balance — count future-dated bookings?
+    status: decided
+    date: 2026-11-06
+    answer: |
+      - **no · today's balance** · future-dated rows stay in Forecast · same date rule as the balance check · build: 2.0.1
+      - before: after counting 8,500 € Accounts showed 8,463 € · source: Android emulator round, AND-17-1
