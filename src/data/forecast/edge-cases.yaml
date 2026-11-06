@@ -219,3 +219,34 @@ items:
     tests:
       - file: test/shared/money_plain_test.dart
         name: places the symbol by the money format
+  - id: E-FC-26
+    group: Numbers
+    title: Shortfall shown as *Free 0.00*
+    when: committed + everyday + buffer above the balance · *Of the balance* card
+    then: |
+      - fixed 2026-11-06 · *Everyday spending* keeps its true figure and a *Short* row names the gap
+      - before: everyday spending shrank and *Free* read 0.00 (AND-14-1)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/forecast/forecast_widgets_test.dart
+        name: a shortfall keeps the true everyday figure
+  - id: E-FC-27
+    group: Numbers
+    title: Bill typed by hand, then made a rule, counted twice
+    when: three months of a 39.99 bill booked by hand · then a 39.99 rule for it
+    then: |
+      - fixed 2026-11-06 · the rows the rule explains leave the everyday estimate · the monthly line is unchanged
+      - before: the bill was in the estimate and in the rule (AND-14-3)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: history a new rule explains leaves the residual
+  - id: E-FC-28
+    group: Planned payments
+    title: "*Book it now* on an overdue payment"
+    when: a planned payment past its date · review › *Book it now*
+    then: the booking form opens on the planned date, changeable · before 2026-11-06 it opened on today (AND-14-7)
+    status: fixed
+    risk: low
