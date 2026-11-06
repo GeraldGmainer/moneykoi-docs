@@ -150,3 +150,22 @@ items:
     then: shows the figure read off the date · a cent or so off the typed one
     status: by-design
     risk: low
+  - id: E-BUD-44
+    group: Goals
+    title: First deposit projects the goal done in days
+    when: new goal · first deposit on day one
+    then: |
+      - since 2026-11-06 *Projected finish* and the what-if pace wait for 30 days since the start or deposits in two months · the monthly need still shows
+      - before: $160 on day one read *Projected finish Nov 8* (AND-13-1)
+    status: fixed
+    risk: low
+  - id: E-BUD-45
+    group: Loans
+    title: Loan payment row
+    when: a payment logged on a loan
+    then: |
+      - since 2026-11-06 a *Borrowed* repayment is money out: minus, plain text, outgoing icon · a *Lent* repayment is money back: plus, income colour
+      - the principal / interest split reads as money in the book's format, and a note shows under it
+      - before: every repayment green with an income icon, the split as raw `230.00` (AND-13-2, AND-13-3)
+    status: fixed
+    risk: low

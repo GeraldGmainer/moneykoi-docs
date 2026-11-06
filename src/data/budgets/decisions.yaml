@@ -12,3 +12,12 @@ items:
     question: Savings-goal calculator and Christmas preset — Free?
     status: open
     answer: "Built ungated inside the Free goal form (2026-10-24) · recommendation: Free, like goals · Rule 1 makes it final"
+  - id: D-BUD-16
+    question: "Budget calculator: the *50/30/20* start lands on 48/25/28"
+    status: open
+    answer: |
+      - today: the per-adult food and transport guides and the rest-to-savings push a single adult to 48/25/28 under a label that says 50/30/20 · the website does the same
+      - a) scale the needs and wants rows to hit 50/30/20 · app and website together (the parity table)
+      - b) rename the start to *Balanced* and keep 50/30/20 only as the comparison
+      - c) keep
+      - source: Android emulator round, AND-13-4 · an app-only change was built and taken back on 2026-11-06 because it broke site parity
