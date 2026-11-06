@@ -234,3 +234,27 @@ items:
     tests:
       - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
         name: a resume offers biometrics enrolled in the background, with their kind
+  - id: E-PRIV-48
+    group: App lock
+    title: PIN could not be turned off
+    when: App lock › *PIN unlock* off · current PIN typed
+    then: |
+      - fixed 2026-11-06 · the right PIN turns it off
+      - before: the check page closed with an error and the lock stayed on · came with the IOS-8-3 fix (AND-8-1)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/settings/ui/pages/app_lock_settings_page_test.dart
+        name: the current PIN typed on the real route turns the PIN off
+  - id: E-PRIV-49
+    group: App lock
+    title: Lock keypad below the gesture bar on a small phone
+    when: 360×640 dp phone · locked app
+    then: |
+      - fixed 2026-11-06 · the koi mark gives way and every key sits above the gesture bar · a split-screen pane shrinks the keys, never below the touch target
+      - before: *0*, ⌫ and the fingerprint key could not be tapped, so a PIN with a 0 locked the user out (AND-8-2)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/app_lock/ui/screens/lock_screen_test.dart
+        name: a 640 dp phone drops the logo and keeps every key above the gesture bar
