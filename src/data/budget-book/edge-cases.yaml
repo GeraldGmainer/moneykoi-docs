@@ -72,11 +72,15 @@ items:
     title: Opening balance counted as income
     when: account has a starting balance in the period · Summary or calendar
     then: |
-      - app adds it to income · analytics doesn't · web lists it, counts neither (D-BKG-6)
-      - app to change: the virtual row carries an income category
-      - every *Personalize* book with starting balances hits it · November income 5.350 € instead of 3.200 € (Android emulator round, AND-2-2)
-    status: known-issue
+      - fixed 2026-11-06 · the opening balance is listed but counted as neither income nor expense · Summary, calendar, filters and analytics agree with the web (D-BKG-6)
+      - before: every *Personalize* book with starting balances showed November income 5.350 € instead of 3.200 € (Android emulator round, AND-2-2)
+    status: fixed
     risk: high
+    tests:
+      - file: test/features/booking/domain/booking_test.dart
+        name: an opening balance is a level
+      - file: test/features/booking_export/ui/booking_export_page_test.dart
+        name: an opening balance is listed but counted apart from the bookings
   - id: E-BB-11
     group: Filters
     title: Account filter misses incoming transfers
