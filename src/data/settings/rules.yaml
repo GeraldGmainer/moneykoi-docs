@@ -44,6 +44,7 @@ items:
       - starter categories come classified
       - no account → fully offline · invitees skip it
       - *Quick start*: one tap · 4 accounts, 48 categories, no balances → Home keeps *Set starting balances*
+      - one step count on every path (*Step 2 of 6* on the method choice) · the progress screen shows none · starting balances are typed in the picked currency's own format (since 2026-11-06, AND-1-3, AND-1-4)
       - signed in with the wrong account → *Log out* on the first step (web since 2026-10-28)
     source: OFFLINE_TIER §3, ONBOARDING §1, ONBOARDING_WEB §1
     tests:
@@ -55,7 +56,7 @@ items:
       - file: test/features/onboarding/domain/service/category_generation_service_test.dart
         name: classifies the starter book as fixed or variable at the parent level
       - file: test/features/onboarding/ui/pages/onboarding_page_test.dart
-        name: the first step has no back button and continue opens the method choice, two steps for a quick start
+        name: the first step has no back button and continue opens the method choice, one six-step count on every path
   - id: R-SET-12
     group: Onboarding
     title: Personalize — six steps
