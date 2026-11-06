@@ -49,7 +49,7 @@ items:
     title: New phone, no account
     from: fresh install
     steps:
-      - "*Sign in or restore* → *Restore a backup*"
+      - "*Sign in* → *Restore* → *Restore a backup*"
       - lands on this phone + settings
       - store asked for Pro, silently
     result: book back · nothing uploaded · no doubles
@@ -92,12 +92,14 @@ items:
     steps:
       - tap the `.moneykoi`
       - app lock / passphrase first if on
-    result: restore preview · or *Welcome back*
+    result: restore preview · or the *Restore* page (box koi, both restore buttons)
     tests:
       - file: test/features/backup/ui/backup_open_listener_test.dart
         name: an account or a book on the phone opens the restore preview in Backup & restore
       - file: test/features/backup/ui/backup_open_listener_test.dart
-        name: a phone without an account or a book opens Welcome back, where the local restore lives
+        name: a phone without an account or a book opens the welcome restore page, where the local restore lives
+      - file: test/features/auth/ui/pages/welcome_restore_page_test.dart
+        name: a file the app was opened with goes straight to the restore bloc
     checks: [C-DATA-006, C-DATA-022, C-DATA-023]
   - id: J-DATA-08
     group: Backups

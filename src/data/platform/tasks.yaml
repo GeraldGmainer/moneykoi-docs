@@ -37,13 +37,14 @@ items:
       - Play Console → Monitor and improve → Policy and programs → App content → App access → *Any other information* → text below · email + password fields stay
       - *full access incl. paid content* ticked → the review account needs a Cloud grant on prod · else untick
       - the password switch (E-ACC-70) ships with the next build · builds already out still send links
+      - the first-screen link reads *Sign in* from the next build (was *Sign in or restore*) → re-paste the text below if it is already in the console
       - pre-launch report crawler can't read instructions · only the build fix stops it, or turn the report off
       - optional, `moneykoi.app` DNS: null MX `MX 0 .` → mail fails at once, no 48 h retry notices · or forwarding (Cloudflare Email Routing, ImprovMX) to read it
     command: |
       Most of the app needs no account: tap "Get started" on the first screen.
 
       To sign in with the review account:
-      1. On the first screen, tap "Sign in or restore"
+      1. On the first screen, tap "Sign in"
       2. Tap "Sign in with email"
       3. Tap the "Password" tab at the top
       4. Enter the email and password above, then tap "Sign in"

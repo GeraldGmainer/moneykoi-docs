@@ -124,12 +124,12 @@ items:
     title: Pro on a new phone
     from: new phone
     steps:
-      - "*Sign in or restore*"
+      - "*Sign in* → *Restore*"
       - "*Restore Pro purchase* · store account is proof"
       - "*Pro restored* → *Restore a backup*"
       - or *Start a new book*
     result: Local Pro + data
-    note: Nothing found → snackbar, stays on *Welcome back*
+    note: Nothing found → snackbar, stays on *Restore*
     tests:
       - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
         name: a Pro purchase goes on to the page that offers a book
@@ -139,10 +139,10 @@ items:
     related: [J-DATA-04, R-MON-58]
   - id: J-MON-22
     group: Restore & move
-    title: Cloud found on Welcome back
+    title: Cloud found on Welcome back › Restore
     from: new phone · Cloud bought
     steps:
-      - "*Restore Pro purchase*"
+      - "*Sign in* → *Restore* → *Restore Pro purchase*"
       - "*Cloud found* · Cloud lives in an account"
       - Google or email sign-in
     result: account's books download

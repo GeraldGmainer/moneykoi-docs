@@ -93,7 +93,7 @@ groups:
       - id: C-MON-051
         text: Fresh install → restore finds the purchase
       - id: C-MON-052
-        text: "*Sign in or restore* → *Restore Pro purchase* → *Pro restored* → Pro, no login"
+        text: "*Sign in* → *Restore* → *Restore Pro purchase* → *Pro restored* → Pro, no login"
       - id: C-MON-053
         text: Local book → claim → sign in → *See plans* → buy → upload continues by itself
       - id: C-MON-054
@@ -118,13 +118,13 @@ groups:
         text: "Pro bought → refund → next day reopen → Pro locks · airplane mode → Pro stays · note the seconds (E-MON-55)"
 
   - id: welcome-back
-    title: Welcome back · Restore Pro purchase
+    title: Welcome back › Restore · Restore Pro purchase
     setup: |
-      - fresh install or *Delete all data* · *Sign in or restore*
+      - fresh install or *Delete all data* · *Sign in* → *Restore*
       - store sandbox (C-MON-050 bought), or dev flavor with *Test purchases succeed*
     items:
       - id: C-MON-070
-        text: Store account without a purchase → *Restore Pro purchase* → snackbar · stays on *Welcome back*
+        text: Store account without a purchase → *Restore Pro purchase* → snackbar · stays on *Restore*
       - id: C-MON-071
         text: "Pro bought → *Pro restored* · *Start a new book* → setup · back → *Restore a backup* → file restores · Pro unlocked"
       - id: C-MON-072

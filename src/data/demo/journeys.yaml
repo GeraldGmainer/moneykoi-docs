@@ -55,7 +55,7 @@ items:
     steps:
       - "*Leave the demo to restore?*"
       - "*Delete sample data*"
-      - "*Welcome back* preview"
+      - "*Restore* page preview"
     result: restores on a fresh phone
     checks: [C-DEMO-023]
   - id: J-DEMO-06

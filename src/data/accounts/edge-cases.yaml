@@ -225,7 +225,7 @@ items:
     when: 360×640 dp phone, or a large system font
     then: |
       - key points dropped first
-      - *Get started*, *Sign in or restore* and the terms stay on screen, no scrolling
+      - *Get started*, *Sign in* and the terms stay on screen, no scrolling
     status: fixed
     risk: medium
     tests:
@@ -258,10 +258,10 @@ items:
   - id: E-ACC-63
     group: Small screens
     title: Still scrolls on 360×640 dp
-    when: German step 2 · *Welcome back* (sign-in + restore)
+    when: German step 2 · *Welcome back*
     then: |
       - step 2: second choice half visible, rest one scroll away
-      - *Welcome back*: koi dropped, terms (de: *Restore Pro purchase* too) below the fold
+      - *Welcome back*: koi dropped, terms (de: *Restore Pro purchase* too) below the fold · since 2026-11-06 one *Restore* button instead of two, re-check (C-ACC-083)
     status: known-issue
     risk: low
   - id: E-ACC-64

@@ -82,7 +82,7 @@ items:
     when: store holds nothing for this store account
     then: |
       - *No purchase found* · Pro on the phone **stays**
-      - on *Welcome back*: snackbar, page stays (D12)
+      - on *Welcome back* › *Restore*: snackbar, page stays (D12)
     risk: high
     tests:
       - file: test/features/monetization/data/entitlement_service_test.dart
@@ -90,7 +90,7 @@ items:
       - file: test/features/monetization/ui/paywall_page_test.dart
         name: a restore that finds nothing says so
       - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
-        name: nothing in the store says so and stays on Welcome back
+        name: nothing in the store says so and stays on the restore page
   - id: E-MON-09
     group: Paywall & store
     title: Launch window edges

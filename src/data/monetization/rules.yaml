@@ -291,16 +291,21 @@ items:
     source: §9a
   - id: R-MON-58
     group: Store & purchases
-    title: Welcome back restore leads on
+    title: Welcome back › Restore leads on
     text: |
-      - *Restore Pro purchase* → nothing → snackbar, stays on *Welcome back*
+      - *Welcome back* holds one *Restore* button → *Restore*: box koi, *Restore a backup*, *Restore Pro purchase* (2026-11-06)
+      - *Restore Pro purchase* → nothing → snackbar, stays on *Restore*
       - Pro → *Pro restored*: *Start a new book* · *Restore a backup*
       - Cloud → *Cloud found*: Google + email sign-in · Cloud wins over Pro
       - closed local book → *Continue without an account* instead of a new one
     source: §9a (decided 2026-10-21, D12)
     tests:
+      - file: test/features/auth/ui/pages/welcome_back_page_test.dart
+        name: Restore opens the restore page
+      - file: test/features/auth/ui/pages/welcome_restore_page_test.dart
+        name: shows the box koi, the explanation and both restore paths
       - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
-        name: nothing in the store says so and stays on Welcome back
+        name: nothing in the store says so and stays on the restore page
       - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
         name: a Pro purchase goes on to the page that offers a book
       - file: test/features/auth/ui/widgets/welcome_restore_section_test.dart
@@ -514,7 +519,7 @@ items:
     text: |
       - Settings → *Account*, under *Profile*
       - *Get Money Koi Pro* · *Pro is active* · *Cloud through {book}* · …
-      - **no** restore row · restore: paywall + *Welcome back*
+      - **no** restore row · restore: paywall + *Welcome back* › *Restore*
       - separate plan card dropped 2026-10-21
     source: §7
     tests:

@@ -33,7 +33,7 @@ groups:
       - id: C-DEMO-022
         text: Tap an invite link → *Leave the demo to join?* → confirm → invite page
       - id: C-DEMO-023
-        text: Tap a `.moneykoi` file → *Leave the demo to restore?* → *Welcome back* preview
+        text: Tap a `.moneykoi` file → *Leave the demo to restore?* → *Restore* page preview
   - id: leaving
     title: Leaving and coming back
     items:

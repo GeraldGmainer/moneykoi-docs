@@ -141,7 +141,7 @@ items:
     group: Backup files
     title: Settings travel · new phone only
     text: |
-      - applied only on a *Welcome back* restore
+      - applied only on a restore from *Welcome back* › *Restore*
       - **never** notification switches or goal reminders
     source: BACKUP §4g
     tests:
@@ -165,7 +165,7 @@ items:
     text: |
       - **Cloud account** → new book on the server
       - **free account** → replaces a chosen own book, or a new local one
-      - **empty phone** (*Welcome back*) → this phone + settings
+      - **empty phone** (*Welcome back* › *Restore*) → this phone + settings
       - **local book** → replaced after a red confirm
     source: BACKUP §4c
     tests:

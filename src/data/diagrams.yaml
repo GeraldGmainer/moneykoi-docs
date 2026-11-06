@@ -228,7 +228,7 @@
   sources:
     - {repo: app, file: .agents/references/OFFLINE_TIER_AI_CONTEXT.md}
     - {repo: app, file: .agents/references/MONETIZATION_AI_CONTEXT.md}
-  checked: 2026-10-21
+  checked: 2026-11-06
 - id: invite
   title: Inviting someone into a book
   page: accounts-books
@@ -324,7 +324,7 @@
   caption: never merges · new book · book it came from · or replaces a phone book
   sources:
     - {repo: app, file: .agents/references/BACKUP_RESTORE_AI_CONTEXT.md}
-  checked: 2026-10-17
+  checked: 2026-11-06
 
 # Web
 - id: web-arch

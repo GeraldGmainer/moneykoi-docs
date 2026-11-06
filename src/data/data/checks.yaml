@@ -24,11 +24,11 @@ groups:
       - id: C-DATA-017
         text: One damaged jpg → only that photo fails
       - id: C-DATA-019
-        text: Protected file via picker, open-with, *Welcome back* → unlock sheet · wrong → error, stays · photos restore
+        text: Protected file via picker, open-with, *Welcome back* › *Restore* → unlock sheet · wrong → error, stays · photos restore
       - id: C-DATA-004
         text: Delete 3 → restore → *Bring back* · edit → *Undo everything* · partner follows
       - id: C-DATA-005
-        text: Fresh install → *Welcome back* → *Restore a backup* → all back · no double recurring
+        text: Fresh install → *Sign in* → *Restore* → *Restore a backup* → all back · no double recurring
       - id: C-DATA-014
         text: Local book → *Restore* → red *Replace* → book = file
       - id: C-DATA-013
