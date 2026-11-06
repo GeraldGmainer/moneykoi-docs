@@ -26,7 +26,8 @@ items:
     status: open
     answer: |
       - today: *This month* on Nov 5 divides by 30 · *This week* by the days so far · the "at this pace" line by 5 · weekday averages count Sundays still to come
-      - October divides by 32 days (the DST change counts a day twice) — a bug either way
+      - October divided by 32 days (the DST change counted a day twice) · fixed 2026-11-06 (AND-15-2)
+      - built so the answer is one constant: `FeatureConstants.analyticsAverageDivisor` · today b)
       - a) days so far, everywhere (matches *month to date*, D-ANL-1)
       - b) the whole period, everywhere
       - source: Android emulator round, AND-15-1, AND-15-2

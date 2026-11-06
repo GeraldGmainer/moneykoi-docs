@@ -48,7 +48,7 @@ items:
     group: Numbers
     title: Salary on the 1st, early in a month
     when: salary on Oct 1 and Nov 1 · *This month* opened on Nov 2
-    then: "*Income ↑ 1018 %* before 2026-11-03 (Oct 2–31 vs Nov) · now Nov 1–2 vs Oct 1–2 → no change · a finished month vs the whole month before it · web the same since 2026-11-05 · iOS round IOS-15-1"
+    then: "*Income ↑ 1018 %* before 2026-11-03 (Oct 2–31 vs Nov) · now Nov 1–2 vs Oct 1–2 → no change · a finished month vs the whole month before it · web the same since 2026-11-05 · iOS round IOS-15-1 · Home's *Cash flow* card the same since 2026-11-06 (it compared Nov 1–5 with Oct 2–6, AND-3-1)"
     status: fixed
     risk: high
     tests:
