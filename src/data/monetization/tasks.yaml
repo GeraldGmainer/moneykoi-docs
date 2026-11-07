@@ -144,12 +144,14 @@ items:
   - id: T-MON-11
     title: Register the trade before the first sale
     owner: gerald
+    status: done
     waitsFor: [T-MON-07]
     detail: |
       - *freies Gewerbe* "Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik" · GISA with ID Austria · free
       - before the paywall release: license-test purchases are €0
       - ask WKO Gründerservice or a tax advisor: UID number (invoices to Google Ireland) · SVS small-business exemption
-      - **filed 2026-11-01** online at BH Steyr-Land · effective 01.11.2026 · the receipt (*Eingangsbestätigung*) carries only an intake number, **no GISA number** → from the GISA extract (*GISA-Auszug*) or the public search on gisa.gv.at · then into the imprint (site S-27)
+      - **done**: filed 2026-11-01 at BH Steyr-Land · GISA **40309453**, *aufrecht* since 01.11.2026, Standort Garsten
+      - imprint carries it since 2026-11-07 (site S-27) · open still: the UID / SVS question above
 
   - id: T-MON-20
     title: Open the claim to everyone
