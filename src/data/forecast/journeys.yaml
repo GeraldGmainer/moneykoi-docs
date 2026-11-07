@@ -55,7 +55,7 @@ items:
     title: Looks at the year, day by day (web)
     from: Forecast → *Calendar*
     steps:
-      - the year · each day's end balance · booked up to today, forecast after
+      - the year as month columns · each day a row: movement, end balance, what · booked up to today, forecast after
       - ‹ › last year or next year
       - a day → what was booked, what is expected, opening → closing
       - an expected payment → *Skip* / *Change* · or *Plan something on this day*

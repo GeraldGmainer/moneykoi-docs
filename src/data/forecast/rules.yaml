@@ -283,12 +283,15 @@ items:
       - web-first · the app has no forecast calendar yet (D-FC-17)
       - *Overview · Calendar* in the header switches the whole page · kept in the link (`?view=calendar`, `&year=` for another year)
       - one calendar year · ‹ › from the book's first year to as far as the forecast reaches (up to 24 months)
-      - each day: the balance at its end · **up to today what was booked** (walked back from today's balance) · **from today the forecast** · red below zero · amber below the buffer · ⚠ on the year's lowest forecast day
-      - one month a row, two on a wide screen, never more · dots for what moves the day · names in the day panel only
+      - laid out like Gerald's forecast spreadsheet: each month a column, one row a day · day · **movement** · **balance at the day's end** · what it was (the biggest item, *+2* for more) · zebra rows
+      - **up to today what was booked** (walked back from today's balance) · **from today the forecast** · booked rows dimmer
+      - the movement column holds bookings and dated payments only · the everyday estimate and budgets only slope the balance, like the sheet's daily decline
+      - red balance below zero · amber below the buffer · ⚠ on the year's lowest forecast day
+      - three months a row on a wide screen, two on a smaller one, one on a phone
       - a day opens beside the year (a sheet from the bottom on a phone or tablet): opening, closing, *Booked* (opens the booking), *Expected* (*Skip* · *Change* · *Edit*), what is spread over the day, net change · *Plan something on this day* from today on
       - accounts left out of the forecast are left out of the past too · a transfer to or from one moves the balance
       - days before the book's history and past the horizon: drawn, no balance
-      - never scrolls sideways · a balance too long for its cell shortens (124k), whole in the day panel
+      - never scrolls sideways · a figure too long for its column shortens (1.2M), whole in the day panel · six figures fit whole even on a 320 px phone
     source: FORECAST_WEB §4 rule 32
     related: [D-FC-17, R-FC-40]
     tests:
@@ -306,4 +309,4 @@ items:
         name: "runs on without a step: every day opens where the day before closed"
       - file: e2e/forecast.mobile.spec.ts
         repo: web
-        name: a six-figure balance is shortened, never cut, at
+        name: a long balance is shortened, never cut, at
