@@ -87,3 +87,10 @@ items:
       - **caption the date** · *End of November* · *Ende November* · *11月末* · another year → *End of October 2027* · built 2026-11-06
       - horizon stays the month end · matches the month tiles
       - source: Android emulator round, AND-14-5
+  - id: D-FC-17
+    question: Forecast calendar in the app too?
+    status: open
+    answer: |
+      - the web has one since 2026-11-07 (R-FC-42): each day's closing balance, what is due, a day panel
+      - the app lists a budget-book calendar with projected balances as later work, "only after a prototype" (FORECAST §12.3) · the web calendar is that prototype
+      - a) port it to the app's forecast page · b) keep it web-only

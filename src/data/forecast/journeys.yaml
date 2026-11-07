@@ -50,3 +50,13 @@ items:
       - balance card on the page → safe to spend sheet
     result: every figure explained on the phone
     checks: [C-FC-017]
+  - id: J-FC-07
+    group: Reading
+    title: Checks a day's balance (web)
+    from: Forecast → *Calendar*
+    steps:
+      - month at a glance · each day's closing balance
+      - a day → what is due, opening → closing
+      - a payment → *Skip* / *Change* · or *Plan something on this day*
+    result: how much is there on any day, and why
+    checks: [C-FC-029, C-FC-030]

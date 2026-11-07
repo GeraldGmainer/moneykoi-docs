@@ -145,6 +145,13 @@
   web: partial
   webNote: same calculation as the app since 2026-10-27 · planned-item review since 2026-10-28 (*Book it now* opens booking entry prefilled in a new tab, retired on *Mark as happened*) · no alerts or accuracy line
   docs: forecast
+- id: forecast-calendar
+  name: Forecast as a calendar (each day's balance)
+  area: money
+  tier: cloud
+  web: web-only
+  webNote: since 2026-11-07 · the app lists it as later work (D-FC-17)
+  docs: forecast
 - id: investments
   name: Investments
   area: money

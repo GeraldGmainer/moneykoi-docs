@@ -47,6 +47,13 @@ groups:
         text: "Web: planned date passed → *Book it now* → new tab, title, category, amount and date filled · save · *Mark as happened* → gone · repeating plan *It didn't happen* → only that date gone, next one still on the line"
       - id: C-FC-027
         text: "Web: *Not this booking* → suggestion gone at once, past date then asks *did it happen?* · reload keeps it · other book or the phone still asks"
+  - id: web-calendar
+    title: Web calendar · 2026-11-07
+    items:
+      - id: C-FC-029
+        text: "Web: *Calendar* → today ringed · each day's figure = the line on that day · rent day drops by the rent · days before today blank · ‹ › stop at the horizon · reload keeps the calendar"
+      - id: C-FC-030
+        text: "Web on a phone (and 320 px): seven columns, no sideways scroll · tap a day → payments below · tap one → *Skip this one* works · a 6-figure balance reads *124k* in the cell, whole below"
   - id: release-1-17
     title: Forecast fixes · 1.17.0
     items:
