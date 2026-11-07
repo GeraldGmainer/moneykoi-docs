@@ -51,7 +51,7 @@ groups:
     title: Web calendar · 2026-11-07
     items:
       - id: C-FC-029
-        text: "Web: *Calendar* → the whole page is the year, month columns of day rows · today marked · past balances = the Balance page's line on those days · rent day: −rent in the movement, balance drops by it, *Rent* beside · quiet days blank in the movement, balance still sloping · ‹ › to last year and next · reload keeps it"
+        text: "Web: *Calendar* → the whole page is the year, month columns of day rows · today marked · past balances = the Balance page's line on those days · rent day: −rent in the movement, balance drops by it, *Rent* beside · quiet days blank in the movement, balance still sloping · ‹ › to last year and next · reload keeps it · *Compact* → week grid, reload keeps it · hover a day → items, amounts, closing"
       - id: C-FC-030
         text: "Web on a phone (and 320 px): one month column, no sideways scroll · tap a day → sheet with booked + expected · *Skip this one* works · a 6-figure balance fits whole · a 9-figure one reads *123M*, whole in the sheet"
   - id: release-1-17

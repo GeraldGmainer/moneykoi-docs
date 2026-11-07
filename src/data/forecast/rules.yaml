@@ -288,6 +288,8 @@ items:
       - the movement column holds bookings and dated payments only · the everyday estimate and budgets only slope the balance, like the sheet's daily decline
       - red balance below zero · amber below the buffer · ⚠ on the year's lowest forecast day
       - three months a row on a wide screen, two on a smaller one, one on a phone
+      - *Table · Compact* beside the year: *Compact* is a week grid (day, balance, dots), two months a row at most · remembered per browser
+      - hover a day (both layouts): date, every item with its amount, what the forecast spreads over it, closing balance
       - a day opens beside the year (a sheet from the bottom on a phone or tablet): opening, closing, *Booked* (opens the booking), *Expected* (*Skip* · *Change* · *Edit*), what is spread over the day, net change · *Plan something on this day* from today on
       - accounts left out of the forecast are left out of the past too · a transfer to or from one moves the balance
       - days before the book's history and past the horizon: drawn, no balance
@@ -310,3 +312,9 @@ items:
       - file: e2e/forecast.mobile.spec.ts
         repo: web
         name: a long balance is shortened, never cut, at
+      - file: src/app/(main)/forecast/page.test.tsx
+        repo: web
+        name: swaps the table for a compact grid, and the browser remembers the choice
+      - file: src/app/(main)/forecast/page.test.tsx
+        repo: web
+        name: hovering a day shows what moved it and where it closes
