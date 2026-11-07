@@ -87,11 +87,13 @@ items:
     waitsFor: [T-INV-13]
     detail: |
       - only when Gerald says so · ≥ 3 days after the cutover
-      - `coingecko` · `binance` · `bitfinex` · dry run first each
-      - then unset `COINGECKO_API_KEY`
+      - `coingecko` · `binance` · `bitfinex` · dry run first each · refused while CoinGecko wrote in the last 3 days
+      - then unset `COINGECKO_API_KEY` · stop `refresh-quotes-daily` once FX is on the ECB too (it also writes the metals.dev rates)
+      - then the AI removes the CoinGecko code (runbook §13.4)
     command: |
       select public.price_purge_provider('coingecko');
       select public.price_purge_provider('coingecko', true);
+      select cron.unschedule('refresh-quotes-daily');
   - id: T-INV-09
     title: Data-source credits in the legal pages
     owner: gerald
