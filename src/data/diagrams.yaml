@@ -354,10 +354,10 @@
   areas: [investments]
   caption: |
     - prod: ECB fetches, not serving · gold-api.com serves metals
-    - CoinGecko + metals.dev until replaced · open steps = investments tasks
+    - Coinranking built, fetch off · CoinGecko + metals.dev until replaced
   sources:
     - {repo: supabase, file: INVESTMENT_PRICES_AI_CONTEXT.md}
-  checked: 2026-10-17
+  checked: 2026-11-07
 
 # Notifications
 - id: notifications

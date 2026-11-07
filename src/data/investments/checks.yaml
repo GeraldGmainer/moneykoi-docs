@@ -65,3 +65,15 @@ groups:
         text: Arrow · Android back · iOS swipe → one step back · keypad closes first
       - id: C-INV-022
         text: Step 1 with changes → discard dialog · editing shows ×
+
+  - id: coinranking
+    title: After the crypto cutover
+    items:
+      - id: C-INV-060
+        text: 'Bitcoin position → footer *Crypto: Data from Coinranking* · link opens coinranking.com'
+      - id: C-INV-061
+        text: 'About → *Price data sources* → *Crypto prices* · *Data from Coinranking*'
+      - id: C-INV-062
+        text: 'Bitcoin detail → *1Y* chart → no gap or jump at the cutover day'
+      - id: C-INV-063
+        text: 'Web: Bitcoin position → footer *Data from Coinranking* · de *Daten von Coinranking*'

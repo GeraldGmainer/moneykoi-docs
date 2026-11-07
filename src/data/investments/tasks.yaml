@@ -1,4 +1,4 @@
-# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-10-05).
+# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-11-07).
 items:
   - id: T-INV-02
     title: Purge World Bank
@@ -47,17 +47,58 @@ items:
   - id: T-INV-08
     title: Crypto → Coinranking (Phase 2)
     owner: gerald
+    status: done
     detail: |
-      - decide on Coinranking terms + history depth
-      - free account → run the agent's read-only probe
-      - then: build, deploy, backfill, compare, release, cut over
-      - purge CoinGecko / Binance / Bitfinex after 3 days
+      - **done 2026-11-07** · cleared on published terms · D-INV-9
+      - free key + probe done · built by AI
+      - next: T-INV-11 → T-INV-14
+  - id: T-INV-11
+    title: Coinranking on prod
+    owner: gerald
+    detail: |
+      - land `20261107120000_price_coinranking.sql` + `fetch-prices` on `main`
+      - copy the key → secret · enable fetch · hand-invoke · 2 crons
+      - prod only · no crypto fetch on dev
+    command: |
+      supabase secrets set COINRANKING_API_KEY="$(pbpaste)" --project-ref cwheprirreyscppmbybp && pbcopy < /dev/null
+      update public.price_provider set fetch_enabled = true where provider = 'coinranking';
+      -- then the hand-invoke and the two crons: fetch-prices/README.md › Coinranking
+  - id: T-INV-12
+    title: Startup trial → full history
+    owner: gerald
+    waitsFor: [T-INV-11]
+    detail: |
+      - start the **Startup** trial · Monthly billing · reminder on day 25
+      - backfill `--only=BTC --dry-run` → full run → `compare_crypto.sql`
+      - send the output → **cancel the trial** the same day
+    command: |
+      deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking --only=BTC --dry-run
+      deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking
+  - id: T-INV-13
+    title: Release, then crypto cutover
+    owner: gerald
+    waitsFor: [T-INV-12]
+    detail: |
+      - app + web release with *Data from Coinranking*
+      - then `cutover_crypto.sql` + hand-invoke `fetch-prices` coinranking
+      - undo: `rollback_crypto.sql` + hand-invoke `refresh-quotes`
+  - id: T-INV-14
+    title: Purge the old crypto sources
+    owner: gerald
+    waitsFor: [T-INV-13]
+    detail: |
+      - only when Gerald says so · ≥ 3 days after the cutover
+      - `coingecko` · `binance` · `bitfinex` · dry run first each
+      - then unset `COINGECKO_API_KEY`
+    command: |
+      select public.price_purge_provider('coingecko');
+      select public.price_purge_provider('coingecko', true);
   - id: T-INV-09
     title: Data-source credits in the legal pages
     owner: gerald
     detail: |
       - third-party data paragraph on `moneykoi.com/legal/terms`
-      - ECB · gold-api.com · later Coinranking
+      - ECB · gold-api.com · Coinranking
       - NBU: keep the blocked provider or drop it
   - id: T-INV-10
     title: About → data sources entry in the app
@@ -66,7 +107,7 @@ items:
     detail: |
       - **done 2026-11-02** · About → *Price data sources* · en/de/ja · R-SET-44
       - names the providers of the prices on the phone · today gold-api.com · CoinGecko · metals.dev
-      - ECB replaces metals.dev at the FX cutover (T-INV-06) · Coinranking needs one app entry first (T-INV-08)
+      - ECB replaces metals.dev at the FX cutover (T-INV-06) · Coinranking entry built 2026-11-07, shows after T-INV-13
   - id: T-INV-01
     title: Turn currency positions on
     owner: gerald

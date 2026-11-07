@@ -42,3 +42,11 @@ items:
       - **a) Undo snack + Trash like bookings** · build: 2.0.1
       - before: delete is final · no Undo snack · not in Trash
       - source: Android emulator round, AND-19-4
+  - id: D-INV-9
+    question: Which source for crypto prices?
+    status: decided
+    date: 2026-11-07
+    answer: |
+      - Coinranking on its published terms · 3 emails unanswered
+      - history once via Startup trial · daily on Free · $0 ongoing
+      - CoinGecko out · Demo not commercial · Basic is monthly
