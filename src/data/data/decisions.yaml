@@ -36,7 +36,7 @@ items:
     status: open
     answer: |
       - GDPR Art. 20 + 15 · only full export now needs Pro
-      - lawyer asks: export on request via support enough? (T-MON-05)
+      - terms check asks: export on request via support enough? (T-MON-05)
       - same gap: read-only shared book on Free (E-MON-23)
     related: [R-MON-21, E-MON-23]
   - id: D-DATA-3

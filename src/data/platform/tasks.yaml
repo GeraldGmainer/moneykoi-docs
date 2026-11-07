@@ -106,7 +106,7 @@ items:
     waitsFor: [T-PLAT-07]
     detail: |
       - one page per outlet: `store/press/kit.md` · pitches + facts ready
-      - Kuketz only after an Exodus scan + the lawyer's read
+      - Kuketz only after an Exodus scan + the terms check
       - ifun.de · appgefahren wait for iOS
 
   - id: T-PLAT-10

@@ -6,7 +6,7 @@ items:
     answer: |
       - **opt-out**, Gerald's risk call
       - risk lowered: EU, no PII, no replay, scrubbing
-      - open: DPA, policy, lawyer (T-PRIV-04)
+      - open: DPA (T-PRIV-04) · policy done 2026-10-28 · no lawyer (2026-11-07)
   - id: D-PRIV-2
     question: "Usage stats: opt-in or default on?"
     status: decided
@@ -49,7 +49,7 @@ items:
     answer: |
       - **stay on by default** · off in Privacy & legal → Crash reports · switching off = objection (Art. 21)
       - confirms the risk call of 2026-10-14 · consent (asked at first start) is the safer route under § 165 TKG
-      - the lawyer reads it (S-25 of the site, T-MON-05)
+      - the terms check reads it (S-25 of the site, T-MON-05)
   - id: D-PRIV-8
     question: "Self-hosting: your data, your server?"
     status: open

@@ -17,7 +17,7 @@ items:
       - **done 2026-10-28** · `moneykoi-site` privacy policy, en + de: usage stats (6) · Sentry (5) · RevenueCat + purchase events on the server (8) · price fetch (7) · retention (11)
       - Sentry: logs, device details, timings · no account, user ID or IP · EU (Frankfurt) · 90 days · switching off = objection (Art. 21)
       - RevenueCat: processor, USA, SCC · only once the plans open · purchase events kept 7 years after deletion (Art. 6(1)(c))
-      - left: the lawyer hour (T-MON-05) · open asks in site `OPEN_DECISIONS.md` S-25
+      - left: the terms check (T-MON-05) · open asks in site `OPEN_DECISIONS.md` S-25
   - id: T-PRIV-03
     title: Store privacy forms
     owner: gerald
@@ -34,7 +34,7 @@ items:
       - Sentry is on the EU-US Data Privacy Framework · the policy names it (privacy 5, 10)
       - Sentry → project Settings → Security & Privacy → *Prevent Storing of IP Addresses* on · the policy says no IP is attached
       - check the plan's retention: Developer 30 days, Team 90 · the policy says 90 at most
-      - lawyer: crash reports on by default vs consent (S-25)
+      - terms check: crash reports on by default vs consent (S-25)
   - id: T-PRIV-05
     title: Web security fixes
     owner: ai
