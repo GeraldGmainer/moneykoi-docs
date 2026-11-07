@@ -56,8 +56,8 @@ items:
     title: Coinranking on prod
     owner: gerald
     detail: |
-      - land `20261107120000_price_coinranking.sql` + `fetch-prices` on `main`
-      - copy the key → secret · enable fetch · hand-invoke · 2 crons
+      - ✅ 2026-11-07: migration + `fetch-prices` live · secret · fetch on · hand-invoke (14 BTC days on prod)
+      - open: confirm the 2 crons (`select jobname, schedule from cron.job where jobname like 'fetch-prices-coinranking%';` → 2 rows)
       - prod only · no crypto fetch on dev
     command: |
       supabase secrets set COINRANKING_API_KEY="$(pbpaste)" --project-ref cwheprirreyscppmbybp && pbcopy < /dev/null
@@ -68,9 +68,9 @@ items:
     owner: gerald
     waitsFor: [T-INV-11]
     detail: |
-      - start the **Startup** trial · Monthly billing · reminder on day 25
-      - backfill `--only=BTC --dry-run` → full run → `compare_crypto.sql`
-      - send the output → **cancel the trial** the same day
+      - ✅ trial started 2026-11-07 · **ends 2026-12-07, $49 charged that day** → cancel by 2026-12-06
+      - ✅ BTC dry run 2026-11-07: 5,950 days since 2010-07-17, 967 requests
+      - next: full run → `compare_crypto.sql` → send the output → **cancel the trial** the same day
     command: |
       deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking --only=BTC --dry-run
       deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking
