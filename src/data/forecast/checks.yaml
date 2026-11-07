@@ -51,9 +51,9 @@ groups:
     title: Web calendar · 2026-11-07
     items:
       - id: C-FC-029
-        text: "Web: *Calendar* → today ringed · each day's figure = the line on that day · rent day drops by the rent · days before today blank · ‹ › stop at the horizon · reload keeps the calendar"
+        text: "Web: *Calendar* → the whole page is the year, two months a row at most · today ringed · past days = the Balance page's line on those days · rent day drops by the rent · ‹ › to last year and next · reload keeps it"
       - id: C-FC-030
-        text: "Web on a phone (and 320 px): seven columns, no sideways scroll · tap a day → payments below · tap one → *Skip this one* works · a 6-figure balance reads *124k* in the cell, whole below"
+        text: "Web on a phone (and 320 px): one month a row, no sideways scroll · tap a day → sheet with booked + expected · *Skip this one* works · a 6-figure balance reads *124k* in the cell, whole in the sheet"
   - id: release-1-17
     title: Forecast fixes · 1.17.0
     items:

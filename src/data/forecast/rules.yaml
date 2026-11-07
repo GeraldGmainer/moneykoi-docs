@@ -278,29 +278,32 @@ items:
         name: '"not this booking" is remembered on this device, per book, and the suggestion leaves at once'
   - id: R-FC-42
     group: Web
-    title: "Web: the forecast as a calendar"
+    title: "Web: the forecast as a year calendar"
     text: |
       - web-first · the app has no forecast calendar yet (D-FC-17)
-      - *Months · Calendar* beside the section title · kept in the link (`?view=calendar`), so a reload keeps it
-      - one month at a time, inside the horizon · each day: where the balance closes · red below zero · amber below the buffer · ⚠ on the lowest day of the horizon
-      - a wide grid names two payments a day + *+N more* · a phone shows dots (income green)
-      - a day opens beside the grid (below it on a phone): opening, closing, every payment, what is spread over the day, net change
-      - a payment there opens the month list's sheet: *Skip* · *Change* · *Edit* · *Plan something on this day* plans on that date
-      - days before today: drawn, no balance · the forecast starts from today's balance
+      - *Overview · Calendar* in the header switches the whole page · kept in the link (`?view=calendar`, `&year=` for another year)
+      - one calendar year · ‹ › from the book's first year to as far as the forecast reaches (up to 24 months)
+      - each day: the balance at its end · **up to today what was booked** (walked back from today's balance) · **from today the forecast** · red below zero · amber below the buffer · ⚠ on the year's lowest forecast day
+      - one month a row, two on a wide screen, never more · dots for what moves the day · names in the day panel only
+      - a day opens beside the year (a sheet from the bottom on a phone or tablet): opening, closing, *Booked* (opens the booking), *Expected* (*Skip* · *Change* · *Edit*), what is spread over the day, net change · *Plan something on this day* from today on
+      - accounts left out of the forecast are left out of the past too · a transfer to or from one moves the balance
+      - days before the book's history and past the horizon: drawn, no balance
       - never scrolls sideways · a balance too long for its cell shortens (124k), whole in the day panel
-      - same run as the chart and the month tiles · *Can I afford this?* shows here too
     source: FORECAST_WEB §4 rule 32
     related: [D-FC-17, R-FC-40]
     tests:
       - file: src/app/(main)/forecast/page.test.tsx
         repo: web
-        name: "shows where each day closes: today, after the rent, after the pay"
+        name: switches the whole page to a year calendar, and keeps the choice in the URL
       - file: src/app/(main)/forecast/page.test.tsx
         repo: web
-        name: a day lists what is due on it, and an occurrence skips from there as from the feed
+        name: "every day closes where the balance is: booked before today, the forecast from today"
+      - file: src/app/(main)/forecast/page.test.tsx
+        repo: web
+        name: a day opens with what is expected, and an occurrence skips from there as from the feed
       - file: src/app/(main)/forecast/lib/calendar-grid.test.ts
         repo: web
-        name: with the dated events, adds up to every day of a real run
+        name: "runs on without a step: every day opens where the day before closed"
       - file: e2e/forecast.mobile.spec.ts
         repo: web
         name: a six-figure balance is shortened, never cut, at

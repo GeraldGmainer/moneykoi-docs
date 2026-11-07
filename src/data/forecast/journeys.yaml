@@ -52,11 +52,12 @@ items:
     checks: [C-FC-017]
   - id: J-FC-07
     group: Reading
-    title: Checks a day's balance (web)
+    title: Looks at the year, day by day (web)
     from: Forecast → *Calendar*
     steps:
-      - month at a glance · each day's closing balance
-      - a day → what is due, opening → closing
-      - a payment → *Skip* / *Change* · or *Plan something on this day*
+      - the year · each day's end balance · booked up to today, forecast after
+      - ‹ › last year or next year
+      - a day → what was booked, what is expected, opening → closing
+      - an expected payment → *Skip* / *Change* · or *Plan something on this day*
     result: how much is there on any day, and why
     checks: [C-FC-029, C-FC-030]
