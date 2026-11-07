@@ -18,6 +18,7 @@ items:
       - Sentry: logs, device details, timings · no account, user ID or IP · EU (Frankfurt) · 90 days · switching off = objection (Art. 21)
       - RevenueCat: processor, USA, SCC · only once the plans open · purchase events kept 7 years after deletion (Art. 6(1)(c))
       - left: the terms check (T-MON-05) · open asks in site `OPEN_DECISIONS.md` S-25
+      - **corrected 2026-11-07** (terms check): 5 said "when the app crashes" → now: logs, timings and sessions **during use** + Sentry's random install id · 2 lists ML Kit and usage stats too · 9 web session = a cookie · 10 + 11 the deletion form runs on Google Forms · status 07.11.2026
   - id: T-PRIV-03
     title: Store privacy forms
     owner: gerald

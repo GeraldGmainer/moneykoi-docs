@@ -289,6 +289,8 @@ items:
     text: |
       - Sentry EU · no personal data, replay, screenshots
       - user content scrubbed
+      - sent **during use**, not only on a crash: errors · info + warning log lines · start timings (traces 100 %) · session start/end with Sentry's random install id
+      - switching off stops Sentry at once (`Sentry.close()`) · nothing more until switched on
       - opt-out = Gerald's risk call (2026-10-14)
     source: MONETIZATION §8 item 5a
     tests:

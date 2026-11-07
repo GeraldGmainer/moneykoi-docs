@@ -237,6 +237,20 @@ items:
       - file: test/features/settings/ui/pages/changelog_page_test.dart
         name: on iOS the update row opens the App Store page
     related: [E-PLAT-03, T-PLAT-10]
+  - id: R-SET-46
+    group: Settings
+    title: Privacy & legal links terms, privacy policy and imprint
+    text: |
+      - *Terms of use* · *Privacy policy* · *Imprint* → the website's legal pages in the browser
+      - imprint added 2026-11-07: Austrian law wants it one tap from the app (ECG § 5, MedienG § 25)
+      - the site's imprint still lacks the trade details until the trade is registered (T-MON-11, site S-27)
+    source: AppUrls.terms / .privacy / .imprint, MONETIZATION §8 item 10
+    tests:
+      - file: test/features/settings/ui/pages/privacy_settings_page_test.dart
+        name: the terms open in the browser
+      - file: test/features/settings/ui/pages/privacy_settings_page_test.dart
+        name: the imprint opens in the browser
+    related: [T-MON-05, T-MON-11]
   - id: R-SET-45
     group: Formatting
     title: Dates and percents follow the locale
