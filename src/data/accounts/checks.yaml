@@ -83,6 +83,8 @@ groups:
         text: "Free account, 2nd phone → sign in → Home: *Your book is on your other phone* + *Get Cloud*"
       - id: C-ACC-026
         text: That card goes after the first booking, or with Cloud
+      - id: C-ACC-085
+        text: "iPhone: *Continue with Apple* → pick the account → as Apple's sheet closes, *Signing in…* over a dimmed page → next screen · again with Wi-Fi off after the sheet → *Cancel* → page back, no error · leave it → after 20 s *Signing in took too long…*"
 
   - id: untested
     title: Never run on a device yet

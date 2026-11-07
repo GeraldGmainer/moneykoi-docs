@@ -231,6 +231,21 @@ items:
         name: a prompt missing more than the category keeps the keyboard and flags the gaps
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
         name: a return key inside the debounce saves the prompt on screen, not the last parse
+  - id: E-BKG-43
+    group: Quick booking
+    title: Sheet hides behind the rising keyboard
+    when: hold **+** → quick booking opens with the keyboard
+    then: |
+      - fixed 2026-11-07: the sheet stands on the keyboard and rises with it, like an input bar · closing rides it down
+      - before: the keyboard came up alone, the sheet slid in behind it and popped out on top (iOS) · on Android the keyboard covered the sheet for a frame, then the sheet jumped
+      - the first open or close after an install can stutter in a debug build · judge it on TestFlight / internal
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/common/keyboard_docked_sheet_test.dart
+        name: the sheet slides in from the keyboard top, not from behind the keyboard
+      - file: test/shared/ui/common/keyboard_docked_sheet_test.dart
+        name: the sheet rides the keyboard down when it closes
   - id: E-BKG-42
     group: Amount
     title: Typed trailing zero

@@ -323,3 +323,23 @@ items:
     tests:
       - file: test/features/auth/ui/widgets/sign_in_layout_test.dart
         name: "Apple, Google and email read as one group: same height, same label size"
+  - id: E-ACC-74
+    group: Sign-in
+    title: Nothing happens after Apple's sheet
+    when: iPhone · *Continue with Apple* → pick the account in Apple's sheet
+    then: |
+      - fixed 2026-11-07: the moment Apple's sheet closes the page dims under *Signing in…* with *Cancel*, until the next screen opens
+      - *Cancel* gives the page back at once · a sign-in that still lands afterwards signs in
+      - no session after 20 s → *Signing in took too long. Check the connection and try again.*
+      - before: ~2 s of the unchanged Welcome back page while the session was fetched
+      - all five Apple entries: Welcome, Welcome back, *Back up & sync*, join a book, profile *Sign in*
+    status: fixed
+    risk: medium
+    related: [C-ACC-085]
+    tests:
+      - file: test/features/auth/ui/widgets/sign_in_progress_layer_test.dart
+        name: once Apple approves, the progress covers the page until the session navigates
+      - file: test/features/auth/bloc/auth_cubit_test.dart
+        name: cancel ends the wait at once, and what the request says later is dropped
+      - file: test/features/auth/bloc/auth_cubit_test.dart
+        name: a session that does not come in time says so, reported as apple
