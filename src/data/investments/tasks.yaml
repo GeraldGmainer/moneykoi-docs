@@ -70,9 +70,10 @@ items:
     detail: |
       - ✅ trial started 2026-11-07 · **ends 2026-12-07, $49 charged that day** → cancel by 2026-12-06
       - ✅ full backfill 2026-11-07: 23 coins · 64,635 days · 1,206 requests · BTC from 2010-07-17
-      - next: POL again with MATIC's history (2019 → 2023) → deviation query of `compare_crypto.sql` → send it → **cancel the trial**
+      - ✅ POL with MATIC's history 2019-05-27 → 2023-10-29 · ✅ `compare_crypto.sql` checked
+      - next: **cancel the trial now** (nothing left needs Startup) · run `outliers_crypto.sql` → send it
     command: |
-      deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking --only=POL
+      -- scripts/price-cutover/outliers_crypto.sql in the prod SQL editor
   - id: T-INV-13
     title: Release, then crypto cutover
     owner: gerald
