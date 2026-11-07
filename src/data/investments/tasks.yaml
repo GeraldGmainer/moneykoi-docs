@@ -72,7 +72,7 @@ items:
       - ✅ full backfill 2026-11-07: 23 coins · 64,635 days · 1,206 requests · BTC from 2010-07-17
       - ✅ POL with MATIC's history 2019-05-27 → 2023-10-29 · ✅ `compare_crypto.sql` checked
       - ✅ off days kept as they are (D-INV-10)
-      - next: **cancel the trial now** · nothing left needs Startup
+      - next: **cancel the trial on 2026-11-21** (kept 14 days · reminder set) · nothing left needs Startup
   - id: T-INV-13
     title: Release, then crypto cutover
     owner: gerald
