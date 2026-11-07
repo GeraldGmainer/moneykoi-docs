@@ -12,7 +12,7 @@ groups:
       - id: C-BOOK-020
         text: A (Cloud) invites B (free) → shared book live both ways · B's own book never on the server
       - id: C-BOOK-021
-        text: B Free + *Enforce plans* → all features in A's book · locks back in own book · *Cloud through {book}*
+        text: B Free → all features in A's book · locks back in own book · *Cloud through {book}*
 
   - id: read-only
     title: Read-only shared books

@@ -7,14 +7,14 @@ groups:
     setup: |
       - **dev** flavor · one device with a cloud account, one fresh
       - developer mode: About → tap the version 7×
-      - *Plan simulator*: *Enforce plans* · *Plan* · *Test purchases succeed* · *Forget test purchases* · *Simulate an ended subscription*
+      - *Plan simulator*: *Plan* · *Test purchases succeed* · *Forget test purchases* · *Simulate an ended subscription*
       - after switching a plan → *Reopen the app*
-      - *Enforce plans* on = the app from Nov 8 (paywall, prices) · off = today's free app, *Get Cloud free*
-      - `MONETIZATION=true` build: always on
+      - plans enforced in every build from 2.0.0 · no flag, no *Enforce plans* switch
+      - developer mode on = the app after Nov 8: no *Get Cloud free*
       - before Nov 8 every new account has Cloud → free account = *Simulate an ended subscription* or `admin_set_cloud_entitlement`
     items:
       - id: C-MON-001
-        text: Dev build on both devices · developer mode on · *Enforce plans* on
+        text: Dev build on both devices · developer mode on
       - id: C-MON-002
         text: Dev Supabase has the T-MON-01 server files
       - id: C-MON-003
@@ -82,7 +82,7 @@ groups:
   - id: store
     title: Store sandbox · real products
     setup: |
-      - needs T-MON-03 + T-MON-04 · Android: `./publish.sh internal monetization` · install from the internal track, never a local build
+      - needs T-MON-03 + T-MON-04 · Android: `./publish.sh internal` · install from the internal track, never a local build
       - the phone's Play account = license tester · test cards in the purchase sheet: *always approves* · *always declines* · *slow card*
       - renewals sped up: monthly ~5 min · yearly ~30 min · trial ~3 min · ends after 6 renewals
       - the yearly trial only on a Google account that never had a subscription → test it first

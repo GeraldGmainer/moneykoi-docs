@@ -127,7 +127,7 @@ items:
       - 9 · RevenueCat: iOS app `com.psyren.moneykoi` + ASC's In-App Purchase key (Users and Access › Integrations) · ASC › App Information › App Store Server Notifications V2 → RevenueCat's URL · products → entitlements `pro` / `cloud` + the offering's packages like Android · the public `appl_…` key → `REVENUECAT_API_KEY_IOS` in `.env.prod` only (dev keeps the fake gateway, like Android; `.dev` has no products) · every package of the current offering gets its iOS product, or the paywall never sees it
       - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: **yes, with the rights** — Investments shows third-party prices (metals.dev, ECB, the crypto feed), credited in `price_sources_footer.dart` · App Privacy: `ASO_STORE_LISTING_PLAN.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
       - 11 · decide D-PLAT-8 (iPad) · D-PLAT-7 decided: no France · D-PLAT-6 is built, D-PLAT-5 mostly · T-PLAT-13 (Apple revoke: key, secrets, deploy) before submitting
-      - 12 · `./publish.sh ios testflight monetization` → TestFlight internal testers → device pass: D-PLAT-5's list, Sign in with Apple, a sandbox purchase per product, restore, the universal link (C-PLAT checks)
+      - 12 · `./publish.sh ios testflight` → TestFlight internal testers → device pass: D-PLAT-5's list, Sign in with Apple, a sandbox purchase per product, restore, the universal link (C-PLAT checks)
       - 13 · listing ✓ written 2026-11-01: `ios/fastlane/metadata/` (name, subtitle, keywords, promo text, description, URLs per language, Finance / Productivity, review notes) · screenshots iPhone 6.3" (`iphone63_*`, the slot ASC asks for) + 6.9" (`iphone69_*`, Media Manager) + iPad 13" × de/en/ja in `ios/fastlane/screenshots/<locale>/` · product page header 3840×1646 in `ios/fastlane/header/<locale>/` → version page › *Header and Search Results* › Header, no search-results asset (ASO plan §7.4) · open: read them (D5), then `./publish.sh ios metadata` · drag each screenshot folder and header into ASC (the lanes skip both) · iPad set is moot if D-PLAT-8 drops iPad · first version: if `deliver` refuses *What's New*, enter the text by hand
       - 14 · `./publish.sh ios promote <build>` → version page: add the in-app purchases (the first ones only reach review with a version) · App Review: sign-in required, the review account + T-PLAT-05 text + *the scanner needs the camera* + where the paywall opens · release manually · Submit
     command: |
@@ -135,7 +135,7 @@ items:
       fvm flutter build ipa --flavor prod                      # registers the ids if step 3 was skipped, needs the team signed in to Xcode
       curl -sI https://my.moneykoi.com/.well-known/apple-app-site-association | grep -iE "content-type|location|HTTP/"
       curl -s https://app-site-association.cdn-apple.com/a/v1/my.moneykoi.com | head -c 400   # Apple's CDN copy
-      ./publish.sh ios testflight monetization
+      ./publish.sh ios testflight
   - id: T-PLAT-12
     title: Bring the iOS app to France
     owner: gerald

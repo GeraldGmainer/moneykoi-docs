@@ -46,7 +46,7 @@
     - ref: T-MON-04
       why: RevenueCat project + webhook
     - ref: T-MON-07
-      why: gates + paywall stay flag-off until these pass
+      why: every build from 2.0.0 carries the paywall · these pass first
     - ref: T-MON-05
       why: a lawyer reads the paywall first
     - ref: T-MON-09

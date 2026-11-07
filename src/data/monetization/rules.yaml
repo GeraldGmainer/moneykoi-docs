@@ -389,7 +389,7 @@ items:
       - Free → *Get Pro* in the Pro group, last in the drawer
       - Pro, only sync locked → *Get Cloud* row · Cloud or Cloud book → none
       - until Nov 8: *Get Cloud free* row · Pro group without button
-      - simulator *Enforce plans* = from Nov 8 → no *Get Cloud free*
+      - developer mode = after Nov 8 → no *Get Cloud free*
     source: §3b, §7, §9a · NAVIGATION §8
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart
@@ -397,7 +397,7 @@ items:
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: the early-adopter offer takes the place of Get Pro and Get Cloud
       - file: test/shared/ui/drawer/app_drawer_test.dart
-        name: 'enforced plans simulate the store after the cutover: Free gets Get Pro, not Cloud free'
+        name: 'developer mode simulates the store after the cutover: Free gets Get Pro, not Cloud free'
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: 'Pro: only sync is locked, so Get Cloud'
       - file: test/shared/ui/drawer/app_drawer_test.dart
@@ -558,8 +558,8 @@ items:
     text: |
       - developer mode unlocks in any release
       - simulator *Plan* + test purchases → debug + dev flavor only
-      - enforcing and lapse only **take away**
+      - the lapse only **takes away**
     source: §3b
     tests:
       - file: test/features/monetization/service/plan_simulator_test.dart
-        name: a store build never raises a plan or lets the test store grant, but may still enforce
+        name: a store build never raises a plan or lets the test store grant

@@ -84,17 +84,17 @@ items:
       - Android store: license test on an internal-track build, checklist A5 of `.agents/plans/PLAY_LICENSE_TESTING_PLAN.md`
     command: |
       # needs REVENUECAT_API_KEY_ANDROID in .env.prod, build number above production's
-      ./publish.sh internal monetization
+      ./publish.sh internal
   - id: T-MON-08
     title: The release · Nov 8
     owner: gerald
     waitsFor: [T-MON-05, T-MON-07, T-MON-24]
     detail: |
-      - **Nov 8 2026** · 1.20.0 · Android only (D13)
+      - **Nov 8 2026** · 2.0.0 · Android only (D13)
       - launch price the same day: T-MON-09 + T-MON-21
-      - trade registered (T-MON-11) · build `--dart-define=MONETIZATION=true` · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
+      - trade registered (T-MON-11) · every build carries the paywall, no flag (2026-11-07) · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
       - watch RevenueCat + store consoles: download-to-paid < 1.5 % · annual → lifetime · Y1 retention
-      - no analytics SDK · until then only the simulator shows locks
+      - no analytics SDK
   - id: T-MON-25
     title: Purchase data leaves with the account · server
     owner: gerald

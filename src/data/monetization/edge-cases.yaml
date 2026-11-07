@@ -272,7 +272,7 @@ items:
     risk: high
     tests:
       - file: test/features/monetization/service/plan_simulator_test.dart
-        name: a store build never raises a plan or lets the test store grant, but may still enforce
+        name: a store build never raises a plan or lets the test store grant
   - id: E-MON-52
     group: Paywall & store
     title: Store build sells through the test store

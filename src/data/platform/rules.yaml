@@ -86,7 +86,7 @@ items:
       - `./publish.sh promote` · same AAB to production · release notes + listing · no rebuild
       - = publishing straight to production · Play's review starts at promote
       - bug found → bump build number → `internal` again · a version code is used once
-      - a paywall build promotes only as `promote monetization`
+      - every build carries the paywall (2.0.0) · no flag · the lanes stop without `REVENUECAT_API_KEY_ANDROID` / `_IOS` in `.env.prod`
       - `./publish.sh production` still skips internal · both ask before production
     source: app README.md (Publish), android/fastlane/Fastfile
   - id: R-PLAT-01
