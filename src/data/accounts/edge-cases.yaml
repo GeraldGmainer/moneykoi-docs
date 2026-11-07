@@ -332,7 +332,7 @@ items:
       - *Cancel* gives the page back at once · a sign-in that still lands afterwards signs in
       - no session after 20 s → *Signing in took too long. Check the connection and try again.*
       - before: ~2 s of the unchanged Welcome back page while the session was fetched
-      - all five Apple entries: Welcome, Welcome back, *Back up & sync*, join a book, profile *Sign in*
+      - every Apple entry: Welcome, Welcome back, *Cloud found*, *Back up & sync*, join a book, profile *Sign in*
     status: fixed
     risk: medium
     related: [C-ACC-085]
