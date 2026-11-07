@@ -112,3 +112,22 @@ items:
       - ~57 strings say *this phone* / *diesem Handy* / *このスマホ* · reads wrong on a tablet
       - a) *this device* everywhere · b) pick the word by screen size · c) keep
       - source: Android emulator round, AND-25-4
+
+  - id: D-PLAT-13
+    question: CI on pull requests too?
+    status: open
+    answer: |
+      - today: CI runs on a push to `main` / `develop` only · a PR gets **no** CI
+      - yes → add `pull_request` to `.github/workflows/dart.yml` · doubles the runs on a PR branch
+      - source: codebase hygiene plan §2 (deleted 2026-11-07)
+
+  - id: D-PLAT-14
+    question: Four theme calls that move pixels?
+    status: open
+    answer: |
+      - drawer button glyph: pure white on every tab · candidate: `primaryTextColor` off Home
+      - loading overlay dims 0.5 · candidate: `scrim` (0.33) or `scrimStrong` (0.4)
+      - remote-loading bar: Material blue · candidate: accent → secondary accent
+      - inline error inset 30 next to 40 · candidate: unify on 40 or 32
+      - plus, no decision: `ScrollableNavBar` is unused → AI deletes it with `tabLabelIdle`
+      - source: codebase hygiene plan §7 (deleted 2026-11-07)
