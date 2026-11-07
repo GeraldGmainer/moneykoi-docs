@@ -32,8 +32,10 @@ items:
   - id: T-INV-06
     title: FX cutover to the ECB · ≈ 2026-10-19
     owner: gerald
+    status: done
     detail: |
-      - when most users run ≥ 1.15.0 (admin Versions)
+      - **done** · seen 2026-11-07: every live exchange rate is `ecb`
+      - open: purge metals.dev + Frankfurter if not done yet (dry run first)
       - last query: 29 live `ecb` rows · rollback `rollback_fx.sql`
       - next morning: log shows `coingecko` only
       - after 3 days: purge metals.dev + Frankfurter (dry run) · unset secrets
@@ -75,26 +77,22 @@ items:
       - ✅ off days kept as they are (D-INV-10)
       - next: **cancel the trial on 2026-11-21** (kept 14 days · reminder set) · nothing left needs Startup
   - id: T-INV-13
-    title: Release, then crypto cutover
+    title: Crypto cutover, then the release
     owner: gerald
-    waitsFor: [T-INV-12]
     detail: |
-      - app + web release with *Data from Coinranking*
-      - then `cutover_crypto.sql` + hand-invoke `fetch-prices` coinranking
-      - undo: `rollback_crypto.sql` + hand-invoke `refresh-quotes`
+      - ✅ cutover 2026-11-07 · 23 coins on Coinranking · 23 latest quotes · full history served
+      - cut over before the release (Gerald's call) · older builds show no crypto credit until they update
+      - open: **app + web release** with *Data from Coinranking*
+      - no undo any more: Binance + Bitfinex purged, CoinGecko key gone
   - id: T-INV-14
     title: Purge the old crypto sources
     owner: gerald
-    waitsFor: [T-INV-13]
     detail: |
-      - only when Gerald says so · ≥ 3 days after the cutover
-      - `coingecko` · `binance` · `bitfinex` · dry run first each · refused while CoinGecko wrote in the last 3 days
-      - then unset `COINGECKO_API_KEY` · stop `refresh-quotes-daily` once FX is on the ECB too (it also writes the metals.dev rates)
+      - ✅ 2026-11-07: `binance` + `bitfinex` purged · `refresh-quotes-daily` stopped · `COINGECKO_API_KEY` unset
+      - open: `coingecko` (1,357 history rows) · **from 2026-11-10 06:10 UTC** (3 days after its last write)
       - then the AI removes the CoinGecko code (runbook §13.4)
     command: |
-      select public.price_purge_provider('coingecko');
       select public.price_purge_provider('coingecko', true);
-      select cron.unschedule('refresh-quotes-daily');
   - id: T-INV-09
     title: Data-source credits in the legal pages
     owner: gerald
