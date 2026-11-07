@@ -403,3 +403,17 @@ items:
     then: the answer stays 8 s with an *OK* · before 2026-11-06 the two-sentence instruction vanished after 3 s (AND-23-1)
     status: fixed
     risk: low
+  - id: E-MON-63
+    group: Store
+    title: Stale restore answer
+    when: "*Restore purchases* finds nothing · a second restore or a purchase follows within 8 s"
+    then: |
+      - was: *nothing found* stayed next to *Pro restored*, or followed the purchase back to the screen before
+      - fixed 2026-11-07: a new restore or purchase clears the last answer
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a second restore replaces the first answer instead of queueing behind it
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: a purchase after a restore that found nothing leaves that answer behind
