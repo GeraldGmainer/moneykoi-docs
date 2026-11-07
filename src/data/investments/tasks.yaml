@@ -71,9 +71,8 @@ items:
       - ✅ trial started 2026-11-07 · **ends 2026-12-07, $49 charged that day** → cancel by 2026-12-06
       - ✅ full backfill 2026-11-07: 23 coins · 64,635 days · 1,206 requests · BTC from 2010-07-17
       - ✅ POL with MATIC's history 2019-05-27 → 2023-10-29 · ✅ `compare_crypto.sql` checked
-      - next: **cancel the trial now** (nothing left needs Startup) · run `outliers_crypto.sql` → send it
-    command: |
-      -- scripts/price-cutover/outliers_crypto.sql in the prod SQL editor
+      - ✅ off days kept as they are (D-INV-10)
+      - next: **cancel the trial now** · nothing left needs Startup
   - id: T-INV-13
     title: Release, then crypto cutover
     owner: gerald

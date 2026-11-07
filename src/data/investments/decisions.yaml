@@ -50,3 +50,11 @@ items:
       - Coinranking on its published terms · 3 emails unanswered
       - history once via Startup trial · daily on Free · $0 ongoing
       - CoinGecko out · Demo not commercial · Basic is monthly
+  - id: D-INV-10
+    question: Coinranking's off days in old crypto history — filter them?
+    status: decided
+    date: 2026-11-07
+    answer: |
+      - no · Coinranking's values served as they are
+      - mean gap to exchange closes < 0.45 % · recent closes match
+      - known off days: XLM 2018-09-21 −15 % · XMR 2018-02-03 −10 % · USDC 2020-08-20 at 1.08
