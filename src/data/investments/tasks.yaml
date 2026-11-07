@@ -69,11 +69,10 @@ items:
     waitsFor: [T-INV-11]
     detail: |
       - ✅ trial started 2026-11-07 · **ends 2026-12-07, $49 charged that day** → cancel by 2026-12-06
-      - ✅ BTC dry run 2026-11-07: 5,950 days since 2010-07-17, 967 requests
-      - next: full run → `compare_crypto.sql` → send the output → **cancel the trial** the same day
+      - ✅ full backfill 2026-11-07: 23 coins · 64,635 days · 1,206 requests · BTC from 2010-07-17
+      - next: POL again with MATIC's history (2019 → 2023) → deviation query of `compare_crypto.sql` → send it → **cancel the trial**
     command: |
-      deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking --only=BTC --dry-run
-      deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking
+      deno run --allow-net --allow-env scripts/backfill-prices/main.ts --provider=coinranking --only=POL
   - id: T-INV-13
     title: Release, then crypto cutover
     owner: gerald
