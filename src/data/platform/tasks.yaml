@@ -184,3 +184,19 @@ items:
       # after the device check: the token row of the test account (never prints the token)
       #   select client_id, apple_sub, length(refresh_token), updated_at from public.apple_sign_in_token order by updated_at desc limit 5;
     related: [T-PLAT-10, T-PLAT-11, R-ACC-68, C-PLAT-018]
+  - id: T-PLAT-14
+    title: Move dev work to local Supabase
+    owner: gerald
+    detail: |
+      - 1 · local stack up + pending migrations + key (commands) · Docker Desktop on
+      - 2 · app: *run LOCAL* on the emulator → check C-PLAT-025 · web: `npm run dev` → *gerald* button
+      - 3 · Dashboard → `money-koi-dev` → Settings → General → *Pause project*
+      - dev steps still open in T-PLAT-03 · T-PLAT-13 · T-MON-01 · T-PRIV-06 → skip while dev is paused
+      - full guide: `moneykoi-supabase/README.md` › Local development
+    command: |
+      cd /Users/gerald/Projects/moneykoi/moneykoi-supabase
+      supabase start
+      supabase migration up
+      ./scripts/local-env.sh
+      # stocksport-wettbewerb uses the same ports: `supabase stop` in one before `supabase start` in the other
+    related: [D-PLAT-15, R-PLAT-35, C-PLAT-025]

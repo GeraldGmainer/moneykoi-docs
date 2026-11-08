@@ -131,3 +131,14 @@ items:
       - inline error inset 30 next to 40 · candidate: unify on 40 or 32
       - plus, no decision: `ScrollableNavBar` is unused → AI deletes it with `tabLabelIdle`
       - source: codebase hygiene plan §7 (deleted 2026-11-07)
+
+  - id: D-PLAT-15
+    question: Where does dev work run?
+    status: decided
+    date: 2026-11-08
+    answer: |
+      - **local Supabase** in Docker · `money-koi-dev` paused
+      - frees the 2nd free Supabase slot · for the Stocksport prod project
+      - app keeps `.env.dev` · *run DEV* works again once dev is unpaused
+      - CI: `develop` no longer deploys to dev · nothing sits between local and prod
+    related: [R-PLAT-35, T-PLAT-14]

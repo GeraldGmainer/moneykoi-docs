@@ -111,6 +111,19 @@ items:
     tests:
       - file: test/ios/ios_project_test.dart
     related: [T-PLAT-10, C-PLAT-006]
+  - id: R-PLAT-35
+    group: Builds
+    title: Which backend a run uses
+    text: |
+      - *run LOCAL* → **local** Supabase · dev flavor + `.env.local`
+      - *run DEV* → dev project · paused since 2026-11-08
+      - *run PROD* → prod
+      - Debug › Device › *Env file* names it
+    source: 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target
+    tests:
+      - file: test/app/env/env_config_test.dart
+        name: a defined ENV wins over the flavor
+    related: [D-PLAT-15, T-PLAT-14, C-PLAT-025]
   - id: R-PLAT-04
     group: Releases
     title: "iOS publishing: testflight → promote"
