@@ -87,8 +87,10 @@ items:
       - = publishing straight to production · Play's review starts at promote
       - bug found → bump build number → `internal` again · a version code is used once
       - every build carries the paywall (2.0.0) · no flag · the lanes stop without `REVENUECAT_API_KEY_ANDROID` / `_IOS` in `.env.prod`
-      - `./publish.sh production` still skips internal · both ask before production
-    source: app README.md (Publish), android/fastlane/Fastfile
+      - `./publish.sh production` still skips internal
+      - `./publish.sh metadata` · the listing alone, no build · stops if a language fails the listing check
+      - `promote`, `production` and `metadata` ask first
+    source: app README.md (Publish), android/fastlane/Fastfile, publish.sh
   - id: R-PLAT-01
     group: Builds
     title: iOS 15.5 minimum
