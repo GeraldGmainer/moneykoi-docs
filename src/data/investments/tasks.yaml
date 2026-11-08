@@ -1,4 +1,4 @@
-# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-11-07).
+# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-11-08).
 items:
   - id: T-INV-02
     title: Purge World Bank
@@ -35,7 +35,7 @@ items:
     status: done
     detail: |
       - **done** · seen 2026-11-07: every live exchange rate is `ecb`
-      - open: purge metals.dev + Frankfurter if not done yet (dry run first)
+      - open: purge metals.dev + Frankfurter (dry run first) · **from 2026-11-10 06:10 UTC** (metals.dev's last write was 2026-11-07, `refresh-quotes-daily` stopped)
       - last query: 29 live `ecb` rows · rollback `rollback_fx.sql`
       - next morning: log shows `coingecko` only
       - after 3 days: purge metals.dev + Frankfurter (dry run) · unset secrets
@@ -93,6 +93,16 @@ items:
       - then the AI removes the CoinGecko code (runbook §13.4)
     command: |
       select public.price_purge_provider('coingecko', true);
+  - id: T-INV-15
+    title: Admin Prices page timeout fix
+    owner: gerald
+    detail: |
+      - 2026-11-08: the Prices page's asset table hit the 8 s statement timeout · the price crons were fine
+      - `20261108200000_admin_asset_prices_fast.sql` · same output · coverage ≈ 2.7× faster, per-asset gaps + chart ≈ 20× faster
+      - land it on `main` (CI pushes it) · additive, so the prod SQL editor works too
+      - done when the timing below is well under 8,000 ms and `/dashboard/prices` loads
+    command: |
+      explain (analyze, buffers) select * from public.admin_asset_price_coverage();
   - id: T-INV-09
     title: Data-source credits in the legal pages
     owner: gerald
