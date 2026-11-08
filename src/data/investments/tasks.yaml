@@ -100,6 +100,7 @@ items:
       - 2026-11-08: the Prices page's asset table hit the 8 s statement timeout · the price crons were fine
       - `20261108200000_admin_asset_prices_fast.sql` · same output · coverage ≈ 2.7× faster, per-asset gaps + chart ≈ 20× faster
       - land it on `main` (CI pushes it) · additive, so the prod SQL editor works too
+      - admin: deploy `moneykoi-admin` → *Pipeline runs* table (goldapi · coinranking · ecb runs) replaces the legacy *Feed runs*; late providers flagged
       - done when the timing below is well under 8,000 ms and `/dashboard/prices` loads
     command: |
       explain (analyze, buffers) select * from public.admin_asset_price_coverage();
