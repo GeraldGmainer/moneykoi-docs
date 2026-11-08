@@ -67,3 +67,10 @@ groups:
         text: "Month breakdown: income · outflows · net · per day → net = tile"
       - id: C-FC-005
         text: "Copy: *How the line is built* · *Covered by the whole-book budget* · *Everyday estimate*"
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-FC-031
+        text: "Forecast → planned payments in three groups: *Upcoming* · *To check* · *Booked or skipped* · book one → it moves to the last group · German + Japanese headers fit"
+      - id: C-FC-032
+        text: "Committed + everyday + buffer above the balance → *Of the balance*: everyday keeps its figure, a short row names the gap, no *Free 0.00* · three 39.99 bills booked by hand, then a 39.99 rule → the monthly line counts it once · overdue planned payment → *Book it now* → form on the planned date · Home forecast card *In 1 month* → caption *End of November*"

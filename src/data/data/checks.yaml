@@ -97,3 +97,8 @@ groups:
         text: "Web book export → 14 CSVs + README · member: no export"
       - id: C-DATA-052
         text: Same bank CSV, web vs app → same columns, accounts, categories, duplicates
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-DATA-054
+        text: "CSV import of a bank file with a payee column → each row gets its own category guess · payee mapped · account and currency hints on their steps · export → currency column reads `EUR` · a description `=1+1` exports as `'=1+1`, amounts like `-12.5` stay numbers · import that file → `=1+1` again · same on the web"

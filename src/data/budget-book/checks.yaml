@@ -17,3 +17,8 @@ groups:
         text: "Small_Phone, new book → Book tab: header *October 2026* · smaller koi · *Add transaction* above the bar, no stripe"
       - id: C-BB-007
         text: Empty book → *Add transaction* + *Scan a receipt* on every tab · scan lands on the scanner
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-BB-008
+        text: "Account with a starting balance this month → Budget Book *Income* leaves it out, the balance still holds it · *Summary* → *Export* → PDF opens · week view on another month → week picker opens on that month"

@@ -77,3 +77,8 @@ groups:
         text: 'Bitcoin detail → *1Y* chart → no gap or jump at the cutover day'
       - id: C-INV-063
         text: 'Web: Bitcoin position → footer *Data from Coinranking* · de *Daten von Coinranking*'
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-INV-064
+        text: "Position bought today → no *Today* change until a fresh quote · BTC `0.00012345` keeps its decimals · gold in oz → four decimals · unit price in the book's money format"

@@ -54,3 +54,10 @@ groups:
         text: Android 13+ → *Themed icons* on → the Money Koi icon turns one-color like the others (koi silhouette, eye and smile cut out) · prod and dev flavor
       - id: C-PLAT-020
         text: "Android 13 and 15+, gesture nav and 3-button nav → the bottom bar, *Save* bar, sheets and keypad reach the screen edge behind the nav bar · no black strip, no darker band behind the 3 buttons · *Welcome* has no status-bar band · tabs, buttons and keys clear of it (R-PLAT-32)"
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-PLAT-023
+        text: "Android tablet, 10\" → rotate → the app turns with it · Budget Book, Stats and Goals tabs in the centred column · list **+** buttons beside the column"
+      - id: C-PLAT-024
+        text: "TalkBack / VoiceOver → the drawer button, the **+**, a Home card's ⋮ menu, the date steppers ‹ › and every keypad key are read by name, not just *button*"

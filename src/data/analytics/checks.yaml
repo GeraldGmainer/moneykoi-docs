@@ -23,3 +23,10 @@ groups:
         text: English app + money format `1.234,56 €` → insights, chart legends, Home budget card, quick-booking chip follow the format · quick-booking date follows the date format
       - id: C-ANL-010
         text: Salary booked on the 1st of last month and this month · on the 2nd → *This month* income shows no change (not +1000 %) · *Last month* compares the whole month before · month start 25 → periods run 25 → 24 on both sides
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-ANL-011
+        text: "*This month* on the 5th → *Avg. per day* = spend ÷ 5 · *Avg. expense* leaves the salary out · *Same period last year* = Nov 1–5 last year · October counts 31 days over the clock change · Home *Cash flow* card: this month against last month to the same day"
+      - id: C-ANL-012
+        text: "Web, same book as the app → *This month* on the 2nd compares with the 1st–2nd of last month, *Last month* with the whole month before · forecast: a salary booked on the 1st is not added on top of the month's income estimate · figures match the app"

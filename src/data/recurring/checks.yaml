@@ -15,3 +15,8 @@ groups:
         text: No-account phone, rule 2 months back → past bookings at once · resume → no doubles
       - id: C-REC-006
         text: "Member: rules read-only · no add · no *Make recurring*"
+  - id: release-2-0-0
+    title: 2.0.0 · 2026-11-08
+    items:
+      - id: C-REC-007
+        text: "Book a rent → *Make recurring* → prefilled rule → *Save* is on without a change → saved · back without saving → asks before discarding"

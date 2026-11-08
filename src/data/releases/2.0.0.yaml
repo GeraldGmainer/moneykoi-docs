@@ -1,0 +1,182 @@
+# App 2.0.0 and web 1.8.0, prepared 2026-11-08 from the release notes
+# (moneykoi-supabase 20261108120000_release_notes_app_2_0_0_web_1_8_0.sql). One item per note,
+# app first (1–12), web after (13–18). 2.0.0 is the paywall release (the roadmap's 1.20.0) and
+# the first iOS build; one app row covers Android and iOS.
+# Every test step is a check in its area (ticks are shared with the area's *What to test* page).
+version: 2.0.0
+status: testing
+source: From the release notes (2026-11-08) · app 2.0.0 items 1–12, web 1.8.0 items 13–18 · ticks shared with each area's *What to test*
+items:
+  - n: 1
+    title: Pro and Cloud on sale
+    area: monetization
+    what: |
+      - paywall in every build · no flag
+      - Free locks: Stats, Forecast, Investments, Shopping, Home editor, exports, *Create backup*
+      - Cloud bought → active at once · refunded Pro locks next day
+      - *Launch price until {date}* on lifetime + upgrade · needs T-MON-09 on the day
+    checks: [C-MON-010, C-MON-019, C-MON-060, C-MON-075, C-MON-076, C-MON-034]
+    related: [T-MON-07, T-MON-09]
+    screens: [paywall_page.dart, drawer Pro group, Settings plan row]
+  - n: 2
+    title: Early adopters keep Cloud
+    area: monetization
+    what: |
+      - account created before Nov 8 00:00 Vienna → *Early adopter: Cloud for life*
+      - account after → *Get Cloud* with prices, no free claim
+      - needs `20261023120000_early_adopter_cutover_nov_8` on prod first (T-MON-01)
+    checks: [C-MON-019, C-ACC-074]
+    related: [T-MON-01]
+    screens: [Settings plan row, claim intro]
+  - n: 3
+    title: iPhone and iPad
+    area: platform
+    what: |
+      - *Continue with Apple* · *Signing in…* + *Cancel* · revoke on delete
+      - Face ID / Touch ID labels · iOS switches and time wheel
+      - bars to the bottom edge · iPad column, rail in landscape
+      - camera permission states on the scanner
+    checks: [C-PLAT-018, C-ACC-085, C-PLAT-019, C-PLAT-021, C-PLAT-022, C-PRIV-007, C-NTF-006, C-SCN-010]
+    related: [T-PLAT-13]
+    screens: [welcome_page.dart, app lock settings, scanner permission card]
+  - n: 4
+    title: Restore behind one button
+    area: accounts
+    what: |
+      - *Welcome back* → *Restore* → *Restore a backup* / *Restore Pro purchase*
+      - opened `.moneykoi` file → the same page
+    checks: [C-ACC-083, C-MON-052, C-MON-070, C-DATA-019]
+    screens: [welcome_back_page.dart, welcome_restore_page.dart]
+  - n: 5
+    title: Forecast · planned payments grouped, shortfall
+    area: forecast
+    what: |
+      - *Upcoming* · *To check* · *Booked or skipped*
+      - shortfall named · no *Free 0.00*
+      - bill booked by hand, then a rule → counted once
+      - *Book it now* → planned date · Home card *End of {month}*
+    checks: [C-FC-031, C-FC-032]
+    related: [E-FC-26, E-FC-27, E-FC-28, D-FC-16]
+    screens: [forecast_page.dart, planned payments list, Home forecast card]
+  - n: 6
+    title: Stats · to date, days so far, avg expense
+    area: analytics
+    what: |
+      - running period vs the previous one to the same day · last year too
+      - *Avg. per day* ÷ days so far · *Avg. expense* without income
+      - Home *Cash flow* by calendar period
+    checks: [C-ANL-010, C-ANL-011]
+    related: [D-ANL-1, D-ANL-2, D-ANL-3, D-ANL-4, E-ANL-07]
+    screens: [analytics_page.dart, Home cash flow card]
+  - n: 7
+    title: Quick booking · usual account, every language
+    area: bookings
+    what: |
+      - category's usual account wins over the default
+      - seeded names of every locale match
+      - electricity + fuel guessed · sheet rides the keyboard up
+    checks: [C-BKG-010, C-BKG-011]
+    related: [E-BKG-43]
+    screens: [quick_booking_sheet.dart]
+  - n: 8
+    title: CSV · category per row, payee, formula guard
+    area: data
+    what: |
+      - a guess per row · payee column · account + currency hints
+      - export: ISO currency · formula-looking text kept as text
+    checks: [C-DATA-009, C-DATA-054]
+    screens: [import wizard, export review]
+  - n: 9
+    title: Budget Book · opening balance, summary PDF
+    area: budget-book
+    what: |
+      - opening balance never income
+      - *Summary* → PDF
+      - week picker on the shown month
+    checks: [C-BB-004, C-BB-008]
+    related: [E-BB-10]
+    screens: [budget_book_page.dart, summary tab]
+  - n: 10
+    title: Investments · Coinranking, today, decimals
+    area: investments
+    what: |
+      - crypto *Data from Coinranking* · About › *Price data sources*
+      - *Today* only on a fresh quote · crypto decimals · oz to 4
+    checks: [C-INV-060, C-INV-061, C-INV-062, C-INV-064, C-SET-015]
+    related: [E-INV-16]
+    screens: [position detail footer, about page]
+  - n: 11
+    title: Android and tablets · edge to edge, rotate, widgets
+    area: platform
+    what: |
+      - Android 10–14 behind the system bars like 15
+      - tablets rotate · tabs in the column
+      - widgets: true percent past 999 · label follows the wallpaper · balance widget grows · tap → Home
+    checks: [C-PLAT-020, C-PLAT-023, C-HOM-003, C-HOM-020]
+    related: [R-PLAT-32, E-PLAT-08, E-PLAT-09, D-HOM-10]
+    screens: [widgets, tablet layout]
+  - n: 12
+    title: Fixes · PIN off, prefilled rule, re-tap, screen readers
+    area: platform
+    what: |
+      - PIN lock can be turned off
+      - rule from *Make recurring* saves untouched
+      - goal projection waits for a history
+      - re-tap the open tab → top
+      - screen-reader labels · terms under *Privacy*
+    checks: [C-PRIV-008, C-REC-007, C-PLAT-024]
+    related: [E-PRIV-48, E-REC-10, E-BUD-44]
+    screens: [app lock settings, recurring_booking_save_page.dart, privacy_settings_page.dart]
+  - n: 13
+    title: "Web · forecast calendar"
+    area: forecast
+    what: |
+      - *Calendar* → a year · month columns of day rows
+      - booked up to today, forecast after · day panel / sheet
+      - *Compact* → week grid
+    checks: [C-FC-029, C-FC-030]
+    related: [D-FC-17]
+    screens: [forecast-calendar.tsx, calendar-grid.ts]
+  - n: 14
+    title: "Web · phone tab bar, tablet rail"
+    area: home
+    what: |
+      - phone: Dashboard · Bookings · + · Analytics · Goals · drawer for the rest
+      - tablet: icon rail opens over the page
+      - wide screen: more columns
+    checks: [C-HOM-016]
+    screens: [layout.tsx, sidebar, tab bar]
+  - n: 15
+    title: "Web · bookings toolbar, day headers, long press"
+    area: bookings
+    what: |
+      - day headers with the day's net
+      - one toolbar: view · *Period* · ⋮ Tags / Import / Export
+      - phone: *Filters* sheet · long press selects · edit = the add form
+    checks: [C-BKG-030, C-BKG-043]
+    screens: [bookings-table.tsx, bookings-filter-bar.tsx, period-picker.tsx]
+  - n: 16
+    title: "Web · calendar comparison, income once"
+    area: analytics
+    what: |
+      - previous calendar period · running one to date
+      - forecast: booked income inside the month's estimate
+    checks: [C-ANL-012]
+    related: [D-ANL-1, E-FC-23]
+    screens: [analytics/lib/period.ts, forecast-engine.ts]
+  - n: 17
+    title: "Web · Coinranking credit"
+    area: investments
+    what: Bitcoin position → footer *Data from Coinranking*
+    checks: [C-INV-063]
+    screens: [price-sources-footer.tsx]
+  - n: 18
+    title: "Web · fixes: sign-in panel, member photos, CSV guard"
+    area: privacy
+    what: |
+      - sign-in from 1024 px: brand panel beside the card
+      - co-member photo only from our `avatars` bucket · needs `20261102210000_profile_avatar_url_own_bucket`
+      - CSV text cell starting `=` `+` `-` `@` → kept as text
+    checks: [C-PRIV-040, C-DATA-054]
+    related: [T-PRIV-06, E-PRIV-41]
+    screens: [login/page.tsx, avatar-url.ts, csv.ts]
