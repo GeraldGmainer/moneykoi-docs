@@ -1,4 +1,4 @@
-# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-11-08).
+# Source: moneykoi-supabase INVESTMENT_PRICES_AI_CONTEXT.md §13 (the runbook, updated 2026-11-09).
 items:
   - id: T-INV-02
     title: Purge World Bank
@@ -104,6 +104,17 @@ items:
       - done when the timing below is well under 8,000 ms and `/dashboard/prices` loads
     command: |
       explain (analyze, buffers) select * from public.admin_asset_price_coverage();
+  - id: T-INV-16
+    title: ECB cron twice a weekday
+    owner: gerald
+    detail: |
+      - ECB publishes one rate a day · the app uses one rate per currency per day
+      - 2026-11-09: 15:00 stored the day, the next 8 half-hourly runs re-read it unchanged
+      - new: 15:30 UTC + the 20:00 final (unchanged) · a late day lands at 20:00 at worst
+      - done when the check shows `30 15 * * 1-5` + `0 20 * * 1-5`, both active · next weekday 2 `ecb` runs
+    command: |
+      select cron.alter_job((select jobid from cron.job where jobname = 'fetch-prices-ecb'), schedule := '30 15 * * 1-5');
+      select jobname, schedule, active from cron.job where jobname like 'fetch-prices-ecb%';
   - id: T-INV-09
     title: Data-source credits in the legal pages
     owner: gerald
