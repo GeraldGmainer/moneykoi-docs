@@ -237,6 +237,29 @@ items:
       - file: test/features/settings/ui/pages/changelog_page_test.dart
         name: on iOS the update row opens the App Store page
     related: [E-PLAT-03, T-PLAT-10]
+  - id: R-SET-47
+    group: Support
+    title: The store's review card, after a saved booking
+    text: |
+      - a booking saved through the form, back on the main page → Google's / Apple's own review card, about 1.5 s later
+      - **no question before it**: Google and Apple forbid *Do you like the app?* and any route around the card · unhappy users have *Feedback* in Settings
+      - only after real use: ≥ 20 bookings on ≥ 7 different days · never in the first 14 days after setup on this phone · never in the demo
+      - never in a launch that showed an update, the paywall or the usage-statistics ask · at most once per launch
+      - at most every 120 days, 3 times per install · the store may still show nothing (its own quota) · the app never learns whether a review was left
+      - Settings → Support → *Rate Money Koi* → the store page (Android, iOS) · never the card: a button that may open nothing is what Google forbids
+    source: STORE_REVIEW_AI_CONTEXT.md, ASO_STORE_LISTING_PLAN.md §11
+    tests:
+      - file: test/features/store_review/review_prompt_test.dart
+        name: asks once the app is in use, and records the ask
+      - file: test/features/store_review/review_prompt_test.dart
+        name: "too few bookings, or all on too few days: no ask"
+      - file: test/features/store_review/review_prompt_test.dart
+        name: waits the interval between asks, and stops after the cap
+      - file: test/features/store_review/review_prompt_test.dart
+        name: an update, the paywall or another ask in this launch keeps it quiet
+      - file: test/features/store_review/review_prompt_test.dart
+        name: never inside the new-user window
+    related: [R-SET-43, C-SET-016]
   - id: R-SET-46
     group: Settings
     title: Privacy & legal links terms, privacy policy and imprint

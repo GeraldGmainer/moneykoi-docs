@@ -184,6 +184,22 @@ items:
       # after the device check: the token row of the test account (never prints the token)
       #   select client_id, apple_sub, length(refresh_token), updated_at from public.apple_sign_in_token order by updated_at desc limit 5;
     related: [T-PLAT-10, T-PLAT-11, R-ACC-68, C-PLAT-018]
+  - id: T-PLAT-15
+    title: Turn on the admin's Play Store page
+    owner: gerald
+    detail: |
+      - built 2026-11-09: admin → *Play Store* · store visitors, acquisitions, visitor → install (all, DE + AT), installs, countries, traffic sources, **Play search terms**, rating, star split, reviews with a reply link, crash + ANR rate · read live from Google, nothing stored, read-only
+      - 1 · Google Cloud, project `money-koi` → IAM & Admin → Service accounts → *Create* `play-reports`, no roles → Keys → *Add key* → JSON · its own key, never the fastlane one (that one can publish)
+      - 2 · same project → enable **Google Play Developer Reporting API** (off on 2026-11-09: the vitals call answered 403) and **Cloud Storage JSON API**
+      - 3 · Play Console → Users and permissions → *Invite new users* → the account's email → **View app information (read-only)**, **Global** · nothing else · the bucket can take up to 24 h to answer
+      - 4 · Play Console → Download reports → Statistics → *Copy Cloud Storage URI* → `pubsite_prod_rev_…`
+      - 5 · `moneykoi-admin/.env.local` + Vercel › Settings › Environment Variables (Production, key **Sensitive**): `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON` (base64, command), `GOOGLE_PLAY_REPORTS_BUCKET` · redeploy
+      - 6 · open *Play Store* · crash/ANR say *too few users* until Google has enough · the first crash figure: check it against Play Console › Android vitals (the API's unit is read as a fraction)
+      - setup in full: `moneykoi-admin/README.md` › *Google Play*
+    command: |
+      base64 -i ~/Downloads/money-koi-play-reports.json | pbcopy   # paste as GOOGLE_PLAY_SERVICE_ACCOUNT_JSON (.env.local + Vercel › Settings › Environment Variables)
+      rm ~/Downloads/money-koi-play-reports.json                   # the key lives only in the env afterwards
+    related: [T-PLAT-07]
   - id: T-PLAT-14
     title: Move dev work to local Supabase
     owner: gerald

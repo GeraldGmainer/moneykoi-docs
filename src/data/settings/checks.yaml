@@ -33,3 +33,5 @@ groups:
         text: Profile → *Language* row → Deutsch → page and drawer German at once · Settings → *Language* shows Deutsch · restart keeps it · back to English the same way · phone, tablet and landscape
       - id: C-SET-015
         text: About → *Price data sources* → metal, crypto, exchange-rate rows · each opens its provider's site · German + Japanese titles
+      - id: C-SET-016
+        text: "Review card (R-SET-47): internal-track build, not a debug one · an account with ≥ 20 bookings on ≥ 7 days signed in on a phone that did not run setup · save a booking → Home, then Play's card · a second save in the same launch → nothing · Settings → *Rate Money Koi* → the Play page · iOS: TestFlight shows no card, only the row"
