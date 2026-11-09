@@ -210,3 +210,26 @@ items:
         repo: web
         name: keeps room for a later sell that must still fit
     related: [E-INV-10]
+  - id: R-INV-42
+    group: What you hold
+    title: A deleted position goes to the trash
+    text: |
+      - delete → *Position deleted* with *Undo* · then *Settings › Trash* for 30 days
+      - comes back with its transactions and recorded values · as new rows
+      - Undo also brings the cash bookings back, linked again
+      - from the trash: the cash bookings stay separate trash rows, restorable one by one
+      - a transaction deleted on its own earlier stays deleted
+      - built 2026-11-09 (D-INV-8) · web: delete is still final
+    source: TRASH §4a · INVESTMENTS §3.1
+    tests:
+      - file: test/features/investment/use_cases/restore_investment_use_case_test.dart
+        name: undo brings the position, its transactions, price points and cash bookings back as new rows
+      - file: test/features/investment/use_cases/restore_investment_use_case_test.dart
+        name: from the trash the transactions come back without their cash bookings, grouped by the delete time
+      - file: test/features/investment/ui/pages/investment_detail_page_test.dart
+        name: delete asks first, then removes the position and leaves with true
+      - file: test/features/trash/trash_cubit_test.dart
+        name: a position entry is restored as a position, with its delete time (D-INV-8)
+      - file: test/features/trash/sweep_trash_use_case_test.dart
+        name: positions are swept and emptied too, then the child rows no trashed position needs (D-INV-8)
+    related: [D-INV-8]

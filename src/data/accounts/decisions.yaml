@@ -6,7 +6,7 @@ items:
     date: 2026-10-10
     answer: |
       - keep every book, hidden under its account
-      - only *Delete account* · *Delete all data* · uninstall · *Remove from this phone* delete
+      - only *Delete account* · *Delete all data* · uninstall · *Remove from this device* delete
   - id: D-ACC-4
     question: No-sync bank account delete removes its rules · block it?
     status: decided

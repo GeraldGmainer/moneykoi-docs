@@ -90,7 +90,7 @@ items:
     steps:
       - "*Back up & sync* → sign in"
       - "*This account doesn't have a Cloud plan yet*"
-      - "*See plans* · *Keep it on this phone* · *Try again*"
+      - "*See plans* · *Keep it on this device* · *Try again*"
     result: Cloud after buying, or local under the account
     status: waiting
     tests:

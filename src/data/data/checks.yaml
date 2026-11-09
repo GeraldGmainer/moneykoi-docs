@@ -15,6 +15,8 @@ groups:
         text: Passphrase < 8 → error · mismatch → error · "Käse-Brot1" → opens in 7-Zip/Keka
       - id: C-DATA-020
         text: "iOS: passphrase offers a strong password → saved to Keychain"
+      - id: C-DATA-055
+        text: "iPhone: *Save to device* → the save picker opens as a card below the status bar, *Cancel* clear of the clock · *Cancel* → back on the page, nothing saved (IOS-10-2)"
 
   - id: restore
     title: Restore
@@ -85,6 +87,8 @@ groups:
         text: "Simulator *Free* → book card ⋮ *Export data* · *Download all data* · *Export bookings* · Budget Book ⋮ *Export* · PDF → each opens the paywall at *Data export*"
       - id: C-DATA-028
         text: "Simulator *Free* → CSV import and *Restore from a backup* still work, no lock"
+      - id: C-DATA-056
+        text: "Budget Book › Export › *CSV* → menu *Save to device* first, *Share* second → save → system dialog → *File saved* · *PDF* → *Share* → share sheet · same in Analytics › Export and a category's activity · Android + iPhone (D-DATA-18)"
 
   - id: web
     title: On the web

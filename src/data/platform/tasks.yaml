@@ -1,5 +1,5 @@
 # Source: Gerald's Trello board (1.19.0), 2026-10-17; _RELEASE_SCHEDULE.md §7 (the site); D-PRIV-7;
-# ASO_STORE_LISTING_PLAN.md §5.4, §10, §15a (the Play listing), 2026-10-24.
+# STORE_LISTING_AI_CONTEXT.md §5.4, §10, §15a (the Play listing), 2026-10-24.
 items:
   - id: T-PLAT-01
     title: Rewrite the marketing site
@@ -60,19 +60,65 @@ items:
     prompt: |
       New migration in moneykoi-supabase (never edit an applied one): in public.changelog, replace "MoneyKoi" with "Money Koi" inside the notes JSONB of every row and language (the 16 occurrences come from 20261015140000_changelog_app_and_web.sql, which rebuilt the table); URLs and file names stay; the rows must still pass internal.changelog_notes_valid. Hand Gerald the push command.
   - id: T-PLAT-06
-    title: Ship the Supabase publishable key before the launch build
+    title: "JWT Phase A: deploy the new Supabase API keys (dev, then prod)"
     owner: gerald
     detail: |
-      - every build up to 1.17.2 still runs on the legacy `anon` key · `.env.dev` / `.env.prod` have no `SUPABASE_PUBLISHABLE_KEY`
-      - the legacy keys stop working at JWT Phase D (Dec 20 at the earliest · Supabase retires them by the end of 2026) · a build without the new key then fails at launch until updated
-      - in `.env.prod` before 1.19.0 is built → every launch install is safe · later → launch installs break at Phase D too
-      - the app no longer falls back to `SUPABASE_ANON_KEY` (removed 2026-10-24) · a build without the new key reaches no server at all: no sign-in, no sync
-      - order and the rest of the deploy (secrets, Vault, cron, web + admin env): `JWT_SIGNING_KEYS_PLAN.md` §3.6, dev first, prod ≥ 48 h later
-      - check after: Sentry tag `supabase_key` reads `publishable` on the new build
+      - **done:** `SUPABASE_PUBLISHABLE_KEY` in the app's `.env.dev` + `.env.prod` · the code is built in app, web, admin and supabase since 2026-09-28
+      - **left, per project — dev, then ≥ 48 h, then prod:** secret key, cron secret, Vault, cron headers, merge, cron re-schedule, web + admin + scripts env, the checks
+      - order matters: the cron's `x-cron-secret` goes on **before** the merge, or every hourly run answers `401` until step 6
+      - keep the legacy `anon` / `service_role` keys **enabled** until Phase D (T-PLAT-21)
+      - Dashboard › Edge Functions: delete a hosted `send-family-invite` if one is listed (no caller check, breaks at the rotation)
+      - check after (dev): sign in, sync, realtime, receipt upload · delete a receipt → object gone from the bucket · `net._http_response` shows `200` for both crons · invite a new address and an existing user · no `Authorization` on `send-book-invite` → `401` · wrong `x-cron-secret` → `401` · web login + QR sign-in · Sentry tag `supabase_key` = `publishable`
+      - why and what was built: `moneykoi-supabase/API_KEYS_AI_CONTEXT.md` §3, §6.1
     command: |
-      # Dashboard → Project Settings → API Keys → create the publishable + secret key (dev, then prod)
-      # moneykoi-app/.env.dev and .env.prod (SUPABASE_ANON_KEY is no longer read; delete the line):
-      SUPABASE_PUBLISHABLE_KEY=sb_publishable_…
+      # 1. Dashboard → Project Settings → API Keys → create the secret key, name `default` (password manager: shown once)
+      # 2. cron secret for materialize-recurring
+      supabase secrets set MATERIALIZE_CRON_SECRET=<random value> --project-ref <ref>
+      # 3. SQL editor, beside the existing Vault secrets
+      select vault.create_secret('sb_secret_…', 'secret_key');
+      select vault.create_secret('<value from 2>', 'materialize_cron_secret');
+      # 4. BEFORE merging: add to the existing materialize-recurring-hourly job's headers, keep its Authorization
+      #    'x-cron-secret', (select decrypted_secret from vault.decrypted_secrets where name = 'materialize_cron_secret')
+      # 5. merge moneykoi-supabase → CI runs db push (20260928210000_secret_key_headers.sql) + functions deploy
+      # 6. re-run the cron.schedule blocks in supabase/functions/materialize-recurring/README.md and the price README (apikey + x-cron-secret, no Authorization)
+      select status_code, content from net._http_response order by created desc limit 10;
+      # 7. env values, then redeploy each
+      #    moneykoi-web .env + host:        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_…
+      #    moneykoi-admin .env.local + Vercel (prod only): NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=… · SUPABASE_SECRET_KEY=sb_secret_… (mark Sensitive)
+      #    moneykoi-supabase .moneykoi-dev.env / .moneykoi-prod.env: SUPABASE_SECRET_KEY=sb_secret_…
+  - id: T-PLAT-20
+    title: "JWT Phase B: rotate the signing key to ES256 (dev, then prod)"
+    owner: gerald
+    waitsFor: [T-PLAT-06]
+    detail: |
+      - only once T-PLAT-06 is green on that project · every edge function on `verify_jwt = false` (all are since the Phase A merge)
+      - reversible until revoke: rotating changes what signs **new** tokens · old tokens and the legacy `anon` key keep working · nobody is signed out
+      - each state change on the JWT Keys page takes ~5 min · budget 20 min for the JWKS to reach the app
+      - 1 Authentication › Sessions → note the access-token expiry (the hosted value, not `config.toml`'s 3600) · Phase D's wait depends on it
+      - 2 Project Settings › JWT Keys → *Migrate JWT secret*
+      - 3 a **standby** key exists · not ES256 → delete it, create one with **ECC (P-256)**
+      - 4 the JWKS serves the standby key (command) · then **stop** — a safe resting state, can sit for a week
+      - 5 *Rotate keys* → standby becomes current, legacy *previously used*
+      - 6 sign out and in on a dev build → decode the access token: `alg: ES256` + a `kid`
+      - 7 check: an old session still works · realtime delivers · a second-book member sees only that book · receipt upload + photo view · every function `200` · QR sign-in approved from the app
+      - rollback: *Rotate* again so the legacy key is current
+      - **never revoke here** — that is T-PLAT-21
+      - details: `moneykoi-supabase/API_KEYS_AI_CONTEXT.md` §4, §6.2
+    command: |
+      curl -s https://<ref>.supabase.co/auth/v1/.well-known/jwks.json | jq '.keys[] | {kid, alg}'
+      # dev ref dpmemqshhdnanywcvsod · prod ref cwheprirreyscppmbybp
+  - id: T-PLAT-21
+    title: "JWT Phase D: disable the legacy API keys, then revoke the legacy secret"
+    owner: gerald
+    waitsFor: [T-PLAT-20, D-PLAT-16]
+    detail: |
+      - **irreversible** · every install built without the publishable key fails at launch (1.17.2 and older at least) · the admin dashboard too if its Vercel env still has only `service_role`
+      - Dec 20 at the earliest · Supabase retires the legacy keys by the end of 2026
+      - no Dashboard counter of legacy-key requests exists · read Play Console › version distribution, Sentry's `supabase_key` tag per release, then walk every caller: both crons, the receipt reaper, the backfill script, admin Vercel env, every `.env`
+      - 1 API Keys → **disable** the legacy `anon` + `service_role` → watch a day (Sentry, `net._http_response`, admin dashboard)
+      - 2 then JWT Keys → **revoke** the legacy secret · no sooner than access-token expiry + 15 min after T-PLAT-20's rotate
+      - 3 after: remove `SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY` from web, admin and scripts env · the reaper's Vault `service_role_key`
+      - details: `moneykoi-supabase/API_KEYS_AI_CONTEXT.md` §0, §7
   - id: T-PLAT-07
     title: Put the Play listing live
     owner: gerald
@@ -87,7 +133,7 @@ items:
       - screenshots re-shot 2026-11-01: Home first, scanner third, Pro / Cloud badges on Stats and shared books — the App Store order · 7" and 10" tablet sets added (6 frames each, `sevenInchScreenshots/`, `tenInchScreenshots/`)
       - D-PLAT-3 clears the upload check · Data safety + deletion URL first (T-PRIV-03, site S-04)
       - then `fastlane production` ships listing + build · from then on the repo **is** the listing
-      - steps in order: `ASO_STORE_LISTING_PLAN.md` §15a
+      - steps in order: `STORE_LISTING_AI_CONTEXT.md` §15a
     command: |
       cd android
       fastlane supply init --metadata_path /tmp/play-listing \
@@ -100,7 +146,7 @@ items:
     owner: ai
     status: done
     detail: |
-      - **done 2026-11-02** · one paragraph per language above *What Money Koi does not do* · `ASO_STORE_LISTING_PLAN.md` §5.4
+      - **done 2026-11-02** · one paragraph per language above *What Money Koi does not do* · `STORE_LISTING_AI_CONTEXT.md` §5.4
       - re-checked against `feature.dart`: text unchanged · `ja` names no scanner
       - ⚠️ in the repo now, live only with 1.20.0 · a `fastlane production` / `promote` / `metadata` before it (a 1.19.x hotfix, T-PLAT-07's upload) puts the plans up before Pro is on sale
   - id: T-PLAT-09
@@ -128,7 +174,7 @@ items:
       - 7 · Supabase Auth › Providers › Apple, dev + prod: enabled, *Client IDs* = `com.psyren.moneykoi,com.psyren.moneykoi.dev` (native sign-in needs no secret) · branch push `moneykoi-supabase` with `20261029120000_profile_name_after_apple_sign_in.sql` · redirect URLs: nothing, `com.psyren.moneykoi://login-callback/` is already allowed
       - 8 · ✓ products + group 2026-10-31, open: sandbox testers, the price re-check (US / Montenegro / the launch line) · in-app purchases + the *Money Koi Cloud* subscription group per `MONETIZATION_AI_CONTEXT.md` §11 step 2 (ids, prices, family sharing Pro only, trial, en/de/ja, a paywall screenshot per product) · sandbox testers
       - 9 · RevenueCat: iOS app `com.psyren.moneykoi` + ASC's In-App Purchase key (Users and Access › Integrations) · ASC › App Information › App Store Server Notifications V2 → RevenueCat's URL · products → entitlements `pro` / `cloud` + the offering's packages like Android · the public `appl_…` key → `REVENUECAT_API_KEY_IOS` in `.env.prod` only (dev keeps the fake gateway, like Android; `.dev` has no products) · every package of the current offering gets its iOS product, or the paywall never sees it
-      - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: **yes, with the rights** — Investments shows third-party prices (metals.dev, ECB, the crypto feed), credited in `price_sources_footer.dart` · App Privacy: `ASO_STORE_LISTING_PLAN.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
+      - 10 · App Information: Finance / Productivity · age rating questionnaire · content rights: **yes, with the rights** — Investments shows third-party prices (metals.dev, ECB, the crypto feed), credited in `price_sources_footer.dart` · App Privacy: `STORE_LISTING_AI_CONTEXT.md` §8.1 in Apple's taxonomy, tracking none (T-PRIV-03), privacy URL `https://www.moneykoi.com/legal/privacy` · Pricing: free, every country except China mainland (needs an ICP filing) and France (D-PLAT-7)
       - 11 · decide D-PLAT-8 (iPad) · D-PLAT-7 decided: no France · D-PLAT-6 is built, D-PLAT-5 mostly · T-PLAT-13 (Apple revoke: key, secrets, deploy) before submitting
       - 12 · `./publish.sh ios testflight` → TestFlight internal testers → device pass: D-PLAT-5's list, Sign in with Apple, a sandbox purchase per product, restore, the universal link (C-PLAT checks)
       - 13 · listing ✓ written 2026-11-01: `ios/fastlane/metadata/` (name, subtitle, keywords, promo text, description, URLs per language, Finance / Productivity, review notes) · screenshots iPhone 6.3" (`iphone63_*`, the slot ASC asks for) + 6.9" (`iphone69_*`, Media Manager) + iPad 13" × de/en/ja in `ios/fastlane/screenshots/<locale>/` · product page header 3840×1646 in `ios/fastlane/header/<locale>/` → version page › *Header and Search Results* › Header, no search-results asset (ASO plan §7.4) · open: read them (D5), then `./publish.sh ios metadata` · drag each screenshot folder and header into ASC (the lanes skip both) · iPad set is moot if D-PLAT-8 drops iPad · first version: if `deliver` refuses *What's New*, enter the text by hand

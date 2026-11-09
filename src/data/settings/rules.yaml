@@ -210,7 +210,7 @@ items:
       - About → *Price data sources* · app only · every plan
       - one row per price kind on the phone → its provider's site
       - follows the synced prices · a server cutover needs no release
-      - no prices downloaded → *No prices on this phone yet*
+      - no prices downloaded → *No prices on this device yet*
     source: INVESTMENTS §7d, supabase INVESTMENT_PRICES §13.3
     related: [R-INV-20]
     tests:
@@ -251,7 +251,7 @@ items:
       - never in a launch that showed an update, the paywall or the usage-statistics ask · at most once per launch
       - at most every 120 days, 3 times per install · the store may still show nothing (its own quota) · the app never learns whether a review was left
       - Settings → Support → *Rate Money Koi* → the store page (Android, iOS) · never the card: a button that may open nothing is what Google forbids
-    source: STORE_REVIEW_AI_CONTEXT.md, ASO_STORE_LISTING_PLAN.md §11
+    source: STORE_REVIEW_AI_CONTEXT.md, STORE_LISTING_AI_CONTEXT.md §11
     tests:
       - file: test/features/store_review/review_prompt_test.dart
         name: asks once the app is in use, and records the ask

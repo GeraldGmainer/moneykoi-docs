@@ -15,3 +15,5 @@ groups:
         text: "Tap each banner, app closed and app open: *Over budget* → that budget's page · bill reminder (one rule) → the rule, (several) → *Upcoming* · goal nudge → the goal · loan → the loan · forecast alert → Forecast · backup reminder → Backup & restore · a form with changes open → it stays, the page opens on top (list taps do nothing then) · budget deleted before the tap → Budgets"
       - id: C-NTF-006
         text: "iPhone → Notifications → *Bill reminders* → *Time* → the wheel in a sheet, 12/24 h like the rest of the app · *Done* saves · Android keeps the dial"
+      - id: C-NTF-007
+        text: "Bill reminder delivered → Settings › change the reminder time → no second reminder for the same payment · the next occurrence still comes at the new time (AND-9-2)"

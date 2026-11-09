@@ -250,3 +250,16 @@ items:
     then: the booking form opens on the planned date, changeable · before 2026-11-06 it opened on today (AND-14-7)
     status: fixed
     risk: low
+  - id: E-FC-29
+    group: Planned payments
+    title: Overdue planned payment left the line
+    when: a planned payment past its date, not booked, skipped or moved · the forecast
+    then: |
+      - fixed 2026-11-09 · it counts as due today until answered · a suggested booking is not counted again
+      - before: it dropped out while waiting in *Planned payments to check* · the line read that much too high (AND-14-6)
+      - web: still drops it
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: a past date with a suggested booking is not counted again

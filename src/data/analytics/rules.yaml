@@ -7,8 +7,12 @@ items:
       - **Pro** · 43 cards in 4 tabs
       - **Overview** · **Spending** · **Habits** · **Accounts**
       - Home = how am I now · Analytics = compare periods
-    source: ANALYTICS §1, §8
-    related: [R-MON-11]
+      - the period: tap the label → every range with its dates · no ‹ › since 2026-11-09 (D-ANL-5)
+    source: ANALYTICS §1, §8, §9
+    tests:
+      - file: test/features/analytics/ui/widgets/analytics_period_selector_test.dart
+        name: portrait shows the range as one chip, without chevrons (D-ANL-5)
+    related: [R-MON-11, D-ANL-5]
   - id: R-ANL-02
     group: Numbers
     title: "Flows: categorized money only"
@@ -158,8 +162,12 @@ items:
     title: "Period report: CSV · PDF · image"
     text: |
       - app bar · web: Export menu
+      - CSV / PDF → *Save to device* first · *Share* second (D-DATA-18, 2026-11-09) · the image is shared
       - CSV headers frozen · PDF localized · app shares an image
     source: ANALYTICS §12
+    tests:
+      - file: test/features/analytics/ui/sheets/analytics_export_sheet_test.dart
+        name: csv and pdf export the report with the book name, the chosen format and save or share (D-DATA-18)
   - id: R-ANL-30
     group: Web
     title: "`/balance` · web only"

@@ -337,7 +337,7 @@ items:
     group: CSV import
     title: Import into a book without sync
     when: CSV import finishes in a book that does not sync
-    then: "*The bookings are on this phone now* · no upload sentence"
+    then: "*The bookings are on this device now* · no upload sentence"
     status: fixed
     risk: low
     tests:

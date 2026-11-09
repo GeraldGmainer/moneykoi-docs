@@ -102,7 +102,7 @@ items:
       - claim continues
     result: Cloud
     note: |
-      - or *Keep it on this phone* → book stays local
+      - or *Keep it on this device* → book stays local
       - account with a book already → that one *Locked* until Cloud
     checks: [C-ACC-014]
     related: [J-ACC-11, J-ACC-13]

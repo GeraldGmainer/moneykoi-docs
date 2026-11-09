@@ -99,7 +99,7 @@ items:
       - **done 2026-11-08** · 2.0.0 live on Play with the paywall
       - **Nov 8 2026** · 2.0.0 · Android only (D13)
       - launch price the same day: T-MON-09 + T-MON-21
-      - trade registered (T-MON-11) · every build carries the paywall, no flag (2026-11-07) · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
+      - trade registered (T-MON-11) · every build carries the paywall, no flag (2026-11-07) · launch date set · listings per `STORE_LISTING_AI_CONTEXT.md`
       - watch RevenueCat + store consoles: download-to-paid < 1.5 % · annual → lifetime · Y1 retention
       - no analytics SDK
   - id: T-MON-25

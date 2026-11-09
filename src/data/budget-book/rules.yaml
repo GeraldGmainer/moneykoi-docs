@@ -109,10 +109,13 @@ items:
     title: Export what you see
     text: |
       - ⋮ → *Export*: summary (CSV/PDF) · period · all matches
+      - CSV / PDF → *Save to device* (save dialog) first · *Share* second (D-DATA-18, 2026-11-09)
       - **Pro** · Free: lock
       - file = screen · no network needed
     source: BUDGET_BOOK §14
     tests:
+      - file: test/shared/export/export_sheet_test.dart
+        name: a format offers saving first, then sharing, and runs the one picked (D-DATA-18)
       - file: test/features/budget_book/ui/screens/budget_book_tab_test.dart
         name: export on a plan without filtered export wears the lock and opens the paywall
       - file: test/features/budget_book/ui/widgets/budget_book_export_run_test.dart

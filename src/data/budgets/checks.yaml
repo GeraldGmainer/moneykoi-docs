@@ -7,6 +7,8 @@ groups:
         text: "New budget: no red error · Groceries → suggestion · 2nd monthly Groceries refused, weekly ok"
       - id: C-BUD-021
         text: Whole 2000 + Food 600 + Dining 200 → nested, assigned/unassigned · transfer → whole book only
+      - id: C-BUD-041
+        text: "*New budget* → *Spending cap* → the keypad opens empty, never a stray *$9.00* · twice in a row, real taps (unconfirmed Android report)"
   - id: goals
     title: Goals
     items:

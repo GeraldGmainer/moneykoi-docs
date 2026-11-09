@@ -44,7 +44,7 @@ items:
     group: Identity & the phone
     title: Only four things delete data
     text: |
-      - *Delete account* · *Delete all data* · uninstall · *Remove from this phone*
+      - *Delete account* · *Delete all data* · uninstall · *Remove from this device*
       - **never**: logout, lost session, account switch, lapse, membership change
     source: MONETIZATION §9b rule 1
     tests:

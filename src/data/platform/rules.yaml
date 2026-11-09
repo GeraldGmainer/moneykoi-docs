@@ -54,7 +54,7 @@ items:
     text: |
       - decided 2026-10-17 · all three languages read like Japanese UI
       - en: no *you / your* · de: no *du / dein*, never *Sie* · ja: no あなた
-      - name the thing or the outcome: *Current plan*, *this phone*, *Delete this booking?*
+      - name the thing or the outcome: *Current plan*, *this device*, *Delete this booking?*
       - buttons stay verbs: *Save goal* / *Ziel speichern* / *保存する*
       - app copy converted 2026-10-21 · ≈590 keys + 105 German imperatives
       - web copy converted 2026-10-28 · 401 en · 506 de · 27 ja keys · app wording reused where the message is the same

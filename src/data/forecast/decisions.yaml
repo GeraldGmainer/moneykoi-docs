@@ -74,7 +74,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) count it as due today** until booked, skipped or moved · build: 2.0.1
+      - **a) count it as due today** until booked, skipped or moved · built 2026-11-09 · web not yet
       - before: a planned payment past its date drops out of the line while it waits in *Planned payments to check* · *Already spoken for $0.00* · the forecast reads 260 $ too high
       - a) count it as due today until it is booked, skipped or moved
       - b) keep it out, and say on the card what the review holds

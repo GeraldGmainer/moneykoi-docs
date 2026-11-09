@@ -112,7 +112,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) dated history moves the opening** · the import result says so · build: 2.0.1
+      - **a) dated history moves the opening** · the import result says so · built 2026-11-09 · R-DATA-41 · web not yet
       - before: the setup's starting balance is *today's* balance · the import adds every older row on top · Bank 2,000 → 8,606.38 €
       - a) dated history moves the opening: the account still ends at the typed balance today
       - b) keep adding · the import's *Accounts* step warns and offers to clear the starting balance
@@ -123,7 +123,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) save dialog first, *Share* second** · build: 2.0.1
+      - **a) save dialog first, *Share* second** · built 2026-11-09 · both platforms, Budget Book, category activity and Analytics · R-BB-20, R-ANL-20
       - before: Budget Book › Export → the share sheet only · Settings' CSV export opens the save dialog
       - a) save dialog first, *Share* as the second button (as backup)
       - b) keep share only for the Budget Book export

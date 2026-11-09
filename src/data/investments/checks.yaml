@@ -9,6 +9,8 @@ groups:
         text: Daily prices + "as of" · custom asset · ignored manual price flagged · 1M…All charts
       - id: C-INV-032
         text: "Member: all visible, nothing editable"
+      - id: C-INV-065
+        text: "Prod: a Gold position → detail → *1M* → a market line, no *Drawn from the trade prices…* note · fresh install, prices not yet downloaded → trade-price steps with the note, then the market line (IOS-19-3)"
   - id: currencies
     title: Currency positions
     setup: Needs `currency_assets.sql` pushed + `is_active` on (T-INV-01)

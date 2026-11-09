@@ -25,7 +25,7 @@ items:
     detail: |
       - Play Data safety: "App interactions", optional, not shared
       - Apple label: "Product interaction", not linked, not tracking
-      - full Play answer sheet, every data type: `ASO_STORE_LISTING_PLAN.md` §8.1
+      - full Play answer sheet, every data type: `STORE_LISTING_AI_CONTEXT.md` §8.1
       - financial data + receipt photos: **Cloud only** · without an account the server gets none
   - id: T-PRIV-04
     title: Sentry DPA

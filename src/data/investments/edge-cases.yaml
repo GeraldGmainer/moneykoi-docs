@@ -153,3 +153,15 @@ items:
     then: no *Today* change until the position has a day to compare · before 2026-11-06 the row and detail showed *Today −1.3 %* (AND-19-1)
     status: fixed
     risk: medium
+  - id: E-INV-17
+    group: Valuation
+    title: Empty detail chart without price history
+    when: a catalog position whose asset has no price series on the phone yet · no recorded values
+    then: the chart draws the value at the trade prices, as steps · *Drawn from the trade prices until market prices arrive* · period row and XIRR stay hidden · before 2026-11-09 an empty frame *No price history yet* (IOS-19-3)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/widgets/investment_history_section_test.dart
+        name: without market prices or recorded values the chart draws from the trade prices (IOS-19-3)
+      - file: test/features/investment/domain/services/trade_price_points_test.dart
+        name: a buy and a sell price the holding unit in the book currency, fee left out

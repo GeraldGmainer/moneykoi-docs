@@ -51,6 +51,11 @@ items:
     group: Reminders
     title: Reminder sent again after a time change
     when: a bill reminder already arrived today · the reminder time is moved later
-    then: the same *due tomorrow* arrives a second time at the new time (AND-9-2)
-    status: known-issue
+    then: |
+      - fixed 2026-11-09 · one reminder per occurrence · a reminder not sent yet moves to the new time
+      - before: the same *due tomorrow* arrived a second time at the new time (AND-9-2)
+    status: fixed
     risk: low
+    tests:
+      - file: test/features/recurring_booking/use_cases/schedule_recurring_due_use_case_test.dart
+        name: one already sent is not sent again after the time changes

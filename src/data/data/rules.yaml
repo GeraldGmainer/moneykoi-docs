@@ -327,9 +327,12 @@ items:
     text: |
       - deleted for good, not trashed
       - items used since are kept
+      - a moved starting balance goes back as it was (R-DATA-41)
       - leave the page → undo gone
     source: BOOKING_IMPORT §11
     tests:
+      - file: test/features/data_import/use_cases/undo_import_use_case_test.dart
+        name: a moved starting balance is put back as it was (D-DATA-17)
       - file: test/features/data_import/use_cases/undo_import_use_case_test.dart
         name: everything the import wrote is deleted, bookings and their labels first
       - file: test/features/data_import/use_cases/undo_import_use_case_test.dart
@@ -339,6 +342,23 @@ items:
     title: Insert or skip, never update
     text: never changes existing bookings · never rebuilds rules
     source: BOOKING_IMPORT §13
+  - id: R-DATA-41
+    group: CSV import
+    title: Older history moves a starting balance
+    text: |
+      - an account's starting balance is its balance on its date · rows from the file up to that day are already in it
+      - those rows move the starting balance back to the earliest of them · today's balance stays the typed one
+      - rows after that day add as usual · an account without a starting balance just adds them
+      - result screen: *Bank: initial balance moved to 9/3/26, so today's balance stays the same*
+      - before 2026-11-09: added on top · Bank 2,000 → 8,606.38 € (AND-11-1)
+      - web: still adds on top
+    source: BOOKING_IMPORT §10
+    related: [D-DATA-17, R-DATA-38]
+    tests:
+      - file: test/features/data_import/domain/import_opening_shift_test.dart
+        name: rows up to the opening day move it back to the earliest one; today still ends at the typed balance
+      - file: test/features/data_import/use_cases/commit_import_use_case_test.dart
+        name: history up to a starting balance moves the opening, written last and kept on the receipt (D-DATA-17)
 
   # Booking export
   - id: R-DATA-50

@@ -49,7 +49,8 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **step in time** · Nov → Oct → Sep · week → previous week · like the Budget Book · build: 2.0.1
+      - **arrows removed** · decided again 2026-11-09, built the same day · the label opens the range sheet · R-ANL-01
+      - was: step in time · Nov → Oct → Sep · week → previous week · like the Budget Book · build: 2.0.1
       - moved from 2.0.0: the period needs an offset across ~40 cards + labels · not a 2-day change
       - before: ‹ › walk the preset list · *This month* → *This week*
       - source: Android emulator round, AND-15-5

@@ -42,7 +42,7 @@ groups:
       - id: C-ACC-013
         text: Start as A, interrupt, sign in as B → mismatch → sign out → local book still there
       - id: C-ACC-014
-        text: Free account → *See plans* → buy → claim continues · *Keep it on this phone* → local · old book *Locked*
+        text: Free account → *See plans* → buy → claim continues · *Keep it on this device* → local · old book *Locked*
       - id: C-ACC-015
         text: Kept book without Cloud → grant → relaunch → upload starts
       - id: C-ACC-016

@@ -23,6 +23,8 @@ groups:
         text: English app + money format `1.234,56 €` → insights, chart legends, Home budget card, quick-booking chip follow the format · quick-booking date follows the date format
       - id: C-ANL-010
         text: Salary booked on the 1st of last month and this month · on the 2nd → *This month* income shows no change (not +1000 %) · *Last month* compares the whole month before · month start 25 → periods run 25 → 24 on both sides
+      - id: C-ANL-013
+        text: "iPhone: Analytics → switch to *Spending* → the first drag scrolls the tab, not only the second (IOS-15-4)"
   - id: release-2-0-0
     title: 2.0.0 · 2026-11-08
     items:

@@ -209,7 +209,7 @@ items:
     when: owner stopped paying or deleted the account · free member
     then: |
       - *Export* → paywall · no free copy out
-      - *Remove from this phone* → the rows are gone
+      - *Remove from this device* → the rows are gone
       - accepted with every export Pro (legal note 6)
     status: known-issue
     risk: medium

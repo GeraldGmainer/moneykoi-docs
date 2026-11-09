@@ -1,5 +1,5 @@
 # Source: moneykoi-app CLAUDE.md (UX copy · product name), 2026-10-21;
-# ASO_STORE_LISTING_PLAN.md §15 (D6, D9), 2026-10-24.
+# STORE_LISTING_AI_CONTEXT.md §15 (D6, D9), 2026-10-24.
 items:
   - id: D-PLAT-1
     question: Where does the name read *Money Koi*?
@@ -108,10 +108,20 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) *this device* everywhere** · *diesem Gerät* · *この端末* · build: 2.0.1
+      - **a) *this device* everywhere** · *diesem Gerät* · *この端末* · built 2026-11-09 · app copy and the docs' quoted copy
       - ~57 strings say *this phone* / *diesem Handy* / *このスマホ* · reads wrong on a tablet
       - a) *this device* everywhere · b) pick the word by screen size · c) keep
       - source: Android emulator round, AND-25-4
+
+  - id: D-PLAT-16
+    question: "JWT Phase D: what share of installs must carry the new key first?"
+    status: open
+    date: 2026-11-09
+    answer: |
+      - Phase D cuts off every install built without the publishable key (T-PLAT-21)
+      - suggested: ≥ 98 % of active installs on a build with the key (Play Console) and Sentry `supabase_key` = `legacy` only on those stragglers for 7 days
+      - and if it is not met on Dec 20: Supabase's end-of-2026 cutoff wins anyway · or Phase D waits until the last week of December
+      - source: JWT plan §8.1 (plan deleted 2026-11-09 · `moneykoi-supabase/API_KEYS_AI_CONTEXT.md`)
 
   - id: D-PLAT-13
     question: CI on pull requests too?

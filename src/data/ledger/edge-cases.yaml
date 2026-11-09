@@ -112,3 +112,13 @@ items:
     tests:
       - file: test/features/category/ui/pages/category_list_page_test.dart
         name: the expense tab lists expense parents
+  - id: E-LED-16
+    group: Categories
+    title: A starter sub-category named like the book
+    when: setup › preview · *Personal & Shopping › Book* · in an app whose noun is *book*
+    then: renamed *Books & Media* · *Bücher & Medien* · *本・メディア* · not *Books*, which Education already uses (names are unique per type) · AND-1-6
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/onboarding/domain/service/category_generation_service_test.dart
+        name: no two starter categories of one type share a name, in any locale

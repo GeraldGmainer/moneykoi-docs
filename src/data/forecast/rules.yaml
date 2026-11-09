@@ -200,9 +200,13 @@ items:
     text: |
       - booking ±5 days + 15 % of a planned one → suggested match
       - planned ≤ 30 days back, no match → *did it happen?*
+      - until answered it counts as due **today** on the line · older than 30 days → off the line
       - **never** automatic · no transfers, corrections, rule bookings
     source: FORECAST §5.6
+    related: [D-FC-15, E-FC-29]
     tests:
+      - file: test/features/forecast/forecast_engine_test.dart
+        name: an unanswered past date counts as due today, not on its own day
       - file: test/features/forecast/domain/item_matcher_test.dart
         name: rule-generated bookings, transfers and balance corrections are never candidates
       - file: test/features/forecast/domain/item_matcher_test.dart

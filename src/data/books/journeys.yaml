@@ -198,7 +198,7 @@ items:
     steps:
       - "*{book} was deleted*"
       - Settings → *Books that stopped syncing*
-      - "*Export* · *Remove from this phone*"
+      - "*Export* · *Remove from this device*"
     result: read-only copy until removed
     tests:
       - file: test/features/cloud_tier/lapse_review_page_test.dart

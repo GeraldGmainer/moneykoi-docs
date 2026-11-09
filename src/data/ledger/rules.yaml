@@ -185,9 +185,17 @@ items:
     title: Balances never summed on screen
     text: |
       - server: triggers · phone: starting balance + synced bookings
-      - same number · a level, no sign
-    source: CLAUDE.md, ACCOUNTS_WEB §7
+      - a level, no sign
+      - phone: today's balance · a future-dated booking counts from its day on, the forecast shows it before (D-LED-6) · Home, Accounts, Analytics, the net-worth line
+      - web + the server's trigger balance still count it now · same number only while nothing is future-dated
+    source: CLAUDE.md, ACCOUNTS_WEB §7, ANALYTICS §2
     tests:
+      - file: test/features/booking/service/booking_query_service_test.dart
+        name: getBalanceForAccount closes at the end of today unless a day is given (D-LED-6)
+      - file: test/features/analytics/domain/service/analytics_query_service_test.dart
+        name: getSignedBalanceForAccount adds the incoming transfer leg, both closed at the end of today (D-LED-6)
+      - file: test/features/analytics/use_cases/get_net_worth_series_use_case_test.dart
+        name: "a future-dated booking draws no point: the line ends today (D-LED-6)"
       - file: test/features/account/use_cases/get_balances_by_account_use_case_test.dart
         name: adds each account opening balance to its booking net
       - file: test/features/account/ui/pages/account_list_page_test.dart
