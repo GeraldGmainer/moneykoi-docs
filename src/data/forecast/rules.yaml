@@ -280,7 +280,7 @@ items:
     group: Web
     title: "Web: the forecast as a year calendar"
     text: |
-      - web-first · the app has no forecast calendar yet (D-FC-17)
+      - web-first · the app has it since 2026-11-09 (R-FC-51) · the app has no *Compact* grid and no hover
       - *Overview · Calendar* in the header switches the whole page · kept in the link (`?view=calendar`, `&year=` for another year)
       - one calendar year · ‹ › from the book's first year to as far as the forecast reaches (up to 24 months)
       - laid out like Gerald's forecast spreadsheet: each month a column, one row a day · day · **movement** · **balance at the day's end** · what it was (the biggest item, *+2* for more) · zebra rows
@@ -318,3 +318,30 @@ items:
       - file: src/app/(main)/forecast/page.test.tsx
         repo: web
         name: hovering a day shows what moved it and where it closes
+  - id: R-FC-51
+    group: Reading
+    title: The forecast as a year calendar (app)
+    text: |
+      - the web's calendar (R-FC-42) on a phone · Forecast → calendar icon in the top bar · its own page, back returns to the forecast
+      - one month under the other · each a header (month, *Closing balance*, ⚠ when a day dips below zero) over a row per day
+      - a row: day (today in an orange circle) · **movement** · **balance at the day's end** · what it was (the biggest item, *+2* for more) · zebra rows · whole amounts, no currency sign
+      - **up to today what was booked** (walked back from today's balance) · **from today the forecast** (up to 24 months, the overview's toggles) · booked rows dimmer
+      - the movement column holds bookings and dated payments only · the everyday estimate and budgets only slope the balance
+      - red balance below zero · amber below the buffer · ⚠ on the year's lowest forecast day
+      - ‹ year › from the book's first year to as far as the forecast reaches · opens on this year with today in the middle of the screen
+      - **tap a day → sheet**: opening, closing, *Booked* (opens the booking), *Expected* (tap → the payment's own sheet: *Skip* with Undo · *Change* · *Edit*), what is spread over the day, net change · *Plan something on this day* from today on (not for read-only members)
+      - accounts left out of the forecast are left out of the past too · a transfer to or from one moves the balance · a balance correction counts on its day
+      - days before the book's history and past the horizon: drawn, no balance, no tap
+    source: FORECAST §9a
+    related: [R-FC-42, D-FC-17]
+    tests:
+      - file: test/features/forecast/ui/calendar_year_test.dart
+        name: "no step anywhere: every day opens where the day before closed"
+      - file: test/features/forecast/ui/calendar_year_test.dart
+        name: "walks back from the live total: each day closes where the next one opened, future rows ignored"
+      - file: test/features/forecast/ui/calendar_year_test.dart
+        name: "the movement column: a booked day is all it moved, a forecast day only its dated events"
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: "tapping today opens its sheet: booked, expected, and plan on this day"
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: an expected row closes the day sheet and opens the event sheet

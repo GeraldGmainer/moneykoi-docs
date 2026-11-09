@@ -61,3 +61,15 @@ items:
       - an expected payment → *Skip* / *Change* · or *Plan something on this day*
     result: how much is there on any day, and why
     checks: [C-FC-029, C-FC-030]
+  - id: J-FC-08
+    group: Reading
+    title: Looks at the year, day by day (app)
+    from: Forecast → calendar icon (top bar)
+    steps:
+      - "the year, one month under the other · each day a row: movement, end balance, what · booked up to today, forecast after · today in the middle"
+      - ‹ › last year or next year
+      - "a day → sheet: opening → closing, what was booked, what is expected, what is spread over it"
+      - "an expected payment → its sheet: *Skip this one* (Undo) / *Change this one* · or *Plan something on this day*"
+    result: how much is there on any day, and why · back returns to the forecast
+    checks: [C-FC-033, C-FC-034]
+    related: [R-FC-51]

@@ -54,6 +54,13 @@ groups:
         text: "Web: *Calendar* → the whole page is the year, month columns of day rows · today marked · past balances = the Balance page's line on those days · rent day: −rent in the movement, balance drops by it, *Rent* beside · quiet days blank in the movement, balance still sloping · ‹ › to last year and next · reload keeps it · *Compact* → week grid, reload keeps it · hover a day → items, amounts, closing"
       - id: C-FC-030
         text: "Web on a phone (and 320 px): one month column, no sideways scroll · tap a day → sheet with booked + expected · *Skip this one* works · a 6-figure balance fits whole · a 9-figure one reads *123M*, whole in the sheet"
+  - id: app-calendar
+    title: App calendar · 2026-11-09
+    items:
+      - id: C-FC-033
+        text: "Forecast → calendar icon → this year, today's row (orange circle) mid-screen · rows above dimmer · rent day: −rent in the movement, balance drops by it, *Rent* beside · quiet days blank in the movement, balance still sloping · past balances = the web calendar's on the same days · ‹ last year, › next year, arrows stop at the ends · 360 dp phone: no figure cut, no sideways scroll"
+      - id: C-FC-034
+        text: "Tap a past day → *Booked* rows open the booking, no *Plan* · tap a future rent day → *Expected* → *Skip this one* → day sheet gone, Undo snackbar · balance from that day up by the rent · Undo → back · *Plan something on this day* → item form with that date · read-only member: no *Plan* · German + Japanese"
   - id: release-1-17
     title: Forecast fixes · 1.17.0
     items:

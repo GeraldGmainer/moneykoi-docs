@@ -89,8 +89,11 @@ items:
       - source: Android emulator round, AND-14-5
   - id: D-FC-17
     question: Forecast calendar in the app too?
-    status: open
+    status: decided
+    date: 2026-11-09
     answer: |
+      - **a) ported** · Gerald 2026-11-09: like the web, fitted to a phone · no side panel · tap a day → bottom sheet · built the same day (R-FC-51)
+      - one month column of day rows, the table only · no *Compact* grid, no hover
       - the web has one since 2026-11-07 (R-FC-42): a year of month columns, a row a day (movement, end balance, what), booked up to today and forecast after, a day panel
       - the app lists a budget-book calendar with projected balances as later work, "only after a prototype" (FORECAST §12.3) · the web calendar is that prototype
       - a) port it to the app's forecast page · b) keep it web-only
