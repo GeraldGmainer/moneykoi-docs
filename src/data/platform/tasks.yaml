@@ -76,7 +76,10 @@ items:
   - id: T-PLAT-07
     title: Put the Play listing live
     owner: gerald
+    status: done
     detail: |
+      - **done, confirmed by Gerald 2026-11-09** · the Play page shows the repo's titles (*Money Koi: Haushaltsbuch* · *Money Koi: Budget Tracker*) · text, feature graphic and screenshots go up in one `supply` call, so the images went with them
+      - from now on every `./publish.sh production` / `promote` / `metadata` re-uploads all of it · `internal` never does · a promote by hand in the Play Console uploads no listing
       - text, feature graphic + 8 screenshots × de/en/ja are in `android/fastlane/metadata/android/` · read them first
       - before Nov 1: fresh prod sign-up gets Cloud · else cut the Cloud paragraph + `family` frame
       - ⚖️ read: *stored only on the phone* · *never sold* · *servers in the EU*
