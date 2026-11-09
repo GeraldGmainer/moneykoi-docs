@@ -203,6 +203,40 @@ items:
       base64 -i ~/Downloads/money-koi-play-reports.json | pbcopy   # paste as GOOGLE_PLAY_SERVICE_ACCOUNT_JSON (.env.local + Vercel › Settings › Environment Variables)
       rm ~/Downloads/money-koi-play-reports.json                   # the key lives only in the env afterwards
     related: [T-PLAT-07]
+  - id: T-PLAT-16
+    title: Run the German short-description experiment
+    owner: gerald
+    detail: |
+      - written 2026-11-09: control + three variants (no bank login · no account, offline · the scanner as an action), all ≤ 79 characters and checked against the claim register · `store/listing-tests/short-description-de.md`
+      - Play Console › Store listing experiments › Localized, German, attribute *Short description*, 50 %, *Retained first-time installers*, 90 % · at least 4 weeks
+      - a winner goes into `android/fastlane/metadata/android/de-DE/short_description.txt`, then `./publish.sh metadata` · applied only in the Console, the next upload undoes it
+      - *more data needed* is a result too: keep the control
+    related: [T-PLAT-17]
+  - id: T-PLAT-17
+    title: Publish the Austria custom store listing
+    owner: gerald
+    waitsFor: [T-PLAT-16]
+    detail: |
+      - written 2026-11-09: `store/custom-listings/at/` · short description *Kassabons von SPAR, BILLA, HOFER und Lidl werden direkt am Handy gelesen.* · full description with the scanner first · screenshots of `de-DE`, `03_scan` first
+      - after the experiment: a country with its own listing leaves the main listing's experiment
+      - steps in the folder's README · `fastlane` never touches it: a `de-DE` text change has to be pasted again
+  - id: T-PLAT-18
+    title: Post the Reddit round
+    owner: gerald
+    waitsFor: [T-PLAT-19]
+    detail: |
+      - five drafts, 2026-11-09: r/MoneyKoi · r/Finanzen (the free template) · r/FinanzenAT (no bank login, Kassabons) · r/androidapps · r/SideProject · `store/press/reddit.md`
+      - read each sidebar's self-promotion rules first · one new subreddit per week · answer comments for a week
+      - every Play link carries `utm_source=reddit` and a campaign per subreddit → the admin's *Play Store* page (T-PLAT-15) shows what each post brought
+      - r/SideProject: check the build time the draft states
+  - id: T-PLAT-19
+    title: Ship the site and web growth round
+    owner: gerald
+    detail: |
+      - site (`moneykoi-site`, deploys on push to main): Haushaltsbuch-Vorlage page `/resources/budget-template` with an `.xlsx` per language · posts *Haushaltsbuch in Excel oder als App?* and *Kontoumsätze als CSV ins Haushaltsbuch* (de + en, covers rendered) · every Play link tagged
+      - web (`moneykoi-web`, deploy by hand): Play links tagged · the invite success card names the address to sign in with (E-BOOK-48) · the App Link fix (T-BOOK-05)
+      - then open `/de/resources/budget-template`, download the file once, open it in Excel or Google Sheets
+    related: [T-BOOK-05, E-BOOK-48]
   - id: T-PLAT-14
     title: Move dev work to local Supabase
     owner: gerald

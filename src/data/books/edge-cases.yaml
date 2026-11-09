@@ -266,3 +266,14 @@ items:
     status: fixed
     risk: medium
     related: [T-BOOK-05]
+  - id: E-BOOK-48
+    group: Invites
+    title: A new invitee installs the app and taps Get started
+    when: invite accepted on the web, the app installed afterwards from Play, *Get started* on Welcome
+    then: |
+      - a book on the phone only, no account → the shared book never appears
+      - since 2026-11-09 the web's success card says *Sign in with {email}, not Get started* (`invite.successSignInApp`)
+      - not built: the app reading Play's install referrer (`utm_campaign=invite`) to lead its Welcome with *Sign in*
+    status: known-issue
+    risk: medium
+    related: [T-PLAT-19]
