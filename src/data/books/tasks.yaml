@@ -33,4 +33,15 @@ items:
       - `moneykoi-web`: deploy the build that hides `is_offline` books after the migration is on that project
       - until the server has the RPC, *Keep offline* leaves a plain empty book the web lists, and *Move to cloud* uploads a kept book as a new one (E-BOOK-41)
     related: [E-BOOK-41, D-BOOK-5]
-
+  - id: T-BOOK-05
+    title: Deploy the App Link fix and recheck in Play
+    owner: gerald
+    detail: |
+      - 1 · deploy `moneykoi-web` (only `public/.well-known/assetlinks.json` matters) · then the first command must list `95:48:05:6E…` for `com.psyren.moneykoi`
+      - 2 · Play Console › Grow users › Deep links › *Filter domains* → `my.moneykoi.com` → recheck · Google re-reads within a day
+      - 3 · phones verify again on the next app install or update · one phone now: the second command over adb
+      - a new signing key (Play key upgrade, a new upload key) needs its fingerprint in the file: `BOOKS_WEB_AI_CONTEXT.md` §4.8
+    command: |
+      curl -s "https://digitalassetlinks.googleapis.com/v1/statements:list?source.web.site=https://my.moneykoi.com&relation=delegate_permission/common.handle_all_urls" | grep -c 95:48:05:6E
+      adb shell pm verify-app-links --re-verify com.psyren.moneykoi && adb shell pm get-app-links com.psyren.moneykoi
+    related: [E-BOOK-47]

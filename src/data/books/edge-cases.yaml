@@ -256,3 +256,13 @@ items:
     tests:
       - file: test/features/cloud_tier/offline_book_test.dart
         name: creates the server book, marks it, moves the rows and the bottom bar onto it, opens it and hands the upload to the claim
+  - id: E-BOOK-47
+    group: Web
+    title: Open-in-app links never verified on Play installs
+    when: a Play install taps *Open in the Money Koi app* or any `my.moneykoi.com/open/book` link
+    then: |
+      - fixed 2026-11-09: `assetlinks.json` listed only the debug key, so Play's own signing key (`95:48:05:6E…`) failed the domain check (Play Console › Deep links: *1 domain not verified*)
+      - now it lists the Play signing key, the upload key and the debug key · live once `moneykoi-web` is deployed (T-BOOK-05)
+    status: fixed
+    risk: medium
+    related: [T-BOOK-05]
