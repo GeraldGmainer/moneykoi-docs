@@ -329,6 +329,8 @@ items:
       - the movement column holds bookings and dated payments only · the everyday estimate and budgets only slope the balance
       - red balance below zero · amber below the buffer · ⚠ on the year's lowest forecast day
       - ‹ year › from the book's first year to as far as the forecast reaches · opens on this year with today in the middle of the screen
+      - "**Go to date** (date icon in the top bar): a date from the book's first day to the forecast's last, *Today* as a shortcut · opens that day's year with the day in the middle, highlighted in orange until the next pick or year arrow"
+      - "a movement under 1 keeps its cents (*+0.40*), never *+0*"
       - **tap a day → sheet**: opening, closing, *Booked* (opens the booking), *Expected* (tap → the payment's own sheet: *Skip* with Undo · *Change* · *Edit*), what is spread over the day, net change · *Plan something on this day* from today on (not for read-only members)
       - accounts left out of the forecast are left out of the past too · a transfer to or from one moves the balance · a balance correction counts on its day
       - days before the book's history and past the horizon: drawn, no balance, no tap
@@ -343,5 +345,9 @@ items:
         name: "the movement column: a booked day is all it moved, a forecast day only its dated events"
       - file: test/features/forecast/ui/forecast_calendar_page_test.dart
         name: "tapping today opens its sheet: booked, expected, and plan on this day"
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: "a date in another year opens that year on it; the same date again scrolls back to it"
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: "a movement under one unit keeps its cents instead of reading +0"
       - file: test/features/forecast/ui/forecast_calendar_page_test.dart
         name: an expected row closes the day sheet and opens the event sheet
