@@ -66,7 +66,7 @@ items:
     title: Looks at the year, day by day (app)
     from: Forecast → calendar icon (top bar)
     steps:
-      - "the year, one month under the other · each day a row: movement, end balance, what · booked up to today, forecast after · today in the middle"
+      - "the year, one month under the other · each day a row: dots (green in, gray out), end balance, what · booked up to today, forecast after · today in the middle · the month's name stays on top"
       - ‹ › last year or next year
       - "date icon → pick a day (or *Today*) → its year opens on it, the row highlighted"
       - "a day → sheet: opening → closing, what was booked, what is expected, what is spread over it"

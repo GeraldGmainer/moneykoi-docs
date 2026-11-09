@@ -58,11 +58,11 @@ groups:
     title: App calendar · 2026-11-09
     items:
       - id: C-FC-033
-        text: "Forecast → calendar icon → this year, today's row (orange circle) mid-screen · rows above dimmer · rent day: −rent in the movement, balance drops by it, *Rent* beside · quiet days blank in the movement, balance still sloping · past balances = the web calendar's on the same days · ‹ last year, › next year, arrows stop at the ends · 360 dp phone: no figure cut, no sideways scroll"
+        text: "Forecast → calendar icon → this year, today's row (orange circle) mid-screen · rows above dimmer · rent day: gray dot, balance drops by the rent, *Rent* beside · payday: green dot · a day with 3+ items: two dots, a green one if any money came in · quiet days no dot, balance still sloping · scrolling: the month's name stays on top, a clear gap before the next month · past balances = the web calendar's on the same days · ‹ last year, › next year, arrows stop at the ends · 360 dp phone: no figure cut, no sideways scroll"
       - id: C-FC-034
         text: "Tap a past day → *Booked* rows open the booking, no *Plan* · tap a future rent day → *Expected* → *Skip this one* → day sheet gone, Undo snackbar · balance from that day up by the rent · Undo → back · *Plan something on this day* → item form with that date · read-only member: no *Plan* · German + Japanese"
       - id: C-FC-035
-        text: "Calendar → date icon → the sheet starts at the book's first day, ends at the forecast's last · pick a day next year → that year opens, the day mid-screen in orange · scroll away, pick the same day → scrolls back · *Today* → today's row · ‹ › clears the orange · figures readable at a glance (bigger than the first build) · a day moving under 1 € shows cents, never *+0* · German + Japanese label on long-press"
+        text: "Calendar → date icon → the sheet starts at the book's first day, ends at the forecast's last · pick a day next year → that year opens, the day mid-screen in orange · scroll away, pick the same day → scrolls back · *Today* → today's row · ‹ › clears the orange · figures readable at a glance (bigger than the first build) · day sheet: opening and closing side by side, labels on one line, amounts as large as the booking rows' or larger · German + Japanese label on long-press"
   - id: release-1-17
     title: Forecast fixes · 1.17.0
     items:
