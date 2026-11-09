@@ -44,7 +44,7 @@ items:
       - trial offer `free-trial` on yearly · *never had any subscription* → one trial per Google account
       - regional prices → [Pricing](/monetization/pricing/) · euro rows all the same price
       - real-time notifications → `Play-Store-Notifications` → RevenueCat
-      - still to confirm: license testing + internal testers (plan A2.2, A2.3)
+      - license testing + internal testers set up · the license test passed (T-MON-07)
       - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library)
   - id: T-MON-04
     title: RevenueCat · project and webhook
@@ -80,20 +80,23 @@ items:
   - id: T-MON-07
     title: Device tests
     owner: gerald
+    status: done
     waitsFor: [T-MON-01, T-MON-04]
     detail: |
-      - nothing since 2026-10-13 has run on a phone
+      - **done by 2026-11-08** · the Play license test passed before the 2.0.0 release (Gerald, 2026-11-09)
       - run [What to test](/monetization/testing/) incl. store sandbox
       - claim failure paths W1–W5 (`.agents/reports/2026-10-08_release_1_16_review.md`) · the claim is already open to all (T-MON-20), so these run live
-      - Android store: license test on an internal-track build, checklist A5 of `.agents/plans/PLAY_LICENSE_TESTING_PLAN.md`
+      - Android store: license test on an internal-track build · the store checks C-MON-050…076 and their setup notes on [What to test](/monetization/testing/)
     command: |
       # needs REVENUECAT_API_KEY_ANDROID in .env.prod, build number above production's
       ./publish.sh internal
   - id: T-MON-08
     title: The release · Nov 8
     owner: gerald
+    status: done
     waitsFor: [T-MON-05, T-MON-07, T-MON-24]
     detail: |
+      - **done 2026-11-08** · 2.0.0 live on Play with the paywall
       - **Nov 8 2026** · 2.0.0 · Android only (D13)
       - launch price the same day: T-MON-09 + T-MON-21
       - trade registered (T-MON-11) · every build carries the paywall, no flag (2026-11-07) · launch date set · listings per `ASO_STORE_LISTING_PLAN.md`
@@ -135,7 +138,8 @@ items:
     detail: |
       - Nov 8: *Add offer* on `cloud.lifetime` (€49.99) and `cloud.lifetime.upgrade` (€24.99) · last day Jan 16 2027 (D4)
       - Play adds VAT to a bulk price: base = target ÷ 1.20 · then the euro rows by hand
-      - same day: RevenueCat offering metadata `launch_until` + `regular_prices` for EUR, USD, GBP, CHF, JPY (R-MON-48 area, plan A7)
+      - same day: RevenueCat offering metadata `launch_until` + `regular_prices` for EUR, USD, GBP, CHF, JPY (R-MON-48 area)
+      - **Jan 17 2027**: the Play offer runs out by itself · remove `launch_until` + `regular_prices` from the RevenueCat offering
       - no build needed
   - id: T-MON-10
     title: "Check: does Play Family Library cover Pro?"
@@ -188,7 +192,7 @@ items:
     owner: ai
     status: done
     detail: |
-      - **done 2026-10-24** · plan B3 in `PLAY_LICENSE_TESTING_PLAN.md`
+      - **done 2026-10-24**
       - `20261023120000_early_adopter_cutover_nov_8.sql` + `supabase/tests/manual/early_adopter_cutover_nov_8.sql`
       - app `FeatureConstants.earlyAdopterCutover` / `earlyAdopterCutoverDay` · `claim_entry_test.dart`
       - left: Gerald pushes it before Nov 8 00:00 (T-MON-01) · the constant ships in a build before Nov 8

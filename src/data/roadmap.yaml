@@ -1,7 +1,8 @@
 # The roadmap Gerald reads instead of Trello. AI recommendation of 2026-10-17, from his board
 # (1.18.0–1.20.0, as decided in chat that day) and moneykoi-app/.agents/plans/ (sizes, order,
-# dependencies). House rules (_RELEASE_SCHEDULE.md §1, §8): a release every Sunday, one M-sized risk
-# item per release, two features touching the same authority never share one.
+# dependencies). House rules: a release every Sunday, one M-sized risk item per release, two features
+# touching the same authority never share one, and store-console work (Data safety, IAP products, a new
+# manifest permission) is done before the Sunday, not on it.
 # Every planned row of catalog.yaml must sit in a bucket — /meta/health/ fails otherwise.
 # A release ships → delete its bucket.
 - id: v1-18-0
