@@ -16,7 +16,7 @@ groups:
       - id: C-SET-006
         text: Personalize → Sunday, month start 25, yyyy-MM-dd → Settings → Display formats show them · Budget Book period starts on the 25th · offline and signed-in alike
       - id: C-SET-007
-        text: Personalize → *Sub-categories* off → preview shrinks to the groups, counter updates → book has no sub-categories · Home quick-add shows Food & Drink, Personal & Shopping, Transportation
+        text: Personalize → *Expenses* listed right under the switch, *Income* below · *Sub-categories* off → preview shrinks to the groups, counter updates → book has no sub-categories · Home quick-add shows Food & Drink, Personal & Shopping, Transportation
       - id: C-SET-008
         text: Tips & features → every row's *Open* lands on its feature (calendar tab, budgets tab, recurring page, scanner with the intro again) · back returns to the list
       - id: C-SET-009
@@ -30,7 +30,7 @@ groups:
       - id: C-SET-013
         text: About → *Open-source licenses* → koi mark, *Money Koi*, version · Inter, Poppins, Noto Sans JP, AssetGlyphs open with their license text · German + Japanese titles
       - id: C-SET-014
-        text: Profile → *Language* row → Deutsch → page and drawer German at once · Settings → *Language* shows Deutsch · restart keeps it · back to English the same way · phone, tablet and landscape
+        text: Profile → *Language* row → Deutsch → page and drawer German at once (title, stats, *Sprache*, *Sicherheit & Daten*, *Abmelden* — not just *Mitglied seit*) · Settings → *Language* shows Deutsch · restart keeps it · back to English the same way · phone, tablet and landscape
       - id: C-SET-015
         text: About → *Price data sources* → metal, crypto, exchange-rate rows · each opens its provider's site · German + Japanese titles
       - id: C-SET-016

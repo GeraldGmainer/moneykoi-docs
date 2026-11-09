@@ -14,11 +14,15 @@ items:
   - id: R-SET-02
     group: Settings
     title: "Language: app per device, web per account"
-    text: neither follows the other · open decision (D-SET-1)
+    text: |
+      - neither follows the other · open decision (D-SET-1)
+      - a switch redraws every open page at once · fixed 2026-11-09: Profile kept its labels and switched only *Member since*
     source: PROFILE_SETTINGS §1, §4
     tests:
       - file: test/features/settings/config/app_locales_test.dart
         name: falls back to English for unsupported languages
+      - file: test/shared/ui/settings/app_language_test.dart
+        name: a language switch rebuilds const widgets on the open page and on the pages under it
     related: [D-SET-1]
   - id: R-SET-03
     group: Settings
@@ -64,7 +68,7 @@ items:
       - accounts: the 4 starters as switches · at least one stays on · optional starting balance each (card = what is owed)
       - calendar: start of week · start of month · date format → written to the profile setting
       - lifestyle questions → categories · *Sub-categories* switch off = main groups only (~13), favorites Food & Drink, Personal & Shopping, Transportation
-      - live read-only preview of the tree above *Create budget book*
+      - live read-only preview of the tree above *Create budget book* · expenses first, income under them (the switch changes only expenses, 2026-11-09)
       - a typed balance retires Home's *Set starting balances* card · a balance or calendar write that fails never blocks the setup
     source: ONBOARDING §2–§5
     tests:
