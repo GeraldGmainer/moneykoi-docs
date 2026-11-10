@@ -122,3 +122,28 @@ items:
     tests:
       - file: test/features/onboarding/domain/service/category_generation_service_test.dart
         name: no two starter categories of one type share a name, in any locale
+  - id: E-LED-17
+    group: Accounts
+    title: Credit card balance typed in setup
+    when: "*Personalize* › credit card › *What is currently owed* 300"
+    then: |
+      - fixed 2026-11-11 · stored as **−300** · total goes down
+      - was: +300 · the debt raised the total
+      - books set up before keep the wrong sign → fix on the account page
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/onboarding/use_cases/onboarding_personalize_use_case_test.dart
+        name: the amount owed on a credit card is stored as a negative balance
+  - id: E-LED-18
+    group: Accounts
+    title: Future-dated booking, app open over midnight
+    when: booking dated tomorrow · app stays open or in the background past midnight
+    then: |
+      - fixed 2026-11-11 · balances reload on the new day
+      - was: yesterday's total until a tab switch
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/app/lifecycle/day_change_announcer_test.dart
+        name: a resume after midnight announces a booking change once, so balances reload

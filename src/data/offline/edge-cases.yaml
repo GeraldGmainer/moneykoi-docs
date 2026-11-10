@@ -1,6 +1,6 @@
 # Source: OFFLINE_FIRST_AI_CONTEXT.md §3a, §5–§7, §12; .agents/reports/edge-cases-2026-09.md (EC-SYNC-1…4);
 # test/edge_cases/offline_conflict_edge_cases_test.dart run with --run-skipped on 2026-10-17
-# (EC-SYNC-2 and EC-SYNC-3 pass, un-skipped 2026-11-02; EC-SYNC-1 and EC-SYNC-4 still fail).
+# (EC-SYNC-2 and EC-SYNC-3 pass, un-skipped 2026-11-02; EC-SYNC-1 fixed and un-skipped 2026-11-11; EC-SYNC-4 still fails).
 # E-ACC-30…37 moved here from accounts on 2026-10-17 and keep their ids.
 items:
   # Conflicts
@@ -20,10 +20,17 @@ items:
     when: you edit offline · partner deletes · you push
     then: |
       - server keeps it deleted
-      - your phone shows a ghost until a pull brings the delete
-      - needs B1 on prod (T-ACC-01) · instant fix open (T-OFF-02)
-    status: known-issue
+      - fixed 2026-11-11 · the push answer says deleted → the booking leaves at once → this phone's trash
+      - was: a live ghost until a pull brought the delete
+    status: fixed
     risk: high
+    tests:
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the push response already carries deleted_at, so the local row is tombstoned right after the flush
+      - file: test/edge_cases/offline_conflict_edge_cases_test.dart
+        name: the derived balance does not keep counting the ghost booking
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: tombstones the local row of a trash-enabled source
     related: [E-ACC-30, T-ACC-01, T-OFF-02]
   - id: E-OFF-02
     group: Conflicts

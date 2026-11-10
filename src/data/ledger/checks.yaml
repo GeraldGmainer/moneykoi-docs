@@ -22,3 +22,10 @@ groups:
         text: New account + balance + date → shown as a level · balance without date refused
       - id: C-LED-011
         text: Delete account used by a transfer → refused · last → refused · Hide → only pickers
+  - id: release-2-1-findings
+    title: 2.1 · device round 2026-11-11
+    items:
+      - id: C-LED-013
+        text: "Booking dated tomorrow → leave the app on Home overnight → open → total and account include it · home-screen widget too"
+      - id: C-LED-014
+        text: "*Personalize* → credit card, owed 300 → Home total drops by 300 · card shows −300"

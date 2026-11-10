@@ -81,7 +81,8 @@ items:
     title: Restore finds nothing
     when: store holds nothing for this store account
     then: |
-      - *No purchase found* · Pro on the phone **stays**
+      - *No purchase found* + which store account to sign in · Pro on the phone **stays**
+      - the title was missing until 2026-11-11
       - on *Welcome back* › *Restore*: snackbar, page stays (D12)
     risk: high
     tests:
@@ -400,7 +401,7 @@ items:
     group: Store
     title: "*Restore purchases* finds nothing"
     when: paywall › *Restore purchases* · no purchase on the store account
-    then: the answer stays 8 s with an *OK* · before 2026-11-06 the two-sentence instruction vanished after 3 s (AND-23-1)
+    then: the answer stays 8 s with an *OK* · before 2026-11-06 it vanished after 3 s (AND-23-1) · until 2026-11-11 it never left without a tap
     status: fixed
     risk: low
   - id: E-MON-63
@@ -417,3 +418,32 @@ items:
         name: a second restore replaces the first answer instead of queueing behind it
       - file: test/features/monetization/ui/paywall_page_test.dart
         name: a purchase after a restore that found nothing leaves that answer behind
+  - id: E-MON-64
+    group: Paywall & store
+    title: Locked export, bought on the paywall
+    when: Free · Budget Book ⋮ › *Export* or a page's export icon → buy
+    then: |
+      - fixed 2026-11-11 · the export sheet opens after the purchase
+      - was: back on the page · *Export* had to be tapped again
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/export/export_action_test.dart
+        name: a menu row goes on to the export sheet after the purchase
+  - id: E-MON-65
+    group: Downgrades
+    title: Plan falls while an editor is open
+    when: refund lands · *Customize* Home, *Navigation* or a new position is open
+    then: |
+      - fixed 2026-11-11 · both editors show the lock · the position form opens the paywall, draft kept
+      - was: nothing happened, or a generic error and a lost draft
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home/ui/pages/home_edit_page_test.dart
+        name: a plan that fell while the editor is open shows the lock instead of rows that fail
+      - file: test/features/settings/ui/pages/navigation_settings_page_test.dart
+        name: a plan that fell while the editor is open shows the lock instead of a save that fails
+      - file: test/features/investment/ui/pages/investment_save_page_test.dart
+        name: a plan that fell while the form was open keeps the draft and opens the paywall
+    related: [E-MON-50]

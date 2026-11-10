@@ -592,3 +592,24 @@ items:
     status: fixed
     risk: medium
     related: [T-DATA-06, T-DATA-07]
+  - id: E-DATA-89
+    group: CSV import
+    title: Result claimed an unchanged balance
+    when: import onto an account that has newer bookings than its starting date
+    then: |
+      - fixed 2026-11-11 · the result says only *initial balance moved to* the date
+      - was: *today's balance stays the same* while it moved
+    status: fixed
+    risk: low
+  - id: E-DATA-90
+    group: Export & erase
+    title: Stats export saved without a word
+    when: Stats › export › *Save to device*
+    then: |
+      - fixed 2026-11-11 · the sheet closes · *File saved* shows
+      - was: the message sat behind the open sheet
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/analytics/ui/sheets/analytics_export_sheet_test.dart
+        name: csv and pdf export the report with the book name

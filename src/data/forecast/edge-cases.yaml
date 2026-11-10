@@ -263,3 +263,27 @@ items:
     tests:
       - file: test/features/forecast/forecast_engine_test.dart
         name: a past date with a suggested booking is not counted again
+  - id: E-FC-30
+    group: Planned payments
+    title: Calendar day with a starting balance
+    when: calendar › the day an account's starting balance lands
+    then: |
+      - fixed 2026-11-11 · a row per account under *Booked* · a dot on the day
+      - was: closing moved, no row explained it
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: the day a starting balance lands lists it, so the rows add up to the net change
+  - id: E-FC-31
+    group: Planned payments
+    title: Calendar at a large font size
+    when: system font 200 % · forecast calendar
+    then: |
+      - fixed 2026-11-11 · the calendar's text grows to 115 % at most
+      - was: two-digit days cut to one digit
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: a large system font cannot clip the fixed-height rows

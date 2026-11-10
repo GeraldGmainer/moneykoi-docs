@@ -63,3 +63,12 @@ groups:
         text: "Android tablet, 10\" → rotate → the app turns with it · Budget Book, Stats and Goals tabs in the centred column · list **+** buttons beside the column"
       - id: C-PLAT-024
         text: "TalkBack / VoiceOver → the drawer button, the **+**, a Home card's ⋮ menu, the date steppers ‹ › and every keypad key are read by name, not just *button*"
+  - id: release-2-1-findings
+    title: 2.1 · device round 2026-11-11
+    items:
+      - id: C-PLAT-026
+        text: "iPhone → any export or *Create backup* → *Save to device* → *Cancel* sits below the clock · cancel → second attempt works (simulator showed it over the clock)"
+      - id: C-PLAT-027
+        text: "Font size 200 % → date field → picker without stripes · quick add with keyboard → text field visible · bottom bar labels whole"
+      - id: C-PLAT-028
+        text: "iPhone → quick add → type `3,50 Kaffee gestern` on the iOS keyboard → no autocorrect, no suggestion bar"

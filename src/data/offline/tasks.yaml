@@ -12,8 +12,10 @@ items:
   - id: T-ACC-02
     title: Fix "parked" in the engine doc
     owner: ai
-    waitsFor: [T-ACC-01]
-    detail: Doc drift found while building this site
+    status: done
+    detail: |
+      - **done 2026-11-11** · §6 step 2 says the deletes half is applied · warning kept
+      - upserts half (O4) still open
     prompt: |
       In moneykoi-app/.agents/references/OFFLINE_FIRST_AI_CONTEXT.md §6 step 2, the deletes half of bug B1 is fixed by moneykoi-supabase 20261005130000_sync_all_deletes_ignore_exclude.sql (in migrations/, not migrations_later/). Rewrite the sentence to say it is applied and keep the warning not to put the filter back. The upserts half (O4) stays open.
   - id: T-OFF-01
@@ -26,9 +28,9 @@ items:
   - id: T-OFF-02
     title: Clear the ghost after a stale push
     owner: ai
-    waitsFor: [T-ACC-01]
+    status: done
     detail: |
-      - EC-SYNC-1 · 3 tests skipped and failing
-      - push answer already says deleted · phone ignores it
+      - **done 2026-11-11** · 3 EC-SYNC-1 tests un-skipped · E-OFF-01 fixed
+      - category, recurring rule, shopping list still wait for the next pull
     prompt: |
       Fix EC-SYNC-1 in moneykoi-app (.agents/reports/edge-cases-2026-09.md): when the outbox pushes an edit of a booking the server already soft-deleted, the upsert's returned row carries deleted_at, but QueueManager's markAsSynced ignores it, so the phone keeps a live ghost until a pull brings the delete. Apply the returned deleted_at locally (tombstone for a trash-enabled source, otherwise delete), keep OFFLINE_FIRST_AI_CONTEXT.md §3/§5 in sync, and unskip the three EC-SYNC-1 tests in test/edge_cases/offline_conflict_edge_cases_test.dart. Then set E-OFF-01 in ../moneykoi-docs/src/data/offline/edge-cases.yaml to fixed with the tests.

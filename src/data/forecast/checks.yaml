@@ -83,3 +83,12 @@ groups:
         text: "Forecast → planned payments in three groups: *Upcoming* · *To check* · *Booked or skipped* · book one → it moves to the last group · German + Japanese headers fit"
       - id: C-FC-032
         text: "Committed + everyday + buffer above the balance → *Of the balance*: everyday keeps its figure, a short row names the gap, no *Free 0.00* · three 39.99 bills booked by hand, then a 39.99 rule → the monthly line counts it once · overdue planned payment → *Book it now* → form on the planned date · Home forecast card *In 1 month* → caption *End of November*"
+  - id: release-2-1-findings
+    title: 2.1 · device round 2026-11-11
+    items:
+      - id: C-FC-036
+        text: "Forecast calendar → tap the day a starting balance was set → *Initial balance* row · rows add up to *Net change*"
+      - id: C-FC-037
+        text: "Font size 200 % → forecast calendar → day numbers and weekdays whole · pinned month header clear of the first row"
+      - id: C-FC-038
+        text: "Listed asset, bought twice, before market prices arrive → position chart drawn from the trade prices (no emulator has the catalog)"
