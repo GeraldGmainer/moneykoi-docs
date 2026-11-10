@@ -132,6 +132,22 @@ items:
       - RevenueCat → App Store Server Notifications on: Apple refunds of Pro arrive only that way
       - check prod has `20261023120000_early_adopter_cutover_nov_8.sql` before Nov 8: not checked
     related: [D16, D17, E-MON-54, E-MON-55]
+  - id: T-MON-27
+    title: Sales page + launch report
+    owner: gerald
+    detail: |
+      - today: paste `moneykoi-admin/reports/launch-2026-11.sql` into the prod SQL editor · read-only · needs no migration
+      - then `20261110150000_admin_sales.sql`: local → prod · the check prints PASS
+      - then deploy the admin → *Sales* + *Usage stats* › *Scan quality* (T-SCN-03)
+    command: |
+      # 1 local
+      cd moneykoi-supabase
+      supabase migration up
+      psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -v ON_ERROR_STOP=1 -f supabase/tests/manual/admin_sales.sql
+      # 2 prod: commit, push main (CI runs db push), then
+      psql "$PROD_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/admin_sales.sql
+      # 3 admin: commit, push (Vercel deploys)
+    related: [T-SCN-03, R-PRIV-25]
   - id: T-MON-09
     title: Google · launch discount from Nov 8
     owner: gerald

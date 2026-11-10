@@ -16,9 +16,14 @@ items:
   - id: T-SCN-03
     title: Scan quality from usage stats
     owner: gerald
+    status: done
     detail: |
       - scans carry `parser` · `code` · `total_edited` · `items_edited`
-      - admin doesn't chart them yet → run the SQL in Supabase
+      - **done 2026-11-10** · admin › *Usage stats* › *Scan quality* charts them
+      - per parser × code × route: share with the total edited, share with items edited
+      - plus buckets: lines saved · photos taken
+      - opted-in installs **only**
+      - shows after T-MON-27 · until then the SQL below still works
     command: |
       select props->>'parser' as parser, props->>'code' as code, count(*) as scans,
              round(avg((props->>'total_edited')::boolean::int), 2) as total_edited,

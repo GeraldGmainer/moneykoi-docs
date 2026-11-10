@@ -243,6 +243,16 @@ items:
     tests:
       - file: test/features/usage_stats/data/usage_tracker_test.dart
         name: a failed send is swallowed
+  - id: R-PRIV-25
+    group: Usage statistics
+    title: Usage never linked to an account
+    text: |
+      - usage events **never** joined to a profile, a purchase or a plan
+      - admin: paywall views of opted-in installs · beside all purchases
+      - never a conversion rate from the two
+      - scan quality: aggregates of opted-in installs
+    source: USAGE_STATS §2, §7 · moneykoi-supabase `20261110150000_admin_sales.sql`
+    related: [T-MON-27, T-SCN-03]
 
   # Web sign-in
   - id: R-PRIV-30
