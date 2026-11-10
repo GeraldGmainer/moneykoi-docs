@@ -285,15 +285,14 @@ items:
     related: [T-BOOK-05, E-BOOK-48]
   - id: T-PLAT-22
     title: Finish dropping en-GB in the Play Console
-    owner: gerald
+    owner: ai
+    status: done
     detail: |
-      - found 2026-11-10: the console's **default language is still `en-GB`** (D-PLAT-3's console step never ran) · every storefront without de / ja / en-US reads it, and Play machine-translates it for the rest
-      - its text was missing the *Free, Pro and Cloud* paragraph → set to the `en-US` text over the API on 2026-11-10 · `fastlane` never writes `en-GB`, so it goes stale again with the next text change
-      - the switch is refused: *provide translations for all your in-app products* · the 3 one-time products and 2 subscriptions have `en-GB`, `de-DE`, `ja-JP`, no `en-US`
-      - 1 · Monetize → each product (`pro.lifetime`, `cloud.lifetime`, `cloud.lifetime.upgrade`, `cloud.monthly`, `cloud.yearly`) → add `en-US`
-      - same visit: every product title says *MoneyKoi* → *Money Koi* (D-PLAT-1) · three German titles and two English benefits start with a space
-      - 2 · Store listing → en-US: upload the icon (only `en-GB` has one) → *Manage translations* → default `en-US` → remove `en-GB`
-      - steps 1 and 2 can run over the API from an agent session, on request
+      - **done 2026-11-10, over the Play API** · default language `en-US` · `en-GB` listing removed · icon moved to `en-US`
+      - found: the default was still `en-GB` (D-PLAT-3's console step never ran) and its text lacked the *Free, Pro and Cloud* paragraph · every storefront without de / ja / en-US read it
+      - Play refused the switch until the 5 products (`pro.lifetime`, `cloud.lifetime`, `cloud.lifetime.upgrade`, `cloud.monthly`, `cloud.yearly`) had `en-US` texts → added, copied from `en-GB`
+      - same pass: every product title *MoneyKoi* → *Money Koi* (D-PLAT-1) · leading spaces gone from three German titles and two English benefits · prices and plans compared before / after: unchanged
+      - open: `pro.lifetime`'s description names investments · the listing may not (claim register) → Gerald's call
     related: [D-PLAT-3, D-PLAT-1, T-PLAT-07]
   - id: T-PLAT-23
     title: Reach before experiments — Play numbers on 2026-11-10
@@ -304,6 +303,7 @@ items:
       - the listing converts (5 of 11) and nobody sees it → reach first: T-PLAT-18 Reddit, T-PLAT-09 press · the site round is live (T-PLAT-19)
       - T-PLAT-16 cannot conclude at this traffic → decide: skip it and publish the Austria listing now (T-PLAT-17), or keep the order
       - first ratings: ask the people already on the app · a listing without a rating converts worse and ranks lower
+      - 2026-11-10, live: search terms added to the de / en descriptions, each once — *Budgetplaner*, *Finanzen*, *offline*, *Fixkosten*, *Paare, Familien und WGs* · *expense tracker*, *personal finances*, *offline*, *couples, families and roommates* · the Austria text in `store/custom-listings/at/` carries them too
       - look again: admin › *Play Store*, 30 days after the first post
     related: [T-PLAT-16, T-PLAT-17, T-PLAT-18, T-PLAT-09]
   - id: T-PLAT-14
