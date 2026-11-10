@@ -99,32 +99,37 @@ items:
       - a) port it to the app's forecast page · b) keep it web-only
   - id: D-FC-18
     question: Bill scan · Free or Pro?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - planned payments are **Pro** today
-      - recommended: scan free · *Book it now* free · *Plan payment* = forecast lock
-      - plan: `plan_later/BILL_QR_PLAN.md` §9 D1
+      - scan **free** · *Book it now* free
+      - *Plan payment* → forecast lock · **Pro**
+      - plan: `plan_later/BILL_QR_PLAN.md` §9
   - id: D-FC-19
     question: Due reminder · every planned payment or only bills?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: any one-off planned payment can remind
-      - a scanned bill: on by default · 2 days before
+      - **any one-off** planned payment can remind
+      - scanned bill: on by default · 2 days before
   - id: D-FC-20
     question: Bill scan · store the creditor's IBAN?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - only needed for *Copy IBAN* · synced in a Cloud book
-      - recommended: **no** · keep the reference only
+      - **hash + last 4 only** · never the full IBAN · same rule as the bank CSV import
+      - shows *IBAN …1234* · a bank CSV row can match the bill by hash
+      - waits on the hash key decision (D-DATA-26)
+    related: [D-DATA-23, D-DATA-26]
   - id: D-FC-21
     question: Bill scan · PDF invoices?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - needs a PDF renderer · new native dependency
-      - recommended: screenshots first · PDF only if bills get scanned
+      - **screenshots first** · PDF renderer only if bills get scanned
   - id: D-FC-22
     question: Bill scan · in the global add sheet?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: no in v1 · planned-payments page + form only
-      - revisit with usage data
+      - **no** in v1 · planned-payments page + form only

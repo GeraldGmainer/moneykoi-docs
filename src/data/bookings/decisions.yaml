@@ -52,45 +52,51 @@ items:
     related: [R-BKG-02, E-BKG-29]
   - id: D-BKG-10
     question: Auto-capture · Free or Pro?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: **Pro** · first payment appearing alone = the paywall moment
+      - **Pro** · first payment appearing alone = the paywall moment
       - after a lapse: review stays readable · new captures stop
-      - plan: `plan_later/AUTO_CAPTURE_PLAN.md` §9 D1
+      - plan: `plan_later/AUTO_CAPTURE_PLAN.md` §9
   - id: D-BKG-11
     question: Auto-capture · which banks in v1?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - decided by phase 0 samples on Gerald's phones
-      - payment + refund + declined + 3DS all parse → supported
-      - the rest → generic parser · labelled as such
+      - phase 0 samples all parse → **supported**
+      - samples = payment + refund + declined + 3DS prompt
+      - other apps → generic parser · labelled as such
   - id: D-BKG-12
     question: Auto-capture · ever book without a tap?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: **never** in v1 · like the forecast review
+      - **never** in v1 · like the forecast review
       - later maybe: opt-in per merchant after 5 unchanged confirms
   - id: D-BKG-13
     question: Auto-capture · keep the notification text?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: **no** · keep parsed fields + parser name only
-      - the text is the most sensitive thing the feature touches
+      - **no** · parsed fields + parser name only
   - id: D-BKG-14
     question: Auto-capture · which book gets a draft?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: the book active at capture · changeable in the review
+      - the book **active at capture** · changeable in the review
       - bank → account mapping per book
   - id: D-BKG-15
     question: Auto-capture · foreign-currency Wallet taps?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - the iPhone trigger sends no reliable currency
-      - recommended: book currency · foreign cards wait for multi-currency
+      - **book currency** · the iPhone trigger sends none reliably
+      - foreign cards wait for multi-currency
   - id: D-BKG-16
     question: Auto-capture · a scan matches a waiting draft?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - same day, same amount → the scan's save sheet asks
-      - recommended: ask · default *replace the draft*
+      - same day + same amount → the scan's save sheet **asks**
+      - *replace the draft* preselected
