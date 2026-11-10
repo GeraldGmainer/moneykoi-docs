@@ -133,3 +133,99 @@ items:
     date: 2026-11-10
     answer: |
       - **ship the passing one** · the other waits for a re-test
+  - id: D-BKG-22
+    question: Multi-currency · what ships, in phases?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **everything in one release** · no phases
+      - foreign bookings · foreign recurring rules · foreign-currency accounts · cross-currency transfers
+  - id: D-BKG-23
+    question: Multi-currency · when?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **December** · contract tracker + subscription check-up move to January
+  - id: D-BKG-24
+    question: Multi-currency · what does a Free user see?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **Pro** · currency chip visible to everyone · Free tap → paywall
+      - existing foreign rows always shown in full · their amounts stay editable
+  - id: D-BKG-25
+    question: Multi-currency · how is a foreign amount entered?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **foreign amount + book amount, linked** · either editable
+      - book amount typed from the bank statement → rate derived
+  - id: D-BKG-26
+    question: Multi-currency · which rate prefills?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **latest feed rate** (ECB, 29 currencies) · else last rate used for that currency in the book
+      - nothing → empty · Save disabled · never 1:1
+  - id: D-BKG-27
+    question: Multi-currency · default currency on a trip?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **trip carries an optional currency** · form, quick add, scanner start in it until the trip ends
+  - id: D-BKG-28
+    question: Multi-currency · change the book currency while foreign rows exist?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **blocked** · tile explains why
+  - id: D-BKG-29
+    question: Multi-currency · web in the same release?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **web shows, app enters** · originals + native balances visible
+      - foreign amount and currency read-only on the web
+  - id: D-BKG-30
+    question: Multi-currency · rate of a recurring occurrence?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **rate of its day** (latest when created) · else last used · else the rule's own rate
+  - id: D-BKG-31
+    question: Multi-currency · CSV?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - export **appends** original_amount · original_currency · fx_rate
+      - Money Koi import reads them back · other files: face value + warning, as today
+  - id: D-BKG-32
+    question: Multi-currency · quick add?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **ISO codes + trip default** · `czk 250` · symbols ($, ¥) stay book currency
+  - id: D-BKG-33
+    question: Multi-currency · third currency on a foreign account (HUF with the CZK card)?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **refused** · every booking on a foreign account is in that account's currency
+  - id: D-BKG-34
+    question: Multi-currency · transfer between two currencies?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **two amounts** · sent + received at the bank's rate · nets to zero book-wide
+  - id: D-BKG-35
+    question: Multi-currency · balance timeline and net-worth chart with a foreign account?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **today's rate for the whole line** · chart note says so
+  - id: D-BKG-36
+    question: Multi-currency · a foreign account's balance on the server and the web?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **new native balance columns** · current_balance keeps its meaning (booked value in the book currency)
