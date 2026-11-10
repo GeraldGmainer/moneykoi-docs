@@ -97,3 +97,34 @@ items:
       - the web has one since 2026-11-07 (R-FC-42): a year of month columns, a row a day (movement, end balance, what), booked up to today and forecast after, a day panel
       - the app lists a budget-book calendar with projected balances as later work, "only after a prototype" (FORECAST §12.3) · the web calendar is that prototype
       - a) port it to the app's forecast page · b) keep it web-only
+  - id: D-FC-18
+    question: Bill scan · Free or Pro?
+    status: open
+    answer: |
+      - planned payments are **Pro** today
+      - recommended: scan free · *Book it now* free · *Plan payment* = forecast lock
+      - plan: `plan_later/BILL_QR_PLAN.md` §9 D1
+  - id: D-FC-19
+    question: Due reminder · every planned payment or only bills?
+    status: open
+    answer: |
+      - recommended: any one-off planned payment can remind
+      - a scanned bill: on by default · 2 days before
+  - id: D-FC-20
+    question: Bill scan · store the creditor's IBAN?
+    status: open
+    answer: |
+      - only needed for *Copy IBAN* · synced in a Cloud book
+      - recommended: **no** · keep the reference only
+  - id: D-FC-21
+    question: Bill scan · PDF invoices?
+    status: open
+    answer: |
+      - needs a PDF renderer · new native dependency
+      - recommended: screenshots first · PDF only if bills get scanned
+  - id: D-FC-22
+    question: Bill scan · in the global add sheet?
+    status: open
+    answer: |
+      - recommended: no in v1 · planned-payments page + form only
+      - revisit with usage data

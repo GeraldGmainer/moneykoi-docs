@@ -54,3 +54,58 @@ items:
       - moved from 2.0.0: the period needs an offset across ~40 cards + labels · not a 2-day change
       - before: ‹ › walk the preset list · *This month* → *This week*
       - source: Android emulator round, AND-15-5
+  - id: D-ANL-6
+    question: Price changes · Free or Pro?
+    status: open
+    answer: |
+      - Analytics is **Pro** → the card is Pro by default
+      - recommended: Pro · quantities saved for everyone from phase 0
+      - plan: `plan_later/PERSONAL_INFLATION_PLAN.md` §9 D1
+  - id: D-ANL-7
+    question: Merged receipt lines · keep the products?
+    status: open
+    answer: |
+      - *Merge by category* loses the products today
+      - recommended: keep them as `parts` · bookings unchanged
+  - id: D-ANL-8
+    question: Receipts scanned before quantities existed?
+    status: open
+    answer: |
+      - a) leave out · b) product history only, marked ≈ · c) in the index too
+      - recommended: **b**
+  - id: D-ANL-9
+    question: Personal index · minimum to show it?
+    status: open
+    answer: |
+      - recommended: ≥ 10 matched products + ≥ 25 % of item spend
+      - revisit with real books
+  - id: D-ANL-10
+    question: Official comparison · HICP or VPI?
+    status: open
+    answer: |
+      - HICP: one Eurostat source for AT + DE · VPI: the number Austrians know
+      - recommended: HICP for both · labelled · country from the locale
+  - id: D-ANL-11
+    question: Export quantity + unit price in CSV?
+    status: open
+    answer: |
+      - app + web archive must change together
+      - recommended: not in v1
+  - id: D-ANL-12
+    question: Editing a line that has a quantity?
+    status: open
+    answer: |
+      - the user changes the line total
+      - recommended: scale the unit price · keep the quantity
+  - id: D-ANL-13
+    question: Quantity accuracy before the card ships?
+    status: open
+    answer: |
+      - share of multiplier + weight lines read right on the corpus
+      - recommended: ≥ 85 % on the four chains with fixtures
+  - id: D-ANL-14
+    question: Personal index · row or its own card?
+    status: open
+    answer: |
+      - recommended: a row on *Price changes* in v1
+      - own card / Home card only if people open it

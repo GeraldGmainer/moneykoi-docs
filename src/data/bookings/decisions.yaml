@@ -50,3 +50,47 @@ items:
       - built 2026-11-03 · *swipe → Discard / Keep editing* is Android back only
       - source: iOS simulator round, IOS-2-1
     related: [R-BKG-02, E-BKG-29]
+  - id: D-BKG-10
+    question: Auto-capture · Free or Pro?
+    status: open
+    answer: |
+      - recommended: **Pro** · first payment appearing alone = the paywall moment
+      - after a lapse: review stays readable · new captures stop
+      - plan: `plan_later/AUTO_CAPTURE_PLAN.md` §9 D1
+  - id: D-BKG-11
+    question: Auto-capture · which banks in v1?
+    status: open
+    answer: |
+      - decided by phase 0 samples on Gerald's phones
+      - payment + refund + declined + 3DS all parse → supported
+      - the rest → generic parser · labelled as such
+  - id: D-BKG-12
+    question: Auto-capture · ever book without a tap?
+    status: open
+    answer: |
+      - recommended: **never** in v1 · like the forecast review
+      - later maybe: opt-in per merchant after 5 unchanged confirms
+  - id: D-BKG-13
+    question: Auto-capture · keep the notification text?
+    status: open
+    answer: |
+      - recommended: **no** · keep parsed fields + parser name only
+      - the text is the most sensitive thing the feature touches
+  - id: D-BKG-14
+    question: Auto-capture · which book gets a draft?
+    status: open
+    answer: |
+      - recommended: the book active at capture · changeable in the review
+      - bank → account mapping per book
+  - id: D-BKG-15
+    question: Auto-capture · foreign-currency Wallet taps?
+    status: open
+    answer: |
+      - the iPhone trigger sends no reliable currency
+      - recommended: book currency · foreign cards wait for multi-currency
+  - id: D-BKG-16
+    question: Auto-capture · a scan matches a waiting draft?
+    status: open
+    answer: |
+      - same day, same amount → the scan's save sheet asks
+      - recommended: ask · default *replace the draft*
