@@ -31,3 +31,18 @@ items:
       - **done 2026-11-02** · app `CsvEncoder.guard` + backup `bookings.csv` · web `csv.ts` `field()` (review-2026-09, item 10)
       - number columns stay raw · declared per table (`numericColumns`) · `-12.5` stays a number
       - import strips the `'` again, app + web · E-PRIV-43, R-DATA-52
+  - id: T-DATA-05
+    title: Bank CSV files for the import corpus
+    owner: gerald
+    detail: |
+      - create `../moneykoi-imports/` · private · never inside moneykoi-app
+      - DKB Girokonto (+ Visa if used) · Raiffeisen bankdirekt
+      - per account **two exports overlapping by a few weeks** · a second account of the same bank if there is one
+      - gates phase 0 of `plans/BANK_CSV_IMPORT_PLAN.md` · decides D-DATA-27
+  - id: T-DATA-06
+    title: Rewind drops balance checks · server
+    owner: ai
+    detail: |
+      - found 2026-11-10 · `internal.rewind_columns` in `20261022120000_forecast_sources.sql` lost booking `reconciliation_id` / `adjustment_type` and the `reconciliation` / `reconciliation_line` entries (`20260929120000_reconciliation.sql:1233-1235` had them)
+      - fix = a new server migration restoring them · rides `BANK_CSV_IMPORT_PLAN.md` §9 item 5 unless done earlier · Gerald applies it
+      - E-DATA-69

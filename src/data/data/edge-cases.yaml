@@ -343,3 +343,14 @@ items:
     tests:
       - file: test/features/data_import/ui/booking_import_page_test.dart
         name: a book without sync says nothing about uploading
+  - id: E-DATA-69
+    group: Backup & restore
+    title: Rewind leaves deleted balance checks out
+    when: backup with a balance check → the check or its correction deleted → *Bring back* / *Rewind* into the same book
+    then: |
+      - the check is skipped (its columns are missing from the rewind list since 2026-10-22)
+      - a deleted correction booking comes back without its check link · likely refused by the server's booking-shape check · not reproduced
+      - fix: T-DATA-06
+    status: known-issue
+    risk: medium
+    related: [T-DATA-06]
