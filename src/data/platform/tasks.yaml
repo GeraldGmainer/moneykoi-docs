@@ -304,7 +304,8 @@ items:
       - T-PLAT-16 cannot conclude at this traffic → decide: skip it and publish the Austria listing now (T-PLAT-17), or keep the order
       - first ratings: ask the people already on the app · a listing without a rating converts worse and ranks lower
       - 2026-11-10, live: search terms added to the de / en descriptions, each once — *Budgetplaner*, *Finanzen*, *offline*, *Fixkosten*, *Paare, Familien und WGs* · *expense tracker*, *personal finances*, *offline*, *couples, families and roommates* · the Austria text in `store/custom-listings/at/` carries them too
-      - look again: admin › *Play Store*, 30 days after the first post
+      - look again: admin › *Play Store*, 30 days after the first post · an agent reads the same numbers with `tool/play_api.py reports`
+      - the open list for agents: `moneykoi-app/.agents/plans/PLAY_STORE_GROWTH_PLAN.md`
     related: [T-PLAT-16, T-PLAT-17, T-PLAT-18, T-PLAT-09]
   - id: T-PLAT-14
     title: Move dev work to local Supabase
