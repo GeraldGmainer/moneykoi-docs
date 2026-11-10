@@ -76,6 +76,7 @@ items:
       - ✅ POL with MATIC's history 2019-05-27 → 2023-10-29 · ✅ `compare_crypto.sql` checked
       - ✅ off days kept as they are (D-INV-10)
       - next: **cancel the trial on 2026-11-21** (kept 14 days · reminder set) · nothing left needs Startup
+      - Coinranking 2026-11-10: trial → Free = plan change · history stays · **no** paid month
   - id: T-INV-13
     title: Crypto cutover, then the release
     owner: gerald
@@ -83,6 +84,7 @@ items:
       - ✅ cutover 2026-11-07 · 23 coins on Coinranking · 23 latest quotes · full history served
       - cut over before the release (Gerald's call) · older builds show no crypto credit until they update
       - open: **app + web release** with *Data from Coinranking*
+      - wording + place approved by Coinranking 2026-11-10 · not needed on home or net worth
       - no undo any more: Binance + Bitfinex purged, CoinGecko key gone
   - id: T-INV-14
     title: Purge the old crypto sources
