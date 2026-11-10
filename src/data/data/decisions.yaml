@@ -205,59 +205,134 @@ items:
     related: [D-DATA-33]
   - id: D-DATA-26
     question: Bank import · which key for the IBAN hash?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - an IBAN hash can be reversed by trying candidates
-      - a) random per-user key on the settings row · server sees key + hash · pseudonymous only · **recommended**, listing says *stored only as a fingerprint*
-      - b) key the server never sees · the web can't match IBANs → no transfer suggestion there
-      - c) last four + bank code only, no hash · two accounts ending alike collide
-      - plan §13 O1
+      - **a random per-user key, synced** with the saved formats · the web matches IBANs too
+      - server holds key + hash = pseudonymous, not secret · listing says *stored only as a fingerprint*
+      - plan D-BANK-19
     related: [D-DATA-23]
   - id: D-DATA-27
     question: Bank file with one combined text, no payee column · build a text cleaner?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - possibly Raiffeisen bankdirekt · decide on Gerald's file (T-DATA-05)
-      - a) cleaner built from that file's words only · b) keep the text, cut to 20
-      - plan §13 O2
+      - **cleaner built from the words of real files only** · each word cites its corpus file
+      - `Bezahlung Karte MC/0001234 BILLA DANKT 1234 WIEN` → `BILLA DANKT WIEN`, cut to 20
+      - plan D-BANK-26
   - id: D-DATA-28
     question: Bank changed its export (other headers) · update the saved format or save a second?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: offer *Update "…"* when the account is the same
-      - plan §13 O3
+      - **offer *Update "…"*** when the target account is the same · no second entry
+      - plan D-BANK-20
   - id: D-DATA-29
     question: Where do *Saved import formats* and *Learned payees* live?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: Settings › Backup & restore, next to *Import bookings*
-      - other: inside the import's File step only
-      - plan §13 O4
+      - **Settings › Backup & restore**, next to *Import bookings*
+      - formats: rename, delete · payees: change category, delete
+      - plan D-BANK-25
   - id: D-DATA-30
     question: Keep the full payee uncut on the booking?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - `booking.merchant_name` exists on the server, unused by every client
-      - recommended: leave it for now · later with search
-      - plan §13 O5
+      - **no** · `booking.merchant_name` stays unused
+      - plan D-BANK-24
   - id: D-DATA-31
     question: Which imported rows teach a payee rule?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: only rows whose category was picked or changed in the import
-      - other: every imported row with a category
-      - plan §13 O6
+      - **only rows whose category was picked or changed** in the import
+      - next time **the rule beats a category the file itself names**
+      - plan D-BANK-21
   - id: D-DATA-32
     question: Transfer suggestion · Free too?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: Pro · the own-account IBANs come from saved formats, which Free doesn't have
-      - plan §13 O7
+      - **Pro only** · own IBANs come only from saved formats
+      - plan D-BANK-23
   - id: D-DATA-33
     question: Web category guess without the app's keyword map and merchant registry?
-    status: open
+    status: decided
+    date: 2026-11-10
     answer: |
-      - recommended: payee rules → booking history → category names · the rest picked by hand
-      - other: port the app's engine to TypeScript (L)
-      - plan §13 O8
+      - **payee rules → booking history (exact, then word) → category names** · the rest picked by hand
+      - plan D-BANK-22
     related: [D-DATA-25]
+  - id: D-DATA-34
+    question: Bank import · rows already in the book, and rows deleted after an import
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - exact matches go into **one collapsed group** at the bottom (*37 already imported*) · unticked, tickable
+      - a booking deleted after its import: **unticked as *Deleted earlier*** while this phone's trash holds it (30 days) · after that, on another phone or the web, it counts as new
+      - ±3-day matches (*Possible duplicate*) stay in the main list, unticked
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-27, 28
+    related: [D-DATA-22]
+  - id: D-DATA-35
+    question: Bank import · a recognized file with new names, or two accounts and no IBAN
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - category or account names never mapped → **that step opens with only those names**, then *Review*
+      - two accounts of one bank, no IBAN in the file → **account pill on the banner** (*Recognized: … → Giro*), tappable, last used preselected
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-29, 31
+    related: [D-DATA-20]
+  - id: D-DATA-36
+    question: Bank import · what does undo take back?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **everything**: the bookings, a newly saved format (or the previous version of an updated one), the payee rules this import learned
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-30
+  - id: D-DATA-37
+    question: Bank import · the details
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - date = **booking day** (*Buchungstag*) · the Columns step can switch it
+      - **owner and admin only**, unchanged
+      - edit sheet: **existing** categories and accounts only, nothing created there
+      - a payee rule remembers **the category only**
+      - Review row: payee + a **grey purpose line**
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-32…35, 37
+  - id: D-DATA-38
+    question: Bank import · compare the book with the bank's balance?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **yes, Free, app + web** · when the file states a balance and everything went into one account
+      - equal → *Matches the bank* · different → *Bank: … · Book: …* + *Check balance*
+      - the Balance check opens **with the bank's figure filled in**, marked *From the bank file* (the bank's number, not the app's)
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-39, 41, 42
+  - id: D-DATA-39
+    question: Open a CSV with Money Koi?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **yes, Free, app** · a CSV tapped in Files, Downloads or the banking app opens the import into the active book
+      - the app decides by content: backup → restore, table → import, else *can't be opened*
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-36, 41
+  - id: D-DATA-40
+    question: Monthly import reminder?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **yes, Pro, app** · per book, a month after the last import into it · off by default
+      - switched on from *Remind in a month* on the result screen and in Settings › Notifications
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-40, 41
+  - id: D-DATA-41
+    question: Bank import · defaults and what stays out
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - format name = the target account's name, editable · **at most 20** formats (the 21st replaces the least used, after asking)
+      - paywall name *Bank import with saved formats* · opt-in usage event *import done* (recognized yes/no, row bucket)
+      - out: an *Import bank file* entry on the account page
+      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-36, 38
