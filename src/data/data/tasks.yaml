@@ -35,14 +35,59 @@ items:
     title: Bank CSV files for the import corpus
     owner: gerald
     detail: |
+      - **first thing to do** · the bank import was built 2026-11-10 on **synthetic** files · no real export was in the corpus
+      - unproven until then: preamble IBAN + balance, payee / purpose columns, pending rows, the cleaner's words (R-DATA-76, R-DATA-94)
       - create `../moneykoi-imports/` · private · never inside moneykoi-app
       - DKB Girokonto (+ Visa if used) · Raiffeisen bankdirekt
       - per account **two exports overlapping by a few weeks** · a second account of the same bank if there is one
-      - gates phase 0 of `plans/BANK_CSV_IMPORT_PLAN.md` · decides D-DATA-27
+      - then the corpus test + checks C-DATA-057…061
+    command: |
+      mkdir -p /Users/gerald/Projects/moneykoi/moneykoi-imports
+      # copy the exports in, then
+      cd /Users/gerald/Projects/moneykoi/moneykoi-app
+      TZ=Europe/Vienna fvm flutter test test/features/data_import/corpus/
   - id: T-DATA-06
     title: Rewind drops balance checks · server
     owner: ai
+    status: done
     detail: |
+      - **done in code 2026-11-10** · `20261110160000_bank_import.sql` restores them in `internal.rewind_columns` · applying it: T-DATA-07
       - found 2026-11-10 · `internal.rewind_columns` in `20261022120000_forecast_sources.sql` lost booking `reconciliation_id` / `adjustment_type` and the `reconciliation` / `reconciliation_line` entries (`20260929120000_reconciliation.sql:1233-1235` had them)
-      - fix = a new server migration restoring them · rides `BANK_CSV_IMPORT_PLAN.md` §9 item 5 unless done earlier · Gerald applies it
       - E-DATA-69
+  - id: T-DATA-07
+    title: Apply the bank-import migration · server first
+    owner: gerald
+    detail: |
+      - `20261110160000_bank_import.sql` · written, **not applied** · local → prod · dev is paused since 2026-11-08 (by hand only)
+      - **before the app build ships**: the app pushes `profile_setting.import_formats` + `booking.import_ref` · without them every settings push with a saved format fails (E-DATA-88)
+      - also carries the rewind fix (T-DATA-06, E-DATA-69) · never `db reset`
+    command: |
+      # 1 local
+      cd /Users/gerald/Projects/moneykoi/moneykoi-supabase
+      supabase migration up
+      psql "postgresql://postgres:postgres@127.0.0.1:54322/postgres" -c "SELECT internal.rewind_columns('booking') @> ARRAY ['reconciliation_id', 'adjustment_type', 'import_ref'];"   # t
+      # 2 dev (paused · only if resumed): by hand
+      supabase link --project-ref dpmemqshhdnanywcvsod && supabase db push
+      # 3 prod: commit, push main (CI runs db push), then
+      psql "$PROD_DATABASE_URL" -c "select version from supabase_migrations.schema_migrations where version = '20261110160000';"
+      psql "$PROD_DATABASE_URL" -c "SELECT tablename FROM pg_publication_tables WHERE pubname = 'supabase_realtime' AND tablename = 'import_payee_rule';"
+  - id: T-DATA-08
+    title: Deploy the web after the migration
+    owner: gerald
+    waitsFor: [T-DATA-07]
+    detail: |
+      - the web import writes `import_ref` on every booking · without the migration it fails at the first insert
+      - web port of the bank import: built by another session · state not verified here
+      - then C-DATA-066 + C-DATA-052
+    command: |
+      # moneykoi-web deploys on push to main · or Actions → Deploy → Run workflow
+      cd /Users/gerald/Projects/moneykoi/moneykoi-web
+      git status --short
+  - id: T-DATA-09
+    title: Play Data safety · IBAN fingerprint
+    owner: gerald
+    detail: |
+      - new on the server for Cloud users: a saved format's IBAN hash + last four + the key (R-DATA-84)
+      - falls under *Other financial info* · already declared, Cloud only → **review, likely no change**
+      - answer sheet: `STORE_LISTING_AI_CONTEXT.md` §8.1 · the listing may say *stored only as a fingerprint*
+      - same pass as T-PRIV-03

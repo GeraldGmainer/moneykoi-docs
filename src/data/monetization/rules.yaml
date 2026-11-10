@@ -186,6 +186,19 @@ items:
       - file: test/features/backup/use_cases/export_all_data_use_case_test.dart
         name: without Pro nothing is read or saved
     related: [D-DATA-12, D-DATA-13, R-DATA-02, R-DATA-20, R-DATA-22]
+  - id: R-MON-59
+    group: Data stays yours
+    title: Bank import · comfort is Pro
+    text: |
+      - `Feature.statementImport` live since 2026-11-10 · paywall *Bank import with saved formats*
+      - the import itself + everything that protects the book stays free (R-DATA-74)
+      - paywall page: *The first file of a bank is mapped once. Every later file goes straight to Review, with its account and categories set.*
+      - its points: *Payees remember their category* · *Every row can be edited before the import* · *A monthly reminder for the next file*
+    source: feature.dart · en.json `paywall.detail.statementImport.*` · BOOKING_IMPORT §1
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: no recognition, no learned payees, no format saved, no row edit
+    related: [R-DATA-74, R-MON-21, D-DATA-19]
   # Store & purchases
   - id: R-MON-30
     group: Store & purchases

@@ -27,6 +27,7 @@ items:
       - Apple label: "Product interaction", not linked, not tracking
       - full Play answer sheet, every data type: `STORE_LISTING_AI_CONTEXT.md` §8.1
       - financial data + receipt photos: **Cloud only** · without an account the server gets none
+      - 2026-11-10: *Other financial info* now also covers a saved import format's IBAN fingerprint + its key (Cloud only, never the IBAN) → review with T-DATA-09 · R-DATA-84
   - id: T-PRIV-04
     title: Sentry DPA
     owner: gerald

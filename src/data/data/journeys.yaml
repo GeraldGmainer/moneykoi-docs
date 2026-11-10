@@ -164,7 +164,7 @@ items:
   # CSV
   - id: J-DATA-20
     group: CSV in & out
-    title: Imports a bank CSV
+    title: Imports any CSV, step by step
     from: owner or admin
     steps:
       - File → Columns → Accounts → Categories → Review
@@ -176,6 +176,119 @@ items:
       - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
         name: import writes, then the result step offers undo
     checks: [C-DATA-009]
+    related: [J-DATA-22, J-DATA-23]
+  # Bank import (2026-11-10)
+  - id: J-DATA-22
+    group: Bank import
+    title: First file of a bank
+    from: Pro, owner or admin
+    steps:
+      - "*Import bookings* → *Choose a CSV file*"
+      - "Columns → Accounts → Categories → *Review*"
+      - "*Save this format* ticked · *Format name*"
+      - "*Import bookings (n)*"
+    result: "bookings in · *Format saved: {name}*"
+    note: "Free: same steps · *Save this format* wears the lock"
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: takes every step; on Review the format is offered under the account name (D-BANK-38)
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: Save this format sits ticked right above the Import button, with the name it will get
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a saved format and learned payees are named on the result card
+    checks: [C-DATA-057, C-DATA-065]
+    related: [R-DATA-83, J-DATA-20]
+  - id: J-DATA-23
+    group: Bank import
+    title: Next month, same bank
+    from: Pro, a saved format
+    steps:
+      - "choose the new file"
+      - "*Recognized: {name}* → straight to *Review*"
+      - "new rows ticked · *n already imported* below"
+      - "*Import bookings (n)*"
+    result: "*Matches the bank: {amount}* · or *Bank: … · Book: …*"
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: lands on Review with the saved mapping, the format and the file facts
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: 'two overlapping exports: the second adds only the rows the first did not have'
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a balance that matches is one line, without a button
+    checks: [C-DATA-060, C-DATA-061]
+    related: [R-DATA-81, R-DATA-78, R-DATA-90]
+  - id: J-DATA-24
+    group: Bank import
+    title: Fixes a row · payee learned
+    from: Pro, on *Review*
+    steps:
+      - "tap the row → *Edit row*"
+      - "pick the category → *Apply*"
+      - "*Import bookings (n)*"
+    result: "*1 payee learned* · next file shows *Learned*"
+    tests:
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a row tap opens the edit sheet; Apply hands the edit to the cubit
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: only a category picked or changed in the import teaches a rule (D-BANK-21)
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a learned payee rule beats the category the file names (D-BANK-21)
+    checks: [C-DATA-064, C-DATA-068]
+    related: [R-DATA-85, R-DATA-86]
+  - id: J-DATA-25
+    group: Bank import
+    title: Transfer between own accounts
+    from: Pro, on *Review*
+    steps:
+      - "row arrives as *Transfer to {account}*"
+      - "or *Edit row* → *Make it a transfer*"
+      - "*To account* → pick · *Apply*"
+      - "*Import bookings (n)*"
+    result: "one transfer, on the paying account"
+    note: the other account's file later shows that row as *Possible duplicate*
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a transfer is booked once, on the paying account, with the key of the row it came from
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a suggested transfer opens as one and can be turned back into a booking
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'a transfer counts on both accounts: from this one as an expense, to it as income (plan §5.3)'
+    checks: [C-DATA-061]
+    related: [R-DATA-87, R-DATA-79]
+  - id: J-DATA-26
+    group: Bank import
+    title: Opens a CSV from Files or mail
+    from: any plan, owner or admin
+    steps:
+      - "tap the `.csv` → Money Koi"
+      - "File step: *Into {book}*"
+      - "*Next* → the usual steps"
+    result: "import loaded with that file"
+    note: member → *Only the owner or an admin of this book can import bookings into it*
+    tests:
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a CSV opens the booking import with the file loaded, not the restore
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a file opened with Money Koi starts the wizard loaded, into the active book
+    checks: [C-DATA-062]
+    related: [R-DATA-91, J-DATA-07]
+  - id: J-DATA-27
+    group: Bank import
+    title: Balance differs → Balance check
+    from: any plan, after an import
+    steps:
+      - "result: *Bank: … · Book: …*"
+      - "*Check balance*"
+      - "that day · one field filled · *From the bank file*"
+      - "save the count"
+    result: "difference booked · book = bank"
+    tests:
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a balance that differs opens the Balance check with the bank figure, never in the route name
+      - file: test/features/reconciliation/reconciliation_cubit_test.dart
+        name: 'opened from a bank file: its day, the one account filled and labelled, the rest blank'
+    checks: [C-DATA-067]
+    related: [R-DATA-90, R-BC-11]
   - id: J-DATA-21
     group: CSV in & out
     title: Exports bookings

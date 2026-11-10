@@ -1,4 +1,5 @@
-# Source: BACKUP_RESTORE_AI_CONTEXT.md §0, §4c–§4h, §6, §10; BOOKING_IMPORT §16; BOOKING_EXPORT §10.
+# Source: BACKUP_RESTORE_AI_CONTEXT.md §0, §4c–§4h, §6, §10; BOOKING_IMPORT §16; BOOKING_EXPORT §10;
+# BANK_CSV_IMPORT_PLAN.md §1 (D-BANK-1…43 = D-DATA-19…41), §1d (D-DATA-42, 43).
 items:
   - id: D-DATA-1
     question: Who may create a backup?
@@ -143,6 +144,7 @@ items:
       - upsell: *Save this format* shown locked · one line on the result screen
       - import stays free (D-DATA-12) · Pro is the monthly convenience
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-1
+      - **built 2026-11-10** · R-DATA-74
     related: [D-DATA-12, D-DATA-11]
   - id: D-DATA-20
     question: Saved import formats · whose, where, when?
@@ -155,6 +157,7 @@ items:
       - *Save this format* ticked by default
       - recognized file → banner *Recognized: …* → straight to *Review* · earlier steps via back
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-3…6, 15, 17
+      - **built 2026-11-10** · R-DATA-81, R-DATA-82, R-DATA-83
     related: [D-DATA-19]
   - id: D-DATA-21
     question: Bank CSV rows · description, editing, pending?
@@ -165,6 +168,7 @@ items:
       - Pro edits per row: date · description · amount · income/expense · category · labels · account · make transfer
       - pending rows (*Vorgemerkt*) imported **unticked**
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-8, 9, 13
+      - **built 2026-11-10** · R-DATA-75, R-DATA-80, R-DATA-86
     related: [D-DATA-19]
   - id: D-DATA-22
     question: Already imported rows · how recognized?
@@ -175,6 +179,7 @@ items:
       - exact across phones, reinstalls and the web · free
       - hand-typed bookings: same account, side, amount within **±3 days** (was the same day)
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-10, 12
+      - **built 2026-11-10** · R-DATA-77, R-DATA-79
     related: [D-DATA-19]
   - id: D-DATA-23
     question: IBAN and own-account transfers
@@ -185,6 +190,7 @@ items:
       - tells two accounts of one bank apart
       - counterparty IBAN = an own account → *Transfer to …* suggested · editable
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-11, 14
+      - **built 2026-11-10** · R-DATA-84, R-DATA-87
     related: [D-DATA-26]
   - id: D-DATA-24
     question: Learned payees · scope and reach
@@ -194,6 +200,7 @@ items:
       - payee → category **per book**, synced (web + partner)
       - read by the import only · quick booking and scanner unchanged
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-7, 18
+      - **built 2026-11-10** · R-DATA-85
   - id: D-DATA-25
     question: Bank CSV import on the web · when?
     status: decided
@@ -202,6 +209,7 @@ items:
       - **same release as the app**
       - web first catches up: payee field, category guess (D-DATA-15), opening move (D-DATA-17)
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-16
+      - **app built 2026-11-10** · web port by another session, state not verified here (T-DATA-08)
     related: [D-DATA-33]
   - id: D-DATA-26
     question: Bank import · which key for the IBAN hash?
@@ -211,6 +219,7 @@ items:
       - **a random per-user key, synced** with the saved formats · the web matches IBANs too
       - server holds key + hash = pseudonymous, not secret · listing says *stored only as a fingerprint*
       - plan D-BANK-19
+      - **built 2026-11-10** · R-DATA-84
     related: [D-DATA-23]
   - id: D-DATA-27
     question: Bank file with one combined text, no payee column · build a text cleaner?
@@ -220,6 +229,7 @@ items:
       - **cleaner built from the words of real files only** · each word cites its corpus file
       - `Bezahlung Karte MC/0001234 BILLA DANKT 1234 WIEN` → `BILLA DANKT WIEN`, cut to 20
       - plan D-BANK-26
+      - **built 2026-11-10 on synthetic files** · real words wait for T-DATA-05 · R-DATA-76
   - id: D-DATA-28
     question: Bank changed its export (other headers) · update the saved format or save a second?
     status: decided
@@ -227,6 +237,7 @@ items:
     answer: |
       - **offer *Update "…"*** when the target account is the same · no second entry
       - plan D-BANK-20
+      - **built 2026-11-10** · R-DATA-83
   - id: D-DATA-29
     question: Where do *Saved import formats* and *Learned payees* live?
     status: decided
@@ -235,6 +246,7 @@ items:
       - **Settings › Backup & restore**, next to *Import bookings*
       - formats: rename, delete · payees: change category, delete
       - plan D-BANK-25
+      - **built 2026-11-10** · R-DATA-83, R-DATA-89
   - id: D-DATA-30
     question: Keep the full payee uncut on the booking?
     status: decided
@@ -242,6 +254,7 @@ items:
     answer: |
       - **no** · `booking.merchant_name` stays unused
       - plan D-BANK-24
+      - **kept 2026-11-10** · nothing built, nothing stored
   - id: D-DATA-31
     question: Which imported rows teach a payee rule?
     status: decided
@@ -250,6 +263,7 @@ items:
       - **only rows whose category was picked or changed** in the import
       - next time **the rule beats a category the file itself names**
       - plan D-BANK-21
+      - **built 2026-11-10** · R-DATA-85
   - id: D-DATA-32
     question: Transfer suggestion · Free too?
     status: decided
@@ -257,6 +271,7 @@ items:
     answer: |
       - **Pro only** · own IBANs come only from saved formats
       - plan D-BANK-23
+      - **built 2026-11-10** · R-DATA-87
   - id: D-DATA-33
     question: Web category guess without the app's keyword map and merchant registry?
     status: decided
@@ -264,6 +279,7 @@ items:
     answer: |
       - **payee rules → booking history (exact, then word) → category names** · the rest picked by hand
       - plan D-BANK-22
+      - web port by another session · state not verified here (T-DATA-08)
     related: [D-DATA-25]
   - id: D-DATA-34
     question: Bank import · rows already in the book, and rows deleted after an import
@@ -274,6 +290,7 @@ items:
       - a booking deleted after its import: **unticked as *Deleted earlier*** while this phone's trash holds it (30 days) · after that, on another phone or the web, it counts as new
       - ±3-day matches (*Possible duplicate*) stay in the main list, unticked
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-27, 28
+      - **built 2026-11-10** · R-DATA-78
     related: [D-DATA-22]
   - id: D-DATA-35
     question: Bank import · a recognized file with new names, or two accounts and no IBAN
@@ -283,6 +300,7 @@ items:
       - category or account names never mapped → **that step opens with only those names**, then *Review*
       - two accounts of one bank, no IBAN in the file → **account pill on the banner** (*Recognized: … → Giro*), tappable, last used preselected
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-29, 31
+      - **built 2026-11-10** · R-DATA-82
     related: [D-DATA-20]
   - id: D-DATA-36
     question: Bank import · what does undo take back?
@@ -291,6 +309,7 @@ items:
     answer: |
       - **everything**: the bookings, a newly saved format (or the previous version of an updated one), the payee rules this import learned
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-30
+      - **built 2026-11-10** · R-DATA-88
   - id: D-DATA-37
     question: Bank import · the details
     status: decided
@@ -302,6 +321,7 @@ items:
       - a payee rule remembers **the category only**
       - Review row: payee + a **grey purpose line**
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-32…35, 37
+      - **built 2026-11-10** · R-DATA-94, R-DATA-89, R-DATA-86, R-DATA-85, R-DATA-75
   - id: D-DATA-38
     question: Bank import · compare the book with the bank's balance?
     status: decided
@@ -311,6 +331,7 @@ items:
       - equal → *Matches the bank* · different → *Bank: … · Book: …* + *Check balance*
       - the Balance check opens **with the bank's figure filled in**, marked *From the bank file* (the bank's number, not the app's)
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-39, 41, 42
+      - **app built 2026-11-10** · R-DATA-90, R-BC-11 · web: state not verified here
   - id: D-DATA-39
     question: Open a CSV with Money Koi?
     status: decided
@@ -319,6 +340,7 @@ items:
       - **yes, Free, app** · a CSV tapped in Files, Downloads or the banking app opens the import into the active book
       - the app decides by content: backup → restore, table → import, else *can't be opened*
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-36, 41
+      - **built 2026-11-10** · R-DATA-91
   - id: D-DATA-40
     question: Monthly import reminder?
     status: decided
@@ -327,6 +349,7 @@ items:
       - **yes, Pro, app** · per book, a month after the last import into it · off by default
       - switched on from *Remind in a month* on the result screen and in Settings › Notifications
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-40, 41
+      - **built 2026-11-10** · R-DATA-92
   - id: D-DATA-41
     question: Bank import · defaults and what stays out
     status: decided
@@ -336,3 +359,20 @@ items:
       - paywall name *Bank import with saved formats* · opt-in usage event *import done* (recognized yes/no, row bucket)
       - out: an *Import bank file* entry on the account page
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-36, 38
+      - **built 2026-11-10** · R-DATA-83, R-PRIV-23
+  - id: D-DATA-42
+    question: Backup format · bump the version for the learned-payee entity?
+    status: open
+    answer: |
+      - `BACKUP_FORMAT.md` §6 says a new entity bumps the version · the build kept **1**, like the earlier added entities
+      - a) **keep 1 + reword §6**: an optional entity is no bump · old files restore, old readers ignore it · recommended
+      - b) bump to 2 · needs an upcaster + an old-version fixture in app and web
+    related: [R-DATA-93, R-DATA-07]
+  - id: D-DATA-43
+    question: "*Download all data* · include the saved import formats?"
+    status: open
+    answer: |
+      - today: **not** in the archive · same strip as the backup file
+      - a) **leave them out**: they hold book and account ids + the IBAN key, no personal text · recommended
+      - b) include them **without the key** · the GDPR copy is then complete, the hashes useless
+    related: [R-DATA-93, R-DATA-20, D-DATA-13]

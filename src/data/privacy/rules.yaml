@@ -224,8 +224,9 @@ items:
     group: Usage statistics
     title: No money, names, ids or text
     text: |
-      - events: consent · session · screen · booking created · paywall shown · scan saved
+      - events: consent · session · screen · booking created · paywall shown · scan saved · import done
       - scan: route, counts, parser kind, never the shop
+      - import (`import_completed`): recognized yes/no + a row-count bucket · never a bank, name, IBAN or amount
       - event names never renamed or reused
     source: USAGE_STATS §4
     tests:
@@ -233,6 +234,9 @@ items:
         name: carry the names and props the server and the dashboard expect
       - file: test/features/usage_stats/domain/usage_event_test.dart
         name: a scan clamps its counts and carries only enums and flags
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: import_completed carries a flag and a bucket, never a count, a name or an id
+    related: [R-DATA-84]
   - id: R-PRIV-24
     group: Usage statistics
     title: Stats never compete with sync

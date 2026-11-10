@@ -29,6 +29,18 @@ items:
     tests:
       - file: test/features/reconciliation/reconciliation_math_test.dart
         name: a blank account produces neither a line nor a booking
+  - id: R-BC-11
+    group: Counting
+    title: A count can open from a bank file
+    text: |
+      - import result › *Check balance* → the bank's day · that account's field filled
+      - labelled *From the bank file* · the bank's number, not the app's
+      - every other account blank · typing over it drops the label · nothing saved until *Save*
+    source: BOOKING_IMPORT §19 · RECONCILIATION §4
+    tests:
+      - file: test/features/reconciliation/reconciliation_cubit_test.dart
+        name: 'opened from a bank file: its day, the one account filled and labelled, the rest blank'
+    related: [R-DATA-90, R-BC-03]
   - id: R-BC-05
     group: Counting
     title: "Cards + loans: amount owed"

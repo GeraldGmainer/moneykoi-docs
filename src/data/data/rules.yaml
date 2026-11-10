@@ -1,4 +1,4 @@
-# Source: BACKUP_RESTORE_AI_CONTEXT.md, BOOKING_IMPORT_AI_CONTEXT.md, BOOKING_EXPORT_AI_CONTEXT.md,
+# Source: BACKUP_RESTORE_AI_CONTEXT.md, BOOKING_IMPORT_AI_CONTEXT.md (bank layer: §9a, §9b, §17–§20), BOOKING_EXPORT_AI_CONTEXT.md,
 # DATA_PORTABILITY_AI_CONTEXT.md, moneykoi-app lib/features/monetization/domain/feature.dart.
 items:
   # Backup files
@@ -242,7 +242,9 @@ items:
     text: |
       - into the active book · bookings + needed accounts, categories, labels
       - nothing written before **Import**
+      - a bank's monthly file: comfort parts are **Pro** → R-DATA-74
     source: BOOKING_IMPORT §1
+    related: [R-DATA-74]
     tests:
       - file: test/features/data_import/use_cases/commit_import_use_case_test.dart
         name: a member who may not import is refused before anything is written
@@ -273,15 +275,18 @@ items:
       - bad dates or amounts · zero amounts
       - each with row number + reason
       - **no category is not a skip** since 2026-11-03 (D-DATA-15) → R-DATA-40
-    source: BOOKING_IMPORT §5
-    related: [R-DATA-40]
+      - a row can **become** a transfer since 2026-11-10 → R-DATA-87
+    source: BOOKING_IMPORT §5, §16 D12
+    related: [R-DATA-40, R-DATA-87]
   - id: R-DATA-40
     group: CSV import
     title: No category → guessed, else picked in Review
     text: |
       - category column optional · a bank CSV imports (D-DATA-15, replaces D11)
       - guess from payee, then description · same engine as quick booking · only existing categories, same side
-      - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* … · only a clue, never the booking text
+      - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* …
+      - the payee also **names the booking** since 2026-11-10 → R-DATA-75 · before: only a clue
+      - Pro: a learned payee answers before the guess → R-DATA-85
       - Review: the category is a pill, tap → change it · no guess → *Choose a category*, unticked, can't be ticked
       - nothing imports without a category
     source: BOOKING_IMPORT §4, §8a
@@ -292,17 +297,28 @@ items:
         name: without a guess it is never selected, by a tap or by Select all
       - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
         name: a category picked in Review selects it and stays with the draft
-    related: [D-DATA-15]
+    related: [D-DATA-15, R-DATA-75, R-DATA-85]
   - id: R-DATA-34
     group: CSV import
     title: Duplicates start unticked
-    text: same account, day, side, amount · counted pairwise · description ignored
-    source: BOOKING_IMPORT §9
+    text: |
+      - same account, side, amount · within **±3 days** since 2026-11-10 · before: the same day
+      - counted pairwise · description ignored
+      - a row an import brought is found by its key first → R-DATA-77
+      - row label: one of three states → R-DATA-78 · before: one duplicate label
+    source: BOOKING_IMPORT §9, §9a, §16 D7
+    tests:
+      - file: test/features/data_import/domain/import_duplicate_matcher_test.dart
+        name: a hand-typed booking within three days is a possible duplicate; four days is not
+    related: [R-DATA-77, R-DATA-78, R-DATA-79]
   - id: R-DATA-35
     group: CSV import
     title: Cut to server limits
-    text: description 20 · account + category names 20 · labels 24
+    text: |
+      - description 20 · account + category names 20 · labels 24
+      - description = the payee since 2026-11-10 → R-DATA-75
     source: BOOKING_IMPORT §5
+    related: [R-DATA-75]
   - id: R-DATA-36
     group: CSV import
     title: No currency handling
@@ -328,8 +344,10 @@ items:
       - deleted for good, not trashed
       - items used since are kept
       - a moved starting balance goes back as it was (R-DATA-41)
+      - a saved format + learned payees go back too → R-DATA-88
       - leave the page → undo gone
     source: BOOKING_IMPORT §11
+    related: [R-DATA-88]
     tests:
       - file: test/features/data_import/use_cases/undo_import_use_case_test.dart
         name: a moved starting balance is put back as it was (D-DATA-17)
@@ -340,7 +358,7 @@ items:
   - id: R-DATA-39
     group: CSV import
     title: Insert or skip, never update
-    text: never changes existing bookings · never rebuilds rules
+    text: never changes existing bookings · never rebuilds recurring rules
     source: BOOKING_IMPORT §13
   - id: R-DATA-41
     group: CSV import
@@ -359,6 +377,392 @@ items:
         name: rows up to the opening day move it back to the earliest one; today still ends at the typed balance
       - file: test/features/data_import/use_cases/commit_import_use_case_test.dart
         name: history up to a starting balance moves the opening, written last and kept on the receipt (D-DATA-17)
+
+  # Bank import (2026-11-10)
+  - id: R-DATA-74
+    group: Bank import
+    title: Import free · monthly comfort is Pro
+    text: |
+      - free: the import · re-import key · ±3-day check · *Deleted earlier* · pending rows · balance compare · open-with
+      - **Pro**: saved formats · learned payees · row editing · transfer suggestion · import reminder
+      - one wizard · Pro parts wear the lock → paywall *Bank import with saved formats*
+      - Free result screen: one line *With Pro, the next file from this bank goes straight to Review*
+    source: BOOKING_IMPORT §1, §9b, §17 · feature.dart `statementImport`
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: no recognition, no learned payees, no format saved, no row edit
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a purchase made mid-wizard counts for the import
+    related: [R-MON-21, R-MON-59, D-DATA-19, D-DATA-12]
+  - id: R-DATA-75
+    group: Bank import
+    title: Description = the payee
+    text: |
+      - expense → the payee · income → the payer · cut to **20**
+      - trailing legal form dropped · *REWE Markt GmbH* → *REWE Markt*
+      - empty payee (fee, interest) → the purpose text
+      - purpose: a grey line in Review · not saved on the booking
+    source: BOOKING_IMPORT §5, §9
+    tests:
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: the payee names an expense, the payer an income, the purpose a row with neither
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: a trailing legal form goes when something is left
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: 'every row says what it is: purpose, pending, possible duplicate, learned, transfer'
+    related: [D-DATA-21, D-DATA-30, R-DATA-35]
+  - id: R-DATA-76
+    group: Bank import
+    title: One combined bank text is cleaned
+    text: |
+      - only a file without a payee or payer column
+      - removed: the leading phrase · card + terminal tokens · IBANs · digit runs ≥ 4
+      - `Bezahlung Karte MC/0001234 BILLA DANKT 1234 WIEN` → `BILLA DANKT WIEN`
+      - all noise → the original stays · word list from **synthetic** files so far (T-DATA-05)
+    source: BOOKING_IMPORT §20
+    tests:
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: each line of the Raiffeisen fixtures is cleaned down to its merchant
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: a text without bank noise is left alone, and an all-noise text keeps its original
+    related: [D-DATA-27, T-DATA-05]
+  - id: R-DATA-77
+    group: Bank import
+    title: Re-import key on every imported booking
+    text: |
+      - `booking.import_ref` · Free too · synced → exact across phones, reinstalls, the web
+      - made from: the account the row was read into · day · signed amount · payee · purpose
+      - **never** from a Review edit, the row number or a balance column
+      - counted, not just found · two identical coffees stay two
+    source: BOOKING_IMPORT §9a, §13
+    tests:
+      - file: test/features/data_import/domain/import_ref_test.dart
+        name: 'a draft hashes its file row: the side signs the amount, an edit changes nothing'
+      - file: test/features/data_import/domain/import_ref_test.dart
+        name: 'same row, other account: the key stays apart (D-BANK-43)'
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a row moved to another account in Review keeps its key (D-BANK-43)
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: two identical coffees on one day stay two
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: a booking carries its import_ref to the row and back
+    related: [D-DATA-22, R-DATA-78]
+  - id: R-DATA-78
+    group: Bank import
+    title: Three duplicate states
+    text: |
+      - *Already imported* · key in the book → collapsed group below, unticked, tickable
+      - *Deleted earlier* · key in this phone's trash, 30 days → same group
+      - *Possible duplicate* · ±3-day match → main list, unticked
+      - *Select all* never ticks the collapsed group
+    source: BOOKING_IMPORT §9, §9a
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'a row whose key is in the book is already imported: collapsed, unticked, still tickable'
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'a key in the trash: deleted earlier (D-BANK-28)'
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: Select all never ticks the rows that are already in the book (D-BANK-27)
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: the rows already in the book sit in one closed group below; open, they are rows like any other
+    related: [D-DATA-34, R-DATA-34, R-DATA-79]
+  - id: R-DATA-79
+    group: Bank import
+    title: Who joins the ±3-day check
+    text: |
+      - hand-typed, scanned and recurring bookings
+      - rows imported while pending · the booked twin comes with other text
+      - **both** legs of every transfer · the other account's file finds it
+      - a booked bank row: found only by its own key
+    source: BOOKING_IMPORT §9a
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a booked bank row is only found by its own key; one imported while pending still pairs
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'a transfer counts on both accounts: from this one as an expense, to it as income (plan §5.3)'
+      - file: test/features/data_import/domain/import_duplicate_matcher_test.dart
+        name: pairwise, the nearest day first
+      - file: test/features/data_import/domain/import_duplicate_matcher_test.dart
+        name: three days across the autumn clock change are still three days
+    related: [R-DATA-34, R-DATA-78]
+  - id: R-DATA-80
+    group: Bank import
+    title: Pending rows start unticked
+    text: |
+      - status *Vorgemerkt*, *pending*, *ausstehend*, *未確定* → *Pending at the bank*
+      - unticked whatever else it is · can be ticked
+    source: BOOKING_IMPORT §9, §20
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a pending row starts unticked and can be ticked (D-BANK-13)
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: a pending row is a draft that says so (D-BANK-13)
+    related: [D-DATA-21]
+  - id: R-DATA-81
+    group: Bank import
+    title: Saved formats · straight to Review
+    text: |
+      - **Pro** · the user's, not a book's · usable in any book
+      - recognized by header names + delimiter + column count · no values
+      - recognized → *Review* with banner *Recognized: {name}* + account pill
+      - *Change* or back → every step again
+    source: BOOKING_IMPORT §17
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: lands on Review with the saved mapping, the format and the file facts
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: 'back and Change leave the shortcut: the earlier steps show in full again'
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: 'next month hashes the same: the preamble values and the rows stay out'
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a recognized file names its format and its account on a pill; Change goes back to Columns
+    related: [D-DATA-20, D-DATA-35, R-DATA-82, R-DATA-83]
+  - id: R-DATA-82
+    group: Bank import
+    title: A format's account and names, per book
+    text: |
+      - file's IBAN → that account · no IBAN → the one used last
+      - an IBAN no entry has → asked · **never** guessed
+      - asked once per book, then remembered
+      - names never answered → their step, only *New in this file*, then Review
+    source: BOOKING_IMPORT §17
+    tests:
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: 'the account: the file IBAN decides, else the last used, else nothing (D-BANK-6, D-BANK-31)'
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: names answered last time are applied; unseen ones are reported (D-BANK-29)
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: names nobody answered for yet stop at their step, with only those (D-BANK-29)
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: the account pill sets the file account and runs the duplicate check again (D-BANK-31)
+    related: [D-DATA-20, D-DATA-35]
+  - id: R-DATA-83
+    group: Bank import
+    title: Saving a format
+    text: |
+      - *Save this format* above the Import button · ticked by default · name = the account's name
+      - other headers, same account → *Update "{name}"* · no second entry
+      - at most **20** · the 21st asks, then replaces the least recently used
+      - managed in Settings › Backup & restore › *Saved import formats* · rename, delete
+    source: BOOKING_IMPORT §17
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: the import hands the commit the format to keep current, ticked by default (D-BANK-15)
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: takes every step; on Review the format is offered under the account name (D-BANK-38)
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'the bank changed its export: the same entry gets the new fingerprint and columns (D-BANK-20)'
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: a 21st format replaces the least recently used one (D-BANK-38)
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: 'formats: the name, the account with the last four of its IBAN, when it was used; delete asks first'
+    related: [D-DATA-28, D-DATA-29, D-DATA-41]
+  - id: R-DATA-84
+    group: Bank import
+    title: "IBAN: fingerprint only"
+    text: |
+      - stored: a keyed hash + the last four · **never** the full IBAN
+      - key: random per user · synced with the formats → the web matches too
+      - server holds key + hash → pseudonymous, not secret
+      - listing may say *stored only as a fingerprint* · never *never on the server*
+    source: BOOKING_IMPORT §13, §17 · STORE_LISTING §1, §8.1
+    tests:
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'a new format: the mapping, the account with its IBAN as a hash, and a key made once'
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: a file without an IBAN makes no key; an existing key is kept
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a new key is 32 random bytes, and another key gives another hash
+    related: [D-DATA-23, D-DATA-26, T-DATA-09, T-PRIV-03]
+  - id: R-DATA-85
+    group: Bank import
+    title: Learned payees
+    text: |
+      - **Pro** · payee → category · per book · synced
+      - taught only by a category **picked or changed** in the import · never an accepted guess
+      - next file: the rule beats the category the file names → *Learned*
+      - read by the import only · remembers the category only
+      - `REWE MARKT 4711` = `REWE Markt GmbH` · a refund is its own rule
+    source: BOOKING_IMPORT §18
+    tests:
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: only a category picked or changed in the import teaches a rule (D-BANK-21)
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a learned payee rule beats the category the file names (D-BANK-21)
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a rule answers before the file category, for the normalized payee and the row side only
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: the key folds case, umlauts, digits and punctuation, and is cut to 64
+    related: [D-DATA-24, D-DATA-31, R-DATA-89]
+  - id: R-DATA-86
+    group: Bank import
+    title: Editing a row in Review
+    text: |
+      - **Pro** · row tap → *Edit row* · amount · side · date · description · account · category · labels · *Make it a transfer*
+      - pickers: the book's items + what this import creates · nothing created in the sheet
+      - Free: the tap opens the paywall · tick box + category pill keep working
+      - edits survive a step back · gone with a new column mapping
+    source: BOOKING_IMPORT §9b
+    tests:
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a row tap opens the edit sheet; Apply hands the edit to the cubit
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: an edit overrides date, amount, description, labels and category; a flipped side asks for a category
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: edits survive a trip back to an earlier step and are cleared by a new mapping
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: an edited row is written as edited, under the key of the file row
+    related: [D-DATA-21, D-DATA-37]
+  - id: R-DATA-87
+    group: Bank import
+    title: Transfers from a bank file
+    text: |
+      - made in *Edit row*, or suggested · counterparty IBAN = an own account
+      - suggestion: **Pro** · own IBANs are known only from saved formats
+      - booked **once**, on the paying account · no category
+      - a row the file itself calls a transfer: still skipped (R-DATA-33)
+    source: BOOKING_IMPORT §9b, §16 D12
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a transfer is booked once, on the paying account, with the key of the row it came from
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a suggested transfer has no category, is ticked, and never points at its own account
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a counterparty IBAN that is an own account of this book suggests it
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: making a row a transfer hides the category and asks for the other account
+    related: [D-DATA-23, D-DATA-32, R-DATA-33]
+  - id: R-DATA-88
+    group: Bank import
+    title: Undo takes everything back
+    text: |
+      - the bookings · a newly saved format · the payees this import learned
+      - an updated format → as it was · a format the 21st pushed out returns
+      - a failed import saves no format and no payee
+    source: BOOKING_IMPORT §10, §11
+    tests:
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: undo takes the format and the rules back with the bookings
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: undo removes a new format and writes an updated one back as it was (D-BANK-30)
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: a failed import saves no format and no rule
+    related: [D-DATA-36, R-DATA-38]
+  - id: R-DATA-89
+    group: Bank import
+    title: Who may
+    text: |
+      - import · learned payees · reminder: **owner or admin**
+      - members read *Learned payees* · can't change them
+      - formats are the user's own
+      - Pro ended → both pages read-only with the lock · nothing deleted
+    source: BOOKING_IMPORT §17, §18 · plan §1c, §10.2
+    tests:
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: 'payees: the learned key and its category; a member reads and cannot change'
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: rename and delete; all of it refused without Pro
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: without Pro nothing is learned, and a direct change is refused
+    related: [D-DATA-37, D-DATA-29]
+  - id: R-DATA-90
+    group: Bank import
+    title: Balance compare after the import
+    text: |
+      - Free · when the file states a balance + every imported row went into **one** account
+      - equal → *Matches the bank: {amount}* · no button
+      - different → *Bank: … · Book: …* · *{n} rows not imported* · *Check balance*
+      - *Check balance* → Balance check on that day · the bank's figure filled, *From the bank file*
+      - a card: the debt compares whichever sign the bank writes
+    source: BOOKING_IMPORT §19
+    tests:
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'equal at the currency precision: matches; the book is read at the end of the stated day'
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'different: both figures, and the bank figure is what the count field takes'
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'a card: the debt compares whichever sign the bank writes, and the field takes the amount owed'
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'no stated balance, no day, more than one account or an unknown account: no compare'
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a failing compare never fails the import
+    related: [D-DATA-38, R-BC-11]
+  - id: R-DATA-91
+    group: Bank import
+    title: Open a CSV with Money Koi
+    text: |
+      - Free · app only · from Files, Downloads or a mail attachment
+      - decided by **content**: a zip → restore · a table of 2+ columns → import · else *This file can't be opened*
+      - into the active book · the File step says *Into {book}*
+      - a member gets the owner-or-admin note · nothing is read
+    source: BOOKING_IMPORT §19
+    tests:
+      - file: test/features/data_import/service/opened_file_sniffer_test.dart
+        name: text that reads as a table is an import, with its name and bytes, whatever it is called
+      - file: test/features/data_import/service/opened_file_sniffer_test.dart
+        name: a ZIP is a backup, whatever it is called
+      - file: test/features/data_import/service/opened_file_sniffer_test.dart
+        name: binary data, one column of words and an empty file are not a table
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a CSV opens the booking import with the file loaded, not the restore
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a file that is neither a backup nor a table says it cannot be opened
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a file opened with Money Koi starts the wizard loaded, into the active book
+    related: [D-DATA-39, J-DATA-07]
+  - id: R-DATA-92
+    group: Bank import
+    title: Import reminder
+    text: |
+      - **Pro** · per book · 30 days after the last import into it · off by default
+      - switched on: *Remind in a month* on the result · Settings › Notifications › *Import reminder*
+      - overdue → once per 30 days, never daily · another phone's import moves it
+      - tap → the import for that book
+    source: BOOKING_IMPORT §19
+    tests:
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: thirty days after the last import, at the reminder time
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: an overdue reminder repeats once per interval, never daily
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: armed a month after the newest imported booking, one id per book, tap names the book
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: off by default; nothing without Pro, for a member, or in a book that never imported
+    related: [D-DATA-40, R-NTF-15]
+  - id: R-DATA-93
+    group: Bank import
+    title: Formats stay out of a backup · payees go in
+    text: |
+      - `.moneykoi`: learned payees + every booking's re-import key
+      - saved formats: **not** in the file · the user's, not the book's
+      - *Download all data*: no formats either → D-DATA-43
+      - the Pro → Cloud claim carries the formats up · server's key wins
+    source: BOOKING_IMPORT §17, §18 · BACKUP_FORMAT.md §1a, §4, §6
+    tests:
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: a backup file never carries the formats; the claim does (BACKUP_FORMAT.md, plan §10.1)
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a book id inside the document follows the claim (plan §10.1)
+    related: [D-DATA-42, D-DATA-43, R-DATA-04]
+  - id: R-DATA-94
+    group: Bank import
+    title: What the file itself says
+    text: |
+      - account: exactly one valid IBAN above the header
+      - balance: a line naming *Kontostand*, *Saldo*, *Balance*, *残高* · else the newest booked row's balance column
+      - date = the booking day · a value-day column is never picked by itself · *Columns* can switch
+      - read from **synthetic** DKB + Raiffeisen files only · real ones: T-DATA-05
+    source: BOOKING_IMPORT §20
+    tests:
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: exactly one valid IBAN in the preamble is the account; two leave it open
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: without a preamble balance, the running-balance column of the newest booked row counts
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: the booking day is the date; a value-day column is never claimed for it (D-BANK-32)
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: 'keeps the preamble: one account IBAN and the stated balance with its day'
+    related: [D-DATA-37, T-DATA-05]
 
   # Booking export
   - id: R-DATA-50

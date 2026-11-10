@@ -331,8 +331,9 @@ items:
     title: Which data is live
     text: |
       - live: bookings · recurring · shopping · goals · loans
-      - live: investments · tags · balance checks · forecast
+      - live: investments · tags · balance checks · forecast · learned payees (`import_payee_rule`)
       - next pull: accounts · categories · receipts · members · prices
+      - saved import formats ride the settings row · synced with it (R-DATA-81)
     source: OFFLINE_FIRST §3
     tests:
       - file: test/core/offline_first/realtime_test.dart

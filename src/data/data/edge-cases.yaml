@@ -1,4 +1,4 @@
-# Source: BACKUP_RESTORE_AI_CONTEXT.md §4–§9, BOOKING_IMPORT §3–§13, BOOKING_EXPORT §4–§7,
+# Source: BACKUP_RESTORE_AI_CONTEXT.md §4–§9, BOOKING_IMPORT §3–§13 + §17–§20 and BANK_CSV_IMPORT_PLAN.md §1c, §1d, BOOKING_EXPORT §4–§7,
 # DATA_PORTABILITY §5–§6.
 items:
   # Backup & restore
@@ -264,6 +264,244 @@ items:
     status: by-design
     risk: medium
 
+  # Bank import (2026-11-10)
+  - id: E-DATA-70
+    group: Bank import
+    title: Two IBANs above the header
+    when: the lines above the header hold two valid IBANs
+    then: "no account IBAN · the account is asked or the last used · never guessed"
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: exactly one valid IBAN in the preamble is the account; two leave it open
+    related: [R-DATA-94, R-DATA-82]
+  - id: E-DATA-71
+    group: Bank import
+    title: A format's account was deleted
+    when: recognized file · its account in this book is gone
+    then: "that book entry no longer counts · the account is asked again"
+    status: handled
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: 'the account: the file IBAN decides, else the last used, else nothing (D-BANK-6, D-BANK-31)'
+    related: [R-DATA-82]
+  - id: E-DATA-72
+    group: Bank import
+    title: The bank changed its export
+    when: new header names or column count, same account
+    then: |
+      - not recognized → every step once more
+      - *Review* offers *Update "{name}"* · same entry, no second one
+    status: handled
+    risk: medium
+    tests:
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: 'the bank changed its export: the same entry gets the new fingerprint and columns (D-BANK-20)'
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: 'bound for an account a saved format already books into: offered as an update (D-BANK-20)'
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a column that moved is found by its header; one that is gone makes the format unusable
+    related: [R-DATA-83, D-DATA-28]
+  - id: E-DATA-73
+    group: Bank import
+    title: The same file again
+    when: a file imported before is chosen again
+    then: "every row *Already imported* · collapsed, unticked · nothing to import"
+    status: handled
+    risk: high
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'a row whose key is in the book is already imported: collapsed, unticked, still tickable'
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: two identical rows against one booking leave one new (multiset)
+    related: [R-DATA-77, R-DATA-78]
+  - id: E-DATA-74
+    group: Bank import
+    title: Two overlapping exports
+    when: October file, then one from mid-October on
+    then: "shared rows collapsed as *Already imported* · only the new ones ticked"
+    status: handled
+    risk: high
+    tests:
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: 'two overlapping exports: the second adds only the rows the first did not have'
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: two overlapping exports add each row once
+    related: [R-DATA-77, C-DATA-060]
+  - id: E-DATA-75
+    group: Bank import
+    title: Imported, deleted, imported again
+    when: booking deleted after its import · the file comes again
+    then: |
+      - this phone, trash still holds it (30 days) → *Deleted earlier*, unticked
+      - later, another phone, the web → counts as **new**
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'a key in the trash: deleted earlier (D-BANK-28)'
+      - file: test/features/data_import/domain/import_duplicate_matcher_test.dart
+        name: 'a key in the trash: deleted earlier, after the live ones are used up'
+    related: [D-DATA-34, E-DATA-84]
+  - id: E-DATA-76
+    group: Bank import
+    title: Pending row booked later
+    when: row imported while pending · next file has it booked, other text
+    then: "other key → *Possible duplicate* within ±3 days, unticked"
+    status: handled
+    risk: medium
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a booked bank row is only found by its own key; one imported while pending still pairs
+      - file: test/features/data_import/domain/import_ref_test.dart
+        name: a pending row and a bank reference have their own prefixes
+    related: [R-DATA-79, R-DATA-80]
+  - id: E-DATA-77
+    group: Bank import
+    title: Two cards, same shop, same day
+    when: two accounts pay the same amount to one payee on one day
+    then: "keys differ by account · both import · neither hides the other"
+    status: handled
+    risk: medium
+    tests:
+      - file: test/features/data_import/domain/import_ref_test.dart
+        name: two accounts paying the same shop on the same day stay apart; the id case does not matter
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: the same row read into another account has another key
+    related: [R-DATA-77]
+  - id: E-DATA-78
+    group: Bank import
+    title: A 21st format
+    when: 20 formats saved · one more is saved
+    then: |
+      - *Replace a saved format?* names the least recently used
+      - *Replace* → it goes · undo brings it back
+    status: handled
+    risk: low
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: with 20 formats saved, the least recently used one is the replace candidate
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: a 21st format replaces the least recently used one (D-BANK-38)
+    related: [R-DATA-83, R-DATA-88]
+  - id: E-DATA-79
+    group: Bank import
+    title: Recognized, but no row reads
+    when: a saved mapping reads no row of this file
+    then: "stays on *Columns* · *None of the rows can be read with these columns*"
+    status: handled
+    risk: low
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a saved mapping that reads no row stays on Columns with the no-rows error
+    related: [R-DATA-81]
+  - id: E-DATA-80
+    group: Bank import
+    title: Pro ended, formats saved
+    when: Pro lapses · formats and learned payees exist
+    then: |
+      - import works by hand again · no recognition, nothing learned
+      - both pages read-only with the lock · **nothing** deleted
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: no recognition, no learned payees, no format saved, no row edit
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: rename and delete; all of it refused without Pro
+    related: [R-DATA-74, R-DATA-89]
+  - id: E-DATA-81
+    group: Bank import
+    title: A member opens a CSV
+    when: a member taps a `.csv` → Money Koi
+    then: "*Only the owner or an admin of this book can import bookings into it* · file not read"
+    status: handled
+    risk: low
+    tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a member who opens a file gets the owner-or-admin state, and nothing is read
+    related: [R-DATA-91, R-DATA-89]
+  - id: E-DATA-82
+    group: Bank import
+    title: Two phones learn one payee offline
+    when: both pick a category for the same payee before syncing
+    then: "both rules sync · the newest counts · no stuck upload"
+    status: by-design
+    risk: low
+    related: [R-DATA-85]
+  - id: E-DATA-83
+    group: Bank import
+    title: Offline book promoted to Cloud
+    when: a saved format books into an offline book → the book goes to Cloud
+    then: |
+      - the format's book entry follows on the phone at once
+      - reaches the server with the next format or settings save
+      - until then the web asks for that book's account once
+    status: known-issue
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a book id inside the document follows the claim (plan §10.1)
+    related: [R-DATA-82, R-DATA-93]
+  - id: E-DATA-84
+    group: Bank import
+    title: "Web: no *Deleted earlier*"
+    when: a booking deleted after its import · the file is imported on the web
+    then: "the web has no trash → the row counts as new"
+    status: by-design
+    risk: low
+    related: [E-DATA-75, D-DATA-34]
+  - id: E-DATA-85
+    group: Bank import
+    title: A second CSV while one is open
+    when: import holds a file · another `.csv` is opened
+    then: "the new import opens above · the first stays on back · an import holding nothing is replaced"
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a second CSV replaces an import that holds nothing yet
+    related: [R-DATA-91]
+  - id: E-DATA-86
+    group: Bank import
+    title: Phone that never saved a format
+    when: formats saved on the web or another phone · this phone changes a setting
+    then: "settings push leaves the formats out · nothing erased"
+    status: handled
+    risk: high
+    tests:
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: the row carries the document; a device that never saved one keeps what the row holds
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: pushed only once this device holds a real document
+    related: [R-DATA-81]
+  - id: E-DATA-87
+    group: Bank import
+    title: A learned payee's category is gone
+    when: category deleted, or it got subcategories
+    then: "rule skipped · row guessed as usual · rule removed at the next import"
+    status: handled
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_format_test.dart
+        name: a rule whose category is gone or has subcategories is skipped, and listed as dead
+      - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
+        name: save writes, undo deletes the created and sets the changed back, dead rules are swept
+    related: [R-DATA-85]
+  - id: E-DATA-88
+    group: Bank import
+    title: App build before the server migration
+    when: a format is saved · server lacks `profile_setting.import_formats`
+    then: |
+      - every settings push with a saved format fails
+      - imported bookings with a key fail to upload too
+      - order: T-DATA-07 **before** the build ships
+    status: known-issue
+    risk: high
+    related: [T-DATA-07]
+
   # Export & erase
   - id: E-DATA-50
     group: Export & erase
@@ -348,9 +586,9 @@ items:
     title: Rewind leaves deleted balance checks out
     when: backup with a balance check → the check or its correction deleted → *Bring back* / *Rewind* into the same book
     then: |
-      - the check is skipped (its columns are missing from the rewind list since 2026-10-22)
-      - a deleted correction booking comes back without its check link · likely refused by the server's booking-shape check · not reproduced
-      - fix: T-DATA-06
-    status: known-issue
+      - **fixed in `20261110160000_bank_import.sql`** · the rewind list has booking's `reconciliation_id` + `adjustment_type` and both balance-check entities again
+      - live once Gerald applies the migration (T-DATA-07) · until then as before
+      - was: the check skipped · a deleted correction came back without its check link
+    status: fixed
     risk: medium
-    related: [T-DATA-06]
+    related: [T-DATA-06, T-DATA-07]

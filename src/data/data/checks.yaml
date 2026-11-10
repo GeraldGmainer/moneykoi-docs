@@ -106,3 +106,31 @@ groups:
     items:
       - id: C-DATA-054
         text: "CSV import of a bank file with a payee column → each row gets its own category guess · payee mapped · account and currency hints on their steps · export → currency column reads `EUR` · a description `=1+1` exports as `'=1+1`, amounts like `-12.5` stay numbers · import that file → `=1+1` again · same on the web"
+  - id: bank-import
+    title: Bank import · 2026-11-10
+    setup: Built on **synthetic** bank files only · real exports first (T-DATA-05) · Pro (simulator) unless a line says Free · server migration applied (T-DATA-07)
+    items:
+      - id: C-DATA-057
+        text: "Real DKB Girokonto export → account IBAN + *Kontostand* read · the payee names each booking · purpose as a grey line · *Vorgemerkt* rows unticked, *Pending at the bank*"
+      - id: C-DATA-058
+        text: "Real DKB Visa export → no IBAN · the merchant names the booking · the foreign-currency column is not the amount · balance line right for a card that owes"
+      - id: C-DATA-059
+        text: "Real Raiffeisen export (no header) → date, text, amount found · each text cleaned down to the merchant · wrong or missing cleaner words noted"
+      - id: C-DATA-060
+        text: "Two exports of one account overlapping by weeks → the second adds each row once · the rest under *n already imported* · same file again → nothing to import"
+      - id: C-DATA-061
+        text: "Second account of the same bank → same format recognized · its IBAN picks the other account · a file without IBAN → account pill, last used · a transfer between both is suggested"
+      - id: C-DATA-062
+        text: "Tap a `.csv` in Files and in a mail attachment · Android + iPhone · app closed and app open → import loaded, *Into {book}* · a `.moneykoi` still opens the restore · a photo → *This file can't be opened*"
+      - id: C-DATA-063
+        text: "Result → *Remind in a month* → permission asked → reminder *Time for the bank file* fires 30 days later (time travel) → tap opens the import for that book, from another book too"
+      - id: C-DATA-064
+        text: "Review → tap a row → *Edit row* → amount on the app keypad · phone + tablet → *Apply* → the row shows the new amount · *Reset to the file* puts it back"
+      - id: C-DATA-065
+        text: "Simulator *Free* → Review: *Save this format* locked → paywall *Bank import with saved formats* · row tap → paywall · tick boxes + category pill work · result shows the Pro hint line"
+      - id: C-DATA-066
+        text: "After the migration: format + learned payee saved on phone A → phone B and the web recognize the next file, rows show *Learned*"
+      - id: C-DATA-067
+        text: "Untick one row → import → *Bank: … · Book: …* + *1 row not imported* → *Check balance* → count page on the bank's day, one field filled, *From the bank file*"
+      - id: C-DATA-068
+        text: "Backup & restore → *Saved import formats*: rename, delete · *Learned payees*: *Change category*, delete · a member reads only · simulator *Free* → both locked, entries kept"

@@ -14,6 +14,7 @@ erDiagram
   ACCOUNT |o--o{ RECONCILIATION : "target_account_id"
   BOOKING ||--o{ BOOKING_TAG : "booking_id"
   TAG ||--o{ BOOKING_TAG : "tag_id"
+  CATEGORY ||--o{ IMPORT_PAYEE_RULE : "category_id"
   ACCOUNT {
     numeric initial_balance
     numeric current_balance "kept by triggers"
@@ -27,6 +28,11 @@ erDiagram
     numeric amount "always positive"
     date date
     text adjustment_type "corrections only"
+    text import_ref "re-import key, bank import"
+  }
+  IMPORT_PAYEE_RULE {
+    text payee_key
+    text category_type "income or expense"
   }
   RECEIPT {
     jsonb photos

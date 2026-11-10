@@ -78,6 +78,20 @@ items:
       - shared book stopped · resumed · deleted
     source: NOTIFICATIONS §1, §5
     related: [R-FC-31, R-BC-09, R-BOOK-35]
+  - id: R-NTF-15
+    group: Channels
+    title: Import reminders
+    text: |
+      - channel *Import reminders* · **Pro** · off by default
+      - *Time for the bank file* · 30 days after the last import into the book
+      - Settings shows *Import reminder* only with Pro · tap opens the import for that book
+    source: NOTIFICATIONS §1 · BOOKING_IMPORT §19
+    tests:
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: the channel id is the one Android stores, in its own id block
+      - file: test/features/data_import/use_cases/import_extras_test.dart
+        name: off by default; nothing without Pro, for a member, or in a book that never imported
+    related: [R-DATA-92]
   - id: R-NTF-14
     group: Channels
     title: A tap lands on the subject

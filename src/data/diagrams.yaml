@@ -45,12 +45,14 @@
   caption: |
     - every table also has `tenant_id` (book) + `profile_id` (creator)
     - booking: categorized · transfer (`to_account_id`) · correction (`reconciliation_id`)
+    - `import_payee_rule` = a learned payee of the bank import · not on the server until `20261110160000_bank_import.sql` is applied
     - `receipt_id` has no foreign key
   sources:
     - {repo: supabase, file: supabase/migrations/20251017000005_booking.sql}
     - {repo: supabase, file: supabase/migrations/20260929120000_reconciliation.sql}
     - {repo: supabase, file: supabase/migrations/20260925120000_transaction_tags.sql}
-  checked: 2026-10-17
+    - {repo: supabase, file: supabase/migrations/20261110160000_bank_import.sql}
+  checked: 2026-11-11
 - id: db-planning
   title: Budgets, goals, loans, forecast and shopping
   page: database
