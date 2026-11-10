@@ -133,3 +133,10 @@ items:
     date: 2026-11-10
     answer: |
       - **no** in v1 · planned-payments page + form only
+  - id: D-FC-23
+    question: Bill scan · direct-debit invoice reminder?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **off** · sheet says *Collected automatically*
+      - every other scanned bill: on · 2 days before

@@ -100,3 +100,36 @@ items:
     answer: |
       - same day + same amount → the scan's save sheet **asks**
       - *replace the draft* preselected
+  - id: D-BKG-17
+    question: Auto-capture · a refund notification?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **income draft** · category from that merchant's income bookings
+      - none found → user must pick one before *Book*
+  - id: D-BKG-18
+    question: Auto-capture · where do waiting drafts show?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **Home system card** · only while drafts wait · not in the editor
+      - + a row in the inbox
+  - id: D-BKG-19
+    question: Auto-capture · which apps can be picked?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **curated bank list** only · grown per release
+      - missing bank → request via feedback
+  - id: D-BKG-20
+    question: Auto-capture · waiting drafts after a Pro lapse?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - still **bookable** or dismissable · only new captures stop
+  - id: D-BKG-21
+    question: Auto-capture · only one platform passes phase 0?
+    status: decided
+    date: 2026-11-10
+    answer: |
+      - **ship the passing one** · the other waits for a re-test
