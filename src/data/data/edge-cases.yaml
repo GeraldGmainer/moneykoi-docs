@@ -449,10 +449,20 @@ items:
     group: Bank import
     title: "Web: no *Deleted earlier*"
     when: a booking deleted after its import · the file is imported on the web
-    then: "the web has no trash → the row counts as new"
+    then: "the web has no trash → the row counts as new · IMPORT_WEB §1"
     status: by-design
     risk: low
-    related: [E-DATA-75, D-DATA-34]
+    related: [E-DATA-75, D-DATA-34, R-DATA-95]
+  - id: E-DATA-91
+    group: On the web
+    title: "Web: edit dialog ignores the money format"
+    when: a row's amount is edited in the web import dialog
+    then: |
+      - plain text field · dot or comma = decimal mark · not the user's money format
+      - labels typed comma-separated, not picked
+    status: known-issue
+    risk: low
+    related: [R-DATA-97]
   - id: E-DATA-85
     group: Bank import
     title: A second CSV while one is open

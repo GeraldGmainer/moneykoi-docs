@@ -77,12 +77,15 @@ items:
     waitsFor: [T-DATA-07]
     detail: |
       - the web import writes `import_ref` on every booking · without the migration it fails at the first insert
-      - web port of the bank import: built by another session · state not verified here
-      - then C-DATA-066 + C-DATA-052
+      - web bank import built 2026-11-11 · uncommitted · 6007 vitest tests pass, `tsc` clean · **never run against a real database**
+      - `npm run lint` fails with 33 errors · all in code this work did not touch (e.g. `layout.tsx:139`, unchanged from HEAD) → Gerald's call whether that blocks the deploy
+      - then C-DATA-069…073 + C-DATA-066 + C-DATA-052
     command: |
-      # moneykoi-web deploys on push to main · or Actions → Deploy → Run workflow
       cd /Users/gerald/Projects/moneykoi/moneykoi-web
+      export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:$PATH"
+      npm run lint          # 33 errors today, pre-existing
       git status --short
+      # deploys on push to main · or Actions → Deploy → Run workflow
   - id: T-DATA-09
     title: Play Data safety · IBAN fingerprint
     owner: gerald

@@ -116,7 +116,7 @@ items:
     status: decided
     date: 2026-11-06
     answer: |
-      - **a) dated history moves the opening** · the import result says so · built 2026-11-09 · R-DATA-41 · web not yet
+      - **a) dated history moves the opening** · the import result says so · built 2026-11-09 · R-DATA-41 · web built 2026-11-11
       - before: the setup's starting balance is *today's* balance · the import adds every older row on top · Bank 2,000 → 8,606.38 €
       - a) dated history moves the opening: the account still ends at the typed balance today
       - b) keep adding · the import's *Accounts* step warns and offers to clear the starting balance
@@ -209,7 +209,7 @@ items:
       - **same release as the app**
       - web first catches up: payee field, category guess (D-DATA-15), opening move (D-DATA-17)
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-16
-      - **app built 2026-11-10** · web port by another session, state not verified here (T-DATA-08)
+      - **app built 2026-11-10 · web built 2026-11-11** · R-DATA-95 · both uncommitted · web never run against a real database (T-DATA-07, T-DATA-08)
     related: [D-DATA-33]
   - id: D-DATA-26
     question: Bank import · which key for the IBAN hash?
@@ -279,7 +279,7 @@ items:
     answer: |
       - **payee rules → booking history (exact, then word) → category names** · the rest picked by hand
       - plan D-BANK-22
-      - web port by another session · state not verified here (T-DATA-08)
+      - **built 2026-11-11** · R-DATA-96
     related: [D-DATA-25]
   - id: D-DATA-34
     question: Bank import · rows already in the book, and rows deleted after an import
@@ -331,7 +331,7 @@ items:
       - equal → *Matches the bank* · different → *Bank: … · Book: …* + *Check balance*
       - the Balance check opens **with the bank's figure filled in**, marked *From the bank file* (the bank's number, not the app's)
       - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-39, 41, 42
-      - **app built 2026-11-10** · R-DATA-90, R-BC-11 · web: state not verified here
+      - **app built 2026-11-10 · web built 2026-11-11** · R-DATA-90, R-BC-11, R-DATA-97
   - id: D-DATA-39
     question: Open a CSV with Money Koi?
     status: decided

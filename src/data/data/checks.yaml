@@ -100,7 +100,17 @@ groups:
       - id: C-DATA-051
         text: "Web book export → 14 CSVs + README · member: no export"
       - id: C-DATA-052
-        text: Same bank CSV, web vs app → same columns, accounts, categories, duplicates
+        text: "Same bank CSV, web vs app → same columns, accounts, duplicates · a guessed category may differ: the web shows *Choose a category* where the app guesses (R-DATA-96)"
+      - id: C-DATA-069
+        text: "Web, after the migration (T-DATA-07): first file of a bank → *Save this format* → the second file goes straight to *Review*, *Recognized: {name}*"
+      - id: C-DATA-070
+        text: "Web: the same file twice → every row under *n already imported* · nothing to import · app-imported file on the web → the same"
+      - id: C-DATA-071
+        text: "Web, as a member: Settings › Data Management › *Learned payees* lists the rules · no change, no delete · *Saved import formats* still editable"
+      - id: C-DATA-072
+        text: "Format saved on the phone → the web recognizes that bank's next file · format saved on the web → the phone recognizes it · needs T-DATA-07"
+      - id: C-DATA-073
+        text: "Web: file with a stated balance, one row unticked → *Bank: … · Book: …* → *Check balance* → count sheet, one field filled, *From the bank file* · no amount in the address bar"
   - id: release-2-0-0
     title: 2.0.0 · 2026-11-08
     items:

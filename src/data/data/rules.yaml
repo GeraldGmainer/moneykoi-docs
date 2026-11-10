@@ -1,4 +1,4 @@
-# Source: BACKUP_RESTORE_AI_CONTEXT.md, BOOKING_IMPORT_AI_CONTEXT.md (bank layer: §9a, §9b, §17–§20), BOOKING_EXPORT_AI_CONTEXT.md,
+# Source: BACKUP_RESTORE_AI_CONTEXT.md, BOOKING_IMPORT_AI_CONTEXT.md (bank layer: §9a, §9b, §17–§20), moneykoi-web IMPORT_WEB_AI_CONTEXT.md, BOOKING_EXPORT_AI_CONTEXT.md,
 # DATA_PORTABILITY_AI_CONTEXT.md, moneykoi-app lib/features/monetization/domain/feature.dart.
 items:
   # Backup files
@@ -369,7 +369,7 @@ items:
       - rows after that day add as usual · an account without a starting balance just adds them
       - result screen: *Bank: initial balance moved to 9/3/26, so today's balance stays the same*
       - before 2026-11-09: added on top · Bank 2,000 → 8,606.38 € (AND-11-1)
-      - web: still adds on top
+      - web: moves it too since 2026-11-11 · shown on the result · web Undo puts it back
     source: BOOKING_IMPORT §10
     related: [D-DATA-17, R-DATA-38]
     tests:
@@ -841,8 +841,68 @@ items:
     title: "Web CSV import: same wizard"
     text: |
       - Columns → Accounts → Categories → Review
-      - writes straight to the server · exact day range for duplicates
-    source: IMPORT_WEB §7
+      - writes straight to the server
+      - duplicates: ±3 days since 2026-11-11 · before: the exact day
+      - bank layer → R-DATA-95
+    source: IMPORT_WEB §1, §4, §7
+    related: [R-DATA-95, R-DATA-96, R-DATA-97]
+  - id: R-DATA-95
+    group: On the web
+    title: "Web bank import: same engine, no paywall"
+    text: |
+      - built 2026-11-11 · saved formats, learned payees, row editing, transfers, balance compare
+      - **no** lock · every web book is Cloud, Cloud includes Pro
+      - same re-import key as the app · shared vector files, a test fails on drift
+      - states: *Already imported* (collapsed card) · *Possible duplicate* (±3 days) · *Pending at the bank* (unticked) · transfer legs count
+      - not on the web: *Deleted earlier* · open-with · import reminder · usage event
+    source: IMPORT_WEB §1, §4, §7, §9
+    tests:
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: a hand-typed booking within three days is a possible duplicate, on the fourth day it is not
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: 'both legs of a transfer count: out of this account for an expense row, into it for an income row'
+      - file: src/app/(main)/bookings/import/page.test.tsx
+        repo: web
+        name: a recognized file goes straight to Review, with its account, its already imported rows collapsed, and Change back to Columns
+    related: [R-DATA-74, R-DATA-77, R-DATA-78, E-DATA-84, D-DATA-25]
+  - id: R-DATA-96
+    group: On the web
+    title: "Web category guess: history, then names"
+    text: |
+      - order: learned payee → the book's bookings (same description, then a shared word) → category names
+      - **no** keyword map or merchant registry → app may guess where the web says *Choose a category*
+      - category column optional on the web too · a row without a category can't be ticked
+    source: IMPORT_WEB §4.4
+    tests:
+      - file: src/app/(main)/bookings/import/page.test.tsx
+        repo: web
+        name: a bank file without a category column goes on; Review asks for the categories it cannot guess
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: a row without a category cannot be selected, whatever the selection says
+    related: [R-DATA-40, D-DATA-33, D-DATA-15]
+  - id: R-DATA-97
+    group: On the web
+    title: "Web: editing, managing, balance, undo"
+    text: |
+      - row editing in a dialog · existing items + what the import creates · a transfer booked once, on the paying account
+      - Settings › Data Management: *Saved import formats* (every role, own) · *Learned payees* (members read)
+      - *Check balance* → `/balance-check/new` · the bank's figure via sessionStorage, **never** the URL · *From the bank file* until edited
+      - Undo: bookings + format + learned payees + a moved opening
+    source: IMPORT_WEB §4.7–§4.9, §4.12, §6
+    tests:
+      - file: src/app/(main)/bookings/import/page.test.tsx
+        repo: web
+        name: compares the stated balance and hands the bank figure to the balance check outside the URL
+      - file: src/app/(main)/settings/learned-payees/page.test.tsx
+        repo: web
+        name: a member reads the rules and can change none
+      - file: src/app/(main)/bookings/import/services/import.service.test.ts
+        repo: web
+        name: 'takes everything back: a new format, a created and a changed rule, a moved opening (D-BANK-30)'
+    related: [R-DATA-86, R-DATA-89, R-DATA-90, R-DATA-88, E-DATA-91]
   - id: R-DATA-73
     group: On the web
     title: "Web booking export: ledger CSV"
