@@ -86,9 +86,9 @@ items:
         name: a read-only member gets the role hint and no way to add
   - id: R-REC-10
     group: Screens
-    title: Rules + Upcoming
+    title: All + Upcoming
     text: |
-      - **Rules**: cadence · next date · active / paused / ended
+      - **All**: cadence · next date · active / paused / ended
       - **Upcoming**: this month + 12 · month cards + signed net
     source: RECURRING §8
     tests:

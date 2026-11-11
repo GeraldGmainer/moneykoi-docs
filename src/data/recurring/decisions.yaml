@@ -10,3 +10,14 @@ items:
       - built 2026-11-03 · R-REC-14
       - source: iOS simulator round, IOS-12-2
     related: [R-REC-14]
+  - id: D-REC-2
+    question: What does the app call this feature?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **Recurring payment** · de *Wiederkehrende Zahlung* · ja *定期支払い* · every string a user reads
+      - replaced *rule*, *regular payment*, *recurring booking* (de also *Regel*, *Daueraufgabe*, *Dauerauftrag*, *regelmäßige Buchung*; ja five variants)
+      - page *Recurring payments* · editor *New / Edit recurring payment* · list tab *All* · bottom-bar label stays *Recurring* / *Regelmäßig* / *定期*
+      - web copy not changed yet
+    related: [R-REC-10, D-HOM-13]
+
