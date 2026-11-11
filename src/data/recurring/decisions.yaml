@@ -18,6 +18,7 @@ items:
       - **Recurring payment** · de *Wiederkehrende Zahlung* · ja *定期支払い* · every string a user reads
       - replaced *rule*, *regular payment*, *recurring booking* (de also *Regel*, *Daueraufgabe*, *Dauerauftrag*, *regelmäßige Buchung*; ja five variants)
       - page *Recurring payments* · editor *New / Edit recurring payment* · list tab *All* · bottom-bar label stays *Recurring* / *Regelmäßig* / *定期*
+      - German editor title *Neue Zahlung* / *Zahlung bearbeiten*: the full name was cut on a 360 dp phone (decided 2026-11-11)
       - web copy not changed yet
     related: [R-REC-10, D-HOM-13]
 

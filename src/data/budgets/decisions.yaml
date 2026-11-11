@@ -31,3 +31,14 @@ items:
       - **wait for a history** · 30 days since the start or deposits in 2 months · as built 2026-11-06
       - source: Android emulator round, AND-13-1
     related: [E-BUD-44]
+  - id: D-BUD-18
+    question: What do the drawer and the page call budgets and goals?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **Budgets & goals** · de *Budgets & Ziele* · ja *予算と目標* · drawer entry and page title · built 2026-11-11
+      - before: Welcome *Budgets & goals*, drawer *Budget goals*, page *Goals*, Tips *Budgets* + *Savings goals* · four names for one page
+      - the page keeps its *Budgets · Goals · Loans* tabs · the bottom-bar label stays *Goals* · Tips keeps its two rows
+      - web not changed
+      - source: new-user re-test on the iPhone simulator, 2026-11-11
+    related: [D-REC-2]

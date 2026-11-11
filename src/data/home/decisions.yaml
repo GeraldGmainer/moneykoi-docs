@@ -87,8 +87,9 @@ items:
     status: decided
     date: 2026-11-11
     answer: |
-      - hidden until bookings span 2 categories · the editor says why
-      - why: with one booking it repeated *Recent transactions* row for row
+      - hidden until there are **4 bookings in 2 categories** · the editor says why
+      - why: with one booking it repeated *Recent transactions* row for row · at 2 categories alone it still did, two rows each (re-test 2026-11-11)
+      - 4 = one more than the card lists by default
     related: [R-HOM-41]
   - id: D-HOM-13
     question: More onboarding or helper dialogs for new users?
