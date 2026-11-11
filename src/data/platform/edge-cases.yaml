@@ -88,3 +88,18 @@ items:
     status: fixed
     risk: low
     related: [R-PLAT-32]
+  - id: E-PLAT-10
+    group: Screen & layout
+    title: Date picker and quick add at 200 % font
+    when: system font 200 % · small phone · a date field or quick add
+    then: |
+      - fixed 2026-11-11 · the picker scrolls, its text grows to 130 % at most
+      - quick add keeps the field above the keyboard
+      - was: overflow stripes · the quick-add field hidden
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/ui/form/date_picker_sheet_test.dart
+        name: a small phone at twice the font size shows the picker without overflow
+      - file: test/features/quick_add/ui/sheets/quick_booking_sheet_test.dart
+        name: with a large font and little room above the keyboard the preview gives way, not the field
