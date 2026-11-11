@@ -185,3 +185,15 @@ items:
     status: by-design
     risk: medium
     related: [R-SCN-25]
+  - id: E-SCN-21
+    group: Reading
+    title: A row read in two cuts
+    when: "some frames read `0,180 kg (N)` alone, the rest the whole row `0,180 kg (N) x 19,90 EUR/kg`"
+    then: "the whole reading wins the row · before 2026-11-11 both stayed, the row read twice and the article (CHILILEBERKAESE) went missing; on the emulator it showed as *Port. Port.*"
+    status: fixed
+    risk: high
+    related: [E-SCN-18, E-SCN-05]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: a shorter cut of a row that later frames read whole does not stay beside the whole line (real frames, spar_20260914_A)
+
