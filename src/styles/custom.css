@@ -415,3 +415,7 @@ body { font-size: var(--sl-text-body); }
 .mk-road-size { margin-inline-start: auto; font-size: var(--sl-text-xs); color: var(--sl-color-gray-3); border: 1px solid var(--sl-color-gray-5); border-radius: 999px; padding: 0 0.5rem; }
 .mk-road-items .mk-note { margin-top: 0.15rem; }
 @media (max-width: 40rem) { .mk-road-goal { margin-inline-start: 0; flex-basis: 100%; } }
+
+/* Pages without the left menu (home): Starlight caps them at 67.5rem in a scoped rule; the doubled
+   :root outranks it. The width picker only touches pages with a sidebar. */
+:root:root:not([data-has-sidebar]) { --sl-content-width: 80rem; }
