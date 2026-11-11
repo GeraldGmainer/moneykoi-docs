@@ -30,3 +30,11 @@ items:
     answer: |
       - **no · today's balance** · future-dated rows stay in Forecast · same date rule as the balance check · built 2026-11-09 · R-LED-41 · web not yet
       - before: after counting 8,500 € Accounts showed 8,463 € · source: Android emulator round, AND-17-1
+  - id: D-LED-7
+    question: Books set up before the credit card fix?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **left as they are** · a card's starting balance typed in setup before the fix stays positive
+      - the user corrects it by editing the starting balance
+      - why: a positive card balance can also be a real credit on the card · nothing tells the two apart

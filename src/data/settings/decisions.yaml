@@ -25,3 +25,10 @@ items:
       - why: *Step 1 of 6* on the very first screen read as a long setup, though *Quick start* is two screens
       - source: new-user review on Android + iOS, 2026-11-11 · built the same day
     related: [R-SET-10, R-SET-12, J-SET-03]
+  - id: D-SET-4
+    question: "*Rate Money Koi* on iOS before the App Store page exists?"
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **keep the link** · the Apple ID is reserved, the page works the day iOS 1.0 is live
+      - until then only the simulator and TestFlight testers reach an empty page (F-24)

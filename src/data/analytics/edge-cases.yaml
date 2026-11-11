@@ -102,3 +102,16 @@ items:
       - file: test/features/analytics/ui/widgets/period_comparison_card_test.dart
         name: a to-date window is labelled by its days
     related: [E-ANL-07]
+  - id: E-ANL-12
+    group: Numbers
+    title: Chart axis with a dot beside comma amounts
+    when: "a money format with a decimal comma (de) · *Income vs expenses*, *Fixed vs variable*, *Account flow*, *Burn rate*, the trend bars"
+    then: |
+      - fixed 2026-11-11 · axis labels and tooltips write *7,5k*, like the amounts beside them
+      - was: *7.5k* · the forecast chart was fixed the same day (E-FC-33)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/chart/nice_axis_test.dart
+        name: "the analytics cards' compact values carry the money format's decimal separator"
+    related: [E-FC-33]

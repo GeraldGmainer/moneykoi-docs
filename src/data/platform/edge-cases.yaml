@@ -165,8 +165,8 @@ items:
     when: German · 360 dp phone · Home and *Sicherung & Wiederherstellung*
     then: |
       - fixed 2026-11-11 · Home cash flow *EINNAHMEN* / *AUSGABEN* and *Gesamtsaldo* shrink to fit on one line · the backup title takes two lines
-      - was: *EINNAHME…*, *Gesamtsald/o*, *Sicherung & Wiederherstellu…*
-      - still open: Japanese greeting cut, hint chip action on the edge, hint snackbar text at half width, Home forecast x labels running together
+      - fixed the same day · the Japanese greeting shrinks · the scan hint's action keeps its inset · the *Wiederkehrend machen* hint text uses the full bar · a chart prints only as many dates as fit
+      - was: *EINNAHME…*, *Gesamtsald/o*, *Sicherung & Wiederherstellu…*, 「おはようござ…」, the hint text at half width, the Home forecast dates running together
     status: fixed
     risk: low
     tests:
@@ -174,4 +174,12 @@ items:
         name: a narrow phone shrinks a column label instead of cutting it off
       - file: test/features/home/ui/widgets/total_balance_overview_test.dart
         name: a narrow phone keeps the label on one line beside the total
+      - file: test/features/home/ui/screens/home_tab_test.dart
+        name: on a 360 dp phone a greeting too wide for the bar shrinks instead of being cut
+      - file: test/features/getting_started/ui/hints/hint_snackbar_test.dart
+        name: a long action goes under the text, which keeps the whole width of the bar
+      - file: test/features/getting_started/ui/hints/hint_chip_test.dart
+        name: without × the action keeps the same inset from the right edge as the text from the left
+      - file: test/shared/ui/chart/budget_line_chart_test.dart
+        name: a narrow plot prints only as many labels as fit side by side
     related: [E-PLAT-12]

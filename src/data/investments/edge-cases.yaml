@@ -177,3 +177,16 @@ items:
     tests:
       - file: test/features/investment/ui/widgets/quote_as_of_label_test.dart
         name: a recorded value names its day without a clock time it never had
+  - id: E-INV-19
+    group: Valuation
+    title: "*per units* in the price field"
+    when: "*Record value* or *Manual price* on a counted position"
+    then: |
+      - fixed 2026-11-11 · *per unit* · a metal says *per oz t* / *per g* · a coin or a share with a code says *per BTC*
+      - the same label as the opening buy's *Price per …*
+      - was: *1,300 per units*
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/sheets/price_point_save_sheet_test.dart
+        name: a counted asset is priced per unit, not per units

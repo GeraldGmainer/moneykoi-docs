@@ -101,3 +101,12 @@ items:
       - Gerald: "i definitly dont want annoying helper dialogs, that explain every feature"
     related: [D-HOM-11, D-SET-3, D-SCN-05, D-REC-2]
 
+  - id: D-HOM-14
+    question: "Starting balances in Home *Cash flow*?"
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **not income, not an expense** · a starting balance moves only the balance
+      - Home now matches Stats and the Budget Book · the breakdown sheet has no *Initial balances* row
+      - was: setup with bank 2,000 + card 150 owed showed income 2,000 and expenses 160 on day one (F-55)
+    related: [D-HOM-11]
