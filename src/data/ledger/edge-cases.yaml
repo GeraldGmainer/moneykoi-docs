@@ -125,7 +125,7 @@ items:
   - id: E-LED-17
     group: Accounts
     title: Credit card balance typed in setup
-    when: "*Personalize* › credit card › *What is currently owed* 300"
+    when: "*Personalize* › credit card › *Amount owed* 300"
     then: |
       - fixed 2026-11-11 · stored as **−300** · total goes down
       - was: +300 · the debt raised the total
@@ -165,7 +165,8 @@ items:
     title: Credit card in *Set starting balances*
     when: Home's starting-balances dialog (now the checklist item) · Card 500, meaning 500 owed
     then: |
-      - fixed 2026-11-11 · the card row says *What is currently owed* and stores −500 · total goes down by 500
+      - fixed 2026-11-11 · the card row says *Card · amount owed* and stores −500 · total goes down by 500
+      - the dialog types on the app keypad, one row per account, like setup
       - was: stored +500, total up by 500 · setup's own accounts page already did it right (F-20)
     status: fixed
     risk: high
