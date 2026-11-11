@@ -69,7 +69,7 @@ items:
       - **check run 2026-11-07** (agent): terms match the app · privacy 2, 5, 9, 10, 11 corrected (T-PRIV-02) · imprint link in the app (R-SET-46)
       - left for Gerald: prod has the cutover + purchase-data migrations and the Vault key before Nov 8 00:00 (T-MON-01, T-MON-25) · trade registered → GISA number into the imprint (T-MON-11, site S-27) · Sentry DPA + IP setting (T-PRIV-04) · Data safety: Sentry's install id under *Device or other IDs* (T-PRIV-03)
       - decide: a § 27 VGG change clause for paid features (terms 4 + 11) · Sentry logs + traces without consent (D-PRIV-9 was decided for crash reports only) · replace the Google Form with a page + `privacy@` (site S-04)
-      - and the 2026-10-28 asks (site `OPEN_DECISIONS.md` S-25): refund when Cloud lifetime ends — none stated · crash reports on by default · Cloud feature changes (§ 27 VGG) · 7 years for purchase events
+      - and the 2026-10-28 asks (site `OPEN_DECISIONS.md` S-25): refund when Cloud lifetime ends: pro rata over 5 years, terms 4, decided 2026-10-28 · crash reports on by default · Cloud feature changes (§ 27 VGG) · 7 years for purchase events
       - and: every export Pro · free way out for server data? (D-DATA-13)
       - see [Legal](/monetization/legal/)
   - id: T-MON-06
