@@ -3,16 +3,26 @@ items:
     group: Channels
     title: Book switch repeats an alert
     when: budget over in A → switch to B → back to A
-    then: may alert again same period · known gap
-    status: known-issue
+    then: |
+      - fixed 2026-11-11 · no second alert in the same period
+      - was: the pass in B forgot A's alerts
+    status: fixed
     risk: low
+    tests:
+      - file: test/features/budget_goals/budget_over_dedupe_test.dart
+        name: a stamp of a budget in another book survives a pass, so switching back stays quiet
   - id: E-NTF-02
     group: Channels
     title: Booking during the check
     when: booking lands mid-check
-    then: noticed only at the next booking · known gap
-    status: known-issue
+    then: |
+      - fixed 2026-11-11 · the check runs once more when it ends
+      - was: noticed only at the next booking
+    status: fixed
     risk: low
+    tests:
+      - file: test/features/budget_goals/use_cases/budget_over_watcher_test.dart
+        name: a call that lands mid-pass reruns once afterwards instead of being dropped
   - id: E-NTF-03
     group: Channels
     title: App never opened

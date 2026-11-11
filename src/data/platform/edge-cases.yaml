@@ -103,3 +103,28 @@ items:
         name: a small phone at twice the font size shows the picker without overflow
       - file: test/features/quick_add/ui/sheets/quick_booking_sheet_test.dart
         name: with a large font and little room above the keyboard the preview gives way, not the field
+  - id: E-PLAT-11
+    group: Screen & layout
+    title: Amounts ignored the system font size
+    when: system font above 100 % · any amount
+    then: |
+      - fixed 2026-11-11 · amounts grow with the font, up to **130 %**
+      - a screen reader hears one figure · *minus $12.50*, not digit by digit
+      - was: every amount at its fixed size
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/ui/budget_book/money_text_test.dart
+        name: an amount follows the system font size, up to the cap
+      - file: test/shared/ui/budget_book/money_text_test.dart
+        name: a screen reader hears one figure, not the split spans
+  - id: E-PLAT-12
+    group: Screen & layout
+    title: Budget Book summary at 200 % font
+    when: system font 200 % · Budget Book › *Summary*
+    then: |
+      - fixed 2026-11-11 · the three totals stay readable, labels shrink to fit
+      - category rows no longer overflow · their amounts shrink instead
+      - was: tiny totals, *INCO…* · overflow stripes on every row
+    status: fixed
+    risk: medium
