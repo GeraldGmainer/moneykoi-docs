@@ -15,3 +15,13 @@ items:
       - drawer lists *Feedback* for everyone
       - no account → optional reply email · account → *Attach email address*
     related: [R-SET-30, R-SET-33]
+  - id: D-SET-3
+    question: Setup steps · a counter on the first screen, and the calendar page?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **no counter on the first two screens** · *Personalize* counts its own pages, *1 of 3* → *3 of 3*
+      - **calendar page dropped** · week start, month start and date format keep their defaults, Settings → Display formats
+      - why: *Step 1 of 6* on the very first screen read as a long setup, though *Quick start* is two screens
+      - source: new-user review on Android + iOS, 2026-11-11 · built the same day
+    related: [R-SET-10, R-SET-12, J-SET-03]

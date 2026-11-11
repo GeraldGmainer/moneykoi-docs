@@ -12,9 +12,9 @@ groups:
       - id: C-SET-004
         text: Japanese onboarding → JPY + Japanese names · English → USD
       - id: C-SET-005
-        text: Personalize → card off, Cash 120 on the keypad (JPY → no decimals, unit shown) → Home total 120 from the first frame · no *Set starting balances* card · account page shows the balance dated today
+        text: Personalize → card off, Cash 120 on the keypad (JPY → no decimals, unit shown) → Home total 120 from the first frame · the checklist's *Set starting balances* already ticked · account page shows the balance dated today
       - id: C-SET-006
-        text: Personalize → Sunday, month start 25, yyyy-MM-dd → Settings → Display formats show them · Budget Book period starts on the 25th · offline and signed-in alike
+        text: "Welcome → *Get started*: language + method screens show no step counter · *Personalize* → accounts *1 of 3* → questions *2 of 3* → categories *3 of 3* · no calendar page · Settings → Display formats on Monday, calendar month, system date"
       - id: C-SET-007
         text: Personalize → *Expenses* listed right under the switch, *Income* below · *Sub-categories* off → preview shrinks to the groups, counter updates → book has no sub-categories · Home quick-add shows Food & Drink, Personal & Shopping, Transportation
       - id: C-SET-008

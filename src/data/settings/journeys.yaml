@@ -12,14 +12,14 @@ items:
     title: Personalized setup
     from: Welcome → *Get started* → *Personalize*
     steps:
-      - accounts on/off · starting balances on the keypad
-      - start of week · start of month · date format
-      - lifestyle questions → *Continue*
+      - accounts on/off · starting balances on the keypad · *1 of 3*
+      - lifestyle questions → *Continue* · *2 of 3*
       - "*Sub-categories* switch · preview → *Create budget book*"
-    result: book with the chosen accounts, balances dated today, calendar settings, categories
+    result: book with the chosen accounts, balances dated today, categories
     note: |
-      - *Quick start* skips all of it · step counter reads 2 there, 6 here
-      - back from accounts → method choice, counter back to 2
+      - *Quick start* skips all of it · the first two screens show no step counter
+      - no calendar page since 2026-11-11 · week and month start, date format → Settings → Display formats
+      - back from accounts → method choice, no counter
     checks: [C-SET-005, C-SET-006, C-SET-007]
     related: [R-SET-12]
   - id: J-SET-05

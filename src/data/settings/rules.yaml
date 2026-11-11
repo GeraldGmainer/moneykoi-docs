@@ -47,8 +47,8 @@ items:
       - language → currency suggested (English → USD)
       - starter categories come classified
       - no account → fully offline · invitees skip it
-      - *Quick start*: one tap · 4 accounts, 48 categories, no balances → Home keeps *Set starting balances*
-      - one step count on every path (*Step 2 of 6* on the method choice) · the progress screen shows none · starting balances are typed in the picked currency's own format (since 2026-11-06, AND-1-3, AND-1-4)
+      - *Quick start*: one tap · 4 accounts, 48 categories, no balances → the getting-started checklist asks for them (*Set starting balances*, R-HOM-40)
+      - no step count on the first two screens · *Personalize* counts its own pages, *1 of 3* → *3 of 3* (D-SET-3, 2026-11-11; was one count of 6 on every path) · the progress screen shows none · starting balances are typed in the picked currency's own format (AND-1-4)
       - signed in with the wrong account → *Log out* on the first step (web since 2026-10-28)
     source: OFFLINE_TIER §3, ONBOARDING §1, ONBOARDING_WEB §1
     tests:
@@ -60,26 +60,26 @@ items:
       - file: test/features/onboarding/domain/service/category_generation_service_test.dart
         name: classifies the starter book as fixed or variable at the parent level
       - file: test/features/onboarding/ui/pages/onboarding_page_test.dart
-        name: the first step has no back button and continue opens the method choice, one six-step count on every path
+        name: the first two screens carry no step count, so Quick Start never reads as a long setup
   - id: R-SET-12
     group: Onboarding
-    title: Personalize — six steps
+    title: Personalize — three steps
     text: |
       - accounts: the 4 starters as switches · at least one stays on · optional starting balance each (card = what is owed)
-      - calendar: start of week · start of month · date format → written to the profile setting
+      - no calendar step: start of week, start of month and date format start on their defaults and change in Settings (D-SET-3, 2026-11-11)
       - lifestyle questions → categories · *Sub-categories* switch off = main groups only (~13), favorites Food & Drink, Personal & Shopping, Transportation
       - live read-only preview of the tree above *Create budget book* · expenses first, income under them (the switch changes only expenses, 2026-11-09)
-      - a typed balance retires Home's *Set starting balances* card · a balance or calendar write that fails never blocks the setup
+      - a typed balance ticks the checklist's *Set starting balances* · a balance write that fails never blocks the setup
     source: ONBOARDING §2–§5
     tests:
       - file: test/features/onboarding/ui/pages/onboarding_page_test.dart
-        name: personalize walks accounts, calendar, questions and categories, where create asks the bloc to personalize
+        name: "personalize counts its own three pages: accounts, questions and categories, where create asks the bloc to personalize"
       - file: test/features/onboarding/domain/entities/onboarding_preferences_test.dart
         name: the last account on cannot be switched off
       - file: test/features/onboarding/domain/service/category_generation_service_test.dart
         name: keeps only the parents and favors the groups booked most
       - file: test/features/onboarding/use_cases/onboarding_personalize_use_case_test.dart
-        name: retires the Home balance card once a balance was typed in setup
+        name: settles the starting balances once one was typed in setup
       - file: test/features/onboarding/data/onboarding_data_test.dart
         name: a failing balance write never strands the setup
     related: [R-SET-10, R-SET-01]
