@@ -147,3 +147,16 @@ items:
     tests:
       - file: test/app/lifecycle/day_change_announcer_test.dart
         name: a resume after midnight announces a booking change once, so balances reload
+  - id: E-LED-19
+    group: Categories
+    title: Flat categories, seven scanner hints
+    when: flat category set · Categories opened · every scanner bucket missing
+    then: |
+      - fixed 2026-11-11 · **one** hint at a time
+      - dismiss or *Create* → the next bucket's hint
+      - was: seven cards above the list
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/category/ui/widget/scanner_coverage_hints_test.dart
+        name: a book that misses every bucket shows one hint, not a stack
