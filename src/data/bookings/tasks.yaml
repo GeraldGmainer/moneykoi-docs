@@ -1,0 +1,37 @@
+items:
+  - id: T-BKG-01
+    title: Multi-currency · apply the parked server migration on dev
+    owner: gerald
+    detail: |
+      - written 2026-11-11, **not** in `migrations/`: `moneykoi-supabase/supabase/migrations_later/20261111120000_multi_currency.sql`
+      - the app branch `multi-currency` cannot push a booking, rule or account to a server without it (PGRST204) · dev first, before testing the branch
+      - to apply: move it into `supabase/migrations/` with a fresh timestamp later than the newest migration there · re-copy any function body its header lists that changed in between
+      - prod: with the December release, before the app build ships
+      - at move time: `BACKUP_FORMAT.md` §4 gains the optional columns (list in `MULTI_CURRENCY_AI_CONTEXT.md` §4)
+  - id: T-BKG-02
+    title: Multi-currency · web shows, the app enters (D-BKG-35)
+    owner: ai
+    waitsFor: [T-BKG-01]
+    detail: |
+      - lists + detail: original amount and rate under the book amount
+      - a foreign booking: book amount + currency read-only on the web
+      - new booking / rule / transfer forms: no foreign account, no cross-currency pair · note *Foreign-currency entries are made in the app*
+      - accounts, dashboard, balance timeline, forecast: foreign accounts read `native_balance` at today's rate · handle `balance: null` + `accounts_without_rate`
+      - import: `ImportField` learns `originalAmount`, `originalCurrency`, `fxRate` (shared `import_formats_schema.json`)
+    prompt: |
+      Build the web part of multi-currency in moneykoi-web (D-BKG-35, "web shows, the app enters"). Read
+      moneykoi-app/.agents/references/MULTI_CURRENCY_AI_CONTEXT.md §2, §4 and §6, and the parked server migration
+      moneykoi-supabase/supabase/migrations_later/20261111120000_multi_currency.sql for the columns and RPC outputs.
+  - id: T-BKG-03
+    title: Multi-currency · delete the built plan file
+    owner: gerald
+    detail: |
+      - `moneykoi-app/.agents/plans/MULTI_CURRENCY_PLAN.md` · built, its content moved to `MULTI_CURRENCY_AI_CONTEXT.md`
+      - an agent may not delete it here (the auto-mode guard refused)
+  - id: T-BKG-04
+    title: Multi-currency · renumber the local migration if split lands first
+    owner: ai
+    detail: |
+      - the branch takes `migration_v28.sql` · split transactions was pencilled in at v28
+      - whichever merges second takes the next number and bumps `_databaseVersion` · the multi-currency file is plain re-runnable `ADD COLUMN`s
+      - on merge: link the branch's tests to E-BKG-44 … E-BKG-52 (`npm run check` reads tests from the main checkout, so they cannot be linked before)

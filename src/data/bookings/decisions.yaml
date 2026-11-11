@@ -140,6 +140,7 @@ items:
     answer: |
       - **everything in one release** · no phases
       - foreign bookings · foreign recurring rules · foreign-currency accounts · cross-currency transfers
+      - built 2026-11-11 on branch `multi-currency` · app + server migration (parked, T-BKG-01) · web open (T-BKG-02)
   - id: D-BKG-23
     question: Multi-currency · when?
     status: decided

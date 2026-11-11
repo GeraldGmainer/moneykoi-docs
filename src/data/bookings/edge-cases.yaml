@@ -256,3 +256,90 @@ items:
     tests:
       - file: test/features/booking/ui/widgets/amount_display_test.dart
         name: keeps a typed trailing zero
+  - id: E-BKG-44
+    group: Multi-currency
+    title: No exchange rate for the chosen currency
+    when: a currency the feed does not serve (VND, AED …) and never used in this book
+    then: |
+      - *Amount in EUR* stays empty · the rate line says *No exchange rate for VND. Enter the amount in EUR or a rate.*
+      - Save stays disabled until a book amount or a rate is typed · never booked at 1.0
+    status: by-design
+    risk: high
+  - id: E-BKG-45
+    group: Multi-currency
+    title: Book amount typed from the statement
+    when: CZK 250 entered, then *Amount in EUR* set to 10.31
+    then: |
+      - the rate is derived from the two amounts · line reads *From the amount in EUR*
+      - typing the foreign amount again keeps that rate · typing a rate recomputes the EUR amount
+    status: by-design
+    risk: medium
+  - id: E-BKG-46
+    group: Multi-currency
+    title: Back to the book currency
+    when: a CZK booking is switched to EUR in the form
+    then: the EUR amount stays · the CZK amount and the rate are dropped
+    status: by-design
+    risk: low
+  - id: E-BKG-47
+    group: Multi-currency
+    title: Booking on a foreign account
+    when: a CZK account is picked
+    then: |
+      - the chip shows CZK and is fixed · tap says *Bookings on this account are in CZK*
+      - a goal contribution, loan payment or trade booked there gets the CZK amount filled in from today's rate · the book amount stays the one handed over
+    status: by-design
+    risk: high
+  - id: E-BKG-48
+    group: Multi-currency
+    title: Transfer into a foreign account
+    when: EUR 400 from the giro to a CZK account
+    then: |
+      - *Received in CZK* is prefilled from today's rate and editable (the bank's figure)
+      - CZK → CZK needs one figure only · book-wide the transfer still counts 0
+    status: by-design
+    risk: high
+  - id: E-BKG-49
+    group: Multi-currency
+    title: Foreign account without a rate
+    when: an account in a currency with no feed rate and no booking yet
+    then: |
+      - its balance shows in its own currency · *Not converted, no rate for …*
+      - Home's total leaves it out · the card says *1 account without exchange rate*
+    status: by-design
+    risk: high
+  - id: E-BKG-50
+    group: Multi-currency
+    title: Quick add with a currency code
+    when: "`CZK 250 lunch` · `pen 3` · `KWD 1.500`"
+    then: |
+      - upper-case code → CZK booking · a lower-case code only for a currency the book already used or the trip's
+      - `pen 3` stays a pen · KWD 1.500 is 1.5 (three decimals)
+      - Free: the code stays text
+    status: by-design
+    risk: medium
+  - id: E-BKG-51
+    group: Multi-currency
+    title: Book currency change with foreign rows
+    when: Settings → Currency while a foreign booking, rule or account exists (archived accounts too)
+    then: refused with *Not changeable while bookings or accounts in other currencies exist* · the server refuses it too
+    status: by-design
+    risk: high
+  - id: E-BKG-52
+    group: Multi-currency
+    title: Account currency after its first booking
+    when: editing the currency of an account a booking, transfer or rule points at
+    then: the tile is greyed · saving anyway is refused with *The currency is fixed once the account has bookings*
+    status: by-design
+    risk: medium
+  - id: E-BKG-53
+    group: Multi-currency
+    title: Known gaps on the branch
+    when: multi-currency on the `multi-currency` branch, before release
+    then: |
+      - reconciliation history tile sums stored lines · a session with a foreign line mixes currencies there
+      - scanner review shows the book symbol on a trip · the saved bookings are right
+      - a rule tile shows ≈ the book value at save, not today's
+      - a trade in another currency is booked without its original (E36/E37)
+    status: known-issue
+    risk: medium
