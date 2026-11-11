@@ -35,9 +35,10 @@ items:
     title: First week with the checklist
     from: setup done → Home
     steps:
-      - "*Getting started* leads Home · *Add entry* or *Scan a receipt* · side by side from a 411 dp phone, stacked on smaller ones (2026-11-09)"
+      - "*Getting started* leads Home · *Add entry*"
       - first booking → tick + one burst of confetti, gone after ~2.5 s (was 2–3 bursts, ~5 s, until 2026-11-09) · next item opens
-      - regular payment · budget · widget → each ticks from data
+      - "*Set starting balances* → dialog, a card as what is owed → *Save* → ticked · the total stops going negative with the first expense"
+      - scan · recurring payment · budget → each ticks from data
     result: "*All set* once, then the card is gone"
     note: |
       - × hides it at once · Undo in the snackbar

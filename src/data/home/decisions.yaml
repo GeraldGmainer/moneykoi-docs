@@ -49,7 +49,7 @@ items:
     answer: |
       - **no** · typing in starting balances is a count of its own
       - set on Nov 3 (or Oct 31) → no November card · Dec 1 asks again
-      - starting-balance card still open → no balance-check card
+      - starting balances still pending → no balance-check card (the checklist asks for them since 2026-11-11, D-HOM-11)
       - built 2026-11-03
       - source: Gerald's iOS test, book set up Oct 31
     related: [D-HOM-6, R-BC-09]
@@ -71,3 +71,32 @@ items:
       - **Home** · pop to the main route, select Home · built 2026-11-06
       - a form with unsaved changes stays open
       - before: the app resumed whatever page was open · source: Android emulator round, AND-26-4
+  - id: D-HOM-11
+    question: Starting balances, the widget item and the scan button on the checklist?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **the separate *Set starting balance* card is retired** · *Set starting balances* becomes checklist item 2
+      - **the widget item is dropped** · the cap stays at 5 · the widget stays in *Tips & features* and Settings
+      - *Add the first entry* keeps one button · the scan item is the scan (was on the same card three times)
+      - why: after *Quick start* the first expense turned the total negative and the balance card sat below the fold
+      - source: new-user review on Android + iOS, 2026-11-11 · built the same day
+    related: [R-HOM-40, R-HOM-41, D-HOM-8]
+  - id: D-HOM-12
+    question: "*Top expenses* with a single booking?"
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - hidden until bookings span 2 categories · the editor says why
+      - why: with one booking it repeated *Recent transactions* row for row
+    related: [R-HOM-41]
+  - id: D-HOM-13
+    question: More onboarding or helper dialogs for new users?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **no** · no dialog or hint that explains a feature · users learn by using it
+      - subtract instead: fewer doors to the same thing, one page before the first scan, a shorter setup
+      - Gerald: "i definitly dont want annoying helper dialogs, that explain every feature"
+    related: [D-HOM-11, D-SET-3, D-SCN-05, D-REC-2]
+

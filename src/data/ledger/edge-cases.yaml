@@ -160,3 +160,18 @@ items:
     tests:
       - file: test/features/category/ui/widget/scanner_coverage_hints_test.dart
         name: a book that misses every bucket shows one hint, not a stack
+  - id: E-LED-20
+    group: Accounts
+    title: Credit card in *Set starting balances*
+    when: Home's starting-balances dialog (now the checklist item) · Card 500, meaning 500 owed
+    then: |
+      - fixed 2026-11-11 · the card row says *What is currently owed* and stores −500 · total goes down by 500
+      - was: stored +500, total up by 500 · setup's own accounts page already did it right (F-20)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/home/bloc/setup_balance_cubit_test.dart
+        name: stores 500 owed as a balance of -500
+      - file: test/features/home/ui/widgets/onboarding_cards_test.dart
+        name: a credit card row asks what is owed and shows a stored debt unsigned
+
