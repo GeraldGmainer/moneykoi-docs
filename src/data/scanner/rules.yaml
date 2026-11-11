@@ -96,17 +96,20 @@ items:
         name: a failed currency lookup still opens the scanner
   - id: R-SCN-13
     group: The flow
-    title: Beta · first tab says where
+    title: Beta · one page before the first scan
     text: |
       - *BETA* · *Made for Austrian receipts*
       - total, date, photo: most receipts
       - items: tuned for the 8 shops · others a best guess
-      - shown once · help button replays
+      - the only page before the first scan (D-SCN-05, 2026-11-11) · no *Skip*, no progress bar · *Got it, scan a receipt* opens the camera
+      - shown once · help button replays every step, the three camera pages included
     source: SCANNER §4.15g, §4.36
     related: [D-SCN-01]
     tests:
       - file: test/features/receipt/ui/widgets/scanner_onboarding_test.dart
         name: opens on the coverage step
+      - file: test/features/receipt/ui/widgets/scanner_onboarding_test.dart
+        name: "is the only page: no progress bar, no Skip, and the one button starts the camera"
       - file: test/features/receipt/domain/parsers/shop_registry_test.dart
         name: every shop the onboarding lists as itemized has its own parser
   - id: R-SCN-03

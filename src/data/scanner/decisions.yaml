@@ -26,3 +26,13 @@ items:
       - never a leaf outside that parent
       - the parent covers its bucket · no hint
     related: [R-LED-01, R-LED-20, E-SCN-08]
+  - id: D-SCN-05
+    question: Four intro pages before the first scan?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - **one page**: *BETA* + which shops are itemized · then the camera
+      - *Welcome*, *Smart auto-detect*, *Capture the items* only in the help sheet · the camera guides live (*Point at the total line*, *Hold steady*)
+      - source: new-user review, 2026-11-11 · built the same day
+    related: [R-SCN-13, D-HOM-13]
+
