@@ -1,4 +1,4 @@
-# Source: SCANNER_AI_CONTEXT.md §4.36, USAGE_STATS_AI_CONTEXT.md §4.
+# Source: SCANNER_AI_CONTEXT.md §4.36, §4.37, USAGE_STATS_AI_CONTEXT.md §4, SCANNER_CAPTURE_PLAN.md §9.
 items:
   - id: T-SCN-01
     title: Try German TSE QR for real
@@ -32,3 +32,31 @@ items:
       where name = 'scan_saved' and props ? 'parser'
       group by 1, 2
       order by scans desc;
+  - id: T-SCN-04
+    title: "Phone check: resolution matrix"
+    owner: gerald
+    detail: |
+      - debug build · C-SCN-013 · ten minutes
+      - fewer than 4 OCR passes a second at `max` → the fallback is one line in `scanner_cubit_camera.dart`: `ultraHigh`, then `veryHigh`
+  - id: T-SCN-05
+    title: "Phone check: long receipts by hover"
+    owner: gerald
+    detail: |
+      - C-SCN-014, C-SCN-015, C-SCN-016 · thirty minutes
+      - a receipt that will not finish → keep its photo for the corpus inbox
+  - id: T-SCN-06
+    title: Hover videos + whole-receipt photos for the corpus
+    owner: gerald
+    detail: |
+      - 10–15 videos of long receipts, 3 short: camera app, 1080p, portrait, from above the store name to below the QR, paper width filling the screen, ~2–3 cm/s
+      - every receipt > 25 items: one full-resolution photo
+      - both into `moneykoi-receipts/inbox/` · videos named `<receipt id>.mp4` under `hover/` once filed
+    command: |
+      tool/scanner_corpus.sh hover --allow-emulator
+      SCORECARD_SCALE=hover .fvm/flutter_sdk/bin/flutter test test/features/receipt/scorecard_test.dart
+  - id: T-SCN-07
+    title: New onboarding clips 2 and 3
+    owner: gerald
+    detail: |
+      - `assets/onboarding/onboarding_scanner2.mp4` and `…3.mp4` still show the old lock screen and item photos
+      - re-record: hovering down a receipt with ticks · the panel finishing at the total

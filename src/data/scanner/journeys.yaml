@@ -4,22 +4,29 @@ items:
     title: Scans a supermarket receipt
     from: Home quick action *Scan receipt* (or the booking form)
     steps:
-      - hold over the receipt until total, date, shop lock
-      - photograph items part by part
+      - start at the store name, move the phone slowly down · read rows get a tick
+      - the panel counts items and the sum · the hint says what is still needed
+      - items meet the total (QR or *SUMME*) → buzz → optional photo or *Without photo*
+      - "short receipt: one tap on *Capture* instead · *Done* ends early"
       - review → categorize, fix, merge → *Save*
-    result: one booking per item + photo
-    checks: [C-SCN-001]
+    result: one booking per item, + photo when one was taken
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: frames that read the whole receipt end the pass when the items meet the total, then offer the photo
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: "one still of a short receipt is the whole scan: review opens with the photo and its item boxes"
+    checks: [C-SCN-001, C-SCN-014]
   - id: J-SCN-02
     group: Scanning
     title: Scans a restaurant bill
     from: the scanner
     steps:
-      - total locks · restaurant detected
+      - header and total read (or the QR) · restaurant detected → the scan ends there
       - one photo, or *Without photo*
     result: one *Dining* booking
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_harvest_capture_test.dart
-        name: one shot books the restaurant line with the photo
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: reaching review on a restaurant QR learns the venue as a restaurant
     checks: [C-SCN-002]
   - id: J-SCN-03
     group: Scanning

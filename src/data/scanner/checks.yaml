@@ -4,7 +4,7 @@ groups:
     title: Scanner
     items:
       - id: C-SCN-001
-        text: BILLA/SPAR with QR → total, date, shop lock · 2 item photos merge, no doubles · uncategorized blocks Save
+        text: BILLA/SPAR hovered top to bottom → ticks on read rows · total from QR or *SUMME* · ends by itself at the total, no doubles · uncategorized blocks Save
       - id: C-SCN-002
         text: Restaurant → one Dining booking · *Without photo* works
       - id: C-SCN-003
@@ -27,3 +27,11 @@ groups:
         text: "Camera declined (or the simulator, no camera) → *Pick photos* on the card → the photo picker → review like from the camera · a photo without a total → snackbar, card stays"
       - id: C-SCN-012
         text: "*Add receipt* → total and item price open the app keypad, never the phone's number pad · ✓ hands the form back · magic wand fills the rest · USD book → no euro sign on the *Total* row"
+      - id: C-SCN-013
+        text: "Debug build, scanner app bar: preset button cycles veryHigh → ultraHigh → max · log `ScanLog: matrix` per preset: ≥ 4 OCR passes a second at max, preview smooth · still size and read time in `ScanLog: still`"
+      - id: C-SCN-014
+        text: "Ten long receipts (> 30 items) by hover, five chains · each ends by itself or with one *Done* · no doubled row · a few short receipts with one *Capture*"
+      - id: C-SCN-015
+        text: "Hover feel: 2× zoom focuses at ~15–20 cm · hints readable, no flicker · *Slower*, *Closer*, *Back to the last line read* appear when provoked · torch works"
+      - id: C-SCN-016
+        text: "After a hover without a still → photo step · *Without photo* → review · *Capture* → review with the photo, 1080 px wide"

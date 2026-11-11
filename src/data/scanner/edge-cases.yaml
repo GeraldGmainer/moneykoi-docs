@@ -9,11 +9,11 @@ items:
     group: Reading
     title: Web-link QR
     when: QR is a link, not RKSV data
-    then: resolved online once → step 1 locks
+    then: resolved online once → total and date from the code
     risk: low
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
-        name: a web-link QR is resolved online once and then locks step 1
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: a web-link code is resolved once per pass
   - id: E-SCN-03
     group: Reading
     title: ADEG multiplier rows
@@ -65,14 +65,18 @@ items:
     risk: medium
     related: [R-SCN-10]
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: a pick inside the branch Dining resolves to keeps the venue a restaurant
   - id: E-SCN-05
     group: Saving
     title: Long receipts + retakes
-    when: same part photographed twice
-    then: seams stripped · retake adds nothing · never over the total
+    when: "same part read twice — hovered back over, or a second still of it"
+    then: rows are placed by position before any parsing · a retake adds no row · never over the total · fixed 2026-11-11 (one assembled receipt, SCANNER §4.37)
+    status: fixed
     risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: "a retake of the same page adds no line: one part, the sum still matches"
   - id: E-SCN-06
     group: Web
     title: Web manual split
@@ -150,3 +154,34 @@ items:
     tests:
       - file: test/features/receipt/domain/services/gallery_photo_preparer_test.dart
         name: a grayscale PNG keeps white paper white instead of red
+  - id: E-SCN-17
+    group: Reading
+    title: Tracking lost mid-receipt
+    when: phone lifted, moved too fast or off the paper during the hover
+    then: "hint *Back to the last line read: …* · what was read stays · the next frames start a new part, joined as soon as its rows overlap the old ones"
+    status: by-design
+    risk: medium
+    related: [R-SCN-02]
+  - id: E-SCN-18
+    group: Reading
+    title: Two identical rows in a row
+    when: the same article twice, one under the other (2× *SEMMERL 0,39*)
+    then: two rows · a row is known by where it is, never by its text
+    status: by-design
+    risk: high
+    related: [E-SCN-05]
+  - id: E-SCN-19
+    group: Reading
+    title: Shop known late
+    when: QR read first, the franchise header (ADEG, SPAR-Partner) only later
+    then: the parser is picked again from the header and the whole receipt is re-read · nothing to redo
+    status: fixed
+    risk: low
+  - id: E-SCN-20
+    group: Reading
+    title: Sum does not meet the total at *Done*
+    when: a row missed or misread · *Done* tapped
+    then: review opens with the mismatch banner · *Scan more* continues the same scan · *Redo item scan* starts the items over
+    status: by-design
+    risk: medium
+    related: [R-SCN-25]

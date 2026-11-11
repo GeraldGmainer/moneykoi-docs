@@ -1,0 +1,32 @@
+# Sources: SCANNER_ACCURACY_PLAN.md:39-47,236-287,369-370, moneykoi-receipts/OPEN_QUESTIONS.md:11-44 + README.md:175-223, scanner/tasks.yaml.
+title: "Scanner accuracy"
+goal: "From 63 % / 53 % to 80 %"
+gerald:
+  - ref: T-SCN-02
+    note: "HOFER + PENNY still at zero"
+  - ref: T-SCN-01
+  - section: "Corpus questions"
+  - text: "Coffee and tea: Groceries or Water & Drink"
+  - text: "`Benjamin Blümchen` line: keep Groceries or name a category"
+  - text: "Refund bigger than the biggest line: option a, b or c · c assumed"
+  - text: "Single route: category from parsed items (JET) or from the venue"
+  - text: "Keep or drop the insurance + postage receipts"
+  - text: "Basket discount: divide by the printed SUMME · yes assumed"
+  - text: "Identify `SI FLASCHE 0` · `SPAR SCHOKOSTUECKE` · `MILKA DONUT`"
+  - text: "`inbox/duplicates`: bin or keep"
+  - section: "Capture rework (hover scanner)"
+  - ref: T-SCN-04
+  - ref: T-SCN-05
+  - text: "Decide the baseline promotion · D-SCN-06"
+  - ref: T-SCN-06
+  - ref: T-SCN-07
+agents:
+  - text: "Fix rounds on the emulator scorecard · none run yet"
+  - text: "BILLA + LIDL rule gaps · BILLA 1/8 at stage 2"
+  - text: "Franchise QR-first check · not covered → Gerald picks (a) or (b)"
+  - text: "HOFER, PENNY + generic parsers · each waits for receipts"
+  - text: "§7.5 leftovers: confidence input · repair fuzz check · dead code"
+  - text: "OCR-printed ATU into the VIES lookup when the QR has none"
+  - text: "At 80 %: move the docs · retire the plan"
+  - text: "Score `SCORECARD_SCALE=hover` once Gerald's videos are filed"
+  - text: "Retire SCANNER_CAPTURE_PLAN.md after his phone checks"

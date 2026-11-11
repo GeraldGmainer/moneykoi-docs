@@ -35,4 +35,11 @@ items:
       - *Welcome*, *Smart auto-detect*, *Capture the items* only in the help sheet · the camera guides live (*Point at the total line*, *Hold steady*)
       - source: new-user review, 2026-11-11 · built the same day
     related: [R-SCN-13, D-HOM-13]
-
+  - id: D-SCN-06
+    question: "Promote the scorecard baselines after the capture rework?"
+    status: open
+    answer: |
+      - no decision yet · the agent promoted nothing (D-CAP-3)
+      - every scale re-scored on the one-page pipeline · gained and lost receipts per scale in SCANNER_CAPTURE_PLAN.md §8
+      - new scales (emulator-native, emulator-bands, hover-synth) have their own first baselines
+      - promote = `SCORECARD_UPDATE=1` per scale, then commit the corpus repo

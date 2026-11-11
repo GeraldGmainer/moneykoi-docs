@@ -10,16 +10,16 @@ items:
     source: SCANNER §1
   - id: R-SCN-02
     group: The flow
-    title: Three steps
+    title: One live scan, then review
     text: |
-      1. **Total**: live camera locks merchant, total, date (2 stable reads) · RKSV QR locks exactly
-      2. **Items**: one photo per part · merged at the seams
+      1. **Read**: hover top to bottom · every frame and every *Capture* still go into one receipt · a row counts once seen twice (a still: once) · RKSV / TSE QR gives total and date exactly
+      2. **Photo**: optional, when no still was taken · *Without photo*
       3. **Review**: fix · merge · categorize · *Save*
-    source: SCANNER §1
-    related: [R-SCN-11]
+    source: SCANNER §1, §4.37
+    related: [R-SCN-11, R-SCN-25]
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
-        name: a receipt QR locks total and date and names the shop from the resolver
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: a QR code gives the total the rows never showed, and a zero-total code is ignored
   - id: R-SCN-04
     group: The flow
     title: Shop parsers + a generic one
@@ -34,23 +34,47 @@ items:
         name: unknown merchants are itemizable with no default category
   - id: R-SCN-05
     group: The flow
-    title: "*Skip* items = one booking"
-    text: before the first photo · total as one uncategorized line · pick the category in review
+    title: "*Skip items* = one booking"
+    text: total known, no item read yet · total as one uncategorized line · pick the category in review
     source: SCANNER §1
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_harvest_capture_test.dart
-        name: skipItemCapture books the total as one uncategorised line
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: Skip items books one uncategorised line at the total
   - id: R-SCN-06
     group: The flow
     title: From gallery photos
     text: |
       - one or more, top to bottom
-      - unreadable photo fails alone · no total anywhere → step 1
+      - unreadable photo fails alone · no total anywhere → back to the camera
+      - same assembly as the live scan: overlapping photos are joined by their rows
       - also without a camera: *Pick photos* on the camera-declined and error cards
     source: SCANNER §4.30
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
         name: and an unreadable photo is reported there
+  - id: R-SCN-25
+    group: The flow
+    title: When a scan ends
+    text: |
+      - itemized: item sum = total (±5 ct) → buzz → photo step or review
+      - restaurant, one-category shop: as soon as the header and the total are read
+      - *Done*: ends with what was read · a sum that does not meet the total → review's mismatch banner, never a made-up line
+      - total never read → review opens at 0 and asks for it
+    source: SCANNER §4.37
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: Done ends the pass early; a total never read opens the review at 0
+  - id: R-SCN-26
+    group: The flow
+    title: Camera and photo size
+    text: |
+      - camera at the sensor's full resolution · opens at 2× zoom (lens range permitting)
+      - a still is read whole at that resolution, in overlapping bands
+      - the stored photo stays 1080 px wide, cropped to the frame · upload unchanged
+    source: SCANNER §4.8
+    tests:
+      - file: test/features/receipt/domain/services/still_reader_test.dart
+        name: a sensor-size still is read in overlapping bands and merged into one page in its own pixels
   - id: R-SCN-22
     group: The flow
     title: Camera declined · ask again before Settings
@@ -161,9 +185,9 @@ items:
       - restaurant venue learned from its QR · a pick outside the dining category unlearns it
     source: SCANNER §4.21, QUICK_BOOKING §3
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: recategorising a restaurant scan away from Dining learns it is not one
-      - file: test/features/receipt/bloc/scanner_cubit_step1_processing_test.dart
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: a pick inside the branch Dining resolves to keeps the venue a restaurant
   - id: R-SCN-20
     group: Accuracy
