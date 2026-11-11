@@ -447,3 +447,15 @@ items:
       - file: test/features/investment/ui/pages/investment_save_page_test.dart
         name: a plan that fell while the form was open keeps the draft and opens the paywall
     related: [E-MON-50]
+  - id: E-MON-66
+    group: Paywall & store
+    title: Paywall at 200 % font
+    when: system font above 130 % · paywall, German worst
+    then: |
+      - fixed 2026-11-11 · the plan overview is one column · a price sits under its option · *Current plan* under the plan name
+      - was: *Einkaufsliste/n*, *Einführun/gspreis* broken mid-word · the Free tagline squeezed into a six-line column beside the pill
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/monetization/ui/paywall_page_test.dart
+        name: at twice the font size the overview is one column

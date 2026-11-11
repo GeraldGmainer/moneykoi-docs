@@ -165,3 +165,15 @@ items:
         name: without market prices or recorded values the chart draws from the trade prices (IOS-19-3)
       - file: test/features/investment/domain/services/trade_price_points_test.dart
         name: a buy and a sell price the holding unit in the book currency, fee left out
+  - id: E-INV-18
+    group: Valuation
+    title: A recorded value printed a clock time
+    when: "*Record value* on a position · the header under the value"
+    then: |
+      - fixed 2026-11-11 · *manual, set Nov 11* · the day only
+      - was: *manual, set Nov 11 01:00* · a recorded day is stored at UTC midnight · west of UTC it showed the day before
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/widgets/quote_as_of_label_test.dart
+        name: a recorded value names its day without a clock time it never had

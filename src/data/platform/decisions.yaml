@@ -153,3 +153,24 @@ items:
       - app keeps `.env.dev` · *run DEV* works again once dev is unpaused
       - CI: `develop` no longer deploys to dev · nothing sits between local and prod
     related: [R-PLAT-35, T-PLAT-14]
+
+  - id: D-PLAT-17
+    question: iPhone reinstall with the old session still in the Keychain?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - the first start of an install drops the leftover session and PIN hash · Welcome, sign in again
+      - not chosen: a Home offline state · keeping the session
+      - source: release 2.1 device round, F-47
+    related: [E-PLAT-02]
+
+  - id: D-PLAT-18
+    question: Cap the system font size app-wide?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - no cap · screens are fixed one by one, as the paywall, calendar, date picker and amounts were
+      - the 200 % overflow list (F-46) waits in the accessibility plan, slot 24
+      - not chosen: a cap at 150 % or 200 %
+      - source: release 2.1 device round, F-46
+    related: [E-PLAT-11, E-PLAT-12]
