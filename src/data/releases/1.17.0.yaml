@@ -2,7 +2,7 @@
 # area (ticks are shared with the area's *What to test* page). A note whose `now` says "fixed since"
 # or "changed since" was outdated by later work — the source is named in it.
 version: 1.17.0
-status: testing
+status: released
 source: From your Trello notes (2026-10-17) · items 5, 6, 8, 14, 28–30 weren't pasted · ticks shared with each area's *What to test*
 items:
   - n: 1

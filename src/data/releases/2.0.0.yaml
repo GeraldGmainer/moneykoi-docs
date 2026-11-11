@@ -4,7 +4,7 @@
 # the first iOS build; one app row covers Android and iOS.
 # Every test step is a check in its area (ticks are shared with the area's *What to test* page).
 version: 2.0.0
-status: testing
+status: released
 source: From the release notes (2026-11-08) · app 2.0.0 items 1–12, web 1.8.0 items 13–18 · ticks shared with each area's *What to test*
 items:
   - n: 1
