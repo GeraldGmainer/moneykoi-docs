@@ -80,7 +80,7 @@ items:
     group: Web
     title: German thousands on web forms
     when: "`1.500` typed in a web goal/loan/budget/account sheet, German number format"
-    then: saved as 1500 · `1.500,25` and `1,500.25` both 1500.25 · `12,5` and `12.50` stay decimals · before 2026-11-12 saved as 1.5 (review 15b) · `/add`, receipt, edit, quick entry, recurring and forecast follow since the same day · investments sheets, plan amount, forecast settings and the import row editor still read it as 1.5
+    then: saved as 1500 · `1.500,25` and `1,500.25` both 1500.25 · `12,5` and `12.50` stay decimals · before 2026-11-12 saved as 1.5 (review 15b) · `/add`, receipt, edit, quick entry, recurring, forecast, the investment forms, the budget planner and the forecast settings follow since the same day · only the bank import's row editor still takes a lone mark as the decimal point
     status: fixed
     risk: high
     tests:
