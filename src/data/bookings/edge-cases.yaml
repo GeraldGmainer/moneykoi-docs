@@ -343,3 +343,25 @@ items:
       - a trade in another currency is booked without its original (E36/E37)
     status: known-issue
     risk: medium
+  - id: E-BKG-60
+    group: On the web
+    title: Sorting the list by account or category
+    when: click the *Account* or *Category* column header on `/bookings`
+    then: rows order by the account's or category's name, newest first inside each · transfers (no category) sort together · before 2026-11-12 the order followed internal ids and looked random
+    status: fixed
+    risk: low
+    tests:
+      - file: src/app/(main)/bookings/services/bookings.service.test.ts
+        repo: web
+        name: sorts by %s by the related name (never the uuid), newest first inside it
+  - id: E-BKG-61
+    group: On the web
+    title: Deleting one booking from its row menu
+    when: "⋯ → *Delete* on a row"
+    then: a dialog of the app's own names the booking, its date and amount · *Cancel* keeps it · before 2026-11-12 the browser's own confirm box asked
+    status: fixed
+    risk: low
+    tests:
+      - file: src/app/(main)/bookings/components/bookings-table.test.tsx
+        repo: web
+        name: does nothing when the confirm is cancelled
