@@ -79,10 +79,14 @@ items:
   - id: E-BUD-41
     group: Web
     title: German thousands on web forms
-    when: "`1.500` typed in a web goal/loan/budget sheet"
-    then: saved as 1.5 · open in every web sheet (review 15b)
-    status: known-issue
+    when: "`1.500` typed in a web goal/loan/budget/account sheet, German number format"
+    then: saved as 1500 · `1.500,25` and `1,500.25` both 1500.25 · `12,5` and `12.50` stay decimals · before 2026-11-12 saved as 1.5 (review 15b) · `/add`, recurring, forecast and investments sheets still read it as 1.5
+    status: fixed
     risk: high
+    tests:
+      - file: src/lib/display-settings/parse-amount.test.ts
+        repo: web
+        name: "reads the user's thousand mark before three digits as thousands: a German 1.500 is fifteen hundred"
   - id: E-BUD-01
     group: Budget calculator
     title: Replace and held ids
@@ -169,3 +173,14 @@ items:
       - before: every repayment green with an income icon, the split as raw `230.00` (AND-13-2, AND-13-3)
     status: fixed
     risk: low
+  - id: E-BUD-46
+    group: Web
+    title: Goals fail to load
+    when: "`/goals` or a goal's page opens while the read fails"
+    then: "*Couldn't load the goals* with *Try again* · before 2026-11-12 the list said *No goals yet* and the goal's page *This goal no longer exists*"
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/goals/page.test.tsx
+        repo: web
+        name: says the load failed and offers a retry, never "No goals yet"
