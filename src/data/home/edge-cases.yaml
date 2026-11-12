@@ -67,3 +67,25 @@ items:
     status: known-issue
     risk: low
     related: [E-SCN-10]
+  - id: E-HOM-14
+    group: On the web
+    title: Summary fails to load
+    when: the dashboard's summary read fails with nothing cached
+    then: every summary tile shows — and *Couldn't load* · before 2026-11-12 the tiles read 0 € and 0 % (review 14)
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/dashboard/components/summary-cards.test.tsx
+        repo: web
+        name: prints a dash on every tile when the read failed, never a zero
+  - id: E-HOM-15
+    group: On the web
+    title: Percentages ignored the number format
+    when: German number format, investments card on the dashboard
+    then: gains read *-1,3 %* and *+529,6 %* · before 2026-11-12 they printed with a dot (*-1.3 %*) beside *31,4 %* on the savings tile
+    status: fixed
+    risk: low
+    tests:
+      - file: src/app/(main)/investments/lib/format.test.ts
+        repo: web
+        name: takes the user's number format when handed one
