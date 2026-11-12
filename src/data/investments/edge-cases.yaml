@@ -190,3 +190,28 @@ items:
     tests:
       - file: test/features/investment/ui/sheets/price_point_save_sheet_test.dart
         name: a counted asset is priced per unit, not per units
+  - id: E-INV-20
+    group: Web
+    title: "Web: investments fail to load"
+    when: "`/investments` or a position's page opens while the read fails"
+    then: "*Couldn't load the investments* with *Try again* · before 2026-11-12 the list offered *add your first position* and the position page said it no longer exists"
+    status: fixed
+    risk: medium
+  - id: E-INV-21
+    group: Web
+    title: "Web: rebalance says Sell 0.00"
+    when: a position sits on its target, or targets add up to 100.02 %
+    then: no trade line for a position on target · the warning reads *100,02 %* · percents follow the number format · before 2026-11-12 a red *Sell 0.00* and *100.0 %*
+    status: fixed
+    risk: low
+  - id: E-INV-22
+    group: Web
+    title: "Web: flat price sparkline"
+    when: a position whose price did not move in the window
+    then: the line runs through the middle of the sparkline · before 2026-11-12 it lay on the bottom edge
+    status: fixed
+    risk: low
+    tests:
+      - file: src/app/(main)/investments/components/price-sparkline.test.tsx
+        repo: web
+        name: draws a flat series down the middle, not on the bottom edge

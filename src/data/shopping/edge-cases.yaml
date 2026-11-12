@@ -24,9 +24,13 @@ items:
     group: Web
     title: Web read fails
     when: shopping request fails
-    then: looks empty or *list not found* · open (review 14)
-    status: known-issue
+    then: "*Couldn't load the shopping lists* with *Try again* · before 2026-11-12 it looked empty or said *list not found* (review 14)"
+    status: fixed
     risk: low
+    tests:
+      - file: src/app/(main)/shopping/components/shopping-workspace.test.tsx
+        repo: web
+        name: says the load failed and offers a retry, instead of an empty board or "not found"
   - id: E-SHP-05
     group: Items
     title: English item names stay uncategorized

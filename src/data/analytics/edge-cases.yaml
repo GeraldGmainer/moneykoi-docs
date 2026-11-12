@@ -115,3 +115,47 @@ items:
       - file: test/shared/ui/chart/nice_axis_test.dart
         name: "the analytics cards' compact values carry the money format's decimal separator"
     related: [E-FC-33]
+  - id: E-ANL-13
+    group: Web
+    title: "Web balance page: first day left out of the change"
+    when: a salary booked on the first day of the window on `/balance`
+    then: "*Starting balance* is the balance before that day · *Net change* counts the salary · before 2026-11-12 both skipped day one"
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/balance/page.test.tsx
+        repo: web
+        name: "counts a booking on the first day of the window in the net change: the window starts on day one's opening balance"
+  - id: E-ANL-14
+    group: Web
+    title: "Web balance page: Custom lit without a range"
+    when: "*Custom* opened but no range picked, or the page reopened after a custom range"
+    then: the chosen preset stays lit and charted · a custom range is not remembered · before 2026-11-12 *Custom* was lit over a 30-day chart
+    status: fixed
+    risk: low
+    tests:
+      - file: src/app/(main)/balance/page.test.tsx
+        repo: web
+        name: "does not reopen on \"Custom\" without its range: only presets are remembered"
+  - id: E-ANL-15
+    group: Web
+    title: "Web balance page: load fails"
+    when: "`/balance` opens while the read fails"
+    then: "*Couldn't load the bookings* with *Try again* · a skeleton while loading · before 2026-11-12 an empty chart from 0 to 1000"
+    status: fixed
+    risk: low
+    tests:
+      - file: src/app/(main)/balance/page.test.tsx
+        repo: web
+        name: says the load failed and offers a retry, instead of a flat zero line
+  - id: E-ANL-16
+    group: Web
+    title: "Web balance page: history before a balance check"
+    when: "`/balance` over a window that holds a balance check's correction, or the day an account was opened"
+    then: the days before the correction no longer carry it · an account's starting balance steps in on its start date, as on the Home card · a deleted account's bookings stay out · before 2026-11-12 every earlier day was off by the correction
+    status: fixed
+    risk: high
+    tests:
+      - file: src/app/(main)/balance/hooks/use-balance-timeline.test.tsx
+        repo: web
+        name: backs a balance correction out on its day

@@ -176,3 +176,14 @@ items:
       - file: test/features/home/ui/widgets/onboarding_cards_test.dart
         name: a credit card row asks what is owed and shows a stored debt unsigned
 
+  - id: E-LED-21
+    group: On the web
+    title: Accounts or categories fail to load
+    when: "`/accounts`, `/categories` or a category's page opens while the read fails"
+    then: "*Couldn't load* with *Try again* · before 2026-11-12 *No accounts found*, an empty category list, or *category not found*"
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/accounts/page.test.tsx
+        repo: web
+        name: says the load failed and offers a retry, never "No accounts found."

@@ -183,3 +183,10 @@ items:
       - file: test/shared/ui/chart/budget_line_chart_test.dart
         name: a narrow plot prints only as many labels as fit side by side
     related: [E-PLAT-12]
+  - id: E-PLAT-17
+    group: Web
+    title: "Web date pickers ignored language and week start"
+    when: any date picker on the web, German language, week starting Monday
+    then: month and weekday names in the app's language · the week starts on the day set in Settings · before 2026-11-12 every picker read English and started on Sunday
+    status: fixed
+    risk: medium
