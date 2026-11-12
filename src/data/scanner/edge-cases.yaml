@@ -196,4 +196,68 @@ items:
     tests:
       - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
         name: a shorter cut of a row that later frames read whole does not stay beside the whole line (real frames, spar_20260914_A)
-
+  - id: E-SCN-22
+    group: Reading
+    title: A repaired price makes the sum fit early
+    when: two of three articles read, one price misread so that a digit fix (3,99 → 8,99) would meet the total
+    then: the scan goes on until the items add up as read · a repair is only offered in review · before 2026-11-12 the repaired sum ended the scan and the third article was never read
+    status: fixed
+    risk: high
+    related: [R-SCN-25, E-SCN-20]
+    tests:
+      - file: test/features/receipt/domain/services/live_scan_engine_test.dart
+        name: "a live parse never repairs a sum toward the total: two of three articles are not a match"
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: a sum the reconciler had to repair is never a match
+  - id: E-SCN-23
+    group: Reading
+    title: QR on the still that ends the scan
+    when: restaurant or one-category receipt, one *Capture*, the QR too small for the live preview
+    then: the QR on the still is read before the scan ends · merchant and restaurant memory are learned · before 2026-11-12 it was skipped
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: a still that ends a one-category pass still reads the code printed on it
+  - id: E-SCN-24
+    group: Photos
+    title: Scan more after the photo step
+    when: hover scan, photo taken on the photo step, *Scan more* in review
+    then: the photo stays with the receipt, no second photo step · removed in review → asked for again · before 2026-11-12 the photo was lost
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: the photo taken on the photo step stays with the receipt through Scan more
+  - id: E-SCN-25
+    group: Photos
+    title: A still removed from a hovered scan
+    when: hover plus one *Capture* · the still deleted in review · *Scan more*
+    then: only that photo goes, the hovered items stay · before 2026-11-12 every hovered item vanished with it
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: a still removed from a hovered pass keeps the hovered items for Scan more
+  - id: E-SCN-26
+    group: Photos
+    title: Photo-step photo in review
+    when: hover scan with a photo from the photo step
+    then: the thumbnail reads *#1*, no item count · before 2026-11-12 *#1 · 0 items*, as if the scan had failed
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_photo_gallery_test.dart
+        name: a photo taken only as proof shows its number without an item count
+  - id: E-SCN-27
+    group: Camera
+    title: Closed or *Rescan* while the camera opens
+    when: back pressed while the camera starts · *Rescan* tapped twice · a QR web link answering after *Rescan*
+    then: one camera, released on close · the late link answer is dropped, never applied to the next receipt · before 2026-11-12 a second camera stayed open and the old total could land on the new scan
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: Rescan tapped twice opens one camera
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: a web link that resolves after Rescan never reaches the new scan

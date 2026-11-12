@@ -30,8 +30,10 @@ groups:
       - id: C-SCN-013
         text: "Debug build, scanner app bar: preset button cycles veryHigh → ultraHigh → max · log `ScanLog: matrix` per preset: ≥ 4 OCR passes a second at max, preview smooth · still size and read time in `ScanLog: still`"
       - id: C-SCN-014
-        text: "Ten long receipts (> 30 items) by hover, five chains · each ends by itself or with one *Done* · no doubled row · a few short receipts with one *Capture*"
+        text: "Ten long receipts (> 30 items) by hover, five chains · each ends by itself or with one *Done* · no doubled row · a few short receipts with one *Capture* · note `ocrMedian` and `parseMax` from `ScanLog: pass`"
       - id: C-SCN-015
         text: "Hover feel: 2× zoom focuses at ~15–20 cm · hints readable, no flicker · *Slower*, *Closer*, *Back to the last line read* appear when provoked · torch works"
       - id: C-SCN-016
-        text: "After a hover without a still → photo step · *Without photo* → review · *Capture* → review with the photo, 1080 px wide"
+        text: "After a hover without a still → photo step · *Without photo* → review · *Capture* → review with the photo, 1080 px wide, labelled *#1* · *Scan more* → back in review, the photo still there"
+      - id: C-SCN-017
+        text: "iPhone: scanner open → home screen → back → preview live, rows keep ticking · same on the photo step (Android passed on the emulator 2026-11-12)"

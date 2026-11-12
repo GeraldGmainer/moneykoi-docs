@@ -30,3 +30,4 @@ agents:
   - text: "At 80 %: move the docs · retire the plan"
   - text: "Score `SCORECARD_SCALE=hover` once Gerald's videos are filed"
   - text: "Retire SCANNER_CAPTURE_PLAN.md after his phone checks"
+  - text: "Re-parse interval from phone timings (C-SCN-014) · max(300 ms, 2× parse)"

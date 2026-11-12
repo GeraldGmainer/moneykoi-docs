@@ -56,7 +56,7 @@ items:
     group: The flow
     title: When a scan ends
     text: |
-      - itemized: item sum = total (±5 ct) → buzz → photo step or review
+      - itemized: item sum = total (±5 ct) as read, a repaired price never counts → buzz → photo step or review
       - restaurant, one-category shop: as soon as the header and the total are read
       - *Done*: ends with what was read · a sum that does not meet the total → review's mismatch banner, never a made-up line
       - total never read → review opens at 0 and asks for it
