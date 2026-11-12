@@ -28,7 +28,7 @@ groups:
       - id: C-SCN-012
         text: "*Add receipt* → total and item price open the app keypad, never the phone's number pad · ✓ hands the form back · magic wand fills the rest · USD book → no euro sign on the *Total* row"
       - id: C-SCN-013
-        text: "Debug build, scanner app bar: preset button cycles veryHigh → ultraHigh → max · log `ScanLog: matrix` per preset: ≥ 4 OCR passes a second at max, preview smooth · still size and read time in `ScanLog: still`"
+        text: "Debug build, scanner app bar: preset button cycles veryHigh → ultraHigh → max · log `ScanLog: matrix` per preset: ≥ 4 OCR passes a second at max, preview smooth · `linePx` at hover distance per preset (far above ~35 = OCR time wasted, the lowest preset that stays above it wins) · still size and read time in `ScanLog: still`"
       - id: C-SCN-014
         text: "Ten long receipts (> 30 items) by hover, five chains · each ends by itself or with one *Done* · no doubled row · a few short receipts with one *Capture* · note `ocrMedian` and `parseMax` from `ScanLog: pass`"
       - id: C-SCN-015
