@@ -227,3 +227,14 @@ items:
     tests:
       - file: test/features/budget_goals/domain/services/dst_boundaries_test.dart
         name: a weekly loan due the Monday before the autumn change stays on Mondays
+  - id: E-BUD-51
+    group: Loans
+    title: A loan repaid in full still asked for payments
+    when: payments reach the principal (or *Mark settled*)
+    then: no *Log payment*, no *Early payoff…*, no next payment, debt-free date or yearly interest · the share reads *100% repaid* · *Mark settled* stays in ⋮ (a local book does not settle by itself) · fixed 2026-11-13 (I5-3) · before, the orange *Log payment* stayed and *Still to repay* stood beside *100%*
+    status: fixed
+    risk: low
+    related: [C-BUD-042]
+    tests:
+      - file: test/features/budget_goals/ui/pages/loan_detail_page_test.dart
+        name: "a loan repaid in full reads as done: no Log payment and no Early payoff, before and after Mark settled (I5-3)"

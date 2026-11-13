@@ -112,6 +112,7 @@ items:
       - CSV / PDF → *Save to device* (save dialog) first · *Share* second (D-DATA-18, 2026-11-09)
       - **Pro** · Free: lock
       - file = screen · no network needed
+      - each line counts the rows its file writes (starting balances, transfers included) · *All matches* only when a match lies outside the period (2026-11-13, E-BB-16)
     source: BUDGET_BOOK §14
     tests:
       - file: test/shared/export/export_sheet_test.dart

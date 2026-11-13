@@ -137,3 +137,14 @@ items:
     tests:
       - file: test/shared/ui/chart/trend_bar_chart_labels_test.dart
         name: a 31-day month does not print 31 against 30
+  - id: E-BB-16
+    group: Export
+    title: Export counts disagreed
+    when: Budget Book ⋮ *Export* · a period holding starting balances or transfers
+    then: the period line and *All matches* count the rows the file writes, starting balances and transfers included · *All matches* shows only when a match lies outside the period · fixed 2026-11-13 (I5-1) · before, *November · 1 row* beside *all time · 3 rows* in a book with one booking
+    status: fixed
+    risk: low
+    related: [R-BB-20]
+    tests:
+      - file: test/features/budget_book/ui/widgets/budget_book_export_options_test.dart
+        name: the period line counts the rows its file holds, opening balances included, as the all-time line does (I5-1)
