@@ -1,5 +1,5 @@
 # Source: BACKUP_RESTORE_AI_CONTEXT.md §0, §4c–§4h, §6, §10; BOOKING_IMPORT §16; BOOKING_EXPORT §10;
-# BANK_CSV_IMPORT_PLAN.md §1 (D-BANK-1…43 = D-DATA-19…41), §1d (D-DATA-42, 43).
+# BOOKING_IMPORT §16a (D-BANK-1…43 = D-DATA-19…41), §16c (D-DATA-42, 43) · from BANK_CSV_IMPORT_PLAN.md, deleted 2026-11-13.
 items:
   - id: D-DATA-1
     question: Who may create a backup?
@@ -143,7 +143,7 @@ items:
       - Pro: saved formats · learned payees · editing single rows in *Review*
       - upsell: *Save this format* shown locked · one line on the result screen
       - import stays free (D-DATA-12) · Pro is the monthly convenience
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-1
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-1
       - **built 2026-11-10** · R-DATA-74
     related: [D-DATA-12, D-DATA-11]
   - id: D-DATA-20
@@ -156,7 +156,7 @@ items:
       - Pro: kept on the phone · synced whenever a Cloud book is active (own or shared) → web · the Cloud upgrade carries it up
       - *Save this format* ticked by default
       - recognized file → banner *Recognized: …* → straight to *Review* · earlier steps via back
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-3…6, 15, 17
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-3…6, 15, 17
       - **built 2026-11-10** · R-DATA-81, R-DATA-82, R-DATA-83
     related: [D-DATA-19]
   - id: D-DATA-21
@@ -167,7 +167,7 @@ items:
       - description = the **payee**, cut to 20 · purpose text only a clue for the category guess
       - Pro edits per row: date · description · amount · income/expense · category · labels · account · make transfer
       - pending rows (*Vorgemerkt*) imported **unticked**
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-8, 9, 13
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-8, 9, 13
       - **built 2026-11-10** · R-DATA-75, R-DATA-80, R-DATA-86
     related: [D-DATA-19]
   - id: D-DATA-22
@@ -178,7 +178,7 @@ items:
       - synced fingerprint on each imported booking · the bank's reference, else a hash of the row
       - exact across phones, reinstalls and the web · free
       - hand-typed bookings: same account, side, amount within **±3 days** (was the same day)
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-10, 12
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-10, 12
       - **built 2026-11-10** · R-DATA-77, R-DATA-79
     related: [D-DATA-19]
   - id: D-DATA-23
@@ -189,7 +189,7 @@ items:
       - only a **hash + last four** stored · never the full IBAN
       - tells two accounts of one bank apart
       - counterparty IBAN = an own account → *Transfer to …* suggested · editable
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-11, 14
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-11, 14
       - **built 2026-11-10** · R-DATA-84, R-DATA-87
     related: [D-DATA-26]
   - id: D-DATA-24
@@ -199,7 +199,7 @@ items:
     answer: |
       - payee → category **per book**, synced (web + partner)
       - read by the import only · quick booking and scanner unchanged
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-7, 18
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-7, 18
       - **built 2026-11-10** · R-DATA-85
   - id: D-DATA-25
     question: Bank CSV import on the web · when?
@@ -208,7 +208,7 @@ items:
     answer: |
       - **same release as the app**
       - web first catches up: payee field, category guess (D-DATA-15), opening move (D-DATA-17)
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-16
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-16
       - **app built 2026-11-10 · web built 2026-11-11** · R-DATA-95 · both uncommitted · web never run against a real database (T-DATA-07, T-DATA-08)
     related: [D-DATA-33]
   - id: D-DATA-26
@@ -289,7 +289,7 @@ items:
       - exact matches go into **one collapsed group** at the bottom (*37 already imported*) · unticked, tickable
       - a booking deleted after its import: **unticked as *Deleted earlier*** while this phone's trash holds it (30 days) · after that, on another phone or the web, it counts as new
       - ±3-day matches (*Possible duplicate*) stay in the main list, unticked
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-27, 28
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-27, 28
       - **built 2026-11-10** · R-DATA-78
     related: [D-DATA-22]
   - id: D-DATA-35
@@ -299,7 +299,7 @@ items:
     answer: |
       - category or account names never mapped → **that step opens with only those names**, then *Review*
       - two accounts of one bank, no IBAN in the file → **account pill on the banner** (*Recognized: … → Giro*), tappable, last used preselected
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-29, 31
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-29, 31
       - **built 2026-11-10** · R-DATA-82
     related: [D-DATA-20]
   - id: D-DATA-36
@@ -308,7 +308,7 @@ items:
     date: 2026-11-10
     answer: |
       - **everything**: the bookings, a newly saved format (or the previous version of an updated one), the payee rules this import learned
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-30
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-30
       - **built 2026-11-10** · R-DATA-88
   - id: D-DATA-37
     question: Bank import · the details
@@ -320,7 +320,7 @@ items:
       - edit sheet: **existing** categories and accounts only, nothing created there
       - a payee rule remembers **the category only**
       - Review row: payee + a **grey purpose line**
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-32…35, 37
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-32…35, 37
       - **built 2026-11-10** · R-DATA-94, R-DATA-89, R-DATA-86, R-DATA-85, R-DATA-75
   - id: D-DATA-38
     question: Bank import · compare the book with the bank's balance?
@@ -330,7 +330,7 @@ items:
       - **yes, Free, app + web** · when the file states a balance and everything went into one account
       - equal → *Matches the bank* · different → *Bank: … · Book: …* + *Check balance*
       - the Balance check opens **with the bank's figure filled in**, marked *From the bank file* (the bank's number, not the app's)
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-39, 41, 42
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-39, 41, 42
       - **app built 2026-11-10 · web built 2026-11-11** · R-DATA-90, R-BC-11, R-DATA-97
   - id: D-DATA-39
     question: Open a CSV with Money Koi?
@@ -339,7 +339,7 @@ items:
     answer: |
       - **yes, Free, app** · a CSV tapped in Files, Downloads or the banking app opens the import into the active book
       - the app decides by content: backup → restore, table → import, else *can't be opened*
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-36, 41
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-36, 41
       - **built 2026-11-10** · R-DATA-91
   - id: D-DATA-40
     question: Monthly import reminder?
@@ -348,7 +348,7 @@ items:
     answer: |
       - **yes, Pro, app** · per book, a month after the last import into it · off by default
       - switched on from *Remind in a month* on the result screen and in Settings › Notifications
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-40, 41
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-40, 41
       - **built 2026-11-10** · R-DATA-92
   - id: D-DATA-41
     question: Bank import · defaults and what stays out
@@ -358,7 +358,7 @@ items:
       - format name = the target account's name, editable · **at most 20** formats (the 21st replaces the least used, after asking)
       - paywall name *Bank import with saved formats* · opt-in usage event *import done* (recognized yes/no, row bucket)
       - out: an *Import bank file* entry on the account page
-      - plan: `plans/BANK_CSV_IMPORT_PLAN.md` D-BANK-36, 38
+      - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-36, 38
       - **built 2026-11-10** · R-DATA-83, R-PRIV-23
   - id: D-DATA-42
     question: Backup format · bump the version for the learned-payee entity?

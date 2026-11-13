@@ -1,6 +1,6 @@
 # Next app release after 2.0.0: app 2.1.0 + web 1.9.0, Sun 2026-11-15. Contents = roadmap bucket nov-15
 # (bank CSV import) + the scanner rework (merged 546fb0a1e) + the app commits since the 2.0.0 bump
-# (879b9656f). Test plan: src/data/releases/2.1.0.yaml. Sources: BANK_CSV_IMPORT_PLAN.md, roadmap.yaml,
+# (879b9656f). Test plan: src/data/releases/2.1.0.yaml. Sources: BOOKING_IMPORT_AI_CONTEXT.md (bank layer), roadmap.yaml,
 # scanner.yaml, RELEASE_2_1_FINDINGS_PLAN.md, git log.
 title: "2.1.0"
 goal: "Bank CSV import + the new scanner · app + web · Sun Nov 15"
@@ -86,13 +86,15 @@ agents:
     done: 2026-11-11
   - text: "Docs: broken test links on /meta/health/"
     done: 2026-11-11
-  - text: "`BANK_CSV_IMPORT_PLAN.md` · delete after the DKB Visa + savings files"
+  - text: "`BANK_CSV_IMPORT_PLAN.md` · deleted, every phase built · the DKB Visa + savings files are still missing (T-DATA-05)"
+    done: 2026-11-13
     sub:
       - text: "header says built"
         done: 2026-11-11
       - text: "6 tests + 3 plans cite its §§ → move those to `BOOKING_IMPORT_AI_CONTEXT.md` first"
         done: 2026-11-12
-      - text: "at deletion: plan §12 (web scope) + §13 (traps) into `IMPORT_WEB_AI_CONTEXT.md` · the D-BANK list is docs D-DATA-19…41"
+      - text: "at deletion: D-BANK tables → `BOOKING_IMPORT_AI_CONTEXT.md` §16a–§16c · traps → its §13 · web scope already in `IMPORT_WEB_AI_CONTEXT.md` §1, §7"
+        done: 2026-11-13
   - text: "`moneykoi-imports/README.md` says the real files are missing · `dkb/` + `elba/` exist"
     done: 2026-11-11
   - text: "Docs: `src/data/releases/2.1.0.yaml` + page when the release is prepared"
