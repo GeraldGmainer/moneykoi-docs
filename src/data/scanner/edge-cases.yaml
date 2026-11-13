@@ -641,3 +641,26 @@ items:
         name: a parse that fails on a frame still places the frame and says so
       - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
         name: the frames are still placed and shown, and the parse is not asked for again on every frame
+  - id: E-SCN-61
+    group: Review
+    title: Back on an edited scan
+    when: review → an item, price, date, category or the merchant changed → back or *Rescan*
+    then: "*Unsaved changes* · *Keep editing* stays, *Discard* leaves · an untouched scan leaves at once · a shop name VIES fills in is no edit · decided + built 2026-11-13 (A5-9) · before, the scan and the edits were gone without a word"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
+        name: back on an edited scan asks first; Keep editing stays, Discard leaves (A5-9)
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: Rescan on an edited scan asks first; Keep editing keeps the scan (A5-9)
+  - id: E-SCN-62
+    group: Reading
+    title: A junk shop name beside a printed VAT number
+    when: the header guesser names the shop wrong (*ELR*, *EUR*, a discount line) · the print carries a valid ATU · the code none
+    then: the VIES name replaces the guess · a name a shop's own rules found, or one the user typed, stays · decided + built 2026-11-13 (D-SCN-16)
+    status: fixed
+    risk: low
+    related: [D-SCN-16]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: a merchant the header only guessed gives way to the VIES name (D-SCN-16)
