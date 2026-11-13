@@ -31,6 +31,10 @@ gerald:
     note: "hover never tried on a real phone · C-SCN-014 → C-SCN-029"
   - ref: T-SCN-10
   - text: "D-SCN-14 undecided → ships as built: one cent never blocks *Save*"
+  - text: "Decide D-DATA-50 · month-by-month import, oldest first (P0, A5-10)"
+  - text: "Decide D-SCN-15 + D-SCN-16 · whole-euro auto-repair, VIES name over a guessed merchant"
+  - text: "Decide A5-9 · scanner review back without a discard prompt"
+  - text: "Paste the 2.1.0 git blocks · app (11 commits), web, supabase, receipts"
   - section: "Commits"
   - text: "Commit the import: app + web + supabase + docs · the 4 format-only files stay out"
     done: 2026-11-13
@@ -61,6 +65,10 @@ agents:
   - text: "Re-run the full app suite after the last test additions"
     done: 2026-11-11
   - text: "Web: whole vitest suite on a quiet machine · 65 timeouts at load 100 on 2026-11-12"
+    done: 2026-11-13
+    sub:
+      - text: "6,234 / 6,234 pass · exit 1 from one `input-otp` timer after teardown (library, not this release)"
+        done: 2026-11-13
   - text: "App: forecast 24-month benchmark on a quiet machine · 835 ms at load 96, budget 256"
   - text: "Two date-dependent investment tests fail on a clean HEAD"
     done: 2026-11-11
@@ -82,4 +90,12 @@ agents:
   - text: "Scanner scales after the evening round (T-SCN-10) · 4 receipts stopped passing → fix"
     done: 2026-11-13
   - text: "Full app suite on the release tree"
+    done: 2026-11-13
+    sub:
+      - text: "14,672 passed · 43 skipped · 0 failed · analyze clean · ratchets clean"
+        done: 2026-11-13
   - text: "iOS simulator + Android emulator round over 2.1.0"
+    done: 2026-11-13
+    sub:
+      - text: "26 findings · fixed or ruled, see RELEASE_2_1_FINDINGS_PLAN.md › Round 5"
+        done: 2026-11-13
