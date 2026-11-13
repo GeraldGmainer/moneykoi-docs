@@ -37,3 +37,14 @@ groups:
         text: "After a hover without a still → photo step · *Without photo* → review · *Capture* → review with the photo, 1080 px wide, labelled *#1* · *Scan more* → back in review, the photo still there"
       - id: C-SCN-017
         text: "iPhone: scanner open → home screen → back → preview live, rows keep ticking · same on the photo step (Android passed on the emulator 2026-11-12)"
+      - id: C-SCN-018
+        text: "Hover a receipt whose date prints below the total → hint *Keep going to the end of the receipt* → ends ~1 s after the phone rests at the end · review shows the printed date"
+      - id: C-SCN-019
+        text: "Stop at the total and hold still → ends after ~2.5 s · review marks *Date not read · today* in the warning color · tap the date → fix it"
+      - id: C-SCN-020
+        text: "Gallery: one full-size photo of a long receipt → every row read, QR found · three overlapping photos → one receipt, no doubles (emulator + iOS simulator passed 2026-11-13)"
+      - id: C-SCN-021
+        text: "Receipt with one price misread → review: *Math mismatch* + *Suggested fix* → *Apply* → banner gone, *Save* on (Android emulator passed 2026-11-13)"
+      - id: C-SCN-022
+        text: "Review → *Rescan* → the camera, not Home · scan again → review (Android emulator + iOS simulator passed 2026-11-13)"
+

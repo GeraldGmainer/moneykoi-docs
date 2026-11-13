@@ -41,5 +41,53 @@ items:
     answer: |
       - no decision yet · the agent promoted nothing (D-CAP-3)
       - every scale re-scored on the one-page pipeline · gained and lost receipts per scale in SCANNER_CAPTURE_PLAN.md §8
-      - new scales (emulator-native, emulator-bands, hover-synth) have their own first baselines
+      - new scales (emulator-native, emulator-bands, hover-synth, emulator-stills) have their own first baselines
       - promote = `SCORECARD_UPDATE=1` per scale, then commit the corpus repo
+  - id: D-SCN-07
+    question: "A mismatch that several price changes would close: apply or suggest?"
+    status: decided
+    date: 2026-11-12
+    answer: |
+      - **suggest only** · card *Suggested fix* in review, applied on tap (R-SCN-29)
+      - a single unambiguous digit repair stays automatic, as before
+  - id: D-SCN-08
+    question: A second OCR engine next to ML Kit?
+    status: decided
+    date: 2026-11-12
+    answer: |
+      - measure first · measured 2026-11-13
+      - a second ML Kit reading at 1920 px gets most of the gain · no new engine (R-SCN-26)
+  - id: D-SCN-09
+    question: "Germany and Switzerland without real receipts: what to promise?"
+    status: decided
+    date: 2026-11-13
+    answer: |
+      - **header first**: total, date, shop · items a best guess (R-SCN-30)
+      - Swiss amount rules built now, with synthetic tests · German VAT brackets only with the printed table
+      - real data from digital receipts, tester photos, public sets (T-SCN-08, T-SCN-09)
+  - id: D-SCN-10
+    question: "Pharmacy receipts: items or one line?"
+    status: decided
+    date: 2026-11-13
+    answer: One line · **Health** (E-SCN-39)
+  - id: D-SCN-11
+    question: "Dates with damaged print: guess or leave?"
+    status: decided
+    date: 2026-11-13
+    answer: |
+      - strict fallback · only when no clean date is printed, and only a recent day (E-SCN-34)
+      - otherwise today, marked *Date not read · today* (R-SCN-28)
+  - id: D-SCN-12
+    question: Blur and glare warnings while scanning?
+    status: decided
+    date: 2026-11-12
+    answer: After the hover videos are filed (T-SCN-06) · nothing built yet
+  - id: D-SCN-13
+    question: "Which scorecard scale gates the 80 % goal?"
+    status: open
+    answer: |
+      - `emulator` (1920 px, the scale named on 2026-10-07): 65 % book-ready on 2026-11-13
+      - `emulator-stills` (how the app reads a still or gallery photo since 2026-11-13): 77 %
+      - no decision yet · numbers and rows in SCANNER_ACCURACY_PLAN.md §9
+    related: [D-SCN-06, R-SCN-26]
+

@@ -152,7 +152,7 @@ items:
     status: fixed
     risk: medium
     tests:
-      - file: test/features/receipt/domain/services/gallery_photo_preparer_test.dart
+      - file: test/features/receipt/domain/services/still_reader_test.dart
         name: a grayscale PNG keeps white paper white instead of red
   - id: E-SCN-17
     group: Reading
@@ -293,5 +293,217 @@ items:
     status: fixed
     risk: high
     tests:
-      - file: test/features/receipt/bloc/scanner_cubit_harvest_capture_test.dart
-        name: "scanMore captures another section and merges it into the review"
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: "Scan more reopens the pass with what was read; Redo item scan starts the items over"
+  - id: E-SCN-31
+    group: Review
+    title: "*Rescan* closed the scanner"
+    when: "scan review · *Rescan* · the camera opens while the review slides out"
+    then: "the camera stays open · fixed 2026-11-13 · before, the scanner closed too and Home showed"
+    status: fixed
+    risk: high
+    related: [E-SCN-27]
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
+        name: a second state change while the review is leaving does not pop the scanner under it
+  - id: E-SCN-32
+    group: Reading
+    title: Scan ended before the date was read
+    when: date, shop name or QR printed below the total · hover scan
+    then: "the scan waits until the phone rests · fixed 2026-11-13 · before, it ended at the total and booked today's date"
+    status: fixed
+    risk: high
+    related: [R-SCN-27, R-SCN-28]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: items that add up do not end it while the phone has only just come to rest
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: "a receipt that is one line waits too: the total row is seldom the last one"
+  - id: E-SCN-33
+    group: Reading
+    title: Gallery photo lost most rows
+    when: a 12 MP photo from the gallery
+    then: "read at full size, like a still · fixed 2026-11-13 · before, shrunk to 1600 px and most prices went unread"
+    status: fixed
+    risk: high
+    related: [R-SCN-06]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: "an imported photo is read like a still: at its own size, and scaled down where that does not add up"
+  - id: E-SCN-34
+    group: Reading
+    title: Date with a damaged separator
+    when: "`05,02.2026` · `02 05.2025` · `10.08 26` beside a time"
+    then: read as the date when no clean one is on the page · within the last 2 years only
+    status: fixed
+    risk: medium
+    related: [R-SCN-28]
+    tests:
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: a comma for the first separator (apotheke_20260205_A)
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: three small numbers without a time are no date
+  - id: E-SCN-35
+    group: Reading
+    title: Amount of 1000 or more without a separator
+    when: "`1249,00` printed without a thousands dot"
+    then: "read as 1249,00 · fixed 2026-11-13 · before, no parser saw the amount"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: a total of a thousand and more is read with its separator and without one
+  - id: E-SCN-36
+    group: Reading
+    title: QR missed on a still or gallery photo
+    when: a small or dense QR on a full-size photo
+    then: "looked for twice · a 2560 px copy first, then the file · 55 → 63 of 66 corpus codes on iOS"
+    status: fixed
+    risk: medium
+    related: [E-SCN-23]
+    tests:
+      - file: test/features/receipt/domain/services/still_reader_test.dart
+        name: a copy that shows none is followed by the file
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: a code on an imported photo is the receipt
+  - id: E-SCN-37
+    group: Reading
+    title: QR read after *Scan more*
+    when: review shows an OCR total · *Scan more* · the QR is read now
+    then: the QR's total replaces the review's · date and shop stay as reviewed
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: a code read only now overrides the total the review showed, never its date or its shop
+  - id: E-SCN-38
+    group: Reading
+    title: Training receipt QR
+    when: RKSV code of a till in training mode
+    then: ignored · total and date come from the print
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: rejects a training receipt
+  - id: E-SCN-39
+    group: Reading
+    title: Pharmacy without a readable header
+    when: "the page says *Apotheke* or carries the pharmacist's line · shop unknown"
+    then: "one **Health** line, named *Apotheke* · a street called Apothekergasse does not count"
+    status: fixed
+    risk: low
+    related: [R-SCN-04, D-SCN-10]
+    tests:
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: a pharmacy receipt without its header is one Health line (apotheke_20250502_A)
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: an address or an advert with the word in it is no pharmacy
+  - id: E-SCN-40
+    group: Reading
+    title: Total row booked as an item
+    when: "the total label misread · `Z0 zahlen` · `Zwischensume`"
+    then: "a total row when it carries the total or the sum of the items above · fixed 2026-11-13 · before, an extra item that also swallowed the change row"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/domain/parsers/parser_noise_test.dart
+        name: a damaged label counts on the row of the known total (lidl_20260701_A)
+      - file: test/features/receipt/domain/parsers/obi_parser_strategy_test.dart
+        name: "a Zwischensumme that lost a letter is no item: the coupons below come off the last article (obi_20260609_A)"
+      - file: test/features/receipt/domain/parsers/parser_noise_test.dart
+        name: without the figure a near-label stays an item
+  - id: E-SCN-41
+    group: Reading
+    title: Discount that lost its minus
+    when: "`Rabatt 20% 1,40` under a 6,99 line (SPAR) · `Preisvorteil 0)40` (LIDL)"
+    then: "taken off when it is the printed share of the line above · a comma read as `)` is a comma again"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/parsers/spar_parser_strategy_test.dart
+        name: a Rabatt that lost its minus is taken off when it is the printed share of the line above (spar_20260718_A)
+      - file: test/features/receipt/domain/parsers/spar_parser_strategy_test.dart
+        name: a positive Rabatt figure that is not that share stays informational
+      - file: test/features/receipt/domain/parsers/lidl_parser_strategy_test.dart
+        name: a discount whose comma was read as a bracket is still taken off (lidl_20260714_A)
+  - id: E-SCN-42
+    group: Reading
+    title: Multipack discount on two lines
+    when: "ADEG · `2 x MULTIPACKNACHLASS -0.80` under two equal lines"
+    then: "both lines share it · before 2026-11-13 the last line took it all"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/receipt/domain/parsers/adeg_parser_strategy_test.dart
+        name: is shared by the two equal lines above it (adeg_20260708_B)
+  - id: E-SCN-43
+    group: Reading
+    title: VAT letter glued to the price
+    when: "ADEG, BILLA · `B1.98` read as one token"
+    then: "price 1,98 · before 2026-11-13 the B became an 8 and the line cost 81,98"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/domain/parsers/adeg_parser_strategy_test.dart
+        name: a VAT letter glued to the price is the letter, not an 8 in front of it (adeg_20260717_A)
+      - file: test/features/receipt/domain/parsers/billa_parser_strategy_test.dart
+        name: a VAT letter glued to the price is the letter, not an 8 in front of it
+  - id: E-SCN-44
+    group: Reading
+    title: Deposit label misread
+    when: "`FAND EINEG 0,25` · `PEANDFLASCHE`"
+    then: "folds into its drink like *Pfand* · never on *Einweg* alone, which also names gloves"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/parsers/spar_parser_strategy_test.dart
+        name: a deposit row whose label the reader damaged still folds into its drink (spar_20260602_A)
+      - file: test/features/receipt/domain/parsers/parser_noise_test.dart
+        name: "never EINWEG alone: it also names gloves and cutlery"
+  - id: E-SCN-45
+    group: Reading
+    title: Word split by the reader
+    when: "`Partyart ikel` · `Supennude ln` · `Maisbål lchen`"
+    then: "category of the whole word · scanner only, typed text stays as typed · before 2026-11-13 no category or the wrong one"
+    status: fixed
+    risk: medium
+    related: [R-SCN-03]
+    tests:
+      - file: test/features/receipt/domain/services/category_chain_test.dart
+        name: two fragments that spell a key match it
+      - file: test/features/receipt/domain/services/category_chain_test.dart
+        name: two unrelated words never spell a short key across their gap
+      - file: test/features/receipt/domain/services/category_chain_test.dart
+        name: typed text is matched as typed
+  - id: E-SCN-46
+    group: Reading
+    title: Item name on another row than its price
+    when: "unknown shop · price row holds only counts or codes · `(2) € 6,50`"
+    then: "name from the row above · from below only when the receipt prints every name below · article numbers leave the name"
+    status: fixed
+    risk: medium
+    related: [R-SCN-04]
+    tests:
+      - file: test/features/receipt/domain/parsers/generic_parser_strategy_test.dart
+        name: "counts and a currency sign are no name: the row above is (libro_20260702_A)"
+      - file: test/features/receipt/domain/parsers/generic_parser_strategy_test.dart
+        name: the name printed below an article row is taken when nothing above is one (deichmann_20260811_A)
+      - file: test/features/receipt/domain/parsers/generic_parser_strategy_test.dart
+        name: a receipt that prints names above never takes one from below, even when its first name is unusable
+  - id: E-SCN-47
+    group: Reading
+    title: Prices one row off their names
+    when: curled or tilted paper · the price column sits a row higher or lower
+    then: "sum right, but lines carry a neighbor's price or name · open (lidl_20260417_A, spar_20260619_A)"
+    status: known-issue
+    risk: medium
+  - id: E-SCN-48
+    group: Reading
+    title: Discount row without a figure
+    when: "`Preisvorteil` printed, its amount not read at all"
+    then: "review shows the mismatch · the user fixes the line · open (lidl_20260701_A)"
+    status: known-issue
+    risk: low
+    related: [R-SCN-29]
+

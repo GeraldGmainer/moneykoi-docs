@@ -6,7 +6,8 @@ items:
     steps:
       - start at the store name, move the phone slowly down · read rows get a tick
       - the panel counts items and the sum · the hint says what is still needed
-      - items meet the total (QR or *SUMME*) → buzz → optional photo or *Without photo*
+      - items meet the total → *Keep going to the end of the receipt* until date and shop are read
+      - QR read, or the phone rests → buzz → optional photo or *Without photo*
       - "short receipt: one tap on *Capture* instead · *Done* ends early"
       - review → categorize, fix, merge → *Save*
     result: one booking per item, + photo when one was taken
@@ -15,7 +16,7 @@ items:
         name: frames that read the whole receipt end the pass when the items meet the total, then offer the photo
       - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: "one still of a short receipt is the whole scan: review opens with the photo and its item boxes"
-    checks: [C-SCN-001, C-SCN-014]
+    checks: [C-SCN-001, C-SCN-014, C-SCN-018]
   - id: J-SCN-02
     group: Scanning
     title: Scans a restaurant bill
@@ -34,8 +35,9 @@ items:
     from: scanner → gallery button, or *Pick photos* when the camera is declined or missing
     steps:
       - pick photos top to bottom
+      - each is read at full size, QR included
     result: review, like from the camera
-    checks: [C-SCN-003, C-SCN-011]
+    checks: [C-SCN-003, C-SCN-011, C-SCN-020]
   - id: J-SCN-04
     group: Scanning
     title: Receipt for an existing booking

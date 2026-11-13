@@ -18,11 +18,15 @@ gerald:
   - ref: T-SCN-04
   - ref: T-SCN-05
   - text: "Decide the baseline promotion · D-SCN-06"
+  - text: "Decide the gate scale · D-SCN-13"
   - ref: T-SCN-06
   - ref: T-SCN-07
+  - section: "Germany and Switzerland"
+  - ref: T-SCN-08
+  - ref: T-SCN-09
 agents:
-  - text: "Fix rounds on the emulator scorecard · none run yet"
-  - text: "BILLA + LIDL rule gaps · BILLA 1/8 at stage 2"
+  - text: "Fix rounds on the emulator scorecard · two run 2026-11-13 · next: missing rows, discounts"
+  - text: "BILLA + LIDL rule gaps · BILLA 5/8 on stills, 2/8 at 1920 px"
   - text: "Franchise QR-first check · not covered → Gerald picks (a) or (b)"
   - text: "HOFER, PENNY + generic parsers · each waits for receipts"
   - text: "§7.5 leftovers: confidence input · repair fuzz check · dead code"
@@ -31,3 +35,6 @@ agents:
   - text: "Score `SCORECARD_SCALE=hover` once Gerald's videos are filed"
   - text: "Retire SCANNER_CAPTURE_PLAN.md after his phone checks"
   - text: "Re-parse interval from phone timings (C-SCN-014) · max(300 ms, 2× parse)"
+  - text: "PDF scale for digital receipts once T-SCN-08 delivers files"
+  - text: "SPAR missing rows + discount attribution · chosen 2026-11-13, not started"
+  - text: "Row tilt: prices one row off their names (lidl_20260417_A, spar_20260619_A)"

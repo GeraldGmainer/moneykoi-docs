@@ -44,37 +44,68 @@ items:
     group: The flow
     title: From gallery photos
     text: |
-      - one or more, top to bottom
+      - one or more, top to bottom · read at **full size**, like a *Capture* still
       - unreadable photo fails alone · no total anywhere → back to the camera
-      - same assembly as the live scan: overlapping photos are joined by their rows
+      - overlapping photos are joined by their rows
       - also without a camera: *Pick photos* on the camera-declined and error cards
-    source: SCANNER §4.30
+    source: SCANNER §4.30, §4.38
+    related: [R-SCN-26, E-SCN-33]
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
         name: and an unreadable photo is reported there
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: "an imported photo is read like a still: at its own size, and scaled down where that does not add up"
   - id: R-SCN-25
     group: The flow
     title: When a scan ends
     text: |
-      - itemized: item sum = total (±5 ct) as read, a repaired price never counts → buzz → photo step or review
-      - restaurant, one-category shop: as soon as the header and the total are read
-      - *Done*: ends with what was read · a sum that does not meet the total → review's mismatch banner, never a made-up line
-      - total never read → review opens at 0 and asks for it
-    source: SCANNER §4.37
+      - ready: items = total (±5 ct) as read · a repaired price **never** counts
+      - ends at once: QR read · *Capture* still · total + date confirmed in review
+      - otherwise: once the phone rests (R-SCN-27) → buzz → photo step or review
+      - *Done*: ends early · mismatch → review banner · no total → review at 0
+    source: SCANNER §4.37, §4.38
+    related: [R-SCN-27, E-SCN-20]
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: Done ends the pass early; a total never read opens the review at 0
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: "the code: its total and date are exact"
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: a still, which showed all there is to show
+  - id: R-SCN-27
+    group: The flow
+    title: The scan waits for the receipt's end
+    text: |
+      - date, shop name and QR often print **below** the total
+      - rest = no new row + no movement for 1.2 s
+      - 2.5 s while date or shop are still unread
+      - hint until then · *Keep going to the end of the receipt*
+    source: SCANNER §4.38
+    related: [R-SCN-25, R-SCN-28, E-SCN-32]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
+        name: the date printed below the total is read when the pan goes on, and the hint asks for it
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: while the date or the shop is unread the pause is the longer one
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: "frames that show no receipt count as rest: lifting the phone away ends it"
+    checks: [C-SCN-018, C-SCN-019]
   - id: R-SCN-26
     group: The flow
     title: Camera and photo size
     text: |
       - camera at the sensor's full resolution · opens at 2× zoom (lens range permitting)
-      - a still is read whole at that resolution, in overlapping bands
+      - a still is read **twice** · full size in bands + whole at 1920 px
+      - the reading whose items meet the total is the receipt · never a mix
       - the stored photo stays 1080 px wide, cropped to the frame · upload unchanged
-    source: SCANNER §4.8
+    source: SCANNER §4.8, §4.38
     tests:
       - file: test/features/receipt/domain/services/still_reader_test.dart
         name: a sensor-size still is read in overlapping bands and merged into one page in its own pixels
+      - file: test/features/receipt/domain/services/still_reader_test.dart
+        name: a large still is read a second time scaled down
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: the second is the receipt when the first misses a row and the second adds up
   - id: R-SCN-22
     group: The flow
     title: Camera declined · ask again before Settings
@@ -93,11 +124,12 @@ items:
     group: The flow
     title: German TSE QR = like RKSV
     text: |
-      - KassenSichV `V0;…` locks total + date exactly
+      - KassenSichV `V0;…` locks total + date exactly · sums per VAT rate kept
       - only sales · training/voided/cancelled ignored
       - date = local day · shop learned per till from the first fix
       - built from the spec · untested on real receipts (C-SCN-006)
-    source: SCANNER §4.36
+    source: SCANNER §4.36, §4.38
+    related: [R-SCN-30]
     tests:
       - file: test/features/receipt/domain/parsers/tse_parser_test.dart
         name: sums the gross amounts per rate into the total
@@ -238,3 +270,54 @@ items:
         name: a hand-entered receipt with a total and no item yet starts neutral, not red
       - file: test/features/booking/ui/pages/add_receipt_page_test.dart
         name: a hand-entered receipt turns red once its items disagree with the total
+  - id: R-SCN-28
+    group: Review & save
+    title: A date that was not read
+    text: |
+      - scanned receipt, no readable date → today · marked *Date not read · today*
+      - a date more than 10 years back or in the future is **never** taken
+      - a damaged date (`05,02.2026`) counts only when no clean one is printed
+      - typed-in receipt → today, no mark
+    source: SCANNER §4.38
+    related: [R-SCN-27, E-SCN-34]
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: a scanned receipt whose date was not read says so; one that was read, or was typed in, does not
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: a date in a year no receipt at hand has is not read at all (tastekitchen_20260618_B)
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: a clean date wins over a damaged one above it
+  - id: R-SCN-29
+    group: Review & save
+    title: Suggested fix for a mismatch
+    text: |
+      - items ≠ total + exactly **one** small fix closes the gap → card *Suggested fix*
+      - fix = ≤ 2 prices by a misread digit or lost comma · or 1 row dropped
+      - only prices read off the paper · nothing changes without *Apply*
+      - rare by design · most gaps are missing rows, not digits
+    source: SCANNER §4.38
+    related: [R-SCN-07, D-SCN-07, E-SCN-22]
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: a scanned receipt one misread row away from its total offers the fix, and Apply hands it to the cubit
+      - file: test/features/receipt/domain/services/receipt_repair_search_test.dart
+        name: two rows that could carry the same fix are ambiguous, so nothing is suggested
+      - file: test/features/receipt/domain/services/receipt_repair_search_test.dart
+        name: two misread digits on two rows are found together
+    checks: [C-SCN-021]
+  - id: R-SCN-30
+    group: Accuracy
+    title: Germany and Switzerland · header first
+    text: |
+      - total, date, shop read like Austrian receipts · `CHF` + `1'234.50` amounts
+      - EDEKA, Kaufland, ALDI, Migros, Coop, Denner, Volg → groceries
+      - items → generic parser, a best guess · VAT letters only from the receipt's own table
+      - **no** real German or Swiss receipt tested yet (T-SCN-08)
+    source: SCANNER §4.38
+    related: [R-SCN-11, D-SCN-09, R-SCN-13]
+    tests:
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: "a Swiss total: CHF, a dot decimal, an apostrophe for the thousands"
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: a total of a thousand and more is read with its separator and without one
+

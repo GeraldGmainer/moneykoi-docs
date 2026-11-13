@@ -43,6 +43,7 @@ items:
     owner: gerald
     detail: |
       - C-SCN-014, C-SCN-015, C-SCN-016 · thirty minutes
+      - + the new end of a scan: C-SCN-018, C-SCN-019 · five minutes
       - a receipt that will not finish → keep its photo for the corpus inbox
   - id: T-SCN-06
     title: Hover videos + whole-receipt photos for the corpus
@@ -60,3 +61,17 @@ items:
     detail: |
       - `assets/onboarding/onboarding_scanner2.mp4` and `…3.mp4` still show the old lock screen and item photos
       - re-record: hovering down a receipt with ticks · the panel finishing at the total
+  - id: T-SCN-08
+    title: Digital receipts from Germany and Switzerland
+    owner: gerald
+    detail: |
+      - export PDFs or eBons from shop apps: REWE, Lidl Plus DE, Kaufland, Migros, Coop
+      - drop them into `moneykoi-receipts/inbox/` · an agent builds the PDF scale from them
+      - no public set of real Swiss slips exists (checked 2026-11-13) · R-SCN-30 is spec-only until then
+  - id: T-SCN-09
+    title: Tester photos from Germany and Switzerland
+    owner: gerald
+    detail: |
+      - ask testers for 5–10 receipt photos per chain · whole receipt, sharp, flat
+      - into `moneykoi-receipts/inbox/` · filed with the `scanner-corpus-round` skill
+
