@@ -66,7 +66,7 @@ gerald:
     note: "all 7 pending migrations in one push · before the web deploy and the Play rollout"
   - text: "`./publish.sh internal` → device pass on the internal build → `./publish.sh promote`"
   - text: "Push `20261115090000_release_notes_app_2_1_0_web_1_9_0` with the Play rollout"
-  - text: "Then push moneykoi-web `main` (T-DATA-08) · 6 commits ahead"
+  - text: "Then push moneykoi-web `main` (T-DATA-08) · 7 commits ahead"
 agents:
   - text: "Corpus test + `expect.json` on the real bank files (T-DATA-05)"
     done: 2026-11-11
