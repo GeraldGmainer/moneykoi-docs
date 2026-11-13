@@ -225,7 +225,9 @@ items:
     then: |
       - the switch keeps a margin inside each segment and drops its icons when the label needs the room · before, *Einnahme* touched the border and *Umbuchung* shrank alone
       - an import row's payee and date line wrap to two lines instead of a few letters · normal size unchanged
-      - fixed 2026-11-13 (A5-14, A5-15) · still open: scanner hint and buttons at 130 % (A5-16), the Budget Book's third tab at 200 % (A5-17)
+      - scanner: the camera hint takes a third line, the review buttons wrap, the item sheet's *Delete* turns into an icon above 130 % so *Save* stays readable
+      - Budget Book view tabs stop growing at 130 %, so *Kalender* stays on a 360 dp screen
+      - fixed 2026-11-13 (A5-14 … A5-17)
     status: fixed
     risk: low
     tests:
@@ -233,3 +235,7 @@ items:
         name: "large text on a narrow phone: the icons give way, the labels keep the room (A5-15)"
       - file: test/features/data_import/ui/bank_import_ui_test.dart
         name: at a large text size the payee and its date line wrap instead of being cut to a few letters (A5-14)
+      - file: test/features/booking/ui/widgets/add_receipt/review_item_edit_sheet_state_test.dart
+        name: at large text Delete is an icon, so Save keeps its label (A5-16)
+      - file: test/features/budget_book/ui/screens/budget_book_tab_test.dart
+        name: at 200 % text the view tabs stop growing at their cap, so all three stay on a narrow phone (A5-17)
