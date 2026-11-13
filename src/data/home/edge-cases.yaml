@@ -142,3 +142,13 @@ items:
     tests:
       - file: test/features/home_widget/widget_snapshot_service_test.dart
         name: a widget bound in another book keeps its last snapshot while this book is open
+  - id: E-HOM-17
+    group: Getting started
+    title: A saved scan never ticked *Scan a receipt*
+    when: new user · scans a receipt (camera or gallery) and saves it
+    then: the checklist ticks *Scan a receipt*, *Tips & features* counts the scanner as used, the scan nudge stops · fixed 2026-11-13 (I5-4) · before, the scan counter was never raised, so all three waited forever
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
+        name: a saved scan counts once for the checklist, Tips & features and the scan nudge (I5-4)

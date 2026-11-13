@@ -177,3 +177,13 @@ items:
     tests:
       - file: test/features/category_activity/service/category_activity_data_generator_test.dart
         name: "an anchored month charts every day of its range, across the month change"
+  - id: E-ANL-19
+    group: Numbers
+    title: "*Shrink by −353.89*"
+    when: Stats › Overview › *Balance forecast* · a balance that falls over the horizon
+    then: "*On track to shrink over 12 months by 353.89* in the adverse colour · the words carry the direction, the figure no sign · *Negative from …* keeps the signed change · fixed 2026-11-13 (I5-5)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/analytics/ui/widgets/forecast_card_test.dart
+        name: '"grow by" / "shrink by" state the direction, so the change carries no sign, only the colour (I5-5)'
