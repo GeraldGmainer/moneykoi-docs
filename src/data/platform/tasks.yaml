@@ -55,8 +55,13 @@ items:
   - id: T-PLAT-04
     title: Rewrite *MoneyKoi* in old release notes
     owner: ai
-    waitsFor: [D-PLAT-2]
-    detail: Only if D-PLAT-2 says yes · Gerald pushes the migration after
+    status: done
+    detail: |
+      - **done 2026-11-12** · D-PLAT-2
+      - `20261112130000_changelog_money_koi.sql` + `supabase/tests/manual/changelog_money_koi.sql`
+      - 16 places in 5 rows · app 1.6.0, 1.13.0, 1.15.0, 1.16.0 · web 1.3.0
+      - `my.moneykoi.com`, file names and URLs stay · runs twice without harm
+      - left: Gerald pushes it, with T-BOOK-06 · app + web show it on the next load
     prompt: |
       New migration in moneykoi-supabase (never edit an applied one): in public.changelog, replace "MoneyKoi" with "Money Koi" inside the notes JSONB of every row and language (the 16 occurrences come from 20261015140000_changelog_app_and_web.sql, which rebuilt the table); URLs and file names stay; the rows must still pass internal.changelog_notes_valid. Hand Gerald the push command.
   - id: T-PLAT-06
@@ -271,7 +276,7 @@ items:
     owner: gerald
     waitsFor: [T-PLAT-19]
     detail: |
-      - five drafts, 2026-11-09: r/MoneyKoi · r/Finanzen (the free template) · r/FinanzenAT (no bank login, Kassabons) · r/androidapps · r/SideProject · `store/press/reddit.md`
+      - five drafts, 2026-11-09: r/MoneyKoi · r/Finanzen (the free template) · r/FinanzenAT (no bank login, Kassabons) · r/droidappshowcase · r/SideProject · `store/press/reddit.md`
       - read each sidebar's self-promotion rules first · one new subreddit per week · answer comments for a week
       - every Play link carries `utm_source=reddit` and a campaign per subreddit → the admin's *Play Store* page (T-PLAT-15) shows what each post brought
       - r/SideProject: check the build time the draft states

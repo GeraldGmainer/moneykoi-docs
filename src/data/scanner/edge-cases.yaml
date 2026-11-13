@@ -261,3 +261,37 @@ items:
         name: Rescan tapped twice opens one camera
       - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
         name: a web link that resolves after Rescan never reaches the new scan
+  - id: E-SCN-28
+    group: Review
+    title: English category name in a German book
+    when: German book · scan review · an item, a line merged by category, the item editor
+    then: the book's own category name, *Lebensmittel* · before 2026-11-12 the scanner's English name, *Groceries* · the saved booking was always right
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_item_tile_test.dart
+        name: a scanner bucket shows the name of the category it resolved to
+      - file: test/features/booking/ui/widgets/add_receipt/review_item_tile_test.dart
+        name: a line merged by category is titled with the resolved category name
+      - file: test/features/booking/ui/widgets/add_receipt/review_item_tile_test.dart
+        name: the editor shows the resolved category name and keeps the bucket it saves
+  - id: E-SCN-29
+    group: Photos
+    title: "Replace took the receipt from sibling bookings"
+    when: "split scan · *Replace* the receipt on one of its bookings"
+    then: "the others keep photos, lines and merchant · fixed 2026-11-12 · before, the shared receipt was deleted (bug hunt 7)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/use_cases/attach_receipt_use_case_test.dart
+        name: "keeps a receipt that another booking from the same scan still shows"
+  - id: E-SCN-30
+    group: Photos
+    title: "*Scan more* dropped the photos"
+    when: "scan review · *Scan more* · save"
+    then: "existing photos kept, the new one added · fixed 2026-11-12 · before, the receipt saved with none (bug hunt 26)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_harvest_capture_test.dart
+        name: "scanMore captures another section and merges it into the review"

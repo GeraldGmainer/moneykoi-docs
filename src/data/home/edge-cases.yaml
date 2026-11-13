@@ -89,3 +89,13 @@ items:
       - file: src/app/(main)/investments/lib/format.test.ts
         repo: web
         name: takes the user's number format when handed one
+  - id: E-HOM-16
+    group: Android widgets
+    title: Widgets after a book switch
+    when: widgets placed in book A · switch to book B
+    then: they keep A's last figures · refresh when A opens again · a deleted record → placeholder · fixed 2026-11-12 · before, all turned into *tap to reconfigure* (bug hunt 54)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/home_widget/widget_snapshot_service_test.dart
+        name: a widget bound in another book keeps its last snapshot while this book is open

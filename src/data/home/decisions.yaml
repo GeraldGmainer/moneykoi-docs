@@ -13,8 +13,12 @@ items:
     answer: No · + needs the middle · would be a redesign
   - id: D-HOM-4
     question: iOS widgets
-    status: open
-    answer: Planned (`plans/IOS_WIDGET_PLAN.md`) · icon assets port directly
+    status: decided
+    date: 2026-11-12
+    answer: |
+      - **after iOS is live** · store launch + New Year push first
+      - WidgetKit phase 0 stays parked until then
+      - planned (`plans/IOS_WIDGET_PLAN.md`) · icon assets port directly
   - id: D-HOM-5
     question: Where do locked pages sit in the Free drawer?
     status: decided

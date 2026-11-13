@@ -50,3 +50,5 @@ groups:
         text: "*?* → help dialog · check de + ja"
       - id: C-BUD-010
         text: Next to "Childcare", "Haushalt", "Funds" → *Car*, *Haus*, *Fun* rows don't land there
+      - id: C-BUD-042
+        text: "Loan repaid in full → no *Reopen* · loan settled by hand below the principal → *Reopen* still there"

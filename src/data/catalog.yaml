@@ -562,7 +562,7 @@
   area: app
   tier: free
   web: partial
-  webNote: currency + starter sets only
+  webNote: currency + starter sets + starting balances per account
   docs: settings
   note: built 2026-10-19, ships 1.18.0 · accounts + balances, calendar, sub-category switch + preview · NUX ph. 3
 - id: getting-started

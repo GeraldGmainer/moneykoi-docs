@@ -169,7 +169,7 @@ items:
     from: owner of a shared book
     steps:
       - card menu → *Stop sharing*
-    result: others removed · private again
+    result: others removed · private again · the open book stays open
     tests:
       - file: test/features/book/use_cases/book_use_cases_test.dart
         name: dissolving stays in the (now private) book

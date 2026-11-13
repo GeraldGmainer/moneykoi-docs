@@ -233,3 +233,16 @@ items:
     text: "members: read-only + hint"
     source: FAMILY_ACCOUNTS §2
     related: [R-BOOK-10]
+  - id: R-LED-45
+    group: Accounts
+    title: Web accounts in three groups
+    text: |
+      - *Cash & bank* · *Savings & investments* · *Credit & loans*, a subtotal each
+      - credit subtotal = what is **owed**
+      - hidden accounts last in their group, counted · empty groups not shown
+      - app list stays flat
+    source: moneykoi-web account-groups.ts, ACCOUNTS_WEB (decided 2026-11-12)
+    tests:
+      - file: src/app/(main)/accounts/lib/account-groups.test.ts
+        repo: web
+        name: sorts the seven types into three groups

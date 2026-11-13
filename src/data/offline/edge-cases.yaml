@@ -304,3 +304,23 @@ items:
     then: reminders not re-armed until an online return
     status: by-design
     risk: low
+  - id: E-OFF-41
+    group: Dates
+    title: "Period figures on the wrong days"
+    when: "any period total · west of UTC always · in Vienna between 00:00 and 02:00"
+    then: "days compared as local days · today counts right after midnight · fixed 2026-11-12 · proven under Vienna only (bug hunt 11)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/core/offline_first/data_sources/local_data_source_date_filter_test.dart
+        name: "a range ending now, shortly after midnight, already holds today"
+  - id: E-OFF-42
+    group: Lifecycle
+    title: Edit in the last instant of a resume
+    when: Cloud back after a lapse · a booking saved just as sync turns back on
+    then: sent with one more push right after · fixed 2026-11-13 · before, it stayed on the phone (1.16 review L4)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/cloud_tier/lapse_test.dart
+        name: a write between the last empty pass and the gate turning back is pushed after it

@@ -44,6 +44,7 @@ items:
     text: |
       - each rule's **next** date only · transfers too
       - lead per rule or default 1 day · within 90 days
+      - lead ≥ the gap between dates → the first date whose reminder is still ahead (2026-11-12) · before, none
       - same day → one notification: "Rent, Phone and 2 more"
     source: NOTIFICATIONS §5
     tests:

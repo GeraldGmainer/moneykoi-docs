@@ -12,8 +12,12 @@ items:
     related: [J-BOOK-13, C-BOOK-001, D5]
   - id: Q-BOOK-2
     question: Close the invite role hole on the server?
-    status: open
-    answer: Open in review-2026-09 (item 4) · no decision yet
+    status: decided
+    date: 2026-11-12
+    answer: |
+      - **close fully** · invites only as member or admin
+      - accepting never changes an owner · never grants owner
+      - migration written (T-BOOK-02) · Gerald pushes it
     related: [E-BOOK-14]
   - id: D-BOOK-1
     question: Manage books offline?

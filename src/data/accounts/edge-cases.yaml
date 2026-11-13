@@ -148,7 +148,7 @@ items:
     when: account with recurring rules deleted in a local book
     then: |
       - its rules deleted too
-      - with sync: account soft-deleted, rules paused
+      - with sync: account soft-deleted, rules paused · listed as *Account missing* since 2026-11-12 · choosing an account resumes the rule
       - kept by Gerald 2026-10-07
     status: by-design
     risk: medium
@@ -343,6 +343,27 @@ items:
         name: cancel ends the wait at once, and what the request says later is dropped
       - file: test/features/auth/bloc/auth_cubit_test.dart
         name: a session that does not come in time says so, reported as apple
+  - id: E-ACC-75
+    group: Web
+    title: Old account's data after the session ends
+    when: web · session expires or ends in another tab · wrong account on an invite · QR sign-in over an open session
+    then: cache, storage and open book cleared · signed-out visitor sees a spinner, never the page · fixed 2026-11-12 · password or code sign-in over an open session still open
+    status: fixed
+    risk: high
+    tests:
+      - file: src/app/(main)/layout.test.tsx
+        repo: web
+        name: never mounts the protected page
+      - file: src/app/invite/page.test.tsx
+        repo: web
+        name: leaves nothing of the wrong account
+  - id: E-ACC-76
+    group: Web
+    title: Profile could not be loaded
+    when: web · the profile read fails after sign-in
+    then: "*Couldn't load the account* with *Try again* and *Log out* · before 2026-11-12 the app opened without the setup check"
+    status: fixed
+    risk: medium
   - id: E-ACC-77
     group: On the web
     title: Profile picture dialog in English

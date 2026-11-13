@@ -258,3 +258,20 @@ items:
     tests:
       - file: test/features/app_lock/ui/screens/lock_screen_test.dart
         name: a 640 dp phone drops the logo and keeps every key above the gesture bar
+  - id: E-PRIV-50
+    group: App lock
+    title: "Lock skipped during the biometrics prompt"
+    when: "app left while the enable-biometrics prompt is up · timeout passes"
+    then: "locks on the way back · fixed 2026-11-12 · before, the time away was not counted (bug hunt 45, 73)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: "time in the background during the enable-biometrics prompt still counts toward the timeout"
+  - id: E-PRIV-51
+    group: Photos
+    title: Photo location in uploaded pictures
+    when: profile picture or receipt photo from a geotagged gallery picture
+    then: all EXIF removed · GPS + camera · the picture keeps its rotation · fixed 2026-11-13 (security M8) · a file the decoder cannot read still goes up unchanged
+    status: fixed
+    risk: high

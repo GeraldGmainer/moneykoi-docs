@@ -20,3 +20,7 @@ groups:
     items:
       - id: C-REC-007
         text: "Book a rent → *Make recurring* → prefilled rule → *Save* is on without a change → saved · back without saving → asks before discarding"
+      - id: C-REC-008
+        text: "Cloud book · delete an account a rule uses → rule shows *Account missing* → *Choose account* → next date booked, on the web too"
+      - id: C-REC-009
+        text: "Monthly rule, pick the 31st → hint about *Last day* in the day picker and the schedule sheet"

@@ -365,3 +365,98 @@ items:
       - file: src/app/(main)/bookings/components/bookings-table.test.tsx
         repo: web
         name: does nothing when the confirm is cancelled
+  - id: E-BKG-62
+    group: Web
+    title: Receipt lines off by a fraction of a cent
+    when: web · *Add receipt* · 3 × 3.333 against 10 · or a yen receipt
+    then: compared in whole minor units of the currency · 0.01 left is shown, not hidden · yen compare as whole yen · fixed 2026-11-12
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/add-receipt/lib/allocation.test.ts
+        repo: web
+        name: does not call three lines of 3.333 a balanced 10
+      - file: src/app/(main)/add-receipt/lib/allocation.test.ts
+        repo: web
+        name: compares whole yen in a zero-decimal book
+  - id: E-BKG-63
+    group: Trash
+    title: "Double tap on *Restore*"
+    when: "Trash · *Restore* tapped twice · or a restore that fails"
+    then: "restored once · *Restored* only after it worked, an error otherwise · fixed 2026-11-12 · before, two bookings (bug hunt 3, 62)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/trash/trash_cubit_test.dart
+        name: "a second tap while a restore runs writes no second copy"
+      - file: test/features/trash/trash_page_test.dart
+        name: "a failed restore shows the error, not Restored"
+  - id: E-BKG-64
+    group: Quick booking
+    title: "*5 euro* lost the amount"
+    when: "quick booking · *kaffee 3,50 euro* · *2 bier 5 euro*"
+    then: "3.50 · 5 · the currency's name counts like its code · fixed 2026-11-12 · before, no amount or 2.00 (bug hunt 38)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/booking/quick_add/quick_booking_parser_test.dart
+        name: "the currency's name after the amount is consumed like its code"
+  - id: E-BKG-65
+    group: Quick booking
+    title: "Chips behind the typed text"
+    when: "quick booking · fast typing · second tap while saving"
+    then: "chips match the text · one booking · fixed 2026-11-12 (bug hunt 37, 10)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
+        name: "an older parse that finishes last does not overwrite the newer one"
+  - id: E-BKG-66
+    group: Web
+    title: Web receipt saved without its merchant
+    when: web · *Add receipt* · merchant typed · saved
+    then: a real receipt with merchant, date, total and items · bookings linked to it · phone shows the receipt card · built 2026-11-12, live once pushed (T-BOOK-06) · until then bookings only, as before
+    status: fixed
+    risk: medium
+    related: [T-BOOK-06]
+    tests:
+      - file: src/app/(main)/add-receipt/services/receipt.service.test.ts
+        repo: web
+        name: writes the receipt and its bookings in one RPC
+  - id: E-BKG-67
+    group: Web
+    title: Bookings of a deleted category on the web
+    when: web ledger · a booking whose category was deleted
+    then: stays listed · *Deleted category* next to the name · kept under the Fixed / Variable filter · ledger still adds up to the balance · decided + built 2026-11-12
+    status: fixed
+    risk: low
+  - id: E-BKG-68
+    group: Amount
+    title: More decimals than the currency has
+    when: 100 ÷ 3 on the keypad · a pasted 0.1 + 0.2 · 333.333 JPY · KWD *1.250* in quick add
+    then: rounded to the currency's decimals on save · 33.33 · 0.30 · 333 · KWD 1.25 · fixed 2026-11-13 · before, stored as typed (EC-AMT-8…14)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/edge_cases/amounts_currency_edge_cases_test.dart
+        name: EUR 100 ÷ 3 then Done stores the 33.33 the display shows
+  - id: E-BKG-69
+    group: Trash
+    title: Old trash entry restored twice
+    when: Trash on two phones · same booking restored on both
+    then: restored once · the second restore does nothing · fixed 2026-11-13 (EC-TRASH-5)
+    status: fixed
+    risk: high
+    tests:
+      - file: test/edge_cases/trash_restore_edge_cases_test.dart
+        name: restoring a stale entry a second time after it already came back does not duplicate it
+  - id: E-BKG-70
+    group: Booking form
+    title: Note or item name too long for sync
+    when: a note with emoji · a shopping item name over 50 · a quantity over 20
+    then: fields stop where the server's column ends, counted like the server · a Japanese word being typed is not cut · fixed 2026-11-13 · before, saved on the phone and refused on sync (contract A2, A3)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/shared/ui/form/code_point_limit_formatter_test.dart
+        name: text an input method is still composing is left alone until it is committed

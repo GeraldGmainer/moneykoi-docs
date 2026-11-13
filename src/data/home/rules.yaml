@@ -120,6 +120,7 @@ items:
     text: |
       - **never** saves in the background · needs sync, balances, validation
       - archived/gone category → placeholder · tap reconfigures
+      - widget of another book keeps its last figures while that book is closed (2026-11-12) · refreshed when it is opened again
     source: HOME_WIDGET §2, §12
   - id: R-HOM-22
     group: Android widgets

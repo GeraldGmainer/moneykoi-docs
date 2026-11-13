@@ -777,6 +777,17 @@ items:
       - file: test/features/backup/ui/backup_restore_page_test.dart
         name: a read-only member may export bookings, though not back up or import
     related: [R-MON-21]
+  - id: R-DATA-101
+    group: Booking export (CSV)
+    title: Export from a tag page
+    text: |
+      - tag page → export icon → the export, set to **this tag**, all time
+      - every member · same lock as the export (R-DATA-50)
+      - *Reset* returns to This month, no tag
+    source: tag_detail_page.dart, booking_export_cubit.dart, BOOKING_EXPORT §1
+    tests:
+      - file: test/features/booking_export/bloc/booking_export_cubit_test.dart
+        name: opened from a tag it starts on that tag over all time
   - id: R-DATA-51
     group: Booking export (CSV)
     title: Opens on This month

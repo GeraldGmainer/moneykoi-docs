@@ -35,6 +35,8 @@ items:
     title: '*Last day*, never "31"'
     text: |
       - "31" skips Feb, Apr, Jun, Sep, Nov
+      - a picked 29–31 shows a hint pointing to *Last day* (2026-11-13)
+      - yearly on Feb 29 → Feb 28 in common years (2026-11-13) · no past years filled in
       - bare monthly rule gets an explicit day first
     source: RECURRING §3
     tests:
@@ -99,6 +101,7 @@ items:
     title: New monthly rule runs on the start date's day
     text: |
       - created on the 2nd → *Every month on day 2* · *Make recurring* → the booking's day
+      - *Make recurring* on the 30th or Feb 28/29 keeps that day · only the 31st becomes *Last day* (2026-11-12)
       - start date moved before the day is touched → the day follows · a picked day stays
       - start-date ‹ › step by the rule's period: a week · a month · a year (a day for daily)
     source: RECURRING §3, §8

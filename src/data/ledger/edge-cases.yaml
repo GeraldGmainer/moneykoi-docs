@@ -187,3 +187,13 @@ items:
       - file: src/app/(main)/accounts/page.test.tsx
         repo: web
         name: says the load failed and offers a retry, never "No accounts found."
+  - id: E-LED-22
+    group: Categories
+    title: "Same subcategory name under another parent"
+    when: "subcategory named like one under another parent, same type"
+    then: "refused as a duplicate, as the server does · fixed 2026-11-12 · before, saved on the phone and never synced (bug hunt 8)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/category/ui/pages/category_sub_save_page_test.dart
+        name: "a name another parent's subcategory already has is refused"

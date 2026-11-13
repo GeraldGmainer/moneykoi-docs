@@ -9,8 +9,16 @@ items:
   - id: T-BOOK-02
     title: Close the invite role hole
     owner: ai
-    waitsFor: [Q-BOOK-2]
-    detail: Only after Q-BOOK-2 is decided
+    status: done
+    detail: |
+      - **done 2026-11-12** · Q-BOOK-2 · E-BOOK-14
+      - `20261112120000_invite_role_hole.sql` + `supabase/tests/manual/invite_role_hole.sql`
+      - invites only as member or admin · the table refuses *owner* too, not only the function
+      - accepting never changes an owner · pending *owner* invites are revoked by the migration
+      - a live member keeps their role when accepting another invite · a removed member rejoins with the invite's role
+      - the last change is not dry-run · local database was down → the manual check proves it
+      - app + web already send only member or admin · left: Gerald pushes it (T-BOOK-06)
+    related: [E-BOOK-14, Q-BOOK-2, T-BOOK-06]
     prompt: |
       New migration in moneykoi-supabase: create_book_invite accepts only 'member' and 'admin' as p_role; accept_book_invite never changes the role of an existing owner and never grants 'owner'. Add a manual check under supabase/tests/manual/. Hand Gerald the deploy step; do not run the supabase CLI.
   - id: T-BOOK-03
@@ -45,3 +53,25 @@ items:
       curl -s "https://digitalassetlinks.googleapis.com/v1/statements:list?source.web.site=https://my.moneykoi.com&relation=delegate_permission/common.handle_all_urls" | grep -c 95:48:05:6E
       adb shell pm verify-app-links --re-verify com.psyren.moneykoi && adb shell pm get-app-links com.psyren.moneykoi
     related: [E-BOOK-47]
+  - id: T-BOOK-06
+    title: Push the invite role fix
+    owner: gerald
+    waitsFor: [T-BOOK-02]
+    detail: |
+      - migration `20261112120000_invite_role_hole.sql` · with it `send-book-invite` (email no longer says *as owner*)
+      - prod the way the last migrations went · `origin/main` is still the 2-commit stub
+      - `db push` also applies every other pending migration, in order
+      - with it: `20261112130000` changelog name · `20261112140000` variability on *All* · `20261112150000` web receipts · `20261113120000` goal + loan status kept by the server · `20261113130000` Feb 29 yearly rules → Feb 28, no back-fill
+      - order: push the migrations **before** the web deploy and the app release that carry the new Feb 29 form
+      - before the Feb 29 push: the read-only *before* query at the end of `recurring_feb29_last_day.sql` (COUNT rules from Feb 29 stay leap-years-only)
+      - local first: `supabase migration up` + each manual check → *PASS* · `invite_role_hole`, `receipt_create_with_bookings`, `goal_loan_status` (the last two dry-run 2026-11-13 → PASS)
+      - after on prod: the read-only queries at the end of `goal_loan_status.sql` · count of goals/loans an old phone already reopened → decide whether to repair them
+      - after: `supabase/tests/manual/receipt_create_with_bookings.sql` prints *PASS* · save one receipt on the web → the phone shows its receipt card after a sync
+      - before: was the hole used? · queries 1–3 at the bottom of the manual check, read-only
+      - after: the manual check prints *PASS* (dev or local, not prod at a busy hour) · the last command answers `t`
+    command: |
+      cd moneykoi-supabase
+      supabase link --project-ref cwheprirreyscppmbybp && supabase db push
+      supabase functions deploy send-book-invite
+      psql "$PROD_DATABASE_URL" -c "select convalidated from pg_constraint where conname = 'book_invite_role_check';"
+    related: [T-BOOK-02, E-BOOK-14]

@@ -72,10 +72,18 @@ items:
     group: Invites
     title: Admin escalates via an invite
     when: admin invites self as `owner`, or the owner as `member`
-    then: server accepts any role → admin can become owner · open (review 4)
-    status: known-issue
+    then: refused · invites only as member or admin · an owner's role never changes · fixed 2026-11-12, live once the migration is pushed (T-BOOK-06) · before, the server accepted any role
+    status: fixed
     risk: high
-    related: [Q-BOOK-2, T-BOOK-02]
+    related: [Q-BOOK-2, T-BOOK-02, T-BOOK-06]
+  - id: E-BOOK-49
+    group: Invites
+    title: Member accepts a second invite
+    when: an admin invites a live member or admin with another role · they accept
+    then: role unchanged · invite marked accepted · only the owner changes roles · decided 2026-11-12, live with T-BOOK-06 · before, the invite's role won
+    status: fixed
+    risk: medium
+    related: [E-BOOK-14, T-BOOK-06]
 
   # Switching & sync
   - id: E-BOOK-20
@@ -277,3 +285,13 @@ items:
     status: known-issue
     risk: medium
     related: [T-PLAT-19]
+  - id: E-BOOK-50
+    group: Switching & sync
+    title: "Account of the previous book pre-filled"
+    when: "book switched · new booking, scan or recurring rule"
+    then: "starts on an account of the open book · fixed 2026-11-12 · before, the other book's account, a booking that never synced (bug hunt 9)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/booking/service/booking_save_initial_state_factory_test.dart
+        name: "an account remembered from another book is not pre-filled"

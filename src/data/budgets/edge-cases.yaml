@@ -201,3 +201,29 @@ items:
       - file: src/app/(main)/goals/services/goals.service.test.ts
         repo: web
         name: "refuses an update RLS matched no row for (a member's write)"
+  - id: E-BUD-48
+    group: Goals
+    title: Stale phone reopens a reached goal
+    when: goal completed on one device · another, older phone edits it
+    then: stays completed · a target edit re-checks it at once · raised above the saved amount → active · built 2026-11-13, live once pushed (T-BOOK-06) · before, the old phone's *active* won (contract A4)
+    status: fixed
+    risk: medium
+    related: [T-BOOK-06]
+  - id: E-BUD-49
+    group: Loans
+    title: Repaid loan reopened
+    when: loan repaid in full · *Reopen* · or an older phone pushes *active*
+    then: "*Reopen* hidden on app + web while repaid ≥ principal · the server keeps it paid off · a loan settled by hand below the principal keeps *Reopen* and is not protected · decided 2026-11-13"
+    status: fixed
+    risk: medium
+    related: [T-BOOK-06]
+  - id: E-BUD-50
+    group: Loans
+    title: Weekly due dates across the clock change
+    when: weekly loan or a goal's day count across the end of summer time
+    then: no day lost or added · fixed 2026-11-13 (mutation report)
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/budget_goals/domain/services/dst_boundaries_test.dart
+        name: a weekly loan due the Monday before the autumn change stays on Mondays

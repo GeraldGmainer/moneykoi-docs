@@ -35,3 +35,5 @@ groups:
         text: "Web ledger: *Balance correction* + *Initial balance* rows listed · neither income nor expense in the totals · search = description or merchant only"
       - id: C-BKG-041
         text: Fresh setup → book *Rent* (fixed category) → snackbar *Does this repeat every month?* replaces *saved* · *Make recurring* → rule form prefilled · a rule in that category → no question · 5th typed entry with no scan → *Got a receipt?* line under the amount · after one scan → never
+      - id: C-BKG-050
+        text: "Japanese keyboard · type a note up to the limit → composing never breaks · the word lands whole or not at all"

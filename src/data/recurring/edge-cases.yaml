@@ -79,3 +79,24 @@ items:
     tests:
       - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
         name: backing out of an untouched prefilled rule asks before discarding it
+  - id: E-REC-11
+    group: Form
+    title: "Type switched, old category kept"
+    when: "recurring rule · Expense ↔ Income switched in the form"
+    then: "category cleared · *Save* waits for one of the new type · fixed 2026-11-12 · before, an income rule booked expenses (bug hunt 20)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: "switching the type in the picker drops the category of the old type"
+  - id: E-REC-12
+    group: Rules and bookings
+    title: Rule whose account or category was deleted
+    when: Cloud book · an account or category a recurring rule uses is deleted
+    then: rule kept, paused, listed as *Account missing* / *Category missing* · choosing one resumes it · account asked first · fixed 2026-11-12/13 · before, in no list (bug hunt 19, EC-TRASH-6)
+    status: fixed
+    risk: medium
+    related: [E-ACC-40]
+    tests:
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: a rule whose account was deleted asks for another account, and picking one resumes it

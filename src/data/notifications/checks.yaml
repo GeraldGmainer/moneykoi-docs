@@ -17,3 +17,5 @@ groups:
         text: "iPhone → Notifications → *Bill reminders* → *Time* → the wheel in a sheet, 12/24 h like the rest of the app · *Done* saves · Android keeps the dial"
       - id: C-NTF-007
         text: "Bill reminder delivered → Settings › change the reminder time → no second reminder for the same payment · the next occurrence still comes at the new time (AND-9-2)"
+      - id: C-NTF-008
+        text: "Daily rule, reminder 2 days ahead → the notification arrives"

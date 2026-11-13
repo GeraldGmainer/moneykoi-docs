@@ -195,7 +195,7 @@ items:
     title: Sells + transfers can't oversell any day
     text: |
       - checked against the lowest holding from that day on, not today's total
-      - transfer only between same-measure positions · a weight arrives converted (10 g → 0.32 oz t)
+      - transfer only between positions of the **same asset** · gold → silver is a sell + a buy (2026-11-12) · a weight arrives converted (10 g → 0.32 oz t)
       - transfer leg read-only, deleted as a pair
       - app + web the same since 2026-10-28 · web still books the cash before the trade
     source: INVESTMENTS §4.5, §11 (2026-10-28) · INVESTMENTS_WEB §4.3, §4.11

@@ -159,3 +159,21 @@ items:
       - file: src/app/(main)/balance/hooks/use-balance-timeline.test.tsx
         repo: web
         name: backs a balance correction out on its day
+  - id: E-ANL-17
+    group: Web
+    title: Fixed vs. variable on *All* showed one month
+    when: web · Analytics · period *All* · the fixed / variable cards
+    then: all time · fixed 2026-11-12 in `20261112140000_variability_all_time.sql`, live once pushed (T-BOOK-06) · until then the cards show the current budget month
+    status: fixed
+    risk: medium
+    related: [T-BOOK-06]
+  - id: E-ANL-18
+    group: Numbers
+    title: "Category trend dropped days"
+    when: "Category Activity · month starting mid-month · or *Last N months*"
+    then: "bars add up to the total · one bar per month on long ranges · fixed 2026-11-12 (bug hunt 14)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/category_activity/service/category_activity_data_generator_test.dart
+        name: "an anchored month charts every day of its range, across the month change"
