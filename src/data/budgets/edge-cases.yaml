@@ -53,9 +53,15 @@ items:
     group: Loans
     title: Debt-free date a month late
     when: 290.29 left at 10.01 a month
-    then: float math → 30 months, both clients · open (review 23)
-    status: known-issue
+    then: 29 months in both clients · before 2026-11-12 float math gave 30 (review 23)
+    status: fixed
     risk: low
+    tests:
+      - file: test/features/budget_goals/loan_math_test.dart
+        name: counts an exact multiple as that many months, not one more
+      - file: src/app/(main)/loans/lib/loan-math.test.ts
+        repo: web
+        name: payoffMonths counts an exact multiple as that many months, not one more
   - id: E-BUD-42
     group: Loans
     title: Split loses part of a payment
@@ -184,3 +190,14 @@ items:
       - file: src/app/(main)/goals/page.test.tsx
         repo: web
         name: says the load failed and offers a retry, never "No goals yet"
+  - id: E-BUD-47
+    group: Web
+    title: Web goal, loan or budget change refused
+    when: a member's role changed while the page was open, then they edit, pause or delete a goal, loan or budget
+    then: "*Only the owner and admins can change how this shared book is set up* · nothing changes · before 2026-11-12 a success message, and the old value came back on the next refresh (review 9)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: src/app/(main)/goals/services/goals.service.test.ts
+        repo: web
+        name: "refuses an update RLS matched no row for (a member's write)"

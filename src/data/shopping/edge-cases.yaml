@@ -44,3 +44,16 @@ items:
     tests:
       - file: test/features/shopping_list/domain/services/shopping_item_categorizer_test.dart
         name: everyday English and Japanese item names land on groceries
+  - id: E-SHP-06
+    group: Items
+    title: Stepper on a decimal quantity
+    when: "− on `0,5 kg`, + on `2.25 l`"
+    then: "`0,5 kg` stays (never zero) · `1,5 kg` − → `0,5 kg` · `2.25 l` + → `3.25 l` · the decimal mark is kept · app and web · before 2026-11-12 − on `0,5 kg` gave `1,5 kg` (web review 26)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/shopping_list/ui/widgets/quantity_stepper_test.dart
+        name: moves a decimal quantity with its decimals and its mark, never to zero
+      - file: src/app/(main)/shopping/lib/bump-quantity.test.ts
+        repo: web
+        name: moves a decimal quantity with its decimals and its mark, never to zero

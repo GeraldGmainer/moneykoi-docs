@@ -36,16 +36,20 @@ items:
     group: Web
     title: Web write refused by RLS
     when: member archives or deletes on the web
-    then: success shown, nothing changed, row returns · open (review 9)
-    status: known-issue
+    then: "*Only the owner and admins can change how this shared book is set up* · nothing changed · before 2026-11-12 success shown and the row came back (review 9)"
+    status: fixed
     risk: medium
   - id: E-INV-06
     group: Web
     title: Web price point, same day
     when: two devices record a value on one day
-    then: web inserts a duplicate · open (review 26)
-    status: known-issue
+    then: the web edits that day's oldest value · before 2026-11-12 it inserted another duplicate (review 26)
+    status: fixed
     risk: low
+    tests:
+      - file: src/app/(main)/investments/services/investments.service.test.ts
+        repo: web
+        name: edits the oldest row when the day already holds two, instead of inserting another
   - id: E-INV-07
     group: Web
     title: "Web: sold out, line kept at 0"

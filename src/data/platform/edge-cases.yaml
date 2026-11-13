@@ -190,3 +190,10 @@ items:
     then: month and weekday names in the app's language · the week starts on the day set in Settings · before 2026-11-12 every picker read English and started on Sunday
     status: fixed
     risk: medium
+  - id: E-PLAT-19
+    group: Web
+    title: "Web Settings: money-format choices in English"
+    when: German language, Settings → money format
+    then: "symbol position shows itself with the book's symbol (`€ 123`, `123 €`) · separators read *Punkt ( . )*, *Komma ( , )*, *Leerzeichen*, *Ohne*, as in the app · before 2026-11-12 English labels (*Symbol before, spaced*)"
+    status: fixed
+    risk: low

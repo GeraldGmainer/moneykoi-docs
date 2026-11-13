@@ -35,8 +35,8 @@ items:
     group: Categories
     title: Web palette drift
     when: color picked on the web
-    then: old 8×5 palette · app colors open as custom
-    status: known-issue
+    then: the app's 15×5 palette · app colors open selected · a new book's starter colours and the budget default are the app's too · before 2026-11-12 the retired 8×5 Material palette, app colors opened as custom
+    status: fixed
     risk: low
   - id: E-LED-06
     group: Categories
