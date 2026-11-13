@@ -156,6 +156,8 @@ items:
       - your history first → category names → keyword tables
       - keyword tables know everyday en + ja words (`milk`, `bus ticket`, `gas`, `starbucks`, `パン`, `電車`) · only words with one obvious category
       - a ticket, bus, train, taxi → *Public Transit*, never *Fuel* · no transit category → no guess
+      - a store for everything → **no** guess from its name · Amazon, Galaxus, eBay, AliExpress, Temu
+      - a chain counts as a whole word · *Sparen* ≠ SPAR
       - never a parent with subs · not even from an old booking on one
       - no "guess" marker
       - Save locked only while no category
@@ -166,6 +168,10 @@ items:
         name: a booking left on a parent that has since got subs is not suggested
       - file: test/shared/categorization/everyday_words_test.dart
         name: a ticket without a transit leaf is no guess, never Fuel
+      - file: test/shared/categorization/category_suggestion_engine_test.dart
+        name: a store that sells everything is not guessed
+      - file: test/shared/categorization/category_suggestion_engine_test.dart
+        name: a chain name inside another word is not that chain
       - file: test/features/quick_add/ui/sheets/quick_booking_submit_test.dart
         name: a prompt missing only its category opens the category picker
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
