@@ -29,3 +29,5 @@ groups:
         text: "Booking dated tomorrow → leave the app on Home overnight → open → total and account include it · home-screen widget too"
       - id: C-LED-014
         text: "*Personalize* → credit card, owed 300 → Home total drops by 300 · card shows −300"
+      - id: C-LED-015
+        text: "Web › Accounts → *Cash & bank*, *Savings & investments*, *Credit & loans*, a subtotal each · credit subtotal = what is owed · a hidden account last in its group · an empty group not shown"

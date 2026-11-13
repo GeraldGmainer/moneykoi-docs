@@ -68,8 +68,10 @@ items:
     related: [R-DEMO-14, E-DEMO-10]
   - id: D-DEMO-10
     question: English demo in the red for half the month?
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
+      - **left as it is** · Gerald: not worth worrying about · no change to `demo_en.yaml`, the paycheck stays 2,150 every 2 weeks
       - the English book is paid every 2 weeks · from about the 12th to the 27th one paycheck is in the month · rent and spending outrun it
       - red days out of 120 (Nov, Feb, May, Aug): every 2 weeks 2,150 (today) **41** · 2,400 **37** · 1st + 15th, 2,330 each **12** · monthly 4,660 on the 1st **0**
       - recommended: monthly on the 1st, like the German and Japanese books

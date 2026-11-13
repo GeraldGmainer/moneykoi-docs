@@ -24,3 +24,5 @@ groups:
         text: "Cloud book · delete an account a rule uses → rule shows *Account missing* → *Choose account* → next date booked, on the web too"
       - id: C-REC-009
         text: "Monthly rule, pick the 31st → hint about *Last day* in the day picker and the schedule sheet"
+      - id: C-REC-010
+        text: "Yearly rule starting Feb 29, 2028 → schedule: Feb 28 in 2029–2031, Feb 29 in 2032 · the rule never reads *Ended*"

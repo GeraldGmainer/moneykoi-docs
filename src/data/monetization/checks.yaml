@@ -116,6 +116,8 @@ groups:
         text: "Signed-in free account buys Cloud → *Cloud is active* at once · *Sync starts soon* → sync starts · note the seconds (E-MON-54)"
       - id: C-MON-076
         text: "Pro bought → refund → next day reopen → Pro locks · airplane mode → Pro stays · note the seconds (E-MON-55)"
+      - id: C-MON-077
+        text: "Free → Budget Book ⋮ *Export* (or the export icon on category activity) → paywall → buy Pro → the export sheet opens by itself"
 
   - id: welcome-back
     title: Welcome back › Restore · Restore Pro purchase

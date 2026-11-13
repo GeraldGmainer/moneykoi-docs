@@ -53,3 +53,5 @@ groups:
         text: App open → pin a balance, budget, goal or shopping widget → tap it → widget fills · no *Tap to open the app once* left
       - id: C-HOM-023
         text: "Budget, goal, shopping + category widget in book A → switch to B → A's figures stay · back to A → refreshed · record deleted in A → placeholder · sign out → all blank"
+      - id: C-HOM-024
+        text: "*Personalize* with bank 2000 + card 150 owed, one 10 € expense → Home *Cash flow · This month* income 0, expenses 10 · breakdown sheet has no *Initial balances* row"

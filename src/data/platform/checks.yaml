@@ -72,3 +72,5 @@ groups:
         text: "Font size 200 % → date field → picker without stripes · quick add with keyboard → text field visible · bottom bar labels whole"
       - id: C-PLAT-028
         text: "iPhone → quick add → type `3,50 Kaffee gestern` on the iOS keyboard → no autocorrect, no suggestion bar"
+      - id: C-PLAT-029
+        text: "Font size 130 % → amounts grow with the text, Budget Book summary whole · 200 % → amounts stop at 130 % · TalkBack / VoiceOver read an amount as one figure"

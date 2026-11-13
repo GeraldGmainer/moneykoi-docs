@@ -49,3 +49,5 @@ groups:
         text: Fresh setup → book *Rent* (fixed category) → snackbar *Does this repeat every month?* replaces *saved* · *Make recurring* → rule form prefilled · a rule in that category → no question · 5th typed entry with no scan → *Got a receipt?* line under the amount · after one scan → never
       - id: C-BKG-050
         text: "Japanese keyboard · type a note up to the limit → composing never breaks · the word lands whole or not at all"
+      - id: C-BKG-051
+        text: "Keypad `100 ÷ 3` → saved and reopened as 33.33 · yen book `333.333` → 333 · quick add in a euro book → `5 euro Kaffee` reads 5.00"

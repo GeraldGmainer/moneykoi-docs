@@ -777,7 +777,7 @@ items:
     text: |
       - `.moneykoi`: learned payees + every booking's re-import key
       - saved formats: **not** in the file · the user's, not the book's
-      - *Download all data*: no formats either → D-DATA-43
+      - *Download all data*: no formats either · decided 2026-11-13 (D-DATA-43)
       - the Pro → Cloud claim carries the formats up · server's key wins
     source: BOOKING_IMPORT §17, §18 · BACKUP_FORMAT.md §1a, §4, §6
     tests:

@@ -362,19 +362,22 @@ items:
       - **built 2026-11-10** · R-DATA-83, R-PRIV-23
   - id: D-DATA-42
     question: Backup format · bump the version for the learned-payee entity?
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
-      - `BACKUP_FORMAT.md` §6 says a new entity bumps the version · the build kept **1**, like the earlier added entities
-      - a) **keep 1 + reword §6**: an optional entity is no bump · old files restore, old readers ignore it · recommended
-      - b) bump to 2 · needs an upcaster + an old-version fixture in app and web
+      - **keep version 1** · Gerald took the recommendation
+      - `BACKUP_FORMAT.md` §6 reworded: an optional entity is no bump · old files restore, old readers ignore it
+      - a bump stays for a renamed or removed column, a new encoding, a required entity
+      - was: b) bump to 2 · an upcaster + an old-version fixture in app and web
     related: [R-DATA-93, R-DATA-07]
   - id: D-DATA-43
     question: "*Download all data* · include the saved import formats?"
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
-      - today: **not** in the archive · same strip as the backup file
-      - a) **leave them out**: they hold book and account ids + the IBAN key, no personal text · recommended
-      - b) include them **without the key** · the GDPR copy is then complete, the hashes useless
+      - **left out** · Gerald took the recommendation
+      - they hold book and account ids + the IBAN key, no personal text · same strip as the backup file
+      - was: b) include them without the key
     related: [R-DATA-93, R-DATA-20, D-DATA-13]
   - id: D-DATA-44
     question: "Bank import · should Amazon and PayPal never learn a category?"

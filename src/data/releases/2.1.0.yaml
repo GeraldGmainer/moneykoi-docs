@@ -1,0 +1,129 @@
+# App 2.1.0 and web 1.9.0, prepared 2026-11-13 from the release notes
+# (moneykoi-supabase 20261115090000_release_notes_app_2_1_0_web_1_9_0.sql). One item per note,
+# app first (1–8), web after (9–12). The bank import is the roadmap bucket nov-15; the scanner
+# rework (merged in 546fb0a1e) ships with it.
+# Every test step is a check in its area (ticks are shared with the area's *What to test* page).
+version: 2.1.0
+status: testing
+source: From the release notes (2026-11-13) · app 2.1.0 items 1–8, web 1.9.0 items 9–12 · ticks shared with each area's *What to test*
+items:
+  - n: 1
+    title: Bank import · every month, formats, payees
+    area: data
+    what: |
+      - free: re-import key skips rows seen before · pending rows unticked · balance compare · open a `.csv` from Files or mail
+      - recurring payment already booked → row unticked
+      - **Pro**: saved format → straight to *Review* · learned payees · *Edit row*, *Split*, Amazon order link · transfer suggestion · reminder in a month
+      - needs `20261110160000_bank_import` on prod first (T-DATA-07)
+    checks: [C-DATA-057, C-DATA-060, C-DATA-061, C-DATA-062, C-DATA-063, C-DATA-064, C-DATA-065, C-DATA-066, C-DATA-067, C-DATA-068, C-DATA-074, C-DATA-075, C-DATA-076]
+    related: [T-DATA-05, T-DATA-07, D-DATA-42, D-DATA-43]
+    screens: [import wizard, review step, edit row sheet, result screen]
+  - n: 2
+    title: Receipt scanner · hover, end of receipt, review
+    area: scanner
+    what: |
+      - hover from the store name down · ticks on read rows · *Slower*, *Closer*, *Back to the last line read*
+      - waits for the end of the receipt · date below the total read · *Date not read · today* when not
+      - gallery photos at full size · *Suggested fix* · *Rescan* → camera · *Scan more* keeps the photos
+      - one cent never blocks *Save* (D-SCN-14 still open)
+    checks: [C-SCN-014, C-SCN-015, C-SCN-016, C-SCN-018, C-SCN-019, C-SCN-020, C-SCN-021, C-SCN-022, C-SCN-023, C-SCN-024, C-SCN-025, C-SCN-026, C-SCN-027, C-SCN-028]
+    related: [T-SCN-05, T-SCN-10, D-SCN-14]
+    screens: [scanner camera, photo step, receipt review]
+  - n: 3
+    title: Forecast · year calendar on phones
+    area: forecast
+    what: |
+      - calendar icon → this year, today mid-screen · pinned month headers
+      - *Go to date* · day sheet: booked + expected, starting balances
+    checks: [C-FC-033, C-FC-034, C-FC-035, C-FC-036, C-FC-037]
+    screens: [forecast calendar, day sheet]
+  - n: 4
+    title: Recurring payments · missing account, Feb 29, 31st
+    area: recurring
+    what: |
+      - account or category deleted → paused, *Choose account* brings it back
+      - yearly Feb 29 → Feb 28 in other years, never *Ended*
+      - only the 31st starts as last day · reminder for the next date ahead
+      - needs `20261113130000_recurring_feb29_last_day` on prod (T-BOOK-06)
+    checks: [C-REC-008, C-REC-009, C-REC-010]
+    related: [T-BOOK-06]
+    screens: [recurring list, recurring_booking_save_page.dart]
+  - n: 5
+    title: Sync · refused changes, server deletes
+    area: offline
+    what: |
+      - refused change → *Retry* or *Discard* · the rest keeps syncing
+      - deleted elsewhere → gone here · categories, recurring payments, shopping lists too
+    checks: [C-OFF-007, C-OFF-011]
+    screens: [Settings › Changes not synced]
+  - n: 6
+    title: New users · checklist, one scanner intro
+    area: home
+    what: |
+      - starting balances in the Home checklist · no widget item
+      - setup without the calendar page
+      - scanner: one intro page
+    checks: [C-HOM-010, C-SCN-008]
+    screens: [Getting started card, onboarding, scanner intro]
+  - n: 7
+    title: Large text and small phones
+    area: platform
+    what: |
+      - amounts follow the font up to 130 % · read as one figure
+      - paywall + Budget Book hold at large text
+      - small phones and landscape: labels fit
+    checks: [C-PLAT-027, C-PLAT-029, C-FC-037]
+    screens: [Budget Book summary, paywall, Home cards]
+  - n: 8
+    title: Fixes · cash flow, owed card, rounding, EXIF, export, loans, widgets, rating
+    area: platform
+    what: |
+      - Home cash flow: a starting balance is neither income nor expense (D-HOM-14)
+      - card owed in setup → negative balance
+      - amounts rounded to the currency's decimals
+      - uploaded photos without EXIF
+      - locked export continues after a purchase
+      - fully repaid loan: no *Reopen* · needs `20261113120000_goal_loan_status_by_server` (T-BOOK-06)
+      - widget keeps its own book · Settings › *Rate Money Koi*
+    checks: [C-HOM-024, C-LED-014, C-BKG-051, C-PRIV-042, C-MON-077, C-BUD-042, C-HOM-023, C-SET-016]
+    related: [D-HOM-14, D-LED-7, T-BOOK-06]
+    screens: [Home cash flow card, onboarding accounts, keypad, export sheet, loan detail]
+  - n: 9
+    title: "Web · bank import"
+    area: data
+    what: |
+      - re-import key · recurring rows unticked · saved format → *Review* · learned payees · edit and split rows · balance compare
+      - formats and payees shared with the app
+      - deploy only after the migration (T-DATA-08)
+    checks: [C-DATA-052, C-DATA-069, C-DATA-070, C-DATA-071, C-DATA-072, C-DATA-073]
+    related: [T-DATA-07, T-DATA-08]
+    screens: [bookings/import]
+  - n: 10
+    title: "Web · receipts saved as receipts"
+    area: scanner
+    what: |
+      - *Add receipt* → merchant, date, total, items · the phone shows the receipt card
+      - items compared in whole cents (whole yen) · *0.01 left* shown
+      - needs `20261112150000_receipt_create_with_bookings` (T-BOOK-06)
+    checks: [C-SCN-029]
+    related: [T-BOOK-06]
+    screens: [add-receipt/page.tsx]
+  - n: 11
+    title: "Web · accounts in three groups"
+    area: ledger
+    what: |
+      - *Cash & bank* · *Savings & investments* · *Credit & loans*, a subtotal each
+      - credit subtotal = what is owed
+    checks: [C-LED-015]
+    screens: [accounts/page.tsx]
+  - n: 12
+    title: "Web · fixes"
+    area: platform
+    what: |
+      - crash → *Something went wrong* with *Try again*, never a blank page
+      - booking of a deleted category stays, *Deleted category*
+      - fixed vs. variable on *All* = all time · needs `20261112140000_variability_all_time`
+      - repaid loan: no *Reopen* · sign-out clears the old account's data
+    checks: [C-BUD-042]
+    related: [T-BOOK-06]
+    screens: [error.tsx, bookings-table.tsx, analytics]

@@ -57,11 +57,13 @@ items:
     title: Missing account/category → paused
     text: |
       - generator pauses it
-      - app list drops it · web: *Needs attention*
+      - app list keeps it, never active · *Account missing* / *Category missing* → *Choose account* / *Choose category* brings it back (2026-11-13) · web: *Needs attention*
     source: RECURRING §6, OFFLINE_TIER §4, RECURRING_WEB §7
     tests:
       - file: test/features/recurring_booking/data/mappers/recurring_booking_mapper_test.dart
-        name: skips rule when category is missing
+        name: a rule whose category is gone is kept, never active, and says its category is missing
+      - file: test/features/recurring_booking/data/mappers/recurring_booking_mapper_test.dart
+        name: a rule whose account is gone is kept, never active, and says its account is missing
   - id: R-REC-07
     group: Rules and bookings
     title: Deleted occurrence never returns

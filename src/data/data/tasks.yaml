@@ -94,3 +94,4 @@ items:
       - falls under *Other financial info* · already declared, Cloud only → **review, likely no change**
       - answer sheet: `STORE_LISTING_AI_CONTEXT.md` §8.1 · the listing may say *stored only as a fingerprint*
       - same pass as T-PRIV-03
+      - **agent review 2026-11-13 → no change**: every 2.1.0 server addition is Cloud-only *Other financial info* (fingerprint, learned payees, `import_ref`) · the CSV open-with filter is no permission · `in_app_review` sends Money Koi nothing · console: only confirm *Other financial info* is still ticked

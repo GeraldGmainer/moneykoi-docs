@@ -1,28 +1,58 @@
-# Next app release after 2.0.0. No file names 2.1.0: contents = roadmap bucket nov-15 (bank CSV import)
-# + the app commits since the 2.0.0 bump (879b9656f). Sources: BANK_CSV_IMPORT_PLAN.md, roadmap.yaml, git log.
+# Next app release after 2.0.0: app 2.1.0 + web 1.9.0, Sun 2026-11-15. Contents = roadmap bucket nov-15
+# (bank CSV import) + the scanner rework (merged 546fb0a1e) + the app commits since the 2.0.0 bump
+# (879b9656f). Test plan: src/data/releases/2.1.0.yaml. Sources: BANK_CSV_IMPORT_PLAN.md, roadmap.yaml,
+# scanner.yaml, RELEASE_2_1_FINDINGS_PLAN.md, git log.
 title: "2.1.0"
-goal: "Bank CSV import · app + web"
+goal: "Bank CSV import + the new scanner · app + web · Sun Nov 15"
 gerald:
   - ref: T-DATA-05
     note: "DKB Giro + ELBA exports in since 2026-11-11 · left: DKB Visa + savings"
   - ref: T-DATA-07
     note: "before the app build"
-  - text: "Device pass · import checks C-DATA-057 → C-DATA-073"
+  - text: "Device pass · import checks C-DATA-057 → C-DATA-076"
     sub:
       - text: "open-with has never run on a device"
   - text: "Device check C-SET-016 · review card on an internal-track build"
   - text: "Device check C-BKG-011 · widget quick add, cold start → keyboard up · retry changed 2026-11-11"
+  - text: "F-01 + F-20 device re-check"
+    done: 2026-11-13
+    sub:
+      - text: "both passed on the emulators that found them (`app-v2.apk`, 2026-11-11) · plan cells were stale"
+        done: 2026-11-13
   - ref: T-DATA-08
   - ref: T-DATA-09
+    note: "reviewed 2026-11-13 · no change needed"
   - text: "Decide D-DATA-42 + D-DATA-43 · backup version, formats in the all-data download"
+    done: 2026-11-13
+  - text: "Decide F-33 · English demo in the red mid-month"
+    done: 2026-11-13
+  - section: "Scanner (ships in 2.1.0)"
+  - ref: T-SCN-05
+    note: "hover never tried on a real phone · C-SCN-014 → C-SCN-029"
+  - ref: T-SCN-10
+  - text: "D-SCN-14 undecided → ships as built: one cent never blocks *Save*"
   - section: "Commits"
   - text: "Commit the import: app + web + supabase + docs · the 4 format-only files stay out"
+    done: 2026-11-13
   - text: "Commit the Play listing files: `tool/play_api.py` · de/en descriptions · `store/custom-listings/at`"
+    done: 2026-11-13
+  - text: "Paste the 2.1.0 git block · app, web, supabase · tag `v2.1.0`"
   - section: "Release"
   - text: "`pubspec.yaml` is still `2.0.0+38` · release notes still 2.0.0 → run prepare-release"
+    done: 2026-11-13
+    sub:
+      - text: "`2.1.0+39` · web `1.9.0` · `release_notes/` · migration `20261115090000`"
+        done: 2026-11-13
   - text: "2.0.0 notes say *runs on iOS* · T-PLAT-10 still open → fix the wording"
+    done: 2026-11-13
     sub:
       - text: "and drop *Cloud for life* · early adopters line (D-PLAT-4)"
+        done: 2026-11-13
+  - ref: T-BOOK-06
+    note: "all 7 pending migrations in one push · before the web deploy and the Play rollout"
+  - text: "`./publish.sh internal` → device pass on the internal build → `./publish.sh promote`"
+  - text: "Push `20261115090000_release_notes_app_2_1_0_web_1_9_0` with the Play rollout"
+  - text: "Then push moneykoi-web `main` (T-DATA-08) · 6 commits ahead"
 agents:
   - text: "Corpus test + `expect.json` on the real bank files (T-DATA-05)"
     done: 2026-11-11
@@ -48,3 +78,7 @@ agents:
   - text: "`moneykoi-imports/README.md` says the real files are missing · `dkb/` + `elba/` exist"
     done: 2026-11-11
   - text: "Docs: `src/data/releases/2.1.0.yaml` + page when the release is prepared"
+    done: 2026-11-13
+  - text: "Scanner scales after the evening round (T-SCN-10) · 4 receipts stopped passing → fix"
+  - text: "Full app suite on the release tree"
+  - text: "iOS simulator + Android emulator round over 2.1.0"

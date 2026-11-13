@@ -21,6 +21,8 @@
       why: web after the migration
     - ref: T-DATA-09
       why: Data safety review before the Sunday · IBAN fingerprint
+    - ref: T-SCN-05
+      why: the scanner rework ships with it (merged 2026-11-13) · hover never ran on a phone
 
 - id: nov
   title: Nov 22 → Nov 29
