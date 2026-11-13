@@ -1,6 +1,6 @@
 # Sources: SCANNER_ACCURACY_PLAN.md §0, §7, §9, §13, moneykoi-receipts/OPEN_QUESTIONS.md:11-44 + README.md:175-223, scanner/tasks.yaml.
 title: "Scanner accuracy"
-goal: "From 63 % / 53 % to 80 % · hover scanner checked on a phone"
+goal: "80 % book-ready on stills: met · left: hover scanner checked on a phone"
 gerald:
   - ref: T-SCN-02
     note: "HOFER + PENNY still at zero"
@@ -18,13 +18,16 @@ gerald:
   - ref: T-SCN-04
   - ref: T-SCN-05
   - text: "Decide the baseline promotion · D-SCN-06"
+    done: 2026-11-13
   - text: "Decide the gate scale · D-SCN-13"
+    done: 2026-11-13
   - ref: T-SCN-06
   - ref: T-SCN-07
   - section: "Fix round 2026-11-13 evening"
   - ref: T-SCN-10
     note: "ran 2026-11-13 · 4 regressions fixed, baselines promoted"
   - text: "Decide the one-cent tolerance in review · D-SCN-14"
+    done: 2026-11-13
   - text: "Decide D-SCN-15 · block a whole-euro auto-repair?"
     done: 2026-11-13
   - text: "Decide D-SCN-16 · may a VIES name replace a guessed merchant?"
@@ -61,6 +64,8 @@ agents:
       - text: "check digit gated · fills only an empty merchant (§4.45) · moves no scale: D-SCN-16"
         done: 2026-11-13
   - text: "At 80 %: move the docs · retire the plan"
+    sub:
+      - text: "80 % met on the gate scale · waits for T-SCN-04 + T-SCN-05"
   - text: "Score `SCORECARD_SCALE=hover` once Gerald's videos are filed"
   - text: "Retire SCANNER_CAPTURE_PLAN.md after his phone checks"
     done: 2026-11-13

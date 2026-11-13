@@ -330,7 +330,7 @@ items:
       - items vs. total compared in whole cents
       - gap of 1 ct → no *Math mismatch*, *Save* stays on · at **any** amount
       - 2 ct or more → mismatch, *Save* off
-      - open: exact match instead (D-SCN-14)
+      - kept on 2026-11-13 · exact match not taken (D-SCN-14)
     source: SCANNER §4.40
     related: [R-SCN-03, R-SCN-07, D-SCN-14, E-SCN-50]
     tests:

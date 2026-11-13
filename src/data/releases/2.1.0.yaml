@@ -25,7 +25,7 @@ items:
       - hover from the store name down · ticks on read rows · *Slower*, *Closer*, *Back to the last line read*
       - waits for the end of the receipt · date below the total read · *Date not read · today* when not
       - gallery photos at full size · *Suggested fix* · *Rescan* → camera · *Scan more* keeps the photos
-      - one cent never blocks *Save* (D-SCN-14 still open)
+      - one cent never blocks *Save* (kept, D-SCN-14)
     checks: [C-SCN-014, C-SCN-015, C-SCN-016, C-SCN-018, C-SCN-019, C-SCN-020, C-SCN-021, C-SCN-022, C-SCN-023, C-SCN-024, C-SCN-025, C-SCN-026, C-SCN-027, C-SCN-028]
     related: [T-SCN-05, T-SCN-10, D-SCN-14]
     screens: [scanner camera, photo step, receipt review]

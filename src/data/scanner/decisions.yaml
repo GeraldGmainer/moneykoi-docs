@@ -37,10 +37,12 @@ items:
     related: [R-SCN-13, D-HOM-13]
   - id: D-SCN-06
     question: "Promote the scorecard baselines after the capture rework?"
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
-      - no decision recorded · the rework's agent promoted nothing (D-CAP-3)
-      - **the fix rounds of 2026-11-13 promoted every scale** (SCANNER §4.41, §4.42, §4.46) · no receipt lost on any scale
+      - **accepted**: the fix rounds of 2026-11-13 promoted every scale (SCANNER §4.41, §4.42, §4.46) · no receipt lost on any scale
+      - from now on an agent promotes after a round when no receipt stopped passing on any scale and the category oracle is not lower · otherwise it asks
+      - before: the rework's agent promoted nothing (D-CAP-3)
       - every scale re-scored on the one-page pipeline · gained and lost receipts per scale in SCANNER_ACCURACY_PLAN.md §14
       - new scales (emulator-native, emulator-bands, hover-synth, emulator-stills) have their own first baselines
       - promote = `SCORECARD_UPDATE=1` per scale, then commit the corpus repo
@@ -85,20 +87,23 @@ items:
     answer: After the hover videos are filed (T-SCN-06) · nothing built yet
   - id: D-SCN-13
     question: "Which scorecard scale gates the 80 % goal?"
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
-      - `emulator` (1920 px, the scale named on 2026-10-07): 68 % book-ready after the last round of 2026-11-13
-      - `emulator-stills` (how the app reads a still or gallery photo since 2026-11-13): **80 %** · SPAR 77 %, ADEG 88 % · the goal's numbers are met on this scale
-      - no decision yet · numbers and rows in SCANNER_ACCURACY_PLAN.md §0, §9
+      - **`emulator-stills`** · how the app reads a still or gallery photo since 2026-11-13
+      - 80 % book-ready on 2026-11-13 · SPAR 77 %, ADEG 88 % · the goal's numbers are met
+      - `emulator` (1920 px, named on 2026-10-07): 68 % · stays a ratchet, like every other scale
+      - the plan is retired after the phone checks (T-SCN-04, T-SCN-05) · rows in SCANNER_ACCURACY_PLAN.md §0, §9
     related: [D-SCN-06, R-SCN-26]
 
   - id: D-SCN-14
     question: "Review: tolerate a one-cent gap, or require an exact match?"
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
-      - now: one cent **never** blocks *Save*, at any amount · two cents always do (R-SCN-31)
-      - alternative: items must equal the total to the cent
-      - no decision yet · source: SCANNER §4.40
+      - **keep one cent**: it never blocks *Save*, at any amount · two cents always do (R-SCN-31)
+      - why: a spread basket discount or a folded Pfand rounds a cent off on a correct scan
+      - not taken: items must equal the total to the cent · source: SCANNER §4.40
     related: [R-SCN-31, E-SCN-50]
   - id: D-SCN-15
     question: "Review: block the automatic price repair when the gap is a whole-euro amount on a receipt of whole-euro prices?"

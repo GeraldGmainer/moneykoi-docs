@@ -31,6 +31,7 @@ gerald:
     note: "hover never tried on a real phone · C-SCN-014 → C-SCN-029"
   - ref: T-SCN-10
   - text: "D-SCN-14 undecided → ships as built: one cent never blocks *Save*"
+    done: 2026-11-13
   - text: "Decide D-DATA-50 · month-by-month import, oldest first (P0, A5-10)"
     done: 2026-11-13
     sub:
