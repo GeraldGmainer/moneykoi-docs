@@ -370,8 +370,9 @@ items:
       - result screen: *Bank: initial balance moved to 9/3/26, so today's balance stays the same*
       - before 2026-11-09: added on top · Bank 2,000 → 8,606.38 € (AND-11-1)
       - web: moves it too since 2026-11-11 · shown on the result · web Undo puts it back
+      - known gap: several files of older history, oldest first → E-DATA-96, D-DATA-50
     source: BOOKING_IMPORT §10
-    related: [D-DATA-17, R-DATA-38]
+    related: [D-DATA-17, R-DATA-38, D-DATA-50]
     tests:
       - file: test/features/data_import/domain/import_opening_shift_test.dart
         name: rows up to the opening day move it back to the earliest one; today still ends at the typed balance

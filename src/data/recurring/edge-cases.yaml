@@ -100,3 +100,15 @@ items:
     tests:
       - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
         name: a rule whose account was deleted asks for another account, and picking one resumes it
+  - id: E-REC-13
+    group: Rules and bookings
+    title: Rule starting more than two years ahead
+    when: start date more than two years from today (e.g. a yearly rule moved from Feb 29 to Feb 28, 2029)
+    then: list and editor show its next dates · fixed 2026-11-13 · before, *No upcoming occurrences* (the two-year window opened today, not at the start)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/recurring_booking/domain/recurrence/recurrence_projector_test.dart
+        name: a rule that starts more than two years ahead still has a next date (A5-12)
+      - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
+        name: a rule starting more than two years ahead still previews its dates (A5-12)

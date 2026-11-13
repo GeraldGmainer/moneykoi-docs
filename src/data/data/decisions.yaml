@@ -432,3 +432,14 @@ items:
       - linking would hold the payment's slot for that date, which a trashed booking may still occupy
       - left open: resuming a paused payment that back-fills could book that date once more
     related: [R-DATA-102, D-DATA-46]
+  - id: D-DATA-50
+    question: "Bank import · older history imported month by month, oldest first — which balance is right?"
+    status: open
+    answer: |
+      - found 2026-11-13 (A5-10): Bank 2,000 typed today → October file moves the opening to Oct 5, today stays 1,990 → November file (rows before the day 2,000 was typed) → today drops by their net
+      - newest file first works · one file over the whole history works · only oldest-first in several files goes wrong
+      - cause: after the first move the app no longer knows the day the balance was typed (R-DATA-41 counts rows up to the **moved** day)
+      - a) **remember that day**: an optional account column (local migration, server migration with `sync_all`, web, backup as an optional column) · every row up to it moves the opening · recommended · after 2.1.0 unless Gerald wants it in
+      - b) no schema: take the account's creation day once an import has moved the opening · wrong for an account opened with a past date by hand
+      - c) ship as is · result screen warns when rows fall between the opening and the account's creation day, with Undo
+    related: [R-DATA-41, D-DATA-17, E-DATA-96]

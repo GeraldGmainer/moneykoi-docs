@@ -218,3 +218,18 @@ items:
     then: "symbol position shows itself with the book's symbol (`€ 123`, `123 €`) · separators read *Punkt ( . )*, *Komma ( , )*, *Leerzeichen*, *Ohne*, as in the app · before 2026-11-12 English labels (*Symbol before, spaced*)"
     status: fixed
     risk: low
+  - id: E-PLAT-20
+    group: Accessibility
+    title: Narrow phone at 130 % and 200 % text
+    when: 360 dp phone, system font 130 % or 200 % · booking type switch, bank import review
+    then: |
+      - the switch keeps a margin inside each segment and drops its icons when the label needs the room · before, *Einnahme* touched the border and *Umbuchung* shrank alone
+      - an import row's payee and date line wrap to two lines instead of a few letters · normal size unchanged
+      - fixed 2026-11-13 (A5-14, A5-15) · still open: scanner hint and buttons at 130 % (A5-16), the Budget Book's third tab at 200 % (A5-17)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/form/segmented_input_test.dart
+        name: "large text on a narrow phone: the icons give way, the labels keep the room (A5-15)"
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: at a large text size the payee and its date line wrap instead of being cut to a few letters (A5-14)

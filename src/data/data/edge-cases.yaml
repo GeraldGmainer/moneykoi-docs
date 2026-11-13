@@ -680,3 +680,26 @@ items:
     tests:
       - file: test/features/budget_book/service/booking_csv_builder_test.dart
         name: a category export carries the category
+  - id: E-DATA-96
+    group: Bank import
+    title: Older history in several files, oldest first
+    when: a starting balance typed today · bank files of past months imported one by one, the oldest first
+    then: |
+      - the first file moves the opening back, today's balance stays · the next file's rows land after the moved day and lower today's balance
+      - newest first, or one file for the whole history, stays right
+      - open decision D-DATA-50 · found on the Android emulator 2026-11-13 (A5-10)
+    status: known-issue
+    risk: high
+    related: [R-DATA-41, D-DATA-50]
+  - id: E-DATA-97
+    group: Bank import
+    title: A file imported twice offered *Select none*
+    when: every row of the file is already in the book
+    then: no *Select all* / *Select none* while nothing can be ticked · the result screen counts an unticked row once (the balance card names it, the summary does not count it again) · fixed 2026-11-13 · before, *Select none* with 0 selected and the row listed twice
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: "a file imported a second time has nothing to select: no Select all, no Select none (A5-3)"
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: a balance that differs opens the Balance check with the bank figure, never in the route name
