@@ -39,8 +39,9 @@ items:
     question: "Promote the scorecard baselines after the capture rework?"
     status: open
     answer: |
-      - no decision yet · the agent promoted nothing (D-CAP-3)
-      - every scale re-scored on the one-page pipeline · gained and lost receipts per scale in SCANNER_CAPTURE_PLAN.md §8
+      - no decision recorded · the rework's agent promoted nothing (D-CAP-3)
+      - **the fix rounds of 2026-11-13 promoted every scale** (SCANNER §4.41, §4.42, §4.46) · no receipt lost on any scale
+      - every scale re-scored on the one-page pipeline · gained and lost receipts per scale in SCANNER_ACCURACY_PLAN.md §14
       - new scales (emulator-native, emulator-bands, hover-synth, emulator-stills) have their own first baselines
       - promote = `SCORECARD_UPDATE=1` per scale, then commit the corpus repo
   - id: D-SCN-07
@@ -86,9 +87,9 @@ items:
     question: "Which scorecard scale gates the 80 % goal?"
     status: open
     answer: |
-      - `emulator` (1920 px, the scale named on 2026-10-07): 65 % book-ready on 2026-11-13
-      - `emulator-stills` (how the app reads a still or gallery photo since 2026-11-13): 77 %
-      - no decision yet · numbers and rows in SCANNER_ACCURACY_PLAN.md §9
+      - `emulator` (1920 px, the scale named on 2026-10-07): 68 % book-ready after the last round of 2026-11-13
+      - `emulator-stills` (how the app reads a still or gallery photo since 2026-11-13): **80 %** · SPAR 77 %, ADEG 88 % · the goal's numbers are met on this scale
+      - no decision yet · numbers and rows in SCANNER_ACCURACY_PLAN.md §0, §9
     related: [D-SCN-06, R-SCN-26]
 
   - id: D-SCN-14

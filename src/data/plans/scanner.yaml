@@ -1,6 +1,6 @@
-# Sources: SCANNER_ACCURACY_PLAN.md:39-47,236-287,369-370, moneykoi-receipts/OPEN_QUESTIONS.md:11-44 + README.md:175-223, scanner/tasks.yaml.
+# Sources: SCANNER_ACCURACY_PLAN.md §0, §7, §9, §13, moneykoi-receipts/OPEN_QUESTIONS.md:11-44 + README.md:175-223, scanner/tasks.yaml.
 title: "Scanner accuracy"
-goal: "From 63 % / 53 % to 80 %"
+goal: "From 63 % / 53 % to 80 % · hover scanner checked on a phone"
 gerald:
   - ref: T-SCN-02
     note: "HOFER + PENNY still at zero"
@@ -63,6 +63,10 @@ agents:
   - text: "At 80 %: move the docs · retire the plan"
   - text: "Score `SCORECARD_SCALE=hover` once Gerald's videos are filed"
   - text: "Retire SCANNER_CAPTURE_PLAN.md after his phone checks"
+    done: 2026-11-13
+    sub:
+      - text: "merged into SCANNER_ACCURACY_PLAN.md · open items §13, decisions + log §14"
+        done: 2026-11-13
   - text: "Re-parse interval from phone timings (C-SCN-014) · max(300 ms, 2× parse)"
   - text: "PDF scale for digital receipts once T-SCN-08 delivers files"
   - text: "SPAR missing rows + discount attribution · chosen 2026-11-13, not started"
@@ -71,3 +75,5 @@ agents:
       - text: "leergut order, split savings, BIC, spaced weight, deposit quantity (§4.42)"
         done: 2026-11-13
   - text: "Row tilt: prices one row off their names (lidl_20260417_A, spar_20260619_A)"
+    sub:
+      - text: "acceptance test: the skipped *curled paper* test · SCANNER_ACCURACY_PLAN §13.3"
