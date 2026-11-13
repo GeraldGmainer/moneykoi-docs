@@ -99,3 +99,20 @@ items:
       - alternative: items must equal the total to the cent
       - no decision yet · source: SCANNER §4.40
     related: [R-SCN-31, E-SCN-50]
+  - id: D-SCN-15
+    question: "Review: block the automatic price repair when the gap is a whole-euro amount on a receipt of whole-euro prices?"
+    status: open
+    answer: |
+      - found 2026-11-13 (repair fuzz, SCANNER §4.44): on the real dumps the reconciler made one repair, and it was wrong · a lost *1,00* line made *5,00* read *6,00*
+      - fuzz: every error the repair searches for → 0 wrong · errors it cannot tell apart by the sum (two in one bracket, a missing line) → 1–11 % wrong
+      - a) **block it** for a whole-euro gap on whole-euro prices · the mismatch banner stays instead · recommended
+      - b) keep it · the repaired line is shown orange
+    related: [R-SCN-31]
+  - id: D-SCN-16
+    question: "Scanner: may a VIES name replace a merchant the header guessed?"
+    status: open
+    answer: |
+      - built 2026-11-13 (SCANNER §4.45): a printed ATU with a valid check digit asks VIES when the code carries none · it only fills a merchant the page never named (§7.3)
+      - on the corpus the guesser always names something, sometimes junk (*ELR*, *EUR*, a discount line) · so the lookup never fills anything (0 of 155)
+      - a) **a VIES name replaces a guessed one**, never a name the shop's own rules found · recommended
+      - b) keep it: fills only an empty merchant

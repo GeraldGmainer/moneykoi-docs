@@ -25,12 +25,21 @@ gerald:
   - ref: T-SCN-10
     note: "ran 2026-11-13 · 4 regressions fixed, baselines promoted"
   - text: "Decide the one-cent tolerance in review · D-SCN-14"
+  - text: "Decide D-SCN-15 · block a whole-euro auto-repair?"
+  - text: "Decide D-SCN-16 · may a VIES name replace a guessed merchant?"
   - section: "Germany and Switzerland"
   - ref: T-SCN-08
   - ref: T-SCN-09
 agents:
   - text: "Fix rounds on the emulator scorecard · two run 2026-11-13 · next: missing rows, discounts"
+    sub:
+      - text: "regressions + SPAR + LIDL rounds 2026-11-13 · emulator 104/95 → 109/99 (SCANNER §4.41–§4.46)"
+        done: 2026-11-13
   - text: "BILLA + LIDL rule gaps · BILLA 5/8 on stills, 2/8 at 1920 px"
+    done: 2026-11-13
+    sub:
+      - text: "LIDL: split total label, lost Preisvorteil · BILLA left is reader-limited (§4.46)"
+        done: 2026-11-13
   - text: "Franchise QR-first check · not covered → Gerald picks (a) or (b)"
     done: 2026-11-11
     sub:
@@ -38,11 +47,25 @@ agents:
         done: 2026-11-11
   - text: "HOFER, PENNY + generic parsers · each waits for receipts"
   - text: "§7.5 leftovers: confidence input · repair fuzz check · dead code"
+    sub:
+      - text: "dead `applied` parameter removed (§4.43)"
+        done: 2026-11-13
+      - text: "repair fuzz over the bracket path · cents never shifted (§4.44)"
+        done: 2026-11-13
+      - text: "dictionary-hit confidence input · measure the false-flag rate first"
   - text: "OCR-printed ATU into the VIES lookup when the QR has none"
+    done: 2026-11-13
+    sub:
+      - text: "check digit gated · fills only an empty merchant (§4.45) · moves no scale: D-SCN-16"
+        done: 2026-11-13
   - text: "At 80 %: move the docs · retire the plan"
   - text: "Score `SCORECARD_SCALE=hover` once Gerald's videos are filed"
   - text: "Retire SCANNER_CAPTURE_PLAN.md after his phone checks"
   - text: "Re-parse interval from phone timings (C-SCN-014) · max(300 ms, 2× parse)"
   - text: "PDF scale for digital receipts once T-SCN-08 delivers files"
   - text: "SPAR missing rows + discount attribution · chosen 2026-11-13, not started"
+    done: 2026-11-13
+    sub:
+      - text: "leergut order, split savings, BIC, spaced weight, deposit quantity (§4.42)"
+        done: 2026-11-13
   - text: "Row tilt: prices one row off their names (lidl_20260417_A, spar_20260619_A)"
