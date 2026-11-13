@@ -343,3 +343,14 @@ items:
         name: cancel ends the wait at once, and what the request says later is dropped
       - file: test/features/auth/bloc/auth_cubit_test.dart
         name: a session that does not come in time says so, reported as apple
+  - id: E-ACC-77
+    group: On the web
+    title: Profile picture dialog in English
+    when: German or Japanese language, `/profile` → change the profile picture
+    then: button, crop dialog and messages in the app's language (*Bild ändern*, *Profilbild zuschneiden*, *Profilbild aktualisiert*) · before 2026-11-13 all English (*Change Avatar*, *Crop Avatar*)
+    status: fixed
+    risk: low
+    tests:
+      - file: src/components/widgets/AvatarUploader.test.tsx
+        repo: web
+        name: opens the file picker from the Change picture button
