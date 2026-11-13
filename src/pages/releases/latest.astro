@@ -1,0 +1,14 @@
+---
+// The home button's target: the newest release with `status: released`, else the newest of all.
+import { getCollection } from 'astro:content';
+
+const parts = (v: string) => v.split('.').map(Number);
+const newestFirst = (a: string, b: string) => {
+  const [x, y] = [parts(a), parts(b)];
+  return y[0] - x[0] || y[1] - x[1] || y[2] - x[2];
+};
+const app = (await getCollection('releases')).filter((r) => /^\d+\.\d+\.\d+$/.test(r.data.version));
+const pick = (list: typeof app) => list.map((r) => r.data.version).sort(newestFirst)[0];
+const version = pick(app.filter((r) => r.data.status === 'released')) ?? pick(app);
+return Astro.redirect(version ? `/releases/${version.replaceAll('.', '-')}/` : '/');
+---

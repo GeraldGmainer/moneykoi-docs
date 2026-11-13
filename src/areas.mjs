@@ -22,5 +22,5 @@ export const areas = [
   { id: 'data', name: 'Backup & data', blurb: 'Backup files, restore, CSV import and export, your data' },
   { id: 'privacy', name: 'Privacy & security', blurb: 'App lock, hide amounts, usage stats, web sign-in, what leaves the phone' },
   { id: 'settings', name: 'Settings & profile', blurb: 'Formats, language, profile, onboarding, changelog, feedback' },
-  { id: 'platform', name: 'Platform & builds', blurb: 'iOS minimum, OS backup, tests, releases' },
+  { id: 'platform', name: 'Platform & builds', blurb: 'iOS minimum, OS backup, tests, releases, store growth' },
 ];

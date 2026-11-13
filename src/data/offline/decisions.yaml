@@ -15,3 +15,12 @@ items:
       - needs `(id, updated_at)` pairs in the exclude list
       - no decision yet
     related: [E-ACC-31]
+  - id: D-OFF-1
+    question: How does a user get rid of a change the server keeps refusing?
+    status: decided
+    answer: |
+      - decided 2026-11-12
+      - shown on the record's own page **and** in a Settings list
+      - *Discard change* makes the phone match the server again (new record → gone · edit → server version · delete → record back)
+      - records under a discarded new record are left for the user, never dropped silently
+    related: [E-OFF-34, R-OFF-16]

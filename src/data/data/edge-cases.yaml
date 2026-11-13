@@ -607,10 +607,13 @@ items:
     title: Result claimed an unchanged balance
     when: import onto an account that has newer bookings than its starting date
     then: |
-      - fixed 2026-11-11 · the result says only *initial balance moved to* the date
+      - fixed 2026-11-11 · *…so today's balance stays the same* only when every imported row of that account is on or before the old starting date · otherwise *initial balance moved to* the date
       - was: *today's balance stays the same* while it moved
     status: fixed
     risk: low
+    tests:
+      - file: test/features/data_import/domain/import_opening_shift_test.dart
+        name: "only a file wholly on or before the opening day keeps today's balance, and says so"
   - id: E-DATA-90
     group: Export & erase
     title: Stats export saved without a word
@@ -623,3 +626,57 @@ items:
     tests:
       - file: test/features/analytics/ui/sheets/analytics_export_sheet_test.dart
         name: csv and pdf export the report with the book name
+  - id: E-DATA-92
+    group: Bank import
+    title: DKB → ELBA transfer not suggested
+    when: a DKB row pays into the own ELBA account
+    then: |
+      - ELBA files carry no IBAN of their own account → the app cannot know that IBAN
+      - the ELBA row of the same payment **is** suggested as a transfer, once the DKB format is saved
+      - monthly order without hand work: **ELBA first, then DKB** · the DKB twin shows *Possible duplicate*, unticked
+      - first DKB import: untick those rows or *Make it a transfer* by hand
+      - open: D-DATA-45
+    status: known-issue
+    risk: medium
+    related: [R-DATA-94, D-DATA-45]
+  - id: E-DATA-93
+    group: Bank import
+    title: Amount edited below a split's parts
+    when: a split row's amount is edited so nothing is left for part 1
+    then: |
+      - the sheet says so on part 1 · *Apply* stays off
+      - an edit that already left nothing → Review shows the row unsplit
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a part without a category keeps the row unticked; parts that leave the first nothing are no split
+    related: [R-DATA-99]
+  - id: E-DATA-95
+    group: Bank import
+    title: Recurring payment without its booking
+    when: a bank row matches a recurring payment's due date · no booking of that payment near it (set up after that day, paused, booking deleted)
+    then: |
+      - row stays **ticked** · grey *Recurring payment, not booked yet*
+      - unticking it would leave that money out of the book
+      - a due date whose booking exists, amount edited → no hint, the row is new
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: keeps the tick and says recurring
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: a due date whose booking exists gives no second hint, even with the amount changed
+    related: [R-DATA-102, D-DATA-46]
+  - id: E-DATA-94
+    group: Export & erase
+    title: Category export saved as *(1)*
+    when: category activity › export › *Save to device* · the month's booking export already saved
+    then: |
+      - fixed 2026-11-11 · the file names the category · `moneykoi-bookings-Groceries-2026-11-01-to-2026-11-30.csv`
+      - was: the month export's name, so the system added *(1)*
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/budget_book/service/booking_csv_builder_test.dart
+        name: a category export carries the category

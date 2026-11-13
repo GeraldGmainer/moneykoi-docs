@@ -10,7 +10,7 @@ groups:
       - id: C-HOM-009
         text: New book on Small_Phone, German → first-entry card button full width, *ERSTE BUCHUNG* not clipped
       - id: C-HOM-010
-        text: Fresh setup → *Getting started* on Home · first booking → tick + confetti · rule, budget, widget tick · all done → *All set* once → gone on next open · × → Undo restores
+        text: Fresh setup → *Getting started* on Home, 5 items, no widget item · first booking → tick + confetti · *Set starting balances* → Card 500 → account −500, total down by 500 · recurring payment, budget tick · all done → *All set* once → gone on next open · × → Undo restores · no separate *Set starting balance* card
       - id: C-HOM-011
         text: Existing account on a wiped phone → no checklist, no hints · Debug → *Re-arm new-user guidance* brings them back
       - id: C-HOM-012
@@ -23,12 +23,16 @@ groups:
         text: "Small_Phone, Free → drawer: *Settings* on screen without scrolling · scroll → *Pro features* + *Get Pro*, 4 dimmed pages · German + Japanese: button not clipped"
       - id: C-HOM-016
         text: "Web, window ≤ 900 px tall (1440×900) → sidebar footer one row: *Add Booking* + 2 icon squares, keys in tooltips · taller → stacked · collapsed → rail · phone drawer stacked"
+      - id: C-HOM-021
+        text: "Web on an iPad (768 portrait, 1024 landscape) → icon rail, Home cards two columns, no title cut (*Cash fl…*) · arrow → full sidebar over the page, tap beside it closes · landscape: rail shows only **+** and every nav icon · iPhone: bottom bar Dashboard · Bookings · **+** · Analytics · Goals, current tab orange, sits above the home indicator, last row not under it · tap **+** → *Add*, hold → quick entry · *Add* and a booking's edit page: no bar · search icon opens ⌘K · accounts one row each · a sheet hides the page behind it · Analytics change chips and tables inside their cards, nothing scrolls sideways"
       - id: C-HOM-018
-        text: "Web Home, month anchor ≠ 1 → *Cash flow* pill → menu under the pill, dates follow the anchor, current ticked · pick *Last 6 months* → figures reload, pill renamed · reload → kept · *Customize* shows it · *Forecast* pill → horizons · *More settings* → the card's sheet · phone width: menu on screen · arrow keys + Enter work"
+        text: "Web Home, month anchor ≠ 1 → *Cash flow* pill → menu under the pill, rows are names only, the line under the heading shows the hovered range's dates and they follow the anchor, current ticked · pick *Last 6 months* → figures reload, pill renamed · reload → kept · *Customize* shows it · *Forecast* pill → horizons · *More settings* → the card's sheet · phone width: menu on screen · arrow keys + Enter work"
       - id: C-HOM-017
         text: "*Getting started* → tap the circle of *Scan a receipt* → ticked, count goes up, next item expands · tap again → open · a data-ticked item's circle does nothing · restart → still ticked · tick the last open item → *All set* + Undo restores the list · row still opens its feature"
       - id: C-HOM-019
         text: Budget Book, Analytics, Goals on a phone → scroll down → header gone behind a plain strip · nothing under the clock
+      - id: C-HOM-022
+        text: Each tab in the bar (Home, Book, Stats, Goals, Shopping incl. a pinned list, Accounts, Categories, Recurring) → scroll down → tap its bar icon again → back to the top, nothing reloads · iPad landscape → same from the rail · tap another tab → switches as before
   - id: widgets
     title: Android widgets
     setup: HOME_WIDGET §12 · what only a person can judge

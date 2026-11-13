@@ -18,6 +18,7 @@ Same as `moneykoi-app/CLAUDE.md`: keyword-style bullets, answer first, `file:lin
 | Prose (overview, pricing, legal) | `src/content/docs/<area>/*.mdx` | tables and short lists; escape `{x}` as `\{x\}` in MDX prose |
 | Areas | `src/areas.mjs` | one line per area; the sidebar and the home table read it |
 | Roadmap | `src/data/roadmap.yaml` → `/roadmap/` | buckets in order (next releases, then months, then *Later*); items are catalog ids or docs ids. **Every planned catalog row sits in a bucket** — the check fails otherwise. Order changes are Gerald's call |
+| Plans | `src/data/plans/<id>.yaml` → `/plans/<id>/` | one page per context (a release, a store launch): a `gerald:` list + an `agents:` list. See *Plans* below |
 | Releases | `src/data/releases/<version>.yaml` | items name their area and **check ids**; notes carry *open / fixed / changed / decided* |
 | Diagrams | `src/diagrams/<id>.mmd` (Mermaid) + `src/data/diagrams.yaml` | registry: title, `page` (How it works), `areas` (embedded in their overviews), caption, `sources`, `checked` date. Shown with `<Diagram id="…" />` |
 | Rendering | `src/components/*.astro` | a kind page = frontmatter + one component |
@@ -74,6 +75,7 @@ A pure refactor touches only the context doc. A behavior change touches both. Ne
 | the web gains, loses or diverges from an app feature (or the reverse) | the catalog row's `web:` / `webNote:`, and the area's *On the web* entries |
 | something Gerald must run, buy, configure or decide | `tasks.yaml` (`owner: gerald`) / `decisions.yaml` (`open`) |
 | a task done or a decision taken | `status: done` / `decided` with the date and `answer:` |
+| a step left for Gerald, or follow-up work for an agent | the fitting plan in `src/data/plans/` — see *Plans* |
 | a test the docs link to renamed, moved or deleted | the `tests:` link — `npm run check` names every broken one |
 | a table, relation, flow, state or decision a diagram draws | `src/diagrams/<id>.mmd`, and `checked:` in `src/data/diagrams.yaml` — find them with `grep -n "<changed file>" src/data/diagrams.yaml` |
 | a release prepared | `src/data/releases/<version>.yaml` + its page, see *Releases* below |
@@ -115,6 +117,21 @@ A server migration belongs to the area of the feature it serves. One fact lives 
 - Mermaid reserves some words as node ids (`call`, `end`, `class`, `style`, `click`): use another id. A broken diagram shows a red error on its page, and the build does not catch it — open the page after editing.
 - No emoji in labels; keep a label to a few words and put the explanation in `caption:`.
 - `page: offline-first` diagrams live on `/offline/how-it-works/` in the order of `diagrams.yaml`, each placed by hand in that page's steps — a new one needs a line there too.
+
+### Plans
+Gerald's working lists, replacing his Notion pages: what **he** does and what **agents** do, per context.
+- **When**: work leaves steps for Gerald or follow-up for an agent → add them to the fitting plan, same pass. No fitting plan → ask Gerald before starting a new page.
+- **New plan**: `src/data/plans/<id>.yaml` (`title`, `goal`, optional `date`) + `src/content/docs/plans/<id>.mdx`, a copy of `ios-store.mdx` with the new id.
+- **Blocks**: `gerald:` = only he can do it (consoles, secrets, devices, pasting a git block, decisions). `agents:` = an agent can finish it alone. Never mix.
+- **Item** = exactly one of:
+  - `ref: T-XXX-nn` → an existing task. Title and state come from `tasks.yaml`. Optional `note:`. **Never** a `done:` here.
+  - `text: …` → a one-off step, ≤ 14 words. State is `done: <date>` in the plan file. Optional `sub:` list of `text` / `done`.
+  - `section: …` → a heading inside the block.
+- Needs a command, a prompt or more than one line → write a task in the area's `tasks.yaml` first, then `ref:` it.
+- **Done**: an agent that finishes an item sets it in the same pass: `status: done` on the task, or `done: <today>` on the text item. Gerald ticks his own in the browser; the dev server writes the same fields.
+- `ref` and `text` are unique within a block: a tick finds its item by them.
+- **Git**: Gerald's ticks leave `src/data/plans/*.yaml` and `status:` lines in `tasks.yaml` modified. Include them in your next docs commit: the one exception to "only files you changed". A `tasks.yaml` with other foreign edits stays out.
+- Plan finished → leave it; Gerald deletes pages.
 
 ### Releases
 `prepare-release` (app and web) adds `src/data/releases/<app version>.yaml` (`web-<version>.yaml` for a web-only release) with `status: testing` and one item per release-note entry: `area`, `what`, the `checks` that prove it (write missing ones into the area first), `related`. Add the page `src/content/docs/releases/<x-y-z>.mdx` — a copy of `1-17-0.mdx` with the new id. Gerald adds his test notes later; never invent `notes`. When the release ships, `status: released`, and its bucket leaves `src/data/roadmap.yaml`.

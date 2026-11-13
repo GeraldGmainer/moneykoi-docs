@@ -34,13 +34,13 @@ items:
   - id: T-DATA-05
     title: Bank CSV files for the import corpus
     owner: gerald
+    status: done
     detail: |
-      - **first thing to do** · the bank import was built 2026-11-10 on **synthetic** files · no real export was in the corpus
-      - unproven until then: preamble IBAN + balance, payee / purpose columns, pending rows, the cleaner's words (R-DATA-76, R-DATA-94)
-      - create `../moneykoi-imports/` · private · never inside moneykoi-app
-      - DKB Girokonto (+ Visa if used) · Raiffeisen bankdirekt
-      - per account **two exports overlapping by a few weeks** · a second account of the same bank if there is one
-      - then the corpus test + checks C-DATA-057…061
+      - **done 2026-11-11** · two DKB Giro + two Mein ELBA exports in `../moneykoi-imports/{dkb,elba}` · expectations recorded
+      - found and built: ELBA's labelled texts (R-DATA-76) · Amazon / PayPal names + order link (R-DATA-98) · split rows (R-DATA-99)
+      - the month files add nothing after the year files · one format per bank
+      - still missing: a DKB Visa file · a file with a pending row
+      - `moneykoi-imports/` is an **untracked folder of the parent repo** · keep it out of every commit (or `git init` inside it)
     command: |
       mkdir -p /Users/gerald/Projects/moneykoi/moneykoi-imports
       # copy the exports in, then

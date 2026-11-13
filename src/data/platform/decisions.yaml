@@ -37,6 +37,7 @@ items:
     answer: |
       - no · the offer ended 2026-11-08, the question with it
       - the listing texts never named it (`android/fastlane/metadata/android/`, checked 2026-11-11)
+      - **but** Play's *What's new* does: `changelogs/default.txt`, the 2.0.0 notes · the 2.1.0 notes replace it (plan 2.1.0)
       - was: *account before 8 Nov → Cloud for life* · true one week only ⚖️
     related: [T-PLAT-07, T-PLAT-08]
   - id: D-PLAT-5
@@ -176,3 +177,51 @@ items:
       - not chosen: a cap at 150 % or 200 %
       - source: release 2.1 device round, F-46
     related: [E-PLAT-11, E-PLAT-12]
+
+  # Growth research 2026-11-11: moneykoi-app/.agents/reports/growth-research-2026-11.md
+  - id: D-PLAT-19
+    question: Spend the €50 test budget?
+    status: open
+    date: 2026-11-11
+    answer: |
+      - **can skip for now** · €30 buys ~10 taps at finance prices · too few to learn from
+      - research: ads at €50 = **measurement**, not growth
+      - ~€30 Apple Ads · AT + DE · Jan 2–31 · needs iOS live
+      - exact match *haushaltsbuch* · *haushaltsbuch app* · *kassenbon scanner*
+      - ~€6–11 AI voice with a commercial license · or text-only videos, €0
+      - rest: template design · or a 2nd Apple Ads week if an install costs < €2
+      - not: Google App Campaigns · Meta · TikTok · Reddit ads
+    related: [T-PLAT-28, T-PLAT-30]
+  - id: D-PLAT-20
+    question: Name rivals on moneykoi.com or in videos?
+    status: open
+    date: 2026-11-11
+    answer: |
+      - **can skip for now** · skipped = the rule stays no
+      - today **no**: no rival in a store text, screenshot, press email or post · `STORE_LISTING_AI_CONTEXT.md` §6.4
+      - research wants: *Finanzguru Alternative ohne Bank-Login* page · comparison pages · videos #4 + #10 · AlternativeTo
+      - UWG allows a comparison if objective, checkable, dated
+      - risk: rival prices change · a wrong one stays online
+      - recommended: keep **no** · the hook needs no rival (§6.4)
+    related: [T-PLAT-27, T-PLAT-29, T-PLAT-30]
+  - id: D-PLAT-21
+    question: Build growth features from the research?
+    status: open
+    date: 2026-11-11
+    answer: |
+      - **can skip for now** · build once there is traffic
+      - sample data as the default first run · demo today waits behind a Welcome button
+      - *Partner:in einladen* right after the first budget
+      - month summary as a share image · amounts hidden
+      - referral: a month of Cloud for both
+      - German chains in the scanner: already T-SCN-02
+      - research: listing, ratings, onboarding **before** new features
+    related: [T-SCN-02]
+  - id: D-PLAT-22
+    question: One word for a starting balance in German, one spelling in Japanese?
+    status: decided
+    date: 2026-11-11
+    answer: |
+      - German: **Anfangssaldo** everywhere · setup said *Startsaldo*
+      - Japanese: **カテゴリ** and **端末** · カテゴリー (43 lines) and デバイス (1) changed
+      - the store listings still say カテゴリー · changed with the next listing update

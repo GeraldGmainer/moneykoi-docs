@@ -7,8 +7,8 @@ hero:
   image:
     file: ../../assets/logo.png
   actions:
-    - text: Release 1.17.0
-      link: /releases/1-17-0/
+    - text: Latest release
+      link: /releases/latest/
       icon: right-arrow
     - text: All features
       link: /features/
@@ -17,13 +17,19 @@ hero:
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 import Stats from '../../components/Stats.astro';
+import PlanIndex from '../../components/PlanIndex.astro';
+
+## To do
+
+<PlanIndex />
 
 <Stats />
 
 ## Also here
 
 <CardGrid>
-  <LinkCard title="Release 1.17.0" href="/releases/1-17-0/" description="Your Trello items as one test plan · outdated notes marked" />
+  <LinkCard title="All plans" href="/plans/" description="To-do pages · yours + the agents'" />
+  <LinkCard title="Latest release" href="/releases/latest/" description="The newest released version · items + checks + notes" />
   <LinkCard title="All features" href="/features/" description="Every feature by area + plan · planned too" />
   <LinkCard title="Health" href="/meta/health/" description="Drift vs the code · broken test links" />
   <LinkCard title="How this site works" href="/meta/how-it-works/" description="Where data lives · how to add an area" />

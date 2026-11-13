@@ -269,12 +269,15 @@ items:
     when: calendar › the day an account's starting balance lands
     then: |
       - fixed 2026-11-11 · a row per account under *Booked* · a dot on the day
+      - the calendar row names it: *Initial balance*, when it is the day's biggest movement
       - was: closing moved, no row explained it
     status: fixed
     risk: medium
     tests:
       - file: test/features/forecast/ui/forecast_calendar_page_test.dart
         name: the day a starting balance lands lists it, so the rows add up to the net change
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: a day moved only by a starting balance says so in its row
   - id: E-FC-31
     group: Planned payments
     title: Calendar at a large font size
@@ -287,3 +290,28 @@ items:
     tests:
       - file: test/features/forecast/ui/forecast_calendar_page_test.dart
         name: a large system font cannot clip the fixed-height rows
+  - id: E-FC-32
+    group: Planned payments
+    title: Day sheet rows on two left edges
+    when: calendar › a day with booked and expected rows
+    then: |
+      - fixed 2026-11-11 · every row starts on the sheet's edge
+      - was: *Booked* rows at ~25 dp, *Expected* rows at ~45 dp
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+        name: an expected row starts on the sheet edge, in line with the booked rows
+  - id: E-FC-33
+    group: Chart
+    title: Axis decimal point beside comma amounts
+    when: money format with a decimal comma · forecast chart, Home forecast card
+    then: |
+      - fixed 2026-11-11 · *7,5k* · *1,95M*
+      - was: *7.5k* next to *7.500,00 €*
+      - the Analytics cards' axes still print a dot
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/chart/nice_axis_test.dart
+        name: a comma money format writes a comma

@@ -337,12 +337,57 @@ items:
     title: Known gaps on the branch
     when: multi-currency on the `multi-currency` branch, before release
     then: |
-      - reconciliation history tile sums stored lines · a session with a foreign line mixes currencies there
-      - scanner review shows the book symbol on a trip · the saved bookings are right
-      - a rule tile shows ≈ the book value at save, not today's
-      - a trade in another currency is booked without its original (E36/E37)
+      - scanner review shows the book symbol on a trip · the saved bookings are right · by decision, not fixed
+      - bank files: *Originalbetrag* / *Amount (Foreign Currency)* not read as the original yet
+      - demo: no foreign subscription rule
     status: known-issue
+    risk: low
+  - id: E-BKG-54
+    group: Multi-currency
+    title: Renaming a foreign account
+    when: a CZK account opened at EUR 400 is renamed months later
+    then: |
+      - the opening balance keeps its EUR value · only a new opening figure, currency or rate re-values it
+      - fixed 2026-11-11 · before: every save re-valued it at today's rate, and with no rate it vanished from the ledger
+    status: fixed
+    risk: high
+  - id: E-BKG-55
+    group: Multi-currency
+    title: Currency with no feed rate and no booking
+    when: a VND account is opened
+    then: |
+      - the form shows *No exchange rate for VND* under the opening balance · tap → type the rate
+      - from then on the account converts at that rate until a feed or a booking brings a newer one
+    status: by-design
     risk: medium
+  - id: E-BKG-56
+    group: Multi-currency
+    title: Planned payment booked during a trip
+    when: forecast → book a planned €950 rent while a CZK trip is on
+    then: stays EUR 950 · the trip currency only applies to an empty new booking · fixed 2026-11-11 (it turned into CZK 950)
+    status: fixed
+    risk: high
+  - id: E-BKG-57
+    group: Multi-currency
+    title: Saved booking moved onto a foreign account
+    when: editing a EUR 10 booking and picking the CZK account
+    then: keeps EUR 10 · CZK amount worked out from the rate · fixed 2026-11-11 (it became CZK 10)
+    status: fixed
+    risk: high
+  - id: E-BKG-58
+    group: Multi-currency
+    title: Balance check without a rate
+    when: a counted foreign account differs and no rate exists (or single mode books it onto an account in another currency)
+    then: Save stays off · the summary says *No exchange rate for …, so this count cannot be booked* · never silently left out
+    status: fixed
+    risk: medium
+  - id: E-BKG-59
+    group: Multi-currency
+    title: Quick add with a currency nobody has a rate for
+    when: "`AED 50 taxi` with no AED rate"
+    then: the amount chip is flagged before saving · *No exchange rate for this currency* · the full form takes a rate
+    status: by-design
+    risk: low
   - id: E-BKG-60
     group: On the web
     title: Sorting the list by account or category

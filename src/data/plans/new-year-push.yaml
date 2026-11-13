@@ -1,0 +1,46 @@
+# The dated launch push: iOS featuring, outreach, January content. Source: moneykoi-app/.agents/reports/growth-research-2026-11.md
+# (§5 timeline, §0 = checked against the repos), platform + monetization tasks/decisions. Ongoing work: plan store-growth.
+title: "New Year push"
+goal: "iOS live · first ratings · found when January budgets start"
+date: 2027-01-01
+gerald:
+  - section: "By December 10"
+  - ref: T-PLAT-10
+    note: "featuring needs the approved app"
+  - ref: T-PLAT-28
+  - text: "Read + push the RKSV page (T-PLAT-27) · indexing takes weeks"
+  - section: "December"
+  - ref: T-PLAT-26
+  - ref: T-PLAT-29
+  - section: "January"
+  - ref: T-PLAT-09
+    note: "first week of January"
+  - text: "r/FinanzenAT: *Monatsabschluss Jänner* post · rules first"
+  - section: "Can skip for now"
+  - ref: T-PLAT-30
+    note: "most time, least certain · 1–2 clips for Reddit + press instead"
+  - text: "Decide D-PLAT-19 · €50 test budget · ~10 taps, too few to learn"
+  - text: "Apple Ads Jan 2–31 · only if D-PLAT-19 says yes"
+  - text: "Decide D-PLAT-20 · rivals on site + videos · skipped = stays no"
+  - text: "Push the other T-PLAT-27 pages · 17 posts live, check indexing instead"
+  - text: "Read the drafts in `store/press/` · fill the `[Gerald: …]` gaps"
+    sub:
+      - text: "`featuring.md` · save as draft first, three fields lock after submission"
+      - text: "`emails.md` · 21 drafts · 5 contacts missing"
+      - text: "`directories.md` · BetaList looks paid now"
+      - text: "`videos.md` · 10 scripts"
+agents:
+  - ref: T-PLAT-27
+    note: "RKSV draft written 2026-11-12, de + en, parked · the other three can skip"
+  - text: "Featuring pitch for T-PLAT-28 · English · claim register first"
+    done: 2026-11-12
+  - text: "T-PLAT-26 emails · one per outlet in `store/press/kit.md`"
+    done: 2026-11-12
+  - text: "Kit pages: futurezone · derStandard · Trending Topics · brutkasten · mobiFlip · GIGA · nextpit"
+    done: 2026-11-12
+  - text: "Directory texts for T-PLAT-29 · English · claim register first"
+    done: 2026-11-12
+  - text: "Feb 1: installs + ratings vs. the milestones on Growth"
+  - section: "Can skip for now"
+  - text: "10 video scripts for T-PLAT-30 · German · 15–30 s"
+    done: 2026-11-12

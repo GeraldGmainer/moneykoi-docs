@@ -111,6 +111,12 @@ groups:
         text: "Format saved on the phone → the web recognizes that bank's next file · format saved on the web → the phone recognizes it · needs T-DATA-07"
       - id: C-DATA-073
         text: "Web: file with a stated balance, one row unticked → *Bank: … · Book: …* → *Check balance* → count sheet, one field filled, *From the bank file* · no amount in the address bar"
+      - id: C-DATA-074
+        text: "Real DKB file → Amazon rows named *Amazon* · tap a row → order number on top → tap opens the order on amazon.de (browser or Amazon app) → back: the sheet still holds what was typed · copy button → number on the clipboard · Android + iPhone"
+      - id: C-DATA-076
+        text: "Recurring payment *Netflix* 12.99 on the 5th, booked → bank file with Netflix 12.99 on the 7th → Review: *Recurring payment, already booked*, unticked, category *Streaming Service* · summary *1 booking is already in this book from a recurring payment* · tick it → the line goes · a deleted booking's date → row ticked, *not booked yet* · Android + iPhone + web"
+      - id: C-DATA-075
+        text: "Amazon row → *Split* → part 2 amount on the app keypad, description, category → part 1 shows the rest → *Apply* → row lists both parts · import → two bookings · the same file again → row under *already imported*"
   - id: release-2-0-0
     title: 2.0.0 · 2026-11-08
     items:

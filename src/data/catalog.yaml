@@ -137,6 +137,13 @@
   area: money
   tier: free
   status: planned
+- id: bill-qr
+  name: Scan a bill's payment code
+  area: money
+  tier: free
+  status: planned
+  docs: forecast
+  note: EPC / GiroCode → planned payment · scan free · planning **Pro** (D-FC-18) · `plan_later/BILL_QR_PLAN.md`
 - id: forecast
   name: Forecast
   area: money
@@ -148,9 +155,10 @@
 - id: forecast-calendar
   name: Forecast as a calendar (each day's balance)
   area: money
-  tier: cloud
-  web: web-only
-  webNote: since 2026-11-07 · the app lists it as later work (D-FC-17)
+  feature: forecast
+  note: Forecast → calendar icon · one month column, a day → sheet · since 2026-11-09
+  web: parity
+  webNote: web first (2026-11-07) · the web also has the *Compact* week grid and hover
   docs: forecast
 - id: investments
   name: Investments
@@ -198,6 +206,13 @@
   status: planned
   docs: bookings
   note: speak a booking · no plan yet
+- id: auto-capture
+  name: Card payments captured automatically
+  area: money
+  tier: pro
+  status: planned
+  docs: bookings
+  note: Android bank notifications · iPhone Wallet taps → drafts to confirm · never automatic (D-BKG-12) · `plan_later/AUTO_CAPTURE_PLAN.md`
 
 # Viewing
 - id: budget-book
@@ -206,7 +221,7 @@
   tier: free
   note: periods · summary · transactions · filters · calendar
   web: partial
-  webNote: no day grouping or period paging · corrections + opening balances listed, counted as neither (app counts opening balances as income)
+  webNote: day headers with day totals since 2026-11-02 · no period paging · corrections + opening balances listed, counted as neither (app counts opening balances as income)
   docs: budget-book
 - id: budget-calendar
   name: Budget Book calendar
@@ -255,8 +270,8 @@
   tier: free
   note: Goals in the drawer
   since: decided 2026-10-16
-  web: app-only
-  webNote: web has a sidebar
+  web: partial
+  webNote: the web opens Cloud books only, so phones get the Cloud bar (Dashboard · Bookings · + · Analytics · Goals, 2026-11-03) · wider screens a sidebar
   docs: home
 - id: analytics
   name: Analytics
@@ -309,6 +324,13 @@
   status: planned
   docs: analytics
   note: a summary of each month · no plan yet
+- id: personal-inflation
+  name: Price changes of what was bought
+  area: viewing
+  tier: pro
+  status: planned
+  docs: analytics
+  note: from receipt items · own basket vs. a year ago · food inflation beside it · `plan_later/PERSONAL_INFLATION_PLAN.md`
 
 # Receipt scanner
 - id: receipt-scanner
@@ -338,8 +360,24 @@
   name: CSV booking import
   area: data
   tier: free
-  note: the door in
+  note: the door in · re-import key, ±3-day duplicate check, pending rows unticked since 2026-11-10 · rows a recurring payment booked unticked since 2026-11-12
   web: parity
+  webNote: since 2026-11-11 · no *Deleted earlier* (no trash on the web) · no usage event · the category guess has no keyword map (R-DATA-96)
+  docs: data
+- id: import-balance-compare
+  name: Balance compare after an import
+  area: data
+  tier: free
+  note: the bank's stated balance vs the book · *Check balance* opens the Balance check with it · since 2026-11-10
+  web: parity
+  webNote: since 2026-11-11 · the bank figure goes to the count sheet via sessionStorage, never the URL
+  docs: data
+- id: open-csv
+  name: Open a CSV with Money Koi
+  area: data
+  tier: free
+  note: from Files or a mail attachment · into the active book · since 2026-11-10
+  web: app-only
   docs: data
 - id: book-export
   name: Whole-book ZIP export
@@ -382,9 +420,14 @@
   webNote: one ledger CSV · no export page
   docs: data
 - id: statement-import
-  name: Bank statement import (CAMT.053 / MT940)
+  name: Bank import with saved formats
   area: data
   feature: statementImport
+  note: saved formats → straight to Review · learned payees · row editing · transfer suggestion · import reminder · CSV only, CAMT.053 / MT940 stay parked
+  since: built 2026-11-10 on synthetic bank files
+  web: parity
+  webNote: since 2026-11-11 · no paywall (every web book is Cloud) · no *Deleted earlier*, open-with, import reminder or usage event · managed in Settings › Data Management (R-DATA-95)
+  docs: data
 
 # Sync & sharing
 - id: no-account
@@ -403,6 +446,13 @@
   name: Sync, multiple devices, realtime, automatic cloud backup
   area: sync
   feature: sync
+  docs: offline
+- id: refused-changes
+  name: Refused changes — try again or discard
+  area: sync
+  feature: sync
+  web: app-only
+  webNote: the web writes straight to the server and has no outbox
   docs: offline
 - id: shared-books
   name: Shared books + invites

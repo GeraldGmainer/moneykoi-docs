@@ -413,18 +413,21 @@ items:
     related: [D-DATA-21, D-DATA-30, R-DATA-35]
   - id: R-DATA-76
     group: Bank import
-    title: One combined bank text is cleaned
+    title: One combined bank text is read by its labels
     text: |
-      - only a file without a payee or payer column
-      - removed: the leading phrase · card + terminal tokens · IBANs · digit runs ≥ 4
-      - `Bezahlung Karte MC/0001234 BILLA DANKT 1234 WIEN` → `BILLA DANKT WIEN`
-      - all noise → the original stays · word list from **synthetic** files so far (T-DATA-05)
+      - only a file without a payee or payer column · Mein ELBA
+      - `Empfänger:` / `Auftraggeber:` → the name · `Zahlungsreferenz:` / `Verwendungszweck:` → the grey line · `IBAN …:` → the counterparty IBAN
+      - card payment (no name label) → the merchant, without terminal number, `K1`, date and time · `Zahlungsreferenz: SPAR 2361 K1 21.05. 09:09 …` → `SPAR`
+      - a text without labels: only IBANs + digit runs ≥ 4 go · all noise → the original stays
+      - labels from the real ELBA files (2026-11-11)
     source: BOOKING_IMPORT §20
     tests:
       - file: test/features/data_import/domain/import_bank_row_test.dart
-        name: each line of the Raiffeisen fixtures is cleaned down to its merchant
+        name: 'each shared text: the counterparty, the reference under it and the IBAN'
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: a labelled text gives the counterparty, the reference under it and the IBAN; a card payment its merchant
       - file: test/features/data_import/domain/import_bank_row_test.dart
-        name: a text without bank noise is left alone, and an all-noise text keeps its original
+        name: a text without bank noise is left alone; a cleaned one keeps the cell under its name
     related: [D-DATA-27, T-DATA-05]
   - id: R-DATA-77
     group: Bank import
@@ -455,6 +458,7 @@ items:
       - *Deleted earlier* · key in this phone's trash, 30 days → same group
       - *Possible duplicate* · ±3-day match → main list, unticked
       - *Select all* never ticks the collapsed group
+      - plus *Recurring payment, already booked* · R-DATA-102
     source: BOOKING_IMPORT §9, §9a
     tests:
       - file: test/features/data_import/domain/import_review_bank_test.dart
@@ -465,12 +469,13 @@ items:
         name: Select all never ticks the rows that are already in the book (D-BANK-27)
       - file: test/features/data_import/ui/bank_import_ui_test.dart
         name: the rows already in the book sit in one closed group below; open, they are rows like any other
-    related: [D-DATA-34, R-DATA-34, R-DATA-79]
+    related: [D-DATA-34, R-DATA-34, R-DATA-79, R-DATA-102]
   - id: R-DATA-79
     group: Bank import
     title: Who joins the ±3-day check
     text: |
-      - hand-typed, scanned and recurring bookings
+      - hand-typed and scanned bookings
+      - **not** a booking a recurring payment made · R-DATA-102 compares it
       - rows imported while pending · the booked twin comes with other text
       - **both** legs of every transfer · the other account's file finds it
       - a booked bank row: found only by its own key
@@ -485,6 +490,43 @@ items:
       - file: test/features/data_import/domain/import_duplicate_matcher_test.dart
         name: three days across the autumn clock change are still three days
     related: [R-DATA-34, R-DATA-78]
+  - id: R-DATA-102
+    group: Bank import
+    title: Recurring payments in the file
+    text: |
+      - match: same account and side · amount **±1 %** · date **±3 days** · the text only breaks a tie
+      - the payment **booked it already** → *Recurring payment, already booked* · unticked · main list · own summary line, *already in this book from recurring payments*
+      - **due but not booked** (set up later, paused, booking deleted) → stays **ticked** · grey *Recurring payment, not booked yet*
+      - the row takes the **payment's category** · a recurring transfer makes it a transfer · a file category, a learned payee, a pick or an edit wins · never learned as a payee rule
+      - an imported due row is a **plain booking**, not tied to the payment
+      - summary lines count **unticked** rows only · a ticked row leaves its line
+      - a row for an account the import creates · never
+      - web: the same since 2026-11-12, category and summary since 2026-11-13
+    source: BOOKING_IMPORT §9c, IMPORT_WEB §4
+    tests:
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: 'the same amount three days later: recurring, unticked, in the main list, still tickable'
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: an amount 1 % off still matches, more than 1 % does not
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: keeps the tick and says recurring
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: 'two payments of a similar amount on one day: the row goes to the one it names'
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: 'a guessed row takes the category of the booking it matched, and of the due date it matched'
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: 'a file category, a learned rule, a pick and an edit all beat the payment'
+      - file: test/features/data_import/domain/import_recurring_test.dart
+        name: 'a recurring transfer makes the row a transfer: to the other account, or from it on the receiving side'
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: 'a row a recurring payment stands for says so: booked and unticked, or due and ticked'
+      - file: src/app/(main)/bookings/import/lib/recurring.test.ts
+        repo: web
+        name: 'the same amount three days later: recurring, unticked, in the main list, still tickable'
+      - file: src/app/(main)/bookings/import/lib/recurring.test.ts
+        repo: web
+        name: keeps the tick and says recurring
+    related: [D-DATA-46, D-DATA-47, D-DATA-48, D-DATA-49, R-DATA-78, R-DATA-79, E-DATA-95]
   - id: R-DATA-80
     group: Bank import
     title: Pending rows start unticked
@@ -751,7 +793,7 @@ items:
       - account: exactly one valid IBAN above the header
       - balance: a line naming *Kontostand*, *Saldo*, *Balance*, *残高* · else the newest booked row's balance column
       - date = the booking day · a value-day column is never picked by itself · *Columns* can switch
-      - read from **synthetic** DKB + Raiffeisen files only · real ones: T-DATA-05
+      - checked on real DKB Giro + Mein ELBA files 2026-11-11 · DKB Visa still from the published shape
     source: BOOKING_IMPORT §20
     tests:
       - file: test/features/data_import/domain/import_bank_row_test.dart
@@ -857,6 +899,67 @@ items:
       - bank layer → R-DATA-95
     source: IMPORT_WEB §1, §4, §7
     related: [R-DATA-95, R-DATA-96, R-DATA-97]
+  - id: R-DATA-98
+    group: Bank import
+    title: Amazon and PayPal rows
+    text: |
+      - `AMAZON PAYMENTS EUROPE S.C.A.`, `AMAZON EU S.A R.L., …` → **Amazon** · the order number stays on the grey line
+      - PayPal → the shop after *Ihr Einkauf bei* (`Galaxus Deutschland`) · no shop → **PayPal**
+      - Amazon and shop-less PayPal **learn no payee** · a category picked there is for that row only · a PayPal shop learns
+      - edit sheet: the order number on top · tap → the order page on amazon.de · button → copy
+      - also cleaned: card payee `Spar.Dankt.3771/Steyr` → `Spar Dankt 3771` · an address behind `AG` / `GmbH` goes
+      - open: D-DATA-44
+    source: BOOKING_IMPORT §20, §18
+    tests:
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: 'a shop that sells everything: its short name, the order behind the row, and no rule to learn'
+      - file: test/features/data_import/domain/import_bank_row_test.dart
+        name: 'each shared row: the name a booking gets, whether it teaches a rule, and its order'
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: 'an Amazon row links its order: a tap opens it, the button copies the number'
+    checks: [C-DATA-074]
+    related: [R-DATA-76, R-DATA-99, R-DATA-100, J-DATA-28, D-DATA-44]
+  - id: R-DATA-99
+    group: Bank import
+    title: One row, several bookings
+    text: |
+      - Pro · edit sheet › *Split* → *Add part*
+      - part 1 = **the rest** of the row's amount · never typed · every other part: amount, description, category
+      - each part = its own booking · same date, account, tags
+      - a part without a category → the row stays unticked · no category pill on a split row
+      - *Remove part* down to one → a normal row again
+      - next month's file: the row counts as imported once · the parts never show as duplicates
+      - a transfer cannot be split · a split row learns no payee
+      - the *Import n bookings* button counts the parts
+    source: BOOKING_IMPORT §9a, §9b
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: 'becomes one booking per part: the first takes the rest and the row key, the others a key no file row has'
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: next month the file row is in the book once, whatever happened to the other parts
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: 'a split in two: the first part takes the rest, the parts add up'
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: 'the Import button counts bookings: a split row once per part'
+    checks: [C-DATA-075]
+    related: [R-DATA-98, J-DATA-28, E-DATA-93]
+  - id: R-DATA-100
+    group: Bank import
+    title: Same category for the rest
+    text: |
+      - category pill on an Amazon or PayPal row → message *n more bookings from Amazon need a category* · *Apply to all*
+      - only the rows of that name and side still without a category · never split rows, transfers, rows already in the book
+      - never by itself · only on the tap
+      - edit sheet: description first, with a one-tap clear · empty = booking without description
+    source: BOOKING_IMPORT §9b
+    tests:
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: 'same category: the other open rows of a payee that learns nothing, same side only'
+      - file: test/features/data_import/bloc/import_wizard_rows_test.dart
+        name: the shortcut gives the named rows the same category, ticks them and keeps it on the drafts
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: one tap clears the description, and an empty one is a valid edit
+    related: [R-DATA-98, J-DATA-28]
   - id: R-DATA-95
     group: On the web
     title: "Web bank import: same engine, no paywall"
@@ -864,7 +967,7 @@ items:
       - built 2026-11-11 · saved formats, learned payees, row editing, transfers, balance compare
       - **no** lock · every web book is Cloud, Cloud includes Pro
       - same re-import key as the app · shared vector files, a test fails on drift
-      - states: *Already imported* (collapsed card) · *Possible duplicate* (±3 days) · *Pending at the bank* (unticked) · transfer legs count
+      - states: *Already imported* (collapsed card) · *Possible duplicate* (±3 days) · *Recurring payment* (R-DATA-102) · *Pending at the bank* (unticked) · transfer legs count
       - not on the web: *Deleted earlier* · open-with · import reminder · usage event
     source: IMPORT_WEB §1, §4, §7, §9
     tests:

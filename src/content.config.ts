@@ -203,6 +203,41 @@ const roadmap = defineCollection({
   }),
 });
 
+// One page of work per context (a release, a store launch): src/data/plans/<id>.yaml → /plans/<id>/.
+// An item is a `section` heading, a `ref` to a task (state in tasks.yaml) or free `text` (state here).
+// `done: <date>`; `true` when the date is unknown (imported from Notion).
+const doneOn = z.union([z.literal(true), day]).optional();
+const planSub = z.object({ text: z.string(), done: doneOn });
+const planItem = z
+  .object({
+    section: z.string().optional(),
+    ref: z.string().optional(),
+    text: z.string().optional(),
+    note: z.string().optional(),
+    done: doneOn,
+    sub: z.array(planSub).default([]),
+  })
+  .strict()
+  .refine((i) => [i.section, i.ref, i.text].filter((v) => v !== undefined).length === 1, {
+    message: 'exactly one of section / ref / text',
+  })
+  .refine((i) => !(i.ref && i.done), { message: 'a ref item has no done: its state is the task status' });
+
+const plans = defineCollection({
+  loader: glob({
+    base: './src/data/plans',
+    pattern: '*.yaml',
+    generateId: ({ entry }) => entry.replace(/\.yaml$/, ''),
+  }),
+  schema: z.object({
+    title: z.string(),
+    goal: z.string().optional(),
+    date: day.optional(),
+    gerald: z.array(planItem).default([]),
+    agents: z.array(planItem).default([]),
+  }),
+});
+
 // Diagram sources are src/diagrams/<id>.mmd; this registry says what each one draws and from where.
 const diagrams = defineCollection({
   loader: file('src/data/diagrams.yaml'),
@@ -228,4 +263,5 @@ export const collections = {
   releases,
   diagrams,
   roadmap,
+  plans,
 };

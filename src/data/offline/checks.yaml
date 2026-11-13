@@ -17,6 +17,8 @@ groups:
         text: Switch to a book opened before → its data shows
       - id: C-OFF-006
         text: Invite someone offline → refused · book unchanged
+      - id: C-OFF-007
+        text: A refused change (e.g. edit as a member, then get removed from the book) → Settings shows *Changes not synced* · *Discard change* → record back to the server's version · row gone from Settings
 
   - id: two-phones
     title: Sync basics · two phones

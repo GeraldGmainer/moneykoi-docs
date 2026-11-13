@@ -162,6 +162,9 @@ items:
       - one page per outlet: `store/press/kit.md` · pitches + facts ready
       - Kuketz only after an Exodus scan + the terms check
       - ifun.de · appgefahren wait for iOS
+      - timing: first week of January · New Year budgeting peak (growth research 2026-11)
+      - more DACH outlets, no kit page yet: futurezone.at · derStandard Web · Trending Topics · brutkasten · mobiFlip · GIGA · nextpit
+      - angle for Austrian outlets: a solo dev's app reads RKSV receipts offline
 
   - id: T-PLAT-10
     title: iOS launch — the Apple side
@@ -280,6 +283,9 @@ items:
       - read each sidebar's self-promotion rules first · one new subreddit per week · answer comments for a week
       - every Play link carries `utm_source=reddit` and a campaign per subreddit → the admin's *Play Store* page (T-PLAT-15) shows what each post brought
       - r/SideProject: check the build time the draft states
+      - draft 4 moved to r/droidappshowcase 2026-11-12 · r/androidapps rule 2 sends self-promotion there
+      - more, research 2026-11: r/FlutterDev as a technical write-up · Kuketz forum · Mastodon *#Datenschutz*
+      - January: a *Monatsabschluss Jänner* post in r/FinanzenAT · plan *New Year push*
   - id: T-PLAT-19
     title: Ship the site and web growth round
     owner: gerald
@@ -311,6 +317,7 @@ items:
       - 2026-11-10, live: search terms added to the de / en descriptions, each once — *Budgetplaner*, *Finanzen*, *offline*, *Fixkosten*, *Paare, Familien und WGs* · *expense tracker*, *personal finances*, *offline*, *couples, families and roommates* · the Austria text in `store/custom-listings/at/` carries them too
       - look again: admin › *Play Store*, 30 days after the first post · an agent reads the same numbers with `tool/play_api.py reports`
       - the open list for agents: `moneykoi-app/.agents/plans/PLAY_STORE_GROWTH_PLAN.md`
+      - 2026-11-11 growth research: same diagnosis, reach + ratings · targets + milestones on [Growth](/platform/growth/)
     related: [T-PLAT-16, T-PLAT-17, T-PLAT-18, T-PLAT-09]
   - id: T-PLAT-14
     title: Move dev work to local Supabase
@@ -328,3 +335,91 @@ items:
       ./scripts/local-env.sh
       # stocksport-wettbewerb uses the same ports: `supabase stop` in one before `supabase start` in the other
     related: [D-PLAT-15, R-PLAT-35, C-PLAT-025]
+  - id: T-PLAT-24
+    title: Re-shoot every store screenshot and the site media after the hover scanner
+    owner: gerald
+    detail: |
+      - Gerald, 2026-11-11: once the hover scanner is in, redo **all** frames — Android phone + tablets, iPhone + iPad — so they look less like every other app, less "made with AI"
+      - new video showcase for `moneykoi-site` (the scan clip shows the old two-step flow) + new site screenshots
+      - harness and order: `STORE_LISTING_AI_CONTEXT.md` §7 · `store/screenshots/spec.md` · the store tour's `scan` step still goes through gallery import → review
+      - after the scanner's phone checks (T-SCN-05)
+    waitsFor: [T-SCN-05]
+    related: [T-SCN-07]
+  # Growth research 2026-11-11: moneykoi-app/.agents/reports/growth-research-2026-11.md (§ = its sections).
+  - id: T-PLAT-25
+    title: First ratings from people you know
+    owner: gerald
+    detail: |
+      - the listing has **no** rating · ratings feed ranking + conversion
+      - message 30–50 people yourself · colleagues · family · friends · hobby circles
+      - ask: use it a week, then rate honestly
+      - **no** reward · no "5 stars please" · Play policy, UWG Z 23c
+      - Android now · iPhone people at the iOS launch
+      - plus the people already on the app · 9–11 devices in Austria
+      - target: 10–20 ratings in 2 weeks · 10 by Dec 31
+  - id: T-PLAT-26
+    title: Get onto the "best Haushaltsbuch apps" pages
+    owner: gerald
+    detail: |
+      - drafts 2026-11-12 · `store/press/emails.md` · 21, one per outlet · Kuketz takes no pitch email → forum post draft
+      - lists that already rank: drei.at *Top 7 Haushaltsbuch-Apps 2026* · geldhelden.org · sparweise.de · finanzwissen.de · financer.de · reisetopia.de
+      - resource pages: finanznavi.gv.at · konsument.at · budgetberatung.at
+      - iosapps.de once the App Store has the app
+      - offer free Pro to test · **no** review duty · coverage labeled *Anzeige*
+      - how to give Pro: Play promo code? · check first
+      - ~15 emails · an agent drafts each · Gerald sends from `support@moneykoi.com`
+      - no rival named in the email · `STORE_LISTING_AI_CONTEXT.md` §6.4
+  - id: T-PLAT-27
+    title: Draft the site pages the research found missing
+    owner: ai
+    detail: |
+      - RKSV page first · the rest **can skip** for now · check the 17 live posts are indexed instead
+      - live already: 17 German posts · template · calculator · don't redo them
+      - missing: *RKSV-QR-Code am Kassabon* · *Haushaltsbuch-App für Österreich* · *WG-Kasse* · *Kakeibo*
+      - bank CSV how-tos only for tested exports: ELBA · DKB (T-DATA-05)
+      - WG: check `/resources/settle-up` + the couples post first
+      - template: *Vorlage 2027* in title + file, if it names a year
+      - de first, en after · claim register first · no rival (D-PLAT-20)
+      - Gerald adds own screenshots + experience, then pushes · before December, indexing takes weeks
+      - **RKSV drafted 2026-11-12** · `content/blog/de/rksv-qr-code-kassabon.md` + en pair · `date: 2099-01-01` keeps it off the site · RKSV facts written without a source → fact check · site S-34
+    prompt: |
+      In moneykoi-site, draft German blog posts (then English) for the topics in docs T-PLAT-27.
+      Read moneykoi-site/CLAUDE.md, the blog-cover skill, two existing posts in content/blog/de/ and
+      moneykoi-app/.agents/references/STORE_LISTING_AI_CONTEXT.md §1 + §6.4 first. No competitor
+      named, no price, no claim the claim register forbids. Leave the files uncommitted and list
+      where Gerald should add his own screenshot or experience.
+  - id: T-PLAT-28
+    title: Nominate the iOS launch for Apple featuring
+    owner: gerald
+    waitsFor: [T-PLAT-10]
+    detail: |
+      - draft 2026-11-12 · `store/press/featuring.md` · Description, Type, Related Apps lock after submission → save as draft first
+      - after App Review approves the app
+      - ASC › Featuring › Nominations › *App Launch* · **by Dec 10** for early January
+      - Apple: ≥ 3 weeks ahead · up to 3 months recommended
+      - pitch: privacy-first Haushaltsbuch from Austria · receipts read on the phone · no account
+      - optional In-App Event, Jan 1–31 · only for something real in the app
+      - ~1 h · featuring is never promised
+  - id: T-PLAT-29
+    title: List Money Koi on directories
+    owner: gerald
+    detail: |
+      - drafts 2026-11-12 · `store/press/directories.md` · BetaList looks paid + wants an own-domain page · AlternativeTo takes no links in a description
+      - AlternativeTo · SaaSHub · BetaList (web) · Indie Hackers · Show HN · Product Hunt (kit page)
+      - backlinks + credibility · little reach in DACH
+      - Show HN: technical angle · offline-first Flutter, receipts parsed on the phone
+      - AlternativeTo lists rivals by name → D-PLAT-20 first
+      - one evening · an agent drafts each text
+  - id: T-PLAT-30
+    title: Try short screen-recording videos
+    owner: gerald
+    detail: |
+      - scripts 2026-11-12 · `store/press/videos.md` · idea 5 rewritten to what the calculator does
+      - **can skip for now** · most time, least certain · 1–2 scan clips for Reddit + press instead
+      - 15–30 s · German · no face · TikTok, Reels, Shorts
+      - batch: 10 clips in one hour · 3–5 a week from January
+      - 10 ideas: research §7 · #4 + #10 name a rival → D-PLAT-20
+      - text-only first · an AI voice needs a paid plan (D-PLAT-19)
+      - synthetic voice → turn the AI label on
+      - an agent writes the scripts · claim register first
+      - expect a few hundred views a post · one breakout in 20–30

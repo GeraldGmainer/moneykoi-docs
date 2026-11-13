@@ -27,7 +27,7 @@ const tiles = [
   { value: sum(journeys), label: 'journeys' },
   { value: sum(edgeCases), label: 'edge cases' },
   { value: sum(checks), label: 'manual checks' },
-  { value: `${tests.ok}/${tests.total}`, label: 'test links found', href: '/meta/health/' },
+  { value: tests.ok, of: tests.total, label: 'test links found', href: '/meta/health/' },
   { value: problems.length, label: 'health problems', href: '/meta/health/', bad: problems.length > 0 },
 ];
 const cell = (area: string, m: Map<string, number>, slug: string) => ({ n: m.get(area) ?? 0, href: `/${area}/${slug}/` });
@@ -38,7 +38,10 @@ const cell = (area: string, m: Map<string, number>, slug: string) => ({ n: m.get
     tiles.map((s) =>
       s.href ? (
         <a class={`mk-stat ${s.bad ? 'mk-stat-bad' : ''}`} href={s.href}>
-          <span class="mk-stat-value">{s.value}</span>
+          <span class="mk-stat-value">
+            {s.value}
+            {s.of !== undefined && <small>/ {s.of}</small>}
+          </span>
           <span class="mk-stat-label">{s.label}</span>
         </a>
       ) : (

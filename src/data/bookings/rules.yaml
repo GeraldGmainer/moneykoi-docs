@@ -17,7 +17,38 @@ items:
       - full-width *Save* · on once changed + valid
       - back with changes → *Discard / Keep editing*
       - barely started → just dropped · create = edit look
-    source: CLAUDE.md, FORMS §1–§4
+      - *×* with the keypad up → one tap: keypad closes and the form leaves · asks if changed · back only closes the keypad
+      - iPhone: edge swipe on an unchanged form or any page → back · with changes the swipe does nothing, *×* asks (D-BKG-9)
+      - a new booking or rule form opens without the last page's snackbar over its keypad
+    source: CLAUDE.md, FORMS §1–§4, §7
+    related: [D-BKG-9, E-BKG-27, E-BKG-29, R-BKG-54]
+    tests:
+      - file: test/shared/ui/form/form_save_scaffold_test.dart
+        name: with an overlay open, × closes it and leaves an untouched form in the same tap
+      - file: test/shared/ui/form/form_save_scaffold_test.dart
+        name: with an overlay open, × on a dirty form closes it and asks
+      - file: test/app/navigation/slide_route_swipe_back_test.dart
+        name: on iOS a SlideRightRoute goes back on an edge swipe
+      - file: test/app/navigation/slide_route_swipe_back_test.dart
+        name: on iOS a page that blocks its pop keeps the edge swipe blocked
+  - id: R-BKG-54
+    group: The booking form
+    title: "Keyboard: lists drop it, forms keep it"
+    text: |
+      - dragging a list (search, pickers, filters, tags, shopping list) closes the keyboard · scrolling a form doesn't
+      - a picker sheet opened from a page leaves the keyboard down when it closes · a sheet over a sheet keeps it (quick booking types on after a chip)
+      - names and descriptions start with a capital · merchant and counterparty capitalize each word
+      - all platforms · found on iOS (IOS-5-4, IOS-6-3, IOS-6-4)
+    source: FORMS §8f
+    tests:
+      - file: test/app/ui/app_scroll_behavior_test.dart
+        name: dragging a result list closes the keyboard
+      - file: test/app/ui/app_scroll_behavior_test.dart
+        name: a form keeps its keyboard while it scrolls
+      - file: test/app/navigation/sheet_focus_observer_test.dart
+        name: closing a picker sheet over a page leaves the keyboard down
+      - file: test/app/navigation/sheet_focus_observer_test.dart
+        name: a sheet opened from a sheet hands focus back to the first sheet
   - id: R-BKG-03
     group: The booking form
     title: App's own keypad
@@ -25,7 +56,9 @@ items:
       - hero amount + calculator
       - **=** → category → maybe description
       - 2 skipped prompts in a row → stops asking · transfers never
-    source: FORMS §7b, §8c
+      - long-press the amount → *Paste* · iPhone (iOS 16+): the system menu, no *Allow Paste* alert
+    source: FORMS §7b, §8c, §9
+    related: [E-BKG-28]
   - id: R-BKG-04
     group: The booking form
     title: From + To are one pair
@@ -121,13 +154,20 @@ items:
     title: Guessed category saves directly
     text: |
       - your history first → category names → keyword tables
+      - keyword tables know everyday en + ja words (`milk`, `bus ticket`, `gas`, `starbucks`, `パン`, `電車`) · only words with one obvious category
+      - a ticket, bus, train, taxi → *Public Transit*, never *Fuel* · no transit category → no guess
       - never a parent with subs · not even from an old booking on one
       - no "guess" marker
       - Save locked only while no category
+      - Return on an incomplete prompt: keyboard stays · only the category missing → category picker · else the empty chips turn red and shake
     source: QUICK_BOOKING §3–§4
     tests:
       - file: test/shared/categorization/category_suggestion_engine_test.dart
         name: a booking left on a parent that has since got subs is not suggested
+      - file: test/shared/categorization/everyday_words_test.dart
+        name: a ticket without a transit leaf is no guess, never Fuel
+      - file: test/features/quick_add/ui/sheets/quick_booking_submit_test.dart
+        name: a prompt missing only its category opens the category picker
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
         name: a guessed category saves without being confirmed
       - file: test/features/booking/quick_add/quick_booking_cubit_test.dart
@@ -214,9 +254,12 @@ items:
     source: TRASH §4
   - id: R-BKG-32
     group: Trash
-    title: Bookings only
-    text: not receipts, accounts, categories, rules, goals, loans, shopping
-    source: TRASH §8
+    title: Bookings and positions only
+    text: |
+      - bookings · investment positions with their transactions (since 2026-11-09, R-INV-42)
+      - not receipts, accounts, categories, rules, goals, loans, shopping
+    source: TRASH §4a, §8
+    related: [R-INV-42]
 
   # Search
   - id: R-BKG-40
@@ -251,9 +294,17 @@ items:
     title: "Web bulk edit: only what changes"
     text: |
       - shift-range or every match
+      - phone: no checkboxes · long press a row → selecting · then a tap ticks, not opens
       - tags · category · account · date · description · delete
       - category only for one side · transfers skipped
     source: BOOKINGS_WEB §4.6–§4.7
+    tests:
+      - file: src/app/(main)/bookings/components/bookings-table.test.tsx
+        repo: web
+        name: starts selecting on a long touch, and the click that ends it opens nothing
+      - file: src/app/(main)/bookings/components/bookings-table.test.tsx
+        repo: web
+        name: ticks a row on a tap while something is selected, instead of opening it
   - id: R-BKG-52
     group: Web ledger
     title: Deleted occurrence stays skipped

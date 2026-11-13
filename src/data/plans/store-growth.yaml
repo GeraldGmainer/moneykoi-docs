@@ -1,0 +1,49 @@
+# Play store, money and reach. Sources: PLAY_STORE_GROWTH_PLAN.md:49-68, platform + monetization + privacy tasks.yaml,
+# ONBOARDING_AI_CONTEXT.md:141, moneykoi-site/.agents/OPEN_DECISIONS.md:18-30,
+# moneykoi-app/.agents/reports/growth-research-2026-11.md (the dated Dec–Jan work is plan new-year-push).
+title: "Play store & growth"
+goal: "Reach · ratings · listing · launch price"
+gerald:
+  - section: "Launch price"
+  - ref: T-MON-09
+  - ref: T-MON-21
+  - ref: T-MON-10
+  - ref: T-MON-27
+  - ref: T-MON-26
+  - section: "Listing"
+  - ref: T-PLAT-24
+  - ref: T-PRIV-03
+  - text: "Report what the console shows: Data safety · category · tags"
+  - text: "`pro.lifetime` description names investments · keep or change"
+  - text: "Play Console store-listing email → `support@moneykoi.com`"
+  - text: "geraldgmainer.com: *MoneyKoi* → *Money Koi* (D-PLAT-1)"
+  - text: "Decide: *Made in Austria* on store + site · not in the claim register"
+  - ref: T-PLAT-23
+  - ref: T-PLAT-16
+  - ref: T-PLAT-17
+  - section: "Reach"
+  - ref: T-PLAT-25
+  - ref: T-PLAT-18
+  - text: "Hallway test: 3 strangers · Welcome → first booking in under 2 min"
+  - section: "Legal"
+  - ref: T-MON-05
+  - ref: T-PRIV-04
+  - ref: T-INV-09
+  - text: "Check DPF/SCC for Supabase, Cloudflare, Resend"
+  - text: "Confirm WKO Fachgruppe UBIT · firmen.wko.at or the welcome letter"
+  - text: "Steuerberater: income tax + SVS on store income"
+  - section: "Can skip for now"
+  - text: "Decide D19 · Pro €14.99 in January · too little traffic for a discount"
+  - text: "Decide D-PLAT-21 · growth features · build once there is traffic"
+agents:
+  - text: "Austria-captioned first frame, 1080×2400 (`store/custom-listings/at/README.md`)"
+  - text: "Read the Play numbers 30 days after the first post, then monthly"
+  - text: "Draft review replies when reviews arrive · Gerald posts"
+  - text: "Keep the Austria text in step with de-DE"
+  - text: "`reddit.md` draft 4: r/androidapps rules now · r/droidappshowcase instead?"
+    done: 2026-11-12
+  - text: "`PLAY_STORE_GROWTH_PLAN.md` points to the growth research + its §0"
+    done: 2026-11-11
+  - text: "Retire `PLAY_STORE_GROWTH_PLAN.md` after 3 months · move §3 to `STORE_LISTING_AI_CONTEXT.md`"
+  - text: "`MONETIZATION_AI_CONTEXT.md` §12 \"Decisions open\" is stale · D1–D4 are decided"
+    done: 2026-11-11

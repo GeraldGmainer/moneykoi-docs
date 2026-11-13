@@ -289,6 +289,24 @@ items:
         name: 'opened from a bank file: its day, the one account filled and labelled, the rest blank'
     checks: [C-DATA-067]
     related: [R-DATA-90, R-BC-11]
+  - id: J-DATA-28
+    group: Bank import
+    title: An Amazon row into bookings
+    from: Pro, Review of a DKB file
+    steps:
+      - "just a category: the pill → pick → *Apply to all* for the other Amazon rows"
+      - "or tap the row → the order number on top → tap: the order on amazon.de"
+      - "back in the app: description · category"
+      - "several items: *Split* → part 2: amount, description, category · part 1 = the rest"
+      - "*Apply* → the row lists its parts"
+    result: "one booking per part · next month's file knows the row"
+    tests:
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: a split in three, each part with its own text
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: a split row lists its parts under the payee and keeps its total
+    checks: [C-DATA-074, C-DATA-075]
+    related: [R-DATA-98, R-DATA-99, R-DATA-100]
   - id: J-DATA-21
     group: CSV in & out
     title: Exports bookings

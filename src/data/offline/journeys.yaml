@@ -20,6 +20,25 @@ items:
         name: an offline-paused item restored while offline pushes once connectivity returns
     checks: [C-OFF-001, C-OFF-004]
     related: [R-ACC-10, R-ACC-11]
+  - id: J-OFF-05
+    group: One phone
+    title: Settling a refused change
+    from: a change the server refused · failed dot on the record
+    steps:
+      - Settings › Data management › *Changes not synced*
+      - tap the change → what it is · why it was refused
+      - '*Try again* → sent once more'
+      - 'or *Discard change* → confirm'
+      - the phone asks the server for the record
+    result: Record matches the server · row gone from the list
+    note: also from the record's page · *Change not synced · options*
+    tests:
+      - file: test/features/sync_problems/sync_problems_page_test.dart
+        name: Try again sends the change once more and closes the sheet
+      - file: test/features/sync_problems/sync_problems_page_test.dart
+        name: Discard asks first, then puts the record back and reports it
+    checks: [C-OFF-007]
+    related: [R-OFF-16]
   - id: J-OFF-02
     group: One phone
     title: App killed with unsent writes

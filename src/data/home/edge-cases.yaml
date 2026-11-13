@@ -67,6 +67,49 @@ items:
     status: known-issue
     risk: low
     related: [E-SCN-10]
+  - id: E-HOM-10
+    group: Web
+    title: "Web forecast card: a balance that doesn't move"
+    when: Web Home · *Forecast* card · nothing planned or estimated changes the balance over the horizon
+    then: a flat line across the chart, the closing under it and *$ 0 vs. today* · before 2026-11-03 the chart showed only a dot on the last day and read as broken (the line's colour gradient drew nothing on a flat line; Analytics' savings-rate line had the same trap)
+    status: fixed
+    risk: low
+  - id: E-HOM-11
+    group: Getting started
+    title: Undo after × leaves the card gone
+    when: "*Getting started* × → *Undo* (or the last item ticked → *All set* → *Undo*)"
+    then: fixed 2026-11-03 · the card comes back at once · before it stayed gone until the next tab switch (IOS-3-2)
+    status: fixed
+    risk: medium
+    related: [C-HOM-010]
+    tests:
+      - file: test/features/getting_started/ui/getting_started_card_test.dart
+        name: × dismisses with an undo, and Undo has Home show the card again
+  - id: E-HOM-12
+    group: Getting started
+    title: Balance-check card on a brand-new book
+    when: Quick Start on Nov 2
+    then: fixed 2026-11-03 · no *New month — do the balances match?* card · first asked at the next month start (D-HOM-6, IOS-3-5)
+    status: fixed
+    risk: medium
+    related: [R-BC-09, D-HOM-6]
+    tests:
+      - file: test/features/reconciliation/balance_check_nudge_use_case_test.dart
+        name: a book created this period is not asked about the last one
+  - id: E-HOM-13
+    group: Home
+    title: Quick-add tile splits a word
+    when: German category *Privatentnahme* on a quick-add tile
+    then: |
+      - a word too wide shrinks the label (down to 75 %) · past that it ends in … on one line · never broken mid-word · Japanese may still wrap between characters
+      - before 2026-11-03 *Privatentnah / me* (iOS round, IOS-6-9)
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home/ui/widgets/quick_tile_label_test.dart
+        name: scales a long word down instead of splitting it
+      - file: test/features/home/ui/widgets/quick_tile_label_test.dart
+        name: ellipsizes a word that cannot fit on one line
   - id: E-HOM-14
     group: On the web
     title: Summary fails to load

@@ -1,0 +1,50 @@
+# Next app release after 2.0.0. No file names 2.1.0: contents = roadmap bucket nov-15 (bank CSV import)
+# + the app commits since the 2.0.0 bump (879b9656f). Sources: BANK_CSV_IMPORT_PLAN.md, roadmap.yaml, git log.
+title: "2.1.0"
+goal: "Bank CSV import · app + web"
+gerald:
+  - ref: T-DATA-05
+    note: "DKB Giro + ELBA exports in since 2026-11-11 · left: DKB Visa + savings"
+  - ref: T-DATA-07
+    note: "before the app build"
+  - text: "Device pass · import checks C-DATA-057 → C-DATA-073"
+    sub:
+      - text: "open-with has never run on a device"
+  - text: "Device check C-SET-016 · review card on an internal-track build"
+  - text: "Device check C-BKG-011 · widget quick add, cold start → keyboard up · retry changed 2026-11-11"
+  - ref: T-DATA-08
+  - ref: T-DATA-09
+  - text: "Decide D-DATA-42 + D-DATA-43 · backup version, formats in the all-data download"
+  - section: "Commits"
+  - text: "Commit the import: app + web + supabase + docs · the 4 format-only files stay out"
+  - text: "Commit the Play listing files: `tool/play_api.py` · de/en descriptions · `store/custom-listings/at`"
+  - section: "Release"
+  - text: "`pubspec.yaml` is still `2.0.0+38` · release notes still 2.0.0 → run prepare-release"
+  - text: "2.0.0 notes say *runs on iOS* · T-PLAT-10 still open → fix the wording"
+    sub:
+      - text: "and drop *Cloud for life* · early adopters line (D-PLAT-4)"
+agents:
+  - text: "Corpus test + `expect.json` on the real bank files (T-DATA-05)"
+    done: 2026-11-11
+  - text: "`claim_entry.dart` + `read_only_feature_banner.dart` above 90 % tier coverage"
+    done: 2026-11-11
+  - text: "Re-run the full app suite after the last test additions"
+    done: 2026-11-11
+  - text: "Web: whole vitest suite on a quiet machine · 65 timeouts at load 100 on 2026-11-12"
+  - text: "App: forecast 24-month benchmark on a quiet machine · 835 ms at load 96, budget 256"
+  - text: "Two date-dependent investment tests fail on a clean HEAD"
+    done: 2026-11-11
+  - text: "Web `npm run lint` · 33 errors in code the import did not touch"
+    done: 2026-11-11
+  - text: "Docs: broken test links on /meta/health/"
+    done: 2026-11-11
+  - text: "`BANK_CSV_IMPORT_PLAN.md` · delete after the DKB Visa + savings files"
+    sub:
+      - text: "header says built"
+        done: 2026-11-11
+      - text: "6 tests + 3 plans cite its §§ → move those to `BOOKING_IMPORT_AI_CONTEXT.md` first"
+        done: 2026-11-12
+      - text: "at deletion: plan §12 (web scope) + §13 (traps) into `IMPORT_WEB_AI_CONTEXT.md` · the D-BANK list is docs D-DATA-19…41"
+  - text: "`moneykoi-imports/README.md` says the real files are missing · `dkb/` + `elba/` exist"
+    done: 2026-11-11
+  - text: "Docs: `src/data/releases/2.1.0.yaml` + page when the release is prepared"

@@ -1,0 +1,49 @@
+# From Gerald's Notion page "2.0.0" (screenshot 2026-11-11). Ticks on T- items come from tasks.yaml,
+# which is newer than the screenshot; `done: true` = ticked in Notion, date unknown.
+title: "2.0.0"
+date: 2026-11-08
+goal: "Paywall on · Android · leftovers"
+gerald:
+  - text: "Paste the git block from the agent session"
+    done: true
+  - ref: T-MON-01
+    note: "`20261023120000_early_adopter_cutover_nov_8.sql` on prod? Not yet checked (T-MON-26)"
+  - ref: T-PLAT-06
+    note: "ticked in Notion · the task also covers dev + prod deploy"
+  - ref: T-PRIV-03
+    note: "Play Data safety form + deletion URL"
+  - ref: T-PLAT-07
+  - text: "Then paste the held commits (app 5 + docs 4)"
+    done: true
+  - ref: T-MON-04
+    note: "ticked in Notion · Android done 2026-10-18 · left: the iOS app"
+  - ref: T-MON-09
+    note: "ticked in Notion"
+  - ref: T-MON-21
+    note: "`launch_until`"
+  - ref: T-MON-11
+  - ref: T-MON-07
+  - ref: T-MON-05
+  - text: "Revert `lib/main.dart:116` (`showDebugBanner: false`)"
+  - text: "Build with `--dart-define=MONETIZATION=true`"
+  - section: "Server checks (not blocking)"
+  - ref: T-ACC-01
+  - ref: T-DATA-04
+  - section: "Sun Nov 8 · release"
+  - text: "1.20.0 live, Android only"
+    done: true
+  - text: "Launch price live the same day (T-MON-09 + T-MON-21)"
+  - text: "Watch RevenueCat + store consoles: download-to-paid < 1.5 % · annual → lifetime · Y1 retention"
+  - section: "After the agents"
+  - text: "Tiny bundle (T-DATA-01, EC-BOOK-1, supabase §13.3, `check_theme.sh`) → paste its git block"
+    done: true
+  - ref: T-PRIV-06
+  - text: "T-BOOK-03 web book switch → paste its git block"
+    done: true
+  - ref: T-PLAT-13
+    note: "before the iOS review"
+agents:
+  - ref: T-DATA-01
+  - ref: T-PRIV-05
+  - ref: T-BOOK-03
+  - ref: T-PLAT-11

@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import { areas } from './src/areas.mjs';
+import { planToggle } from './src/lib/plan-write.mjs';
 
 // `npm run check` builds while `npm run dev` keeps running. Sharing Vite's dependency cache let the
 // build rewrite it under the dev server, and every diagram page then failed with
@@ -13,6 +14,7 @@ export default defineConfig({
   vite: {
     cacheDir: building ? 'node_modules/.vite-build' : 'node_modules/.vite',
     optimizeDeps: { include: ['mermaid'] },
+    plugins: [planToggle()],
   },
   redirects: { '/architecture/offline-first/': '/offline/how-it-works/' },
   integrations: [
@@ -31,12 +33,14 @@ export default defineConfig({
             { label: 'Roadmap', link: '/roadmap/' },
           ],
         },
+        { label: 'Plans', items: [{ autogenerate: { directory: 'plans' } }] },
         { label: 'Releases', items: [{ autogenerate: { directory: 'releases' } }] },
         { label: 'How it works', collapsed: true, items: [{ autogenerate: { directory: 'architecture' } }] },
         ...areas.map((a) => ({ label: a.name, collapsed: true, items: [{ autogenerate: { directory: a.id } }] })),
         { label: 'This site', items: [{ autogenerate: { directory: 'meta' } }] },
       ],
       components: { ThemeSelect: './src/components/ThemeSelect.astro' },
+      routeMiddleware: './src/routeData.ts',
       // Applied before first paint so a remembered width or text size does not jump in after load.
       head: [
         {
@@ -47,7 +51,7 @@ export default defineConfig({
             "if(t)r.style.setProperty('--mk-text-scale',String(t/16))}catch(e){}",
         },
       ],
-      plugins: [starlightLinksValidator({ errorOnInvalidHashes: false })],
+      plugins: [starlightLinksValidator({ errorOnInvalidHashes: false, exclude: ['/releases/latest/'] })],
     }),
   ],
 });

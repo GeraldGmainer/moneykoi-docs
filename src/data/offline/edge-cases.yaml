@@ -21,6 +21,7 @@ items:
     then: |
       - server keeps it deleted
       - fixed 2026-11-11 · the push answer says deleted → the booking leaves at once → this phone's trash
+      - the same for categories, recurring payments and shopping lists, and for the upload after a lapse
       - was: a live ghost until a pull brought the delete
     status: fixed
     risk: high
@@ -31,6 +32,8 @@ items:
         name: the derived balance does not keep counting the ghost booking
       - file: test/core/offline_first/queue/queue_manager_test.dart
         name: tombstones the local row of a trash-enabled source
+      - file: test/core/offline_first/claim/bulk_pusher_test.dart
+        name: a row the server already holds as deleted is removed here, to the trash where there is one
     related: [E-ACC-30, T-ACC-01, T-OFF-02]
   - id: E-OFF-02
     group: Conflicts
@@ -129,6 +132,89 @@ items:
         name: a caller arriving while the queued pull runs gets one more after it
 
   # The outbox
+  - id: E-OFF-34
+    group: The outbox
+    title: A refused change never left the outbox
+    when: server refuses a change for good (missing parent, no write permission, a broken rule)
+    then: |
+      - fixed 2026-11-12 · *Try again* or *Discard change*, on the record and in Settings (R-OFF-16)
+      - until settled: failed dot · a pull never replaces it · blocks *Rewind* · balance check says pending
+      - was: no way to drop it · retried forever
+    status: fixed
+    risk: high
+    tests:
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a refused edit goes back to the row the server holds
+    related: [R-ACC-11, R-OFF-16, D-OFF-1]
+  - id: E-OFF-37
+    group: The outbox
+    title: Discarded new record with records under it
+    when: a refused new account is discarded · its bookings were refused too
+    then: |
+      - only the account goes
+      - its bookings stay in *Changes not synced* · each settled on its own
+      - hidden in the ledger meanwhile (no account to show them under)
+    status: by-design
+    risk: medium
+    related: [R-OFF-16, D-OFF-1]
+  - id: E-OFF-38
+    group: The outbox
+    title: New edit while a discard is running
+    when: record edited again while *Discard change* asks the server
+    then: the new edit wins · nothing discarded
+    status: handled
+    risk: low
+    tests:
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a newer edit made while the server is asked keeps the record
+  - id: E-OFF-39
+    group: The outbox
+    title: App killed between save and outbox
+    when: app killed right after a save · or a save before the outbox was ready
+    then: |
+      - fixed 2026-11-12 · next start queues it again (R-OFF-17)
+      - was: never sent · never corrected · a deleted record hidden for good on this phone only
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a pending book row without an outbox item is queued again and pushed
+  - id: E-OFF-40
+    group: The outbox
+    title: One refused change held up the rest
+    when: one change refused · others waiting behind it
+    then: |
+      - fixed 2026-11-12 · the refused one waits alone
+      - was: every retry paused the whole outbox for 2 s
+    status: fixed
+    risk: low
+    tests:
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a refused item waits out its retry delay without holding up the others
+  - id: E-OFF-35
+    group: The outbox
+    title: Server out of reach looked like a failure
+    when: phone reports online · 3 pushes time out
+    then: |
+      - fixed 2026-11-11 · record stays waiting · a deleted record stays hidden
+      - was: failed dot, and the deleted record showed again until the next reconnect
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_test.dart
+        name: offline errors retry, pause, and resume when connectivity returns
+  - id: E-OFF-36
+    group: The outbox
+    title: Edit while the same record is being sent
+    when: record edited again during its push · partner's change pulled before the second push
+    then: |
+      - fixed 2026-11-11 · record stays waiting until the second push lands
+      - was: marked up to date → the pull could replace the new edit on this phone
+    status: fixed
+    risk: low
+    tests:
+      - file: test/core/offline_first/queue/queue_manager_wake_test.dart
+        name: an edit queued during the push keeps the row pending when that push lands
   - id: E-OFF-10
     group: The outbox
     title: Push to a deleted booking refused

@@ -8,7 +8,7 @@ import { diagramSources } from './diagrams';
 import { readRepoFile, hasRepo } from './repos';
 
 export interface Problem {
-  kind: 'repo' | 'catalog' | 'test' | 'link' | 'duplicate' | 'diagram';
+  kind: 'repo' | 'catalog' | 'test' | 'link' | 'duplicate' | 'diagram' | 'plan';
   where: string;
   message: string;
 }
@@ -125,6 +125,24 @@ export async function health(): Promise<Health> {
       if (!areaIds.has(item.area)) problems.push({ kind: 'link', where, message: `area ${item.area} is not in src/areas.mjs` });
       expect(where, item.checks, 'check', ['checks']);
       expect(where, item.related, 'see also');
+    }
+  }
+
+  const pages = new Set((await getCollection('docs')).map((d) => d.id));
+  for (const plan of await getCollection('plans')) {
+    const where = `plans/${plan.id}`;
+    if (!pages.has(`plans/${plan.id}`)) problems.push({ kind: 'plan', where, message: `has no page src/content/docs/plans/${plan.id}.mdx` });
+    for (const block of ['gerald', 'agents'] as const) {
+      const keys = new Set<string>();
+      for (const item of plan.data[block]) {
+        const key = item.ref ?? item.text;
+        if (key === undefined) continue;
+        // A tick finds its item by ref or text, so each is unique within a block.
+        if (keys.has(key)) problems.push({ kind: 'plan', where: `${where} → ${block}`, message: `"${key}" is listed twice` });
+        keys.add(key);
+        if (item.ref) expect(`${where} → ${block}`, [item.ref], 'ref', ['tasks']);
+        if (new Set(item.sub.map((s) => s.text)).size < item.sub.length) problems.push({ kind: 'plan', where: `${where} → ${key}`, message: 'two sub-items share one text' });
+      }
     }
   }
 

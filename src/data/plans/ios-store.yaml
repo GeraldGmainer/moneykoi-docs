@@ -1,0 +1,23 @@
+# The open iOS tasks. Sources: platform/tasks.yaml, monetization/tasks.yaml, _IMPLEMENTATION_PLAN.md:117,213, PLAY_STORE_GROWTH_PLAN.md:67.
+title: "iOS store"
+goal: "iOS app in the App Store"
+gerald:
+  - ref: T-MON-02
+  - ref: T-PLAT-13
+  - ref: T-MON-04
+    note: "left: the iOS app in RevenueCat"
+  - ref: T-PLAT-05
+  - text: "Decide D-PLAT-8 · iPad"
+  - text: "Decide D-PLAT-5 · Cupertino look"
+  - ref: T-PLAT-10
+  - section: "iOS widgets"
+  - text: "Decide D-HOM-4 · iOS widgets + its 6 open questions (`IOS_WIDGET_PLAN.md:479`)"
+  - text: "Xcode: widget extension target · iOS 17 · App Group in the developer portal"
+  - section: "Later"
+  - ref: T-PLAT-12
+agents:
+  - ref: T-PLAT-11
+  - text: "T-PLAT-10 step 10 names metals.dev · prices come from gold-api.com + Coinranking"
+    done: 2026-11-11
+  - text: "iOS description in step with the Play listing at submission"
+  - text: "WidgetKit phase 0 · after iOS is live · D-HOM-4 (`ios-widgets`)"

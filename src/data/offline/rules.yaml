@@ -69,8 +69,10 @@ items:
     text: |
       - outbox strictly one by one · deletes first
       - quick edits of one record → latest wins
-      - 3 failures → paused, failed dot · app restart → retry
-      - offline items wake when back online
+      - server refuses 3 times → paused, failed dot · app restart → retry
+      - a change that can never pass (duplicate, broken rule) → paused at the first refusal
+      - a refused change waits alone · the rest keeps going out
+      - server out of reach → still waiting, no failed dot · wakes when back online
     source: OFFLINE_FIRST §5
     tests:
       - file: test/core/offline_first/queue/queue_manager_test.dart
@@ -92,6 +94,41 @@ items:
         name: restart replays the outbox in enqueue order with deletes first
       - file: test/core/offline_first/queue/queue_manager_wake_test.dart
         name: a cold start online wakes offline-paused items, resets their error state and pushes them first
+  - id: R-OFF-16
+    group: Sending changes · the outbox
+    title: A refused change is the user's to settle
+    text: |
+      - shown on the record (*Change not synced · options*) and in Settings › Data management › *Changes not synced*
+      - the Settings row exists only while something is refused · shows the number
+      - *Try again* → sent once more
+      - *Discard change* → the phone matches the server again: new record gone · edit back to the server's version · delete undone
+      - discard needs the server · out of reach → nothing changes
+      - only that record · records that depend on it stay listed
+    source: OFFLINE_FIRST §5a
+    tests:
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a refused edit goes back to the row the server holds
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a refused new record the server never got is removed from the phone
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a server that cannot be asked changes nothing
+      - file: test/features/sync_problems/sync_problems_page_test.dart
+        name: Discard asks first, then puts the record back and reports it
+      - file: test/features/settings/ui/pages/settings_page_test.dart
+        name: the refused-changes row shows how many changes the server refused
+    checks: [C-OFF-007]
+    related: [E-OFF-34, D-OFF-1]
+  - id: R-OFF-17
+    group: Sending changes · the outbox
+    title: Nothing saved is left unsent
+    text: |
+      - app start checks for saved changes that never reached the outbox (app killed mid-save)
+      - found → queued again and sent
+      - Cloud books only · a paused book keeps its changes for the resume
+    source: OFFLINE_FIRST §5
+    tests:
+      - file: test/core/offline_first/queue/queue_discard_test.dart
+        name: a pending book row without an outbox item is queued again and pushed
   - id: R-OFF-11
     group: Sending changes · the outbox
     title: A copy, not a live link

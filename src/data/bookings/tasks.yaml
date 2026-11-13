@@ -34,4 +34,4 @@ items:
     detail: |
       - the branch takes `migration_v28.sql` · split transactions was pencilled in at v28
       - whichever merges second takes the next number and bumps `_databaseVersion` · the multi-currency file is plain re-runnable `ADD COLUMN`s
-      - on merge: link the branch's tests to E-BKG-44 … E-BKG-52 (`npm run check` reads tests from the main checkout, so they cannot be linked before)
+      - on merge: link the branch's tests to E-BKG-44 … E-BKG-59 (`npm run check` reads tests from the main checkout, so they cannot be linked before)

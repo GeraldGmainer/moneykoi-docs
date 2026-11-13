@@ -1,0 +1,134 @@
+---
+import { getEntry } from 'astro:content';
+import Pill from './Pill.astro';
+import { blocks, count, planSections } from '../lib/plans';
+
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const plan = (await getEntry('plans', id))?.data;
+const parts = plan
+  ? await Promise.all(blocks.map(async (b) => ({ ...b, sections: await planSections(plan[b.id]) })))
+  : [];
+---
+
+{!plan && <p class="mk-broken">No plan file: src/data/plans/{id}.yaml</p>}
+{
+  plan && (
+    <div class="mk-plan" data-plan={id}>
+      {(plan.goal || plan.date) && (
+        <p class="mk-muted">{[plan.date, plan.goal].filter(Boolean).join(' · ')}</p>
+      )}
+      <div class="mk-checklist-bar not-content">
+        {parts.map((p) => (
+          <span>
+            {p.title} <strong data-count={p.id}>{count(p.sections).done}</strong> / {count(p.sections).total}
+          </span>
+        ))}
+        <label>
+          <input type="checkbox" data-hide-done /> Hide done
+        </label>
+        <span class="mk-plan-error" data-error hidden />
+      </div>
+
+      {parts.map((p) => (
+        <section data-block={p.id}>
+          <h2 id={p.id}>{p.title}</h2>
+          {p.sections.length === 0 && <p class="mk-muted">Nothing here</p>}
+          {p.sections.map((s) => (
+            <>
+              {s.title && <h3>{s.title}</h3>}
+              <ul class="mk-plan-list not-content">
+                {s.lines.map((l) => (
+                  <li id={l.id}>
+                    <label>
+                      <input type="checkbox" data-key={l.key} checked={l.done} disabled={l.broken} />
+                      <span class="mk-plan-text">
+                        {l.id && (
+                          <a class="mk-id" href={l.href}>
+                            {l.id}
+                          </a>
+                        )}
+                        <span set:html={l.html} />
+                        {l.blocked && <Pill tone="bad">blocked</Pill>}
+                        {l.broken && <Pill tone="bad">unknown id</Pill>}
+                      </span>
+                    </label>
+                    {l.sub.length > 0 && (
+                      <ul>
+                        {l.sub.map((s) => (
+                          <li>
+                            <label>
+                              <input type="checkbox" data-key={l.key} data-sub={s.text} checked={s.done} />
+                              <span class="mk-plan-text" set:html={s.html} />
+                            </label>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ))}
+        </section>
+      ))}
+    </div>
+  )
+}
+
+<script>
+  const HIDE = 'mk-docs:plan-hide-done';
+  document.querySelectorAll<HTMLElement>('[data-plan]').forEach((root) => {
+    const error = root.querySelector<HTMLElement>('[data-error]')!;
+    const hide = root.querySelector<HTMLInputElement>('[data-hide-done]')!;
+
+    const refresh = () => {
+      root.querySelectorAll<HTMLElement>('[data-block]').forEach((block) => {
+        const top = [...block.querySelectorAll<HTMLInputElement>('.mk-plan-list > li > label > input')];
+        const counter = root.querySelector(`[data-count="${block.dataset.block}"]`);
+        if (counter) counter.textContent = String(top.filter((b) => b.checked).length);
+        top.forEach((b) => (b.closest('li')!.hidden = hide.checked && b.checked));
+      });
+    };
+
+    root.querySelectorAll<HTMLInputElement>('input[data-key]').forEach((box) =>
+      box.addEventListener('change', async () => {
+        const body = {
+          plan: root.dataset.plan,
+          block: box.closest<HTMLElement>('[data-block]')!.dataset.block,
+          key: box.dataset.key,
+          sub: box.dataset.sub,
+          done: box.checked,
+        };
+        let failed = '';
+        try {
+          const res = await fetch('/_plan/toggle', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+          if (!res.ok) failed = res.status === 400 ? (await res.json()).error : 'needs npm run dev';
+        } catch {
+          failed = 'needs npm run dev';
+        }
+        if (failed) box.checked = !box.checked;
+        error.textContent = failed ? `Not saved · ${failed}` : '';
+        error.hidden = !failed;
+        refresh();
+      }),
+    );
+
+    try {
+      hide.checked = localStorage.getItem(HIDE) === '1';
+    } catch {}
+    hide.addEventListener('change', () => {
+      try {
+        localStorage.setItem(HIDE, hide.checked ? '1' : '0');
+      } catch {}
+      refresh();
+    });
+    refresh();
+  });
+</script>

@@ -1,6 +1,18 @@
 # Source: MONETIZATION_AI_CONTEXT.md §12 (D1–D9, "Deliberately dropped"), §9a (D-B*, D-C*).
 items:
   # Open
+  - id: D19
+    question: A New-Year price for Pro?
+    status: open
+    date: 2026-11-11
+    answer: |
+      - **can skip for now** · a discount converts visitors you have · ~10 a month
+      - growth research 2026-11: Pro **€14.99** · Dec 26 → Jan 31 · then €24.99
+      - today: Pro €24.99 only (D3) · launch prices are Cloud lifetime's, until Jan 16 (D4)
+      - allowed: a real, time-limited store price · **never** a "was" price
+      - no price in a store text · the store renders it
+      - yes → Play promotional price + an App Store offer · end with D4 on Jan 16?
+    related: [D3, D4, T-MON-09]
   - id: D1
     question: Restore copy + *Current plan* pill on the Free card
     status: decided

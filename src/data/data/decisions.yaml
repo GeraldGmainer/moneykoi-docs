@@ -376,3 +376,56 @@ items:
       - a) **leave them out**: they hold book and account ids + the IBAN key, no personal text · recommended
       - b) include them **without the key** · the GDPR copy is then complete, the hashes useless
     related: [R-DATA-93, R-DATA-20, D-DATA-13]
+  - id: D-DATA-44
+    question: "Bank import · should Amazon and PayPal never learn a category?"
+    status: open
+    answer: |
+      - built: **no learning** for Amazon and for PayPal without a shop · the pick is for that row · *Apply to all* covers the rest of the file
+      - a) **keep it** · what is bought there changes every time · recommended
+      - b) learn like any payee · next month every Amazon row arrives with the last category
+    related: [R-DATA-98, R-DATA-100]
+  - id: D-DATA-45
+    question: "Bank import · remember an own account's IBAN from a row made a transfer?"
+    status: open
+    answer: |
+      - today: own IBANs are known only from a file's header · ELBA has none → DKB rows into the ELBA account are not suggested (E-DATA-92)
+      - a) **yes**: *Make it a transfer* to account X stores that row's IBAN (keyed hash + last 4, never the IBAN) for X · later rows arrive as transfers · recommended · needs the web too
+      - b) no · keep the order *ELBA first, then DKB*
+    related: [E-DATA-92, R-DATA-94]
+  - id: D-DATA-46
+    question: "Bank import · how are rows of a recurring payment handled?"
+    status: decided
+    date: 2026-11-12
+    answer: |
+      - in the list, **unticked**, with a hint · Gerald: "they should be in the import list, but default de-selected"
+      - match = an existing recurring payment, not a pattern inside the file
+      - amount ±1 % **and** date ±3 days · the description only breaks a tie
+      - due but no booking of the payment yet → stays **ticked**, hint only
+      - app and web in one pass
+    related: [R-DATA-102, E-DATA-95]
+  - id: D-DATA-47
+    question: "Bank import · which category does a row get that matched a recurring payment?"
+    status: decided
+    date: 2026-11-13
+    answer: |
+      - the **payment's category** · booked and due rows alike · a recurring transfer makes the row a transfer
+      - a category the file names, a learned payee rule, a pick or an edit still wins
+      - found on the device: *Netflix* rows were guessed *Leisure* while the payment books *Streaming Service*
+    related: [R-DATA-102, D-DATA-46]
+  - id: D-DATA-48
+    question: "Bank import · how does the Review summary count duplicates and recurring rows?"
+    status: decided
+    date: 2026-11-13
+    answer: |
+      - **two lines**: *already in this book* (duplicates, already imported) and *already in this book from recurring payments*
+      - each counts the **unticked** rows only · before, ticked rows still counted as *not selected*
+    related: [R-DATA-102, R-DATA-78]
+  - id: D-DATA-49
+    question: "Bank import · is an imported 'not booked yet' row tied to the payment's due date?"
+    status: decided
+    date: 2026-11-13
+    answer: |
+      - **no**: a plain imported booking with its re-import key
+      - linking would hold the payment's slot for that date, which a trashed booking may still occupy
+      - left open: resuming a paused payment that back-fills could book that date once more
+    related: [R-DATA-102, D-DATA-46]

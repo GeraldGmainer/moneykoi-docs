@@ -1,0 +1,52 @@
+# moneykoi.com. Sources: moneykoi-site/.agents/OPEN_DECISIONS.md (S- numbers, line in each item's history), APP_MEDIA.md:106-111, platform/tasks.yaml.
+title: "Website"
+goal: "moneykoi.com · open decisions + fixes"
+gerald:
+  - ref: T-PLAT-01
+    note: "likely done · real shots + videos since 2026-10-22"
+  - ref: T-PLAT-02
+    note: "mostly done · not confirmed: the .app 301s + Supabase Auth URLs"
+  - text: "Search Console: new validation on the feeds row · request indexing · check 404 rows"
+  - section: "Decide"
+  - text: "S-30 · receipts for scanner training: per receipt, a toggle, or none"
+  - text: "S-04 · keep the Google Form or build a page + `privacy@`"
+  - text: "S-05 · show or hide the *Lifetime* definition on /pricing"
+  - text: "S-06 · keep the public \"features only move down\" promise"
+  - text: "S-10 · *Go to App* button: keep, relabel + Cloud badge, or hide"
+  - text: "S-11 · iOS date \"end of 2026\" in roadmap, FAQ, 24 posts"
+  - text: "S-12 · investing spotlights real or drawn · delete unused mocks"
+  - text: "S-23 · accept the scan-clip app labels or fix the app + re-take"
+  - text: "S-13 · developer \"I\" in 3 blog posts: allow or rewrite"
+  - text: "S-31 · changelog notes addressing the reader: wording migration or accept"
+  - text: "S-14 · WCAG AA contrast fix · it darkens the site"
+  - text: "S-15 · /pricing in EUR only, by locale, or a switch"
+  - text: "S-16 · a Japanese site · blog too?"
+  - text: "S-17 · delete template leftovers, unused utilities, Nuxt README"
+  - text: "S-19 · app copy using du/you in screenshots + the scan clip"
+  - text: "S-20 · footer to `.eyebrow` · delete `.label`"
+  - text: "Scanner keeps a misread learned shop name until corrected · accept?"
+  - text: "Look at the new video pause button + focus rings · `/features`, home"
+  - text: "RKSV post: own photo + screenshot, fact check, real date · parked at 2099 (S-34)"
+  - text: "RKSV cover: approve the motif · card further left in the share image"
+agents:
+  - text: "/roadmap: move *Public Android launch*, onboarding, demo off \"next\" · all live"
+    done: 2026-11-12
+  - text: "`OPEN_DECISIONS.md` S-25 lawyer hour → Decided · no lawyer, 2026-11-07"
+    done: 2026-11-12
+  - text: "T-MON-05 says no refund stated · site S-25 says pro rata over 5 years"
+    done: 2026-11-11
+  - text: "FAQ \"Can the data be deleted?\" names only in-app deletion, not the form"
+    done: 2026-11-12
+  - text: "On \"go\": focus rings, video pause, menu focus (audit §2.2)"
+    done: 2026-11-12
+  - text: "On \"go\": `@types/node` dev dependency for typecheck"
+    done: 2026-11-12
+  - section: "App bugs found while filming"
+  - text: "Quick booking: the 200 ms keyboard retry knocks down the rising keyboard"
+    done: 2026-11-11
+  - text: "German scan review shows *Groceries*, not *Lebensmittel*"
+    done: 2026-11-12
+  - text: "First-scan tutorial mock review is English in the German app · stays, decided 2026-11-11"
+    done: 2026-11-11
+  - text: "Welcome demo button swallows the first tap during its entrance animation"
+    done: 2026-11-12

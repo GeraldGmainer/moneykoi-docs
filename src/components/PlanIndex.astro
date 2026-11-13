@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import { count, planSections } from '../lib/plans';
+
+const plans = await Promise.all(
+  (await getCollection('plans')).map(async (p) => ({
+    id: p.id,
+    ...p.data,
+    mine: count(await planSections(p.data.gerald)),
+    theirs: count(await planSections(p.data.agents)),
+  })),
+);
+const open = (c: { done: number; total: number }) => c.total - c.done;
+// Plans with open work first, then by date.
+plans.sort(
+  (a, b) =>
+    Number(open(a.mine) + open(a.theirs) === 0) - Number(open(b.mine) + open(b.theirs) === 0) ||
+    (a.date ?? '9999').localeCompare(b.date ?? '9999'),
+);
+---
+
+{plans.length === 0 && <p class="mk-muted">No plans yet</p>}
+{
+  plans.length > 0 && (
+    <table>
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Goal</th>
+          <th>Date</th>
+          <th>Gerald open</th>
+          <th>Agents open</th>
+        </tr>
+      </thead>
+      <tbody>
+        {plans.map((p) => (
+          <tr>
+            <td>
+              <a href={`/plans/${p.id}/`}>{p.title}</a>
+            </td>
+            <td>{p.goal}</td>
+            <td>{p.date}</td>
+            <td>
+              <strong>{open(p.mine)}</strong> / {p.mine.total}
+            </td>
+            <td>
+              <strong>{open(p.theirs)}</strong> / {p.theirs.total}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}

@@ -7,6 +7,10 @@ groups:
         text: Keypad → **=** → category · description sheet only once learned · back with changes → *Discard / Keep editing*
       - id: C-BKG-002
         text: "Transfer: pick To's account as From → swaps · ⇅ swaps · not income or expense anywhere"
+      - id: C-BKG-048
+        text: "*New booking* → `25` → *Transfer* → keypad down, From and To visible · *New booking* → *Transfer* first → keypad stays, no camera key → *Expense* → camera back · same on the recurring form"
+      - id: C-BKG-049
+        text: "iPhone, English-only keyboard: long-press **+** → type `kebap 5,90 gestern` → the words stay as typed, date chip *yesterday* · suggestions bar still there (IOS-4-4)"
       - id: C-BKG-010
         text: "Long-press +: `kebap 5,90 gestern` · `kaffee 3.20 cash` · `miete 1.500 monatsanfang` · `apfel 2,5 vor 2 tagen` → chips right · fixed chip stays"
       - id: C-BKG-011
@@ -19,13 +23,21 @@ groups:
         text: "Web: double-click *Save* · ⌘↵ twice · Enter in the note → one booking · receipt with a 0 item → refused · receipt save fails → retry books each item once"
       - id: C-BKG-042
         text: "*New booking* → back or a tap on another field as the keypad slides up → form stays, no crash · same on the recurring form"
+      - id: C-BKG-044
+        text: "iPhone: open a booking, change nothing → edge swipe goes back · change the amount → swipe does nothing, *×* asks · goals, loans, settings pages, rule editor swipe back · *+* → keypad up → *×* once → form gone"
+      - id: C-BKG-045
+        text: "iPhone (iOS 16+): copy `42.90` in Notes → *New booking* → long-press the amount → system *Paste* → no *Allow Paste* alert, amount 42.90 · tap away instead → nothing changes, app keeps drawing"
+      - id: C-BKG-046
+        text: "Save a booking → **+** at once → no *Booking created* / *Make recurring* bar over the keypad · ✓ and 0 take taps"
+      - id: C-BKG-047
+        text: "Keyboard: Search → `shell` → drag the results → keyboard closes · *New account* → name keyboard starts upper-case → *Type* → pick → keyboard stays down · same after *Initial balance* · quick booking → category chip → pick → keyboard back on the line"
   - id: fixing
     title: Fixing
     items:
       - id: C-BKG-020
         text: Delete → *Undo* · Trash → restore · *Empty trash* asks · trash per device
       - id: C-BKG-030
-        text: "Web: select across pages · *select all N* · bulk tag/edit/delete · mixed sides → no category"
+        text: "Web: select across pages · *select all N* · bulk tag/edit/delete · mixed sides → no category · iPhone: no checkboxes · hold a row → ticked, bar shows, no callout menu · tap another → ticked, not opened · scrolling never selects · clear → a tap opens again"
   - id: search
     title: Search
     items:

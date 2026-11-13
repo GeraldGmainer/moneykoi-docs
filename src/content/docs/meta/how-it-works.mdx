@@ -46,6 +46,15 @@ Search works only in `npm run build && npm run preview`.
 - ids are **permanent** · Trello, commits, chats cite them
 - never renumber · retire by deleting
 
+## Plans
+
+- `src/data/plans/<id>.yaml` → `/plans/<id>/` · one page per context
+- two blocks: **Gerald** · **Agents**
+- tick → saved to the YAML · only under `npm run dev`
+- `ref: T-…` item → state = the task's `status` in `tasks.yaml`
+- `text:` item → state = `done: <date>` in the plan file
+- agents add items + tick their own
+
 ## Releases
 
 - `src/data/releases/<version>.yaml` · items in order

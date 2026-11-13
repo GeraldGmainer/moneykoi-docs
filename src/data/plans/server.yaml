@@ -1,0 +1,87 @@
+# Everything that needs the Supabase dashboard, a migration push, a secret or a deploy.
+# Sources: tasks.yaml of every area, moneykoi-supabase/SECURITY_AUDIT.md:169-182, INVESTMENT_PRICES_AI_CONTEXT.md:548,583-586,
+# moneykoi-web/.agents/references/02_FEATURES.md:136-143, moneykoi-site/.agents/OPEN_DECISIONS.md:30, moneykoi-admin/README.md.
+title: "Server & deploys"
+goal: "Migrations, secrets, deploys · dev then prod"
+gerald:
+  - text: "Prod: list applied migrations → many items below may already be done"
+    sub:
+      - text: "`select version from supabase_migrations.schema_migrations where version >= '20260928' order by 1;`"
+      - text: "CI runs `supabase db push` on `main` · it applies every pending migration"
+  - section: "Migrations"
+  - ref: T-MON-01
+  - ref: T-MON-25
+  - ref: T-ACC-01
+  - ref: T-DATA-04
+  - ref: T-DATA-07
+  - ref: T-ANL-01
+  - ref: T-PRIV-01
+  - ref: T-PRIV-06
+  - ref: T-SET-01
+  - ref: T-SET-02
+  - ref: T-BOOK-04
+  - text: "5 web migrations wait without a task (`02_FEATURES.md:136`)"
+    sub:
+      - text: "`20261008120000_budget_month_anchor`"
+      - text: "`20261009090000_booking_receipt_merchant`"
+      - text: "`20261009110000_home_cash_flow`"
+      - text: "`20261009120000_investment_transfer_delete`"
+      - text: "`20261009140000_dashboard_summary_month_anchor`"
+  - section: "Security"
+  - ref: T-PLAT-06
+  - ref: T-PLAT-20
+  - ref: T-PLAT-21
+  - text: "Security migration `20261028120000` on dev → re-run the harness, 13/13"
+  - text: "Delete the orphaned `send-family-invite` function · dev + prod"
+  - text: "Turn on leaked-password protection · Dashboard › Auth"
+  - text: "Decide F5 · web sign-in approval bound to a verification code"
+  - section: "Prices"
+  - ref: T-INV-13
+  - ref: T-INV-14
+  - ref: T-INV-12
+  - ref: T-INV-16
+  - ref: T-INV-02
+  - ref: T-INV-03
+  - ref: T-INV-04
+  - ref: T-INV-07
+  - ref: T-INV-15
+  - ref: T-INV-01
+  - text: "Purge metals.dev + Frankfurter · unset the `METALS_*` secrets (runbook #8)"
+  - section: "Deploys"
+  - ref: T-DATA-08
+  - ref: T-BOOK-05
+  - ref: T-INV-05
+    note: "likely done · the fix is on admin `main` since 2026-10-05, Vercel deploys on push"
+  - ref: T-PLAT-19
+    note: "site round is live · web deploy not confirmed"
+  - ref: T-PLAT-15
+  - section: "Email"
+  - ref: T-PLAT-03
+  - text: "Supabase Auth SMTP + email rate limit for the @moneykoi.com sender"
+  - text: "Edge Function `SMTP_*` secrets for the new sender"
+  - ref: T-BOOK-06
+    note: "also carries the changelog rewrite (T-PLAT-04) + `20261112140000_variability_all_time.sql` + `20261112150000_receipt_create_with_bookings.sql` · the last two never ran against a database"
+  - section: "Dev setup"
+  - ref: T-PLAT-14
+    note: "step 3 done · dev paused since 2026-11-08"
+  - text: "Check the restore deadline of the paused `money-koi-dev`"
+  - text: "Admin: regenerate `database.types.ts` → `types:pull`"
+  - text: "Commit the untracked supabase files: `API_KEYS_AI_CONTEXT.md` · `scripts/local-env.sh` · `dev.yaml`"
+  - text: "Optional: Vercel Deployment Protection on the admin"
+  - text: "Optional: moneykoi.com → Cloudflare Registrar, possible from 2026-11-12"
+  - text: "Vercel cleanup of the old site + web projects"
+agents:
+  - text: "After the metals purge: remove metals.dev, walk-back + Frankfurter code, footer keys · app + web"
+  - text: "After the CoinGecko purge: remove `refresh-quotes`, `backfill-history`, the credit, the secret"
+  - text: "Final migration: drop the legacy price branches + tables"
+  - text: "`INVESTMENT_PRICES_AI_CONTEXT.md` §13.1: ECB \"not serving yet\" vs \"serves FX\""
+    done: 2026-11-11
+  - text: "`OFFLINE_FIRST_AI_CONTEXT.md:313` still says the B1 fix is parked"
+    done: 2026-11-11
+  - text: "Optional: `search_path` sweep over ~78 flagged functions"
+  - text: "Admin security findings #2–#9 have no status (`reports/security-2026-09.md`)"
+    done: 2026-11-12
+  - text: "Admin: audit rows awaited (#5) · open redirect after login (#7) · sums without a minimum group (#2)"
+    done: 2026-11-13
+  - text: "Admin README links the deleted JWT plan → `API_KEYS_AI_CONTEXT.md`"
+    done: 2026-11-11

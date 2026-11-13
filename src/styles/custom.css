@@ -211,6 +211,9 @@
 }
 .mk-stat:hover { border-color: var(--sl-color-accent); }
 .mk-stat-value { font-size: var(--sl-text-3xl); font-weight: 700; line-height: 1.1; }
+/* "1258 / 1269" is wider than a tile: the total is small and may wrap under the number. */
+.mk-stat-value { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.4rem; }
+.mk-stat-value small { font-size: var(--sl-text-sm); font-weight: 400; color: var(--sl-color-gray-3); white-space: nowrap; }
 .mk-stat-label { font-size: var(--sl-text-sm); color: var(--sl-color-gray-3); }
 .mk-stat-bad .mk-stat-value { color: var(--mk-bad); }
 
@@ -415,6 +418,34 @@ body { font-size: var(--sl-text-body); }
 .mk-road-size { margin-inline-start: auto; font-size: var(--sl-text-xs); color: var(--sl-color-gray-3); border: 1px solid var(--sl-color-gray-5); border-radius: 999px; padding: 0 0.5rem; }
 .mk-road-items .mk-note { margin-top: 0.15rem; }
 @media (max-width: 40rem) { .mk-road-goal { margin-inline-start: 0; flex-basis: 100%; } }
+
+/* Plans: /plans/<id>/ */
+.mk-plan-list, .mk-plan-list ul { list-style: none; padding: 0; margin: 0.4rem 0 0.8rem; }
+.mk-plan-list ul { margin: 0 0 0 1.9rem; }
+.mk-plan-list li { scroll-margin-top: 8rem; }
+.mk-plan-list label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.mk-plan-list label:hover { background: var(--sl-color-gray-6); }
+.mk-plan-list input { accent-color: var(--sl-color-accent); transform: translateY(0.1rem); }
+.mk-plan-list .mk-id { margin-inline-end: 0.5rem; }
+.mk-plan-list .mk-pill { margin-inline-start: 0.5rem; }
+.mk-plan-list code {
+  font-family: var(--sl-font-mono);
+  font-size: 0.875em;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  background: var(--sl-color-gray-6);
+}
+.mk-plan-list label:has(input:checked) .mk-plan-text { color: var(--sl-color-gray-3); text-decoration: line-through; }
+.mk-plan-list li:target > label { outline: 1px solid var(--sl-color-accent); }
+.mk-plan-error { color: var(--mk-bad, #d33); font-weight: 600; }
 
 /* Pages without the left menu (home): Starlight caps them at 67.5rem in a scoped rule; the doubled
    :root outranks it. The width picker only touches pages with a sidebar. */

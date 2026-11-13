@@ -104,6 +104,23 @@ items:
       - file: test/shared/ui/drawer/app_drawer_test.dart
         name: 'Pro: every page back in its place'
     related: [D-HOM-5, R-MON-45]
+  - id: R-HOM-14
+    group: Bottom bar & drawer
+    title: Tap the open tab again → back to the top
+    text: |
+      - bottom bar and tablet rail · every page that can be a tab
+      - smooth scroll to the top · nothing reloads, the tab stays
+      - the drawer or a link opening the page you are on → no scroll
+      - same as the iOS status-bar tap
+    source: NAVIGATION §5 (decided 2026-11-03)
+    tests:
+      - file: test/main/ui/pages/main_page_test.dart
+        name: scrolls its page back to the top from the bottom bar
+      - file: test/main/ui/pages/main_page_test.dart
+        name: scrolls its page back to the top from the rail
+      - file: test/main/ui/pages/main_page_test.dart
+        name: reaches a page that scrolls with its own controller
+    related: [D-HOM-7]
 
   # Android widgets
   - id: R-HOM-20
@@ -137,13 +154,21 @@ items:
     group: Web shell
     title: "Web: sidebar, ⌘K, +"
     text: |
-      - sidebar (drawer on phones) · ⌘K: pages, actions, records
+      - phone: bottom bar Dashboard · Bookings · **+** · Analytics · Goals — the app's bar for a Cloud book · drawer for the rest · search icon in the top bar
+      - phone bar hidden on *Add*, *Enter receipt*, a new balance check, the budget planner and a booking's edit page
+      - tablet and narrow window (640–1279 px): an icon rail · its arrow opens the full sidebar over the page, a tap beside it, Esc or a page change closes it
+      - from 1280 px: sidebar open beside the page · its arrow folds it to the rail
+      - ⌘K: pages, actions, records · under 1024 px the search is an icon
       - sidebar footer: *Add Booking* full width · *Quick entry* · *Enter Receipt*
       - window ≤ 900px tall: the three in one row · *Quick entry* and *Enter Receipt* as icons, label and key in the tooltip
       - keys **N** · **Q** · **R**, shown on the buttons and in ⌘K · not while typing
-      - long press mobile + → quick entry
+      - long press the phone bar's **+** → quick entry
       - dark only · no offline
     source: APP_SHELL_WEB §1, §4.7, web 02_FEATURES
+    tests:
+      - file: src/app/(main)/layout.test.tsx
+        repo: web
+        name: marks the tab that owns the page
   - id: R-HOM-31
     group: Web shell
     title: "Web dashboard: 17 card types"
@@ -171,7 +196,9 @@ items:
     title: Getting started card
     text: |
       - only after setup on *this* phone · gone after 14 days, when done, or on ×
-      - 5 items: first entry · scan · regular payment · monthly budget · widget (Android) · ticked from data, also from the web
+      - 5 items: first entry · starting balances · scan · recurring payment · monthly budget · ticked from data, also from the web (D-HOM-11, 2026-11-11)
+      - *Set starting balances* opens the balances dialog · only in a book the user owns (4 items in someone else's) · a credit card is typed as what is owed · saving or ticking it by hand lets the balance check appear
+      - *Add the first entry* has one button, *Add entry* · scanning is the next-but-one item · no widget item (Tips & features, Settings)
       - tap an open item's circle → ticked by hand (skip) · tap again → open · a tick from data cannot be taken back
       - next open item expanded with its button · *All set* once, then gone · × has Undo · hand-ticking the last item has Undo
       - never for a read-only member · an existing account on a new phone never sees it
@@ -180,26 +207,34 @@ items:
       - file: test/features/getting_started/service/new_user_progress_test.dart
         name: the layer switches off after the window, whatever was done
       - file: test/features/getting_started/use_cases/get_checklist_use_case_test.dart
-        name: "ticks come from data: a booking, a scan, an active rule, an active budget, a placed widget"
+        name: "ticks come from data: a booking, a starting balance, a scan, an active rule, an active budget"
       - file: test/features/getting_started/ui/getting_started_card_test.dart
         name: × dismisses with an undo
       - file: test/features/getting_started/bloc/getting_started_cubit_test.dart
         name: a hand tick skips an open item at once and records it; a second tap takes it back
       - file: test/features/getting_started/ui/getting_started_card_test.dart
         name: ticking the last open item by hand offers an undo
-    related: [R-HOM-01, R-SET-12]
+      - file: test/features/getting_started/ui/getting_started_card_test.dart
+        name: the action opens the balances dialog; a save settles the question and reloads Home
+      - file: test/features/getting_started/use_cases/get_checklist_use_case_test.dart
+        name: "an invited member's book has no starting-balances item"
+    related: [R-HOM-01, R-SET-12, D-HOM-11]
   - id: R-HOM-41
     group: New users
     title: Cards earn their place
     text: |
       - trend + timeline: only once bookings span 2 days
-      - *Upcoming*: only once a recurring rule exists
-      - zero bookings: *First entry* card (or the checklist) with *Add entry* + *Scan a receipt*
+      - *Upcoming*: only once a recurring payment exists
+      - *Top expenses*: only once there are 4 bookings in 2 categories · before that it repeated *Recent transactions* (D-HOM-12, 2026-11-11)
+      - zero bookings: the checklist (or, on a phone that did not run setup, the *First entry* card with *Add entry* + *Scan a receipt*)
+      - no *Set starting balance* card since 2026-11-11 · the checklist asks (D-HOM-11)
     source: GETTING_STARTED §3, HOME_CARDS §4
     tests:
       - file: test/features/home/use_cases/get_dashboard_layout_use_case_test.dart
         name: the trend and the timeline wait for a second booking day
-    related: [R-HOM-01]
+      - file: test/features/home/use_cases/get_dashboard_layout_use_case_test.dart
+        name: top expenses wait for four bookings in two categories, so they never repeat the recent list
+    related: [R-HOM-01, D-HOM-12]
   - id: R-HOM-42
     group: New users
     title: Just-in-time hints
