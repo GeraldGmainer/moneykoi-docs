@@ -26,7 +26,9 @@ gerald:
     note: "ran 2026-11-13 · 4 regressions fixed, baselines promoted"
   - text: "Decide the one-cent tolerance in review · D-SCN-14"
   - text: "Decide D-SCN-15 · block a whole-euro auto-repair?"
+    done: 2026-11-13
   - text: "Decide D-SCN-16 · may a VIES name replace a guessed merchant?"
+    done: 2026-11-13
   - section: "Germany and Switzerland"
   - ref: T-SCN-08
   - ref: T-SCN-09

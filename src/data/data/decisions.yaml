@@ -434,8 +434,12 @@ items:
     related: [R-DATA-102, D-DATA-46]
   - id: D-DATA-50
     question: "Bank import · older history imported month by month, oldest first — which balance is right?"
-    status: open
+    status: decided
+    date: 2026-11-13
     answer: |
+      - **2.1.0: warn · 2.1.1: store the day the balance was typed** (Gerald, a then c)
+      - built 2026-11-13, app + web: the result names rows after the moved opening and on or before the day the account was added, in the warning colour, beside *Undo import*
+      - 2.1.1: an optional account column for that day · every row up to it moves the opening · then the warning goes
       - found 2026-11-13 (A5-10): Bank 2,000 typed today → October file moves the opening to Oct 5, today stays 1,990 → November file (rows before the day 2,000 was typed) → today drops by their net
       - newest file first works · one file over the whole history works · only oldest-first in several files goes wrong
       - cause: after the first move the app no longer knows the day the balance was typed (R-DATA-41 counts rows up to the **moved** day)

@@ -32,8 +32,14 @@ gerald:
   - ref: T-SCN-10
   - text: "D-SCN-14 undecided → ships as built: one cent never blocks *Save*"
   - text: "Decide D-DATA-50 · month-by-month import, oldest first (P0, A5-10)"
+    done: 2026-11-13
+    sub:
+      - text: "warn in 2.1.0 (built, app + web) · store the typed day in 2.1.1"
+        done: 2026-11-13
   - text: "Decide D-SCN-15 + D-SCN-16 · whole-euro auto-repair, VIES name over a guessed merchant"
+    done: 2026-11-13
   - text: "Decide A5-9 · scanner review back without a discard prompt"
+    done: 2026-11-13
   - text: "Paste the 2.1.0 git blocks · app (11 commits), web, supabase, receipts"
   - section: "Commits"
   - text: "Commit the import: app + web + supabase + docs · the 4 format-only files stay out"
@@ -99,3 +105,4 @@ agents:
     sub:
       - text: "26 findings · fixed or ruled, see RELEASE_2_1_FINDINGS_PLAN.md › Round 5"
         done: 2026-11-13
+  - text: "2.1.1: store the day a balance was typed on the account (D-DATA-50) · app + web + server, then drop the warning"

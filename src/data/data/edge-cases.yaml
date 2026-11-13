@@ -687,10 +687,16 @@ items:
     then: |
       - the first file moves the opening back, today's balance stays · the next file's rows land after the moved day and lower today's balance
       - newest first, or one file for the whole history, stays right
-      - open decision D-DATA-50 · found on the Android emulator 2026-11-13 (A5-10)
+      - since 2026-11-13 the result names those rows in the warning colour, beside *Undo import* (app + web) · the real fix is 2.1.1 (D-DATA-50)
+      - found on the Android emulator 2026-11-13 (A5-10)
     status: known-issue
     risk: high
     related: [R-DATA-41, D-DATA-50]
+    tests:
+      - file: test/features/data_import/domain/import_opening_shift_test.dart
+        name: November rows after the moved opening but before the account was added are flagged
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: rows that may already be in a starting balance are named with a warning, Undo beside them (D-DATA-50)
   - id: E-DATA-97
     group: Bank import
     title: A file imported twice offered *Select none*
