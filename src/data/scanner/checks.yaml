@@ -48,3 +48,15 @@ groups:
       - id: C-SCN-022
         text: "Review → *Rescan* → the camera, not Home · scan again → review (Android emulator + iOS simulator passed 2026-11-13)"
 
+      - id: C-SCN-023
+        text: "Hover to the last row, lift the phone at once → the panel's count and sum include that row · the scan ends by itself"
+      - id: C-SCN-024
+        text: "Hover too far and too fast in turns → the hint changes within ~2 s, never stuck on the first one · no flicker"
+      - id: C-SCN-025
+        text: "Receipt whose QR is a web link, one *Capture*, slow network → shutter spins ≤ 4 s → review with the code's total, date, shop · offline: the print's values"
+      - id: C-SCN-026
+        text: "Open the scanner → gallery button at once → back out of the picker → preview live, rows tick without a *Capture*"
+      - id: C-SCN-027
+        text: "320 dp phone, largest text, de/en/ja → empty review: both buttons stacked, nothing cut · *Total* sheet: hint readable beside the items sum"
+      - id: C-SCN-028
+        text: "Review → edit an item → type a 60-character name → the row and the receipt-line column stay in shape · saved booking: description cut"

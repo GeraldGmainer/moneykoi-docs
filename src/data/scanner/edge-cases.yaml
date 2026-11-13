@@ -507,3 +507,137 @@ items:
     risk: low
     related: [R-SCN-29]
 
+  - id: E-SCN-49
+    group: Review
+    title: Save tip saved a receipt Save refused
+    when: "first review · mismatch, no account or a 0.00 line · the save tip tapped"
+    then: "the tip shows only while *Save* is on · one save path · fixed 2026-11-13 · before, the tip saved it"
+    status: fixed
+    risk: high
+    related: [R-SCN-21, R-SCN-03]
+    tests:
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: the save tip stays away with
+      - file: test/features/booking/ui/pages/add_receipt_page_test.dart
+        name: the save tip on a receipt that can be saved saves it once, like the button
+  - id: E-SCN-50
+    group: Review
+    title: One-cent gap blocked at some amounts
+    when: items one cent off the total
+    then: "never a mismatch, at any amount · fixed 2026-11-13 · before, blocked at some totals and not at others"
+    status: fixed
+    risk: medium
+    related: [R-SCN-31, D-SCN-14]
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_metrics_test.dart
+        name: a one-cent gap is judged the same at every amount
+  - id: E-SCN-51
+    group: Review
+    title: Long item name cut while editing
+    when: scanned name over 20 characters · one letter fixed in the item editor
+    then: "the whole name stays · the booking description is still cut at save · fixed 2026-11-13 · before, cut on the first keystroke"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_item_edit_sheet_test.dart
+        name: fixing one letter of a scanned name longer than a booking description keeps its tail
+  - id: E-SCN-52
+    group: Review
+    title: VAT rate in the mismatch banner
+    when: a fractional VAT rate · German number format
+    then: "shortest form, the user's decimal mark · *4,9 %* · fixed 2026-11-13 · before *4.90 %*"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_banners_test.dart
+        name: a fractional VAT rate reads in its shortest form with the user decimal mark
+  - id: E-SCN-53
+    group: Review
+    title: Empty review on a narrow phone
+    when: nothing read · 320 dp phone or large text
+    then: "the two buttons stack, the page scrolls · fixed 2026-11-13 · before, they ran over the edge"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_empty_state_test.dart
+        name: the empty review fits a
+  - id: E-SCN-54
+    group: Review
+    title: Total sheet hint squeezed
+    when: "*Total* sheet · hint beside the items sum"
+    then: "the hint takes the whole row width · one line when it fits · fixed 2026-11-13"
+    status: fixed
+    risk: low
+    related: [R-SCN-23]
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_total_edit_sheet_test.dart
+        name: the hint takes all the width the item sum leaves, so it stays on one line when it fits
+  - id: E-SCN-55
+    group: Reading
+    title: Last row read, phone lifted
+    when: a row or the total read · then the phone lifted or held too far
+    then: "the row counts · panel sum current · the scan can end · fixed 2026-11-13 · before, left out and the sum stale"
+    status: fixed
+    risk: high
+    related: [R-SCN-25, E-SCN-17]
+    tests:
+      - file: test/features/receipt/domain/services/live_scan_engine_test.dart
+        name: rows confirmed while the parse was not due are parsed by the next due frame, even one that adds nothing
+  - id: E-SCN-56
+    group: Reading
+    title: Hint stuck while two others take turns
+    when: two conditions alternate frame by frame · too far, too fast
+    then: "after ~2 s the more urgent one shows · fixed 2026-11-13 · before, the old hint stayed"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/live_guidance_test.dart
+        name: two hints taking turns still replace a hint that is no longer wanted, the more urgent one
+      - file: test/features/receipt/domain/services/live_guidance_test.dart
+        name: a hint shown for two taking turns stays while it is one of them
+  - id: E-SCN-57
+    group: Reading
+    title: Still of a web-link QR ended too early
+    when: restaurant or one-category receipt · one *Capture* · the QR is a web link
+    then: "the still waits for the link, ≤ 4 s, shutter spinning · review opens with the code's total, date, shop · fixed 2026-11-13"
+    status: fixed
+    risk: medium
+    related: [E-SCN-02, E-SCN-23]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: a still whose code is a web link waits for the link before it ends the pass
+  - id: E-SCN-58
+    group: Photos
+    title: Link answer under the gallery picker
+    when: a web-link QR still being fetched · gallery picker open
+    then: "picked photos are read → review · picker cancelled → the code is read again · fixed 2026-11-13 · before, the scan ended and the photos were dropped"
+    status: fixed
+    risk: high
+    related: [R-SCN-06, E-SCN-02]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: "under the open picker it does not end the pass: the picked photos are read"
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: a cancelled picker leaves the code to be read again
+  - id: E-SCN-59
+    group: Camera
+    title: Dead preview after a cancelled picker
+    when: scanner just opened · gallery button at once · picker cancelled
+    then: "the live view reads again · fixed 2026-11-13 · before, nothing was read until a *Capture*"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: a picker opened before the preview is read and then cancelled leaves the pass reading the preview
+  - id: E-SCN-60
+    group: Reading
+    title: Parser error froze the live view
+    when: the parser fails on a page during the hover
+    then: "ticks, last line and hints keep moving · *Done* still opens the review · fixed 2026-11-13"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/live_scan_engine_test.dart
+        name: a parse that fails on a frame still places the frame and says so
+      - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
+        name: the frames are still placed and shown, and the parse is not asked for again on every frame

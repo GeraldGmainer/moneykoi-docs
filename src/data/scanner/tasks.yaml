@@ -43,7 +43,8 @@ items:
     owner: gerald
     detail: |
       - C-SCN-014, C-SCN-015, C-SCN-016 · thirty minutes
-      - + the new end of a scan: C-SCN-018, C-SCN-019 · five minutes
+      - + the new end of a scan: C-SCN-018, C-SCN-019 · five minutes · **still open**
+      - + the 2026-11-13 evening fixes: C-SCN-023 to C-SCN-028 · ten minutes
       - a receipt that will not finish → keep its photo for the corpus inbox
   - id: T-SCN-06
     title: Hover videos + whole-receipt photos for the corpus
@@ -75,3 +76,15 @@ items:
       - ask testers for 5–10 receipt photos per chain · whole receipt, sharp, flat
       - into `moneykoi-receipts/inbox/` · filed with the `scanner-corpus-round` skill
 
+  - id: T-SCN-10
+    title: Run the scales for the 2026-11-13 evening round
+    owner: gerald
+    detail: |
+      - **none** ran in that round · the receipt corpus was not on that machine (SCANNER §4.40)
+      - before it lands: every scorecard scale + the category oracle · `hover-synth` first
+      - a `stopped passing` line or a lower oracle → back to an agent
+    command: |
+      for s in hover-synth emulator emulator-stills emulator-bands emulator-native proxy; do
+        SCORECARD_SCALE=$s .fvm/flutter_sdk/bin/flutter test test/features/receipt/scorecard_test.dart
+      done
+      .fvm/flutter_sdk/bin/flutter test test/features/receipt/corpus/category_oracle_test.dart

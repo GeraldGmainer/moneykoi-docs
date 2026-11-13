@@ -174,7 +174,7 @@ items:
     text: |
       - unresolved → *Tap to categorise* · **no** silent "Other"
       - guess names a parent with subs → a fitting sub inside it · none → blank · never the parent (D-SCN-04)
-      - Save off until: all categorized + sum = total + account picked
+      - Save off until: all categorized + sum = total (1 ct apart still counts, R-SCN-31) + account picked
       - Categories page warns ahead
     source: SCANNER §4.9, §4.15d, CATEGORY §8a
     related: [R-LED-01, R-LED-20]
@@ -193,6 +193,7 @@ items:
       - + receipt record · round-ups · trip tag
       - total editable · mismatch blocks Save
     source: SCANNER §4.17, §4.18, §4.27
+    related: [R-SCN-31]
   - id: R-SCN-08
     group: Review & save
     title: Merge all · by category · undo
@@ -235,6 +236,7 @@ items:
     text: |
       - the first review shows one-line tips in place: *Tap any field to fix it* · *Every item needs a category* (while one is missing) · *Save, and each item becomes a booking* (once all are set)
       - one at a time, in that order · the next appears once the shown one is closed (×) or acted on · the save tip sits under the items, not over them (since 2026-11-06, AND-7-3)
+      - the save tip shows only while *Save* is on · a tap on it saves like the button, **never** more (E-SCN-49)
       - each once, per phone · the help button still replays the full intro, Edit & Merge included
       - whoever saw the old 4-page tutorial sees no tips
     source: SCANNER §4.15g
@@ -243,7 +245,7 @@ items:
         name: "one tip at a time: hero first, the category tip once the hero is closed"
       - file: test/features/receipt/service/scanner_onboarding_progress_test.dart
         name: whoever saw the old carousel is shown nothing
-    related: [R-SCN-13, R-SCN-03]
+    related: [R-SCN-13, R-SCN-03, E-SCN-49]
   - id: R-SCN-23
     group: Review & save
     title: Amounts on the app keypad
@@ -321,3 +323,18 @@ items:
       - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
         name: a total of a thousand and more is read with its separator and without one
 
+  - id: R-SCN-31
+    group: Review & save
+    title: One cent never blocks Save
+    text: |
+      - items vs. total compared in whole cents
+      - gap of 1 ct → no *Math mismatch*, *Save* stays on · at **any** amount
+      - 2 ct or more → mismatch, *Save* off
+      - open: exact match instead (D-SCN-14)
+    source: SCANNER §4.40
+    related: [R-SCN-03, R-SCN-07, D-SCN-14, E-SCN-50]
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_metrics_test.dart
+        name: a one-cent gap is judged the same at every amount
+      - file: test/features/booking/ui/widgets/add_receipt/review_metrics_test.dart
+        name: a two-cent gap is a mismatch at every amount

@@ -91,3 +91,11 @@ items:
       - no decision yet · numbers and rows in SCANNER_ACCURACY_PLAN.md §9
     related: [D-SCN-06, R-SCN-26]
 
+  - id: D-SCN-14
+    question: "Review: tolerate a one-cent gap, or require an exact match?"
+    status: open
+    answer: |
+      - now: one cent **never** blocks *Save*, at any amount · two cents always do (R-SCN-31)
+      - alternative: items must equal the total to the cent
+      - no decision yet · source: SCANNER §4.40
+    related: [R-SCN-31, E-SCN-50]

@@ -21,6 +21,10 @@ gerald:
   - text: "Decide the gate scale · D-SCN-13"
   - ref: T-SCN-06
   - ref: T-SCN-07
+  - section: "Fix round 2026-11-13 evening"
+  - ref: T-SCN-10
+    note: "before the round lands · hover-synth first"
+  - text: "Decide the one-cent tolerance in review · D-SCN-14"
   - section: "Germany and Switzerland"
   - ref: T-SCN-08
   - ref: T-SCN-09
