@@ -51,9 +51,9 @@ gerald:
   - ref: T-DATA-08
   - ref: T-BOOK-05
   - ref: T-INV-05
-    note: "likely done · the fix is on admin `main` since 2026-10-05, Vercel deploys on push"
+    note: "the fix is on admin `main` since 2026-10-05, Vercel deploys on push"
   - ref: T-PLAT-19
-    note: "site round is live · web deploy not confirmed"
+    note: "site + web pushed 2026-11-09 · both deploy on push"
   - ref: T-PLAT-15
   - section: "Email"
   - ref: T-PLAT-03
@@ -67,6 +67,8 @@ gerald:
   - text: "Check the restore deadline of the paused `money-koi-dev`"
   - text: "Admin: regenerate `database.types.ts` → `types:pull`"
   - text: "Commit the untracked supabase files: `API_KEYS_AI_CONTEXT.md` · `scripts/local-env.sh` · `dev.yaml`"
+    done: 2026-11-11
+    note: "`58855e1` + `0eb873a`"
   - text: "Optional: Vercel Deployment Protection on the admin"
   - text: "Optional: moneykoi.com → Cloudflare Registrar, possible from 2026-11-12"
   - text: "Vercel cleanup of the old site + web projects"

@@ -6,7 +6,7 @@ items:
     owner: gerald
     detail: |
       - `20261005130000_sync_all_deletes_ignore_exclude.sql` is committed
-      - engine doc §6 still says "parked" · check prod
+      - engine doc no longer says "parked" (2026-11-11) · check prod
     command: |
       psql "$PROD_DATABASE_URL" -c "select version from supabase_migrations.schema_migrations where version = '20261005130000';"
   - id: T-ACC-02

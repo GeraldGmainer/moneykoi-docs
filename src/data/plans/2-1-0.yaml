@@ -41,12 +41,16 @@ gerald:
   - text: "Decide A5-9 · scanner review back without a discard prompt"
     done: 2026-11-13
   - text: "Paste the 2.1.0 git blocks · app (11 commits), web, supabase, receipts"
+    done: 2026-11-13
+    note: "app `0e6ff54fe`…`ac89cb28f` · web `acf4b9c` · supabase `8ca9486` · receipts `dcca849`"
   - section: "Commits"
   - text: "Commit the import: app + web + supabase + docs · the 4 format-only files stay out"
     done: 2026-11-13
   - text: "Commit the Play listing files: `tool/play_api.py` · de/en descriptions · `store/custom-listings/at`"
     done: 2026-11-13
   - text: "Paste the 2.1.0 git block · app, web, supabase · tag `v2.1.0`"
+    done: 2026-11-13
+    note: "tag `v2.1.0` → `ac89cb28f` · 6 T-BOOK-06 migrations still untracked in supabase"
   - section: "Release"
   - text: "`pubspec.yaml` is still `2.0.0+38` · release notes still 2.0.0 → run prepare-release"
     done: 2026-11-13

@@ -9,7 +9,9 @@ items:
   - id: T-DATA-02
     title: Commit BACKUP_FORMAT.md update
     owner: gerald
+    status: done
     detail: |
+      - **done 2026-10-18**: `d1aafe8` committed §1a–§1c · file clean since, last `5e86d84` 2026-11-13
       - uncommitted: `settings.json`, `photos/`, passphrase
       - review + commit in `moneykoi-supabase`
   - id: T-DATA-04
@@ -77,13 +79,13 @@ items:
     waitsFor: [T-DATA-07]
     detail: |
       - the web import writes `import_ref` on every booking · without the migration it fails at the first insert
-      - web bank import built 2026-11-11 · uncommitted · 6007 vitest tests pass, `tsc` clean · **never run against a real database**
-      - `npm run lint` fails with 33 errors · all in code this work did not touch (e.g. `layout.tsx:139`, unchanged from HEAD) → Gerald's call whether that blocks the deploy
+      - web bank import built 2026-11-11 · committed `9547d58` · 6007 vitest tests pass, `tsc` clean · **never run against a real database**
+      - `npm run lint`: 0 errors since `bf6516d` (2026-11-11)
       - then C-DATA-069…073 + C-DATA-066 + C-DATA-052
     command: |
       cd /Users/gerald/Projects/moneykoi/moneykoi-web
       export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:$PATH"
-      npm run lint          # 33 errors today, pre-existing
+      npm run lint          # 0 errors since 2026-11-11
       git status --short
       # deploys on push to main · or Actions → Deploy → Run workflow
   - id: T-DATA-09

@@ -75,8 +75,11 @@ items:
   - id: T-MON-06
     title: Decide the open questions
     owner: gerald
+    status: done
     waitsFor: [D1, D2, D3, D4, D5, D8]
-    detail: Answer the open decisions below → tell the next AI pass
+    detail: |
+      - **done 2026-11-06**: D1–D3 decided 2026-11-06 · D4, D5, D8 before
+      - Answer the open decisions below → tell the next AI pass
   - id: T-MON-07
     title: Device tests
     owner: gerald

@@ -26,6 +26,8 @@ gerald:
   - ref: T-MON-05
   - text: "Revert `lib/main.dart:116` (`showDebugBanner: false`)"
   - text: "Build with `--dart-define=MONETIZATION=true`"
+    done: 2026-11-07
+    note: "moot · `c12ed80e3` removed the define, paywall in every build"
   - section: "Server checks (not blocking)"
   - ref: T-ACC-01
   - ref: T-DATA-04
