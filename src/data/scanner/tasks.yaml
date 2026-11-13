@@ -79,7 +79,9 @@ items:
   - id: T-SCN-10
     title: Run the scales for the 2026-11-13 evening round
     owner: gerald
+    status: done
     detail: |
+      - **ran 2026-11-13 by an agent**: 4 receipts had stopped passing (tedi_20260821_A, spar_20260619_A, smyths_20260617_A, spar_20260923_A) · all from the capture rework (`b9c755853`), none from the evening round · fixed (SCANNER §4.41), all six scales green, oracle unchanged 99.4 %, baselines promoted
       - **none** ran in that round · the receipt corpus was not on that machine (SCANNER §4.40)
       - before it lands: every scorecard scale + the category oracle · `hover-synth` first
       - a `stopped passing` line or a lower oracle → back to an agent

@@ -80,5 +80,6 @@ agents:
   - text: "Docs: `src/data/releases/2.1.0.yaml` + page when the release is prepared"
     done: 2026-11-13
   - text: "Scanner scales after the evening round (T-SCN-10) · 4 receipts stopped passing → fix"
+    done: 2026-11-13
   - text: "Full app suite on the release tree"
   - text: "iOS simulator + Android emulator round over 2.1.0"

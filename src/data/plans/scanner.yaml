@@ -23,7 +23,7 @@ gerald:
   - ref: T-SCN-07
   - section: "Fix round 2026-11-13 evening"
   - ref: T-SCN-10
-    note: "before the round lands · hover-synth first"
+    note: "ran 2026-11-13 · 4 regressions fixed, baselines promoted"
   - text: "Decide the one-cent tolerance in review · D-SCN-14"
   - section: "Germany and Switzerland"
   - ref: T-SCN-08
@@ -32,6 +32,10 @@ agents:
   - text: "Fix rounds on the emulator scorecard · two run 2026-11-13 · next: missing rows, discounts"
   - text: "BILLA + LIDL rule gaps · BILLA 5/8 on stills, 2/8 at 1920 px"
   - text: "Franchise QR-first check · not covered → Gerald picks (a) or (b)"
+    done: 2026-11-11
+    sub:
+      - text: "closed by the capture rework · SCANNER_ACCURACY_PLAN §7.3"
+        done: 2026-11-11
   - text: "HOFER, PENNY + generic parsers · each waits for receipts"
   - text: "§7.5 leftovers: confidence input · repair fuzz check · dead code"
   - text: "OCR-printed ATU into the VIES lookup when the QR has none"
