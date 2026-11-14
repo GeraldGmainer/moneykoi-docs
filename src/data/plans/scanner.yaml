@@ -40,6 +40,8 @@ agents:
     sub:
       - text: "regressions + SPAR + LIDL rounds 2026-11-13 · emulator 104/95 → 109/99 (SCANNER §4.41–§4.46)"
         done: 2026-11-13
+      - text: "categories on misread names 2026-11-14 · stills 117 → 118 (§4.49)"
+        done: 2026-11-14
   - text: "BILLA + LIDL rule gaps · BILLA 5/8 on stills, 2/8 at 1920 px"
     done: 2026-11-13
     sub:
@@ -52,12 +54,16 @@ agents:
         done: 2026-11-11
   - text: "HOFER, PENNY + generic parsers · each waits for receipts"
   - text: "§7.5 leftovers: confidence input · repair fuzz check · dead code"
+    done: 2026-11-14
     sub:
       - text: "dead `applied` parameter removed (§4.43)"
         done: 2026-11-13
       - text: "repair fuzz over the bracket path · cents never shifted (§4.44)"
         done: 2026-11-13
       - text: "dictionary-hit confidence input · measure the false-flag rate first"
+        done: 2026-11-14
+      - text: "8 % of wrong lines marked, 1 in 5 clean receipts · not built (§4.49)"
+        done: 2026-11-14
   - text: "OCR-printed ATU into the VIES lookup when the QR has none"
     done: 2026-11-13
     sub:
@@ -80,5 +86,9 @@ agents:
       - text: "leergut order, split savings, BIC, spaced weight, deposit quantity (§4.42)"
         done: 2026-11-13
   - text: "Row tilt: prices one row off their names (lidl_20260417_A, spar_20260619_A)"
+    done: 2026-11-14
     sub:
       - text: "acceptance test: the skipped *curled paper* test · SCANNER_ACCURACY_PLAN §13.3"
+        done: 2026-11-14
+      - text: "passes since §4.41 · skip removed, both receipts read right (§4.49)"
+        done: 2026-11-14

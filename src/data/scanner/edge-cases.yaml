@@ -495,17 +495,23 @@ items:
     group: Reading
     title: Prices one row off their names
     when: curled or tilted paper · the price column sits a row higher or lower
-    then: "sum right, but lines carry a neighbor's price or name · open (lidl_20260417_A, spar_20260619_A)"
-    status: known-issue
+    then: "each name keeps its own price · both corpus receipts (lidl_20260417_A, spar_20260619_A) read right on every scale · fixed 2026-11-13, acceptance test on since 2026-11-14"
+    status: fixed
     risk: medium
+    tests:
+      - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
+        name: "curled paper: each name keeps its own price where the curl turns the price column round"
   - id: E-SCN-48
     group: Reading
     title: Discount row without a figure
     when: "`Preisvorteil` printed, its amount not read at all"
-    then: "review shows the mismatch · the user fixes the line · open (lidl_20260701_A)"
+    then: "LIDL: the lost figure comes from the printed savings line, only when the total agrees (lidl_20260701_A, fixed 2026-11-13) · other shops: review shows the mismatch, the user fixes the line"
     status: known-issue
     risk: low
     related: [R-SCN-29]
+    tests:
+      - file: test/features/receipt/domain/parsers/lidl_parser_strategy_test.dart
+        name: is what the savings line says the read ones miss, when the total agrees
 
   - id: E-SCN-49
     group: Review
@@ -664,3 +670,15 @@ items:
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: a merchant the header only guessed gives way to the VIES name (D-SCN-16)
+  - id: E-SCN-63
+    group: Reading
+    title: A misread letter in a product name
+    when: "the reader loses one glyph (*HARTBO* for HARIBO, *IROEPFCH* for TROEPFCH)"
+    then: "the line keeps the category of the word on the paper · only for glyphs the reader mixes up, so *Salzstanger* stays bread · fixed 2026-11-14"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/receipt/domain/services/category_chain_test.dart
+        name: a brand the cleaner repaired from one misread glyph is on the paper (spar_20260606_A)
+      - file: test/features/receipt/domain/services/category_chain_test.dart
+        name: a long keyword one glyph off beats the shorter key read whole (spar_20260606_A)
