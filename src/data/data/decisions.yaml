@@ -447,3 +447,14 @@ items:
       - b) no schema: take the account's creation day once an import has moved the opening · wrong for an account opened with a past date by hand
       - c) ship as is · result screen warns when rows fall between the opening and the account's creation day, with Undo
     related: [R-DATA-41, D-DATA-17, E-DATA-96]
+  - id: D-DATA-51
+    question: "Bank import · *Learned payees* shows the match key (`netflix com`) — what should it show?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **store the name**: the payee as the bank wrote it (*Netflix.com*) beside the key · 2.1.1 (Gerald)
+      - needs an optional column on `import_payee_rule`: local migration, server migration with `sync_all`, web, backup
+      - the key stays the match · only the list shows the name · a rule without a name shows the key as today
+      - not chosen: capitalise the key on screen (*Netflix Com*, not the real name) · leave as is
+      - found 2026-11-13 (A5-5)
+    related: [R-DATA-85]

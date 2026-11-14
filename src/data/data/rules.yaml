@@ -317,7 +317,12 @@ items:
     text: |
       - description 20 · account + category names 20 · labels 24
       - description = the payee since 2026-11-10 → R-DATA-75
+      - a long description ends at a **whole** word · *Hausverwaltung Müller GmbH* → *Hausverwaltung*
+      - one long word or Japanese → hard cut at 20 · app + web, since 2026-11-14
     source: BOOKING_IMPORT §5
+    tests:
+      - file: test/features/data_import/domain/import_models_test.dart
+        name: a description too long for the server is cut at the last whole word within 20 characters
     related: [R-DATA-75]
   - id: R-DATA-36
     group: CSV import

@@ -115,6 +115,7 @@ items:
     when: system font above 100 % · any amount
     then: |
       - fixed 2026-11-11 · amounts grow with the font, up to **130 %**
+      - booking form's big amount: shrinks onto **one** line · since 2026-11-14
       - a screen reader hears one figure · *minus $12.50*, not digit by digit
       - was: every amount at its fixed size
     status: fixed
@@ -124,6 +125,8 @@ items:
         name: an amount follows the system font size, up to the cap
       - file: test/shared/ui/budget_book/money_text_test.dart
         name: a screen reader hears one figure, not the split spans
+      - file: test/features/booking/ui/widgets/amount_display_test.dart
+        name: at the largest text size a long amount shrinks onto one line
   - id: E-PLAT-12
     group: Screen & layout
     title: Budget Book summary at 200 % font

@@ -1,7 +1,7 @@
 # Next app release after 2.0.0: app 2.1.0 + web 1.9.0, Sun 2026-11-15. Contents = roadmap bucket nov-15
 # (bank CSV import) + the scanner rework (merged 546fb0a1e) + the app commits since the 2.0.0 bump
 # (879b9656f). Test plan: src/data/releases/2.1.0.yaml. Sources: BOOKING_IMPORT_AI_CONTEXT.md (bank layer), roadmap.yaml,
-# scanner.yaml, RELEASE_2_1_FINDINGS_PLAN.md, git log.
+# scanner.yaml, the release 2.1 findings plan (deleted 2026-11-14, open rows below), git log.
 title: "2.1.0"
 goal: "Bank CSV import + the new scanner · app + web · Sun Nov 15"
 gerald:
@@ -68,7 +68,23 @@ gerald:
   - text: "`./publish.sh internal` → device pass on the internal build → `./publish.sh promote`"
   - text: "Push `20261115090000_release_notes_app_2_1_0_web_1_9_0` with the Play rollout"
   - text: "Then push moneykoi-web `main` (T-DATA-08) · 7 commits ahead"
+  - section: "Left from the device rounds (findings plan, deleted 2026-11-14)"
+  - text: "iPhone: *Save to device* → picker as a sheet, *Cancel* below the clock? (F-25)"
+  - text: "iPhone: sign in → delete the app → reinstall offline → Welcome (F-47)"
+  - text: "German, 200 % font → paywall in one column, words whole (F-08)"
+  - text: "Tablet landscape → snackbar beside the rail · ja setup, no one-letter line (F-39, F-40)"
+  - text: "Small phone, de → greeting, scan hint, recurring hint, Home forecast dates whole (F-53)"
+  - text: "*Personalize* with a card → Home cash flow 0 / 10 (F-55)"
+  - text: "*Record value* → date only, *per unit* (F-60)"
+  - text: "Largest iOS text size → booking amount on one line (I5-6)"
+  - text: "Import a long payee → name ends at a whole word (A5-1)"
+  - text: "*Galaxus*, *Amazon*, *Sparen* in quick add → no category guessed (A5-2)"
+  - text: "iPhone local book: delete an account with a rule → rule gone for good? (A5-11)"
+    sub:
+      - text: "likely by design: a lapsed book keeps deletes as pending · not reproduced"
+  - text: "Store listings still write カテゴリー → カテゴリ at the next listing update (F-38)"
 agents:
+  - text: "2.1.1: learned payees keep the payee's name (D-DATA-51) · app + web + server"
   - text: "Corpus test + `expect.json` on the real bank files (T-DATA-05)"
     done: 2026-11-11
   - text: "`claim_entry.dart` + `read_only_feature_banner.dart` above 90 % tier coverage"
@@ -110,6 +126,6 @@ agents:
   - text: "iOS simulator + Android emulator round over 2.1.0"
     done: 2026-11-13
     sub:
-      - text: "26 findings · fixed or ruled, see RELEASE_2_1_FINDINGS_PLAN.md › Round 5"
+      - text: "26 findings · fixed or ruled · findings plan deleted 2026-11-14, open rows moved here"
         done: 2026-11-13
   - text: "2.1.1: store the day a balance was typed on the account (D-DATA-50) · app + web + server, then drop the warning"
