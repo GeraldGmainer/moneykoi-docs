@@ -39,6 +39,8 @@ groups:
         text: "Booking with one receipt of several categories (scan → *Skip items*, or attach a receipt) → *Split by receipt items* → one part per category · a discount shows as *left to assign* · itemized scan (one booking per line) → no such button · new itemized scan → its lines sit under one header in the ledger"
       - id: C-BKG-055
         text: "Round-up goal on, unit 1 · split 3.40 + 2.30 → one round-up of 0.30 · scan a receipt of 3 items → one round-up on the total, not three · server migration `20261114100000_booking_split_group` applied first, else the save stays *not synced*"
+      - id: C-BKG-056
+        text: "Quick add → `Galaxus 49`, `Amazon 20`, `Sparen 50` → no category guessed, the picker asks · `Interspar 12` → Groceries (A5-2)"
   - id: fixing
     title: Fixing
     items:

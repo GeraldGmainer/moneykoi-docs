@@ -535,3 +535,21 @@ items:
     tests:
       - file: test/features/backup/backup_remapper_test.dart
         name: the parts of a split purchase stay one group under a new id
+  - id: E-BKG-74
+    group: Quick booking
+    title: A store for everything guessed as Groceries
+    when: quick add or a bank import names *Galaxus*, *Amazon* or *Sparen*
+    then: |
+      - fixed 2026-11-14 · no guess from a store that sells everything · the picker asks
+      - a chain counts as a whole word · *Sparen*, *Sparkasse* ≠ SPAR · *Interspar* still Groceries
+      - a word beside the store still guesses · *Galaxus Milch* → Groceries · history and learned payees still win
+      - was: *Galaxus* → Groceries (the keyword `GALA` inside it) · *Sparen* → Groceries (SPAR)
+      - found on the Android emulator 2026-11-13 (A5-2)
+    status: fixed
+    risk: low
+    related: [R-BKG-14]
+    tests:
+      - file: test/shared/categorization/category_suggestion_engine_test.dart
+        name: a store that sells everything is not guessed
+      - file: test/shared/categorization/category_suggestion_engine_test.dart
+        name: a chain name inside another word is not that chain

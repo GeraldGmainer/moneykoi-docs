@@ -52,6 +52,9 @@ gerald:
   - text: "Paste the 2.1.0 git block · app, web, supabase · tag `v2.1.0`"
     done: 2026-11-13
     note: "tag `v2.1.0` → `ac89cb28f` · 6 T-BOOK-06 migrations still untracked in supabase"
+  - text: "Paste the findings git block · app, 4 commits (A5-1, A5-2, I5-6, plan)"
+    done: 2026-11-14
+  - text: "Paste the web git block · payee cut at a whole word (A5-1)"
   - section: "Release"
   - text: "`pubspec.yaml` is still `2.0.0+38` · release notes still 2.0.0 → run prepare-release"
     done: 2026-11-13
@@ -65,20 +68,21 @@ gerald:
         done: 2026-11-13
   - ref: T-BOOK-06
     note: "all 7 pending migrations in one push · before the web deploy and the Play rollout"
+  - text: "Decide D-PLAT-23 first: build from tag `v2.1.0` or `main` (split inside)"
   - text: "`./publish.sh internal` → device pass on the internal build → `./publish.sh promote`"
   - text: "Push `20261115090000_release_notes_app_2_1_0_web_1_9_0` with the Play rollout"
   - text: "Then push moneykoi-web `main` (T-DATA-08) · 7 commits ahead"
   - section: "Left from the device rounds (findings plan, deleted 2026-11-14)"
-  - text: "iPhone: *Save to device* → picker as a sheet, *Cancel* below the clock? (F-25)"
+  - text: "iPhone: *Save to device* → *Cancel* below the clock? (F-25, C-PLAT-026)"
   - text: "iPhone: sign in → delete the app → reinstall offline → Welcome (F-47)"
   - text: "German, 200 % font → paywall in one column, words whole (F-08)"
   - text: "Tablet landscape → snackbar beside the rail · ja setup, no one-letter line (F-39, F-40)"
   - text: "Small phone, de → greeting, scan hint, recurring hint, Home forecast dates whole (F-53)"
   - text: "*Personalize* with a card → Home cash flow 0 / 10 (F-55)"
   - text: "*Record value* → date only, *per unit* (F-60)"
-  - text: "Largest iOS text size → booking amount on one line (I5-6)"
-  - text: "Import a long payee → name ends at a whole word (A5-1)"
-  - text: "*Galaxus*, *Amazon*, *Sparen* in quick add → no category guessed (A5-2)"
+  - text: "Largest iOS text size → booking amount on one line (I5-6, C-PLAT-030)"
+  - text: "Import a long payee → name ends at a whole word (A5-1, C-DATA-077)"
+  - text: "*Galaxus*, *Amazon*, *Sparen* in quick add → no guess (A5-2, C-BKG-056)"
   - text: "iPhone local book: delete an account with a rule → rule gone for good? (A5-11)"
     sub:
       - text: "likely by design: a lapsed book keeps deletes as pending · not reproduced"

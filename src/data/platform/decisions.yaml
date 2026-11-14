@@ -225,3 +225,14 @@ items:
       - German: **Anfangssaldo** everywhere · setup said *Startsaldo*
       - Japanese: **カテゴリ** and **端末** · カテゴリー (43 lines) and デバイス (1) changed
       - the store listings still say カテゴリー · changed with the next listing update
+  - id: D-PLAT-23
+    question: Build 2.1.0 from the tag `v2.1.0` or from today's `main`?
+    status: open
+    answer: |
+      - `main` = tag `v2.1.0` + 7 commits (2026-11-14): split transactions (local migration v28), A5-1, A5-2, I5-6, plan files
+      - `./publish.sh` builds the working tree · from `main`, split ships inside 2.1.0
+      - split needs its server migration on prod **first** (T-BKG-05) · without it the server refuses every booking push
+      - a) **from the tag** · what the device rounds tested · today's fixes + split go to 2.1.1 · a worktree at `v2.1.0` to build from · recommended
+      - b) from `main` · T-BKG-05 on prod first · split + 3 fixes into the release notes and `releases/2.1.0` · split device pass C-BKG-052…055 · D-BKG-37/38 still open
+      - web: A5-1 is uncommitted · either way harmless, it changes descriptions only
+    related: [T-BKG-05, D-BKG-37, D-BKG-38]

@@ -709,3 +709,19 @@ items:
         name: "a file imported a second time has nothing to select: no Select all, no Select none (A5-3)"
       - file: test/features/data_import/ui/bank_import_ui_test.dart
         name: a balance that differs opens the Balance check with the bank figure, never in the route name
+  - id: E-DATA-98
+    group: Bank import
+    title: A long payee cut mid-word
+    when: a payee longer than 20 characters · bank or CSV import
+    then: |
+      - fixed 2026-11-14 · the description ends at the last whole word · *Hausverwaltung Müller GmbH* → *Hausverwaltung*
+      - a dangling `-` goes too · *FA Österreich - Musterstadt* → *FA Österreich*
+      - one long word or Japanese → hard cut at 20 · app + web the same
+      - was: *Hausverwaltung Mülle*
+      - found on the Android emulator 2026-11-13 (A5-1)
+    status: fixed
+    risk: low
+    related: [R-DATA-35]
+    tests:
+      - file: test/features/data_import/domain/import_models_test.dart
+        name: a description too long for the server is cut at the last whole word within 20 characters

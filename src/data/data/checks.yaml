@@ -150,3 +150,5 @@ groups:
         text: "Untick one row → import → *Bank: … · Book: …* + *1 row not imported* → *Check balance* → count page on the bank's day, one field filled, *From the bank file*"
       - id: C-DATA-068
         text: "Backup & restore → *Saved import formats*: rename, delete · *Learned payees*: *Change category*, delete · a member reads only · simulator *Free* → both locked, entries kept"
+      - id: C-DATA-077
+        text: "Bank file with a long payee (*Hausverwaltung Müller GmbH*) → Review and the saved booking say *Hausverwaltung* · same on the web (A5-1)"
