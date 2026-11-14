@@ -62,3 +62,5 @@ groups:
         text: "Review → edit an item → type a 60-character name → the row and the receipt-line column stay in shape · saved booking: description cut"
       - id: C-SCN-029
         text: "Web *Add receipt* → merchant typed, 3 items of 3.333 against 10 → *0.01 left* shown · fix → saved · phone after a sync shows the receipt card with merchant and items (needs T-BOOK-06)"
+      - id: C-SCN-030
+        text: "Release APK on a real Android phone (`flutter build apk --release --flavor dev`) → hover a receipt → rows tick, the pass ends by itself · the debug build alone proves nothing here (E-SCN-64)"

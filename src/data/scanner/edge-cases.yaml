@@ -682,3 +682,13 @@ items:
         name: a brand the cleaner repaired from one misread glyph is on the paper (spar_20260606_A)
       - file: test/features/receipt/domain/services/category_chain_test.dart
         name: a long keyword one glyph off beats the shorter key read whole (spar_20260606_A)
+  - id: E-SCN-64
+    group: Camera
+    title: Release build read nothing
+    when: a release build since the Android tooling upgrade (AGP 9) · scanner opened · hovering or *Capture*
+    then: "rows read and tick, the pass ends by itself · fixed 2026-11-14 · before, every camera frame failed inside the text reader and the screen showed nothing; debug builds and the emulator were fine"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/android/android_build_test.dart
+        name: R8 keeps the no-arg constructors ML Kit instantiates by reflection
