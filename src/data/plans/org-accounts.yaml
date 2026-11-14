@@ -1,40 +1,30 @@
 # Sources: D&B mail of 2026-11-11 (case 11263262) · a to-do list from another AI, pasted by Gerald 2026-11-11 ·
 # checked 2026-11-11 against developer.apple.com/help/account/membership/program-enrollment/ and
 # …/updating-your-account-information/ · support.google.com/googleplay/android-developer/answer/13634888 + 16260648.
+# 2026-11-14: rechecked 16260648 (path, no way back, 72 h) + 14151465 (closed test) · Gerald: goal = new apps
+# without the closed test · Apple stays individual · no GmbH soon.
 # "not verified" = from the other AI or third-party guides only.
 title: "Organization accounts"
-goal: "Apple + Play developer accounts as an organization · D-U-N-S"
+goal: "New Play apps without the 12-tester closed test · D-U-N-S"
 gerald:
   - section: "D-U-N-S"
   - text: "D-U-N-S `303269065` created · trade style *Money Koi* · case 11263262"
     done: 2026-11-11
   - text: "Wait 2–3 business days until Apple + Google see the number · not verified"
   - text: "Use the record's address everywhere: `Am Platzl 3/Wohnhaus, Tür 3 · 4451 Garsten`"
-  - section: "Decide first"
-  - text: "Apple rule: a sole proprietor **must** join as individual → ask Apple before applying"
-    sub:
-      - text: "Apple accepts legal entities only · no trade names"
-      - text: "Einzelunternehmen without Firmenbuch entry → may be refused"
-  - text: "Play: organization → individual is not supported · no way back"
-  - text: "Play: ask support what a new payments profile does to products + payouts"
-  - text: "Pick the public developer name · ideas so far: Koi Labs, Koi App Studio, Psyren Studio"
-  - text: "Timing: before or after the iOS submission (T-PLAT-10)"
-  - section: "Apple"
-  - text: "Send the request form: `developer.apple.com/contact/request/migrate-individual-account`"
-    sub:
-      - text: "no menu switch exists · the other AI's *Switch to organization membership* path is wrong"
-  - text: "Give: D-U-N-S · `team@moneykoi.com` · `moneykoi.com` · legal name *Gerald Gmainer*"
-  - text: "Keep the GISA extract ready · Apple may ask for business documents"
-  - text: "Answer Apple's verification mail or call"
-  - text: "After: check seller name · agreements + Small Business Program (T-MON-02) still active"
-  - section: "Google Play"
-  - text: "Verify `moneykoi.com` in Play Console"
-  - text: "Developer account › About you › *Change account type* · path not verified"
-  - text: "Create a new payments profile · type Organization · enter the D-U-N-S"
+  - section: "Ask first"
+  - ref: T-PLAT-31
+  - text: "Apple stays individual · a sole proprietor must join as one"
+    done: 2026-11-14
+  - text: "No GmbH soon · it would bring a new D-U-N-S and another switch"
+    done: 2026-11-14
+  - section: "Google Play · only if T-PLAT-31 says convert"
+  - text: "Phone number for Play · shown publicly · receives Google's SMS code"
+  - text: "Verify `moneykoi.com` in Play Console · needs Search Console access"
+  - text: "Manage account › Account details › About you › *Change account type*"
+  - text: "New payments profile · Organization · Company/business · enter the D-U-N-S"
   - text: "Legal name + address exactly as on the D-U-N-S record"
-  - text: "Wait for Google's verification"
-  - text: "Set the public developer name"
+  - text: "Wait for Google's verification · then 72 h before a new app"
   - text: "After: check products · launch price (T-MON-09) · payouts · RevenueCat · 15 % tier (T-MON-28)"
 agents:
-  - text: "After the switch: new seller + developer name in listings, imprint, `STORE_LISTING_AI_CONTEXT.md`"
-  - text: "After the switch: T-PLAT-10 step 2 · DSA trader lines name the individual membership"
+  - text: "After the switch: Play account type in `STORE_LISTING_AI_CONTEXT.md` + platform docs"

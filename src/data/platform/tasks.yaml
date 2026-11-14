@@ -427,3 +427,25 @@ items:
       - synthetic voice → turn the AI label on
       - an agent writes the scripts · claim register first
       - expect a few hundred views a post · one breakout in 20–30
+  - id: T-PLAT-31
+    title: Ask Play support about the closed test for new apps
+    owner: gerald
+    detail: |
+      - the answer decides plan *Organization accounts* · goal: new apps without the 12-tester closed test
+      - Play Console › Help › Contact support · paste the text below
+      - no closed test for a new app on this account → no organization account · close the plan
+      - closed test needed, but a converted account is free of it → convert after Jan 16 (launch price)
+      - needed either way → decide: a second organization account, or 12 testers per new app
+      - Google's pages say only "personal accounts created after 2023-11-13" · converted accounts not mentioned
+    command: |
+      Hello,
+
+      my personal developer account has one app in production (com.psyren.moneykoi) with in-app products and subscriptions. I plan to publish more apps on this account.
+
+      1. Does each new app on my personal account need the closed test with at least 12 testers for 14 days before it gets production access, or does the existing production access cover new apps?
+      2. If I change the account type to organization (sole proprietorship with a D-U-N-S number), do new apps still need that closed test?
+      3. Would changing the account type affect my live in-app products, subscriptions, payouts, merchant payments profile or my enrollment in the 15% service fee tier?
+
+      Thank you
+      Gerald Gmainer
+    related: [T-MON-28]
