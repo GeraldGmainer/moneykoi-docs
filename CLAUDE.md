@@ -5,8 +5,8 @@ Human-facing docs for MoneyKoi: features, tiers, business rules, journeys, edge 
 ## 💬 Replies
 Same as `moneykoi-app/CLAUDE.md`: keyword-style bullets, answer first, `file:line` instead of prose.
 
-## 🚫 Git
-**This repo is the one place an agent commits** (decided 2026-11-03). When your docs work is done and `npm run check` passes, run `git add <paths>` + `git commit -m "<area>: <what changed>"` yourself: every path named, only files you changed, never another session's. Nothing else writes here either: no push, branch, checkout, restore, reset, stash, rebase, amend or history rewrite. Read-only git is fine. The code repos stay Gerald's (`moneykoi-app/CLAUDE.md` › Git).
+## 🔀 Git
+`moneykoi-app/CLAUDE.md` › Git is the rule for every repo (decided 2026-11-14): commit your own finished work, `git add <paths>` + `git -c gc.auto=0 commit -m "<area>: <what changed>" -- <paths>`, every path named, only files you changed, never another session's. Here "finished" means `npm run check` passes. `add` and `commit` are the only git writes: no push, pull, fetch, branch, checkout, restore, reset, stash, rebase, amend or history rewrite. Read-only git is fine.
 
 ## Where things live
 | What | Where | Rule |
@@ -122,7 +122,7 @@ A server migration belongs to the area of the feature it serves. One fact lives 
 Gerald's working lists, replacing his Notion pages: what **he** does and what **agents** do, per context.
 - **When**: work leaves steps for Gerald or follow-up for an agent → add them to the fitting plan, same pass. No fitting plan → ask Gerald before starting a new page.
 - **New plan**: `src/data/plans/<id>.yaml` (`title`, `goal`, optional `date`) + `src/content/docs/plans/<id>.mdx`, a copy of `ios-store.mdx` with the new id.
-- **Blocks**: `gerald:` = only he can do it (consoles, secrets, devices, pasting a git block, decisions). `agents:` = an agent can finish it alone. Never mix.
+- **Blocks**: `gerald:` = only he can do it (consoles, secrets, devices, pushing, tagging, decisions). `agents:` = an agent can finish it alone. Never mix.
 - **Item** = exactly one of:
   - `ref: T-XXX-nn` → an existing task. Title and state come from `tasks.yaml`. Optional `note:`. **Never** a `done:` here.
   - `text: …` → a one-off step, ≤ 14 words. State is `done: <date>` in the plan file. Optional `sub:` list of `text` / `done`.
@@ -138,7 +138,7 @@ Gerald's working lists, replacing his Notion pages: what **he** does and what **
 
 ### Finishing
 1. `npm run check` in this repo passes (Node 24: `export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:$PATH"`).
-2. Commit it yourself (see *Git*): `git -C ../moneykoi-docs add <paths>` + `git -C ../moneykoi-docs commit -m "<area>: <what changed>"`, one commit per feature, every path named, only your own files. The code repo's commit stays in the git block for Gerald.
+2. Commit it yourself (see *Git*): `git -C ../moneykoi-docs add <paths>` + `git -C ../moneykoi-docs -c gc.auto=0 commit -m "<area>: <what changed>" -- <paths>`, one commit per feature, every path named, only your own files. The code repo's work is committed there, same rule.
 3. Say in the reply which docs entries changed (ids) and the commit hash, or "docs: nothing user-visible changed".
 
 ## Commands
