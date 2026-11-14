@@ -64,13 +64,13 @@ items:
   - id: J-FC-08
     group: Reading
     title: Looks at the year, day by day (app)
-    from: Forecast → calendar icon (top bar)
+    from: Forecast → *Calendar* tab (under the title)
     steps:
       - "the year, one month under the other · each day a row: dots (green in, gray out), end balance, what · booked up to today, forecast after · today in the middle · the month's name stays on top"
       - ‹ › last year or next year
-      - "date icon → pick a day (or *Today*) → its year opens on it, the row highlighted"
+      - "date icon beside the year → pick a day (or *Today*) → its year opens on it, the row highlighted"
       - "a day → sheet: opening → closing, what was booked, what is expected, what is spread over it"
       - "an expected payment → its sheet: *Skip this one* (Undo) / *Change this one* · or *Plan something on this day*"
-    result: how much is there on any day, and why · back returns to the forecast
-    checks: [C-FC-033, C-FC-034, C-FC-035]
+    result: how much is there on any day, and why · *Overview* returns to the forecast
+    checks: [C-FC-033, C-FC-034, C-FC-035, C-FC-039]
     related: [R-FC-51]

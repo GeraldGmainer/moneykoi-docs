@@ -274,9 +274,9 @@ items:
     status: fixed
     risk: medium
     tests:
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: the day a starting balance lands lists it, so the rows add up to the net change
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: a day moved only by a starting balance says so in its row
   - id: E-FC-31
     group: Planned payments
@@ -288,7 +288,7 @@ items:
     status: fixed
     risk: medium
     tests:
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: a large system font cannot clip the fixed-height rows
   - id: E-FC-32
     group: Planned payments
@@ -300,7 +300,7 @@ items:
     status: fixed
     risk: low
     tests:
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: an expected row starts on the sheet edge, in line with the booked rows
   - id: E-FC-33
     group: Chart

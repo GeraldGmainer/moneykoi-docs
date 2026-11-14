@@ -326,7 +326,7 @@ items:
     group: Reading
     title: The forecast as a year calendar (app)
     text: |
-      - the web's calendar (R-FC-42) on a phone · Forecast → calendar icon in the top bar · its own page, back returns to the forecast
+      - the web's calendar (R-FC-42) on a phone · Forecast → *Overview · Calendar* tabs under the title switch the page · the top bar keeps only the pencil and the sliders (2026-11-14, the calendar icon was easy to miss) · opens on *Overview*
       - one month under the other · each a header (month, *Closing balance*, ⚠ when a day dips below zero) over a row per day
       - a row: day (today in an orange circle) · **dots** · **balance at the day's end** · what it was (the biggest item, *+2* for more) · zebra rows · whole amounts, no currency sign
       - **up to today what was booked** (walked back from today's balance) · **from today the forecast** (up to 24 months, the overview's toggles) · booked rows dimmer
@@ -335,7 +335,7 @@ items:
       - the month's name stays on top while its days scroll, with a gap before the next month
       - red balance below zero · amber below the buffer · ⚠ on the year's lowest forecast day
       - ‹ year › from the book's first year to as far as the forecast reaches · opens on this year with today in the middle of the screen
-      - "**Go to date** (date icon in the top bar): a date from the book's first day to the forecast's last, *Today* as a shortcut · opens that day's year with the day in the middle, highlighted in orange until the next pick or year arrow"
+      - "**Go to date** (date icon at the end of the year bar): a date from the book's first day to the forecast's last, *Today* as a shortcut · opens that day's year with the day in the middle, highlighted in orange until the next pick or year arrow"
       - **tap a day → sheet**: opening, closing, *Booked* (opens the booking), *Expected* (tap → the payment's own sheet: *Skip* with Undo · *Change* · *Edit*), what is spread over the day, net change · *Plan something on this day* from today on (not for read-only members)
       - accounts left out of the forecast are left out of the past too · a transfer to or from one moves the balance · a balance correction counts on its day
       - days before the book's history and past the horizon: drawn, no balance, no tap
@@ -350,13 +350,15 @@ items:
         name: "the dots: an item each, bookings and dated events only, and a quiet forecast day has none"
       - file: test/features/forecast/ui/calendar_year_test.dart
         name: at most two dots, and a small income still shows beside bigger bills
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: "tapping today opens its sheet: booked, expected, and plan on this day"
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: "a date in another year opens that year on it; the same date again scrolls back to it"
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: "a row draws its dots, green for money in, and a quiet day none"
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: the month being scrolled keeps its header pinned at the top of the list
-      - file: test/features/forecast/ui/forecast_calendar_page_test.dart
+      - file: test/features/forecast/ui/forecast_calendar_view_test.dart
         name: an expected row closes the day sheet and opens the event sheet
+      - file: test/features/forecast/ui/forecast_pages_test.dart
+        name: the top bar keeps the pencil and the sliders; the Calendar tab swaps the page for the year calendar

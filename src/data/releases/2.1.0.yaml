@@ -33,9 +33,9 @@ items:
     title: Forecast · year calendar on phones
     area: forecast
     what: |
-      - calendar icon → this year, today mid-screen · pinned month headers
+      - *Calendar* tab beside *Overview* → this year, today mid-screen · pinned month headers
       - *Go to date* · day sheet: booked + expected, starting balances
-    checks: [C-FC-033, C-FC-034, C-FC-035, C-FC-036, C-FC-037]
+    checks: [C-FC-033, C-FC-034, C-FC-035, C-FC-036, C-FC-037, C-FC-039]
     screens: [forecast calendar, day sheet]
   - n: 4
     title: Recurring payments · missing account, Feb 29, 31st
