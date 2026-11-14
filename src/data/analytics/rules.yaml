@@ -4,7 +4,7 @@ items:
     group: What it is
     title: A deep-dive, not a 2nd Home
     text: |
-      - **Pro** · 43 cards in 4 tabs
+      - **Pro** · 44 cards in 4 tabs
       - **Overview** · **Spending** · **Habits** · **Accounts**
       - Home = how am I now · Analytics = compare periods
       - the period: tap the label → every range with its dates · no ‹ › since 2026-11-09 (D-ANL-5)
@@ -185,7 +185,7 @@ items:
     title: Unlocks as you record
     text: |
       - zero entries: one empty state per segment · *Add entry* · *Scan a receipt*
-      - a card shows once the book is old enough for it: first entry · 2 days · 2 months · 3 months (seasonality) · income · a scanned receipt · a rule · a budget · a fixed-cost category · a tag
+      - a card shows once the book is old enough for it: first entry · 2 days · 2 months · 3 months (seasonality) · income · a scanned receipt · repeat purchases on receipts (*Price changes*) · a rule · a budget · a fixed-cost category · a tag
       - everything held back sits in one *Unlocks as you record* card with the reason and, where one exists, the button (*Scan a receipt*, *Add a rule*, *Set a budget*)
       - about the book's lifetime, never the selected period · a shown card with an empty window keeps its own *nothing in this period* line
       - Merchants and Receipts stay in the unlocks card until the first scan
@@ -198,3 +198,53 @@ items:
       - file: test/features/analytics/ui/views/analytics_section_list_test.dart
         name: "zero bookings: one empty state with two actions, no segment content"
     related: [R-ANL-01, R-HOM-41]
+  - id: R-ANL-41
+    group: Price changes
+    title: Price changes of what was bought
+    text: |
+      - Spending › *Receipts* › *Price changes* · **Pro** like all of Analytics (D-ANL-6) · not on the web
+      - from scanned receipts only · the **unit price** (per piece, per kg) · never the line total
+      - a product = same name at the same chain (BILLA and BILLA PLUS are one) · pack size kept apart (*1L*, *6x0,5L*)
+      - shows a product bought **3 times over 60 days** · change = its first 30 days vs. its latest 30 days
+      - up to 3 rising and 3 falling · a change under ½ % is neither · tap → every purchase, shop, date, a price line
+      - the card opens once **5 products** have such a history · until then it waits in *Unlocks as you record*
+      - receipts scanned before quantities were kept: in the history as one piece, marked **≈**
+    source: ANALYTICS › Price changes
+    related: [R-ANL-42, R-ANL-43, R-SCN-32, D-ANL-6]
+    tests:
+      - file: test/features/analytics/use_cases/get_price_changes_use_case_test.dart
+        name: risers and fallers, largest change first, unchanged and young products left out
+      - file: test/features/analytics/domain/prices/product_key_test.dart
+        name: BILLA and BILLA PLUS are one chain; an unknown shop is its own
+  - id: R-ANL-42
+    group: Price changes
+    title: The personal index
+    text: |
+      - the card's top row: *Groceries bought here, compared with a year ago* · a signed percent
+      - the last 90 days vs. the same 90 days a year earlier · products bought in **both** · weighted by last year's spend
+      - shown from **10 products** that are **25 %** of the item spend (D-ANL-9) · below: what it waits for, or the month it starts (13 months after the first receipt with quantities)
+      - *Based on 12 products, 40 % of item spend* under it · never called inflation alone
+      - **≈** receipts never count (D-ANL-8)
+      - *What stands out* says it too, from a 1 % change
+    source: ANALYTICS › Price changes
+    related: [R-ANL-41, D-ANL-9, D-ANL-14]
+    tests:
+      - file: test/features/analytics/domain/prices/personal_index_test.dart
+        name: an even rise across the basket is the index
+      - file: test/features/analytics/domain/prices/personal_index_test.dart
+        name: approximate points never count
+      - file: test/features/analytics/insight_builder_test.dart
+        name: a rise and a fall, rounded to whole percent
+  - id: R-ANL-43
+    group: Price changes
+    title: Food prices in Austria / Germany beside it
+    text: |
+      - *Food prices in Austria: +0.3 % (Eurostat HICP, Sep 2026)* · always the month · one or two months old
+      - Eurostat HICP food and drinks (CP01), year on year · *HVPI* in German (D-ANL-10)
+      - country: the phone's region when AT or DE, else none · ⋮ on the card → Austria · Germany · No comparison · kept on this phone
+      - shipped inside the app · refreshed at every release (`tool/update_hicp.dart`) · works offline
+    source: ANALYTICS › Price changes
+    related: [R-ANL-42, D-ANL-10]
+    tests:
+      - file: test/features/analytics/domain/service/official_food_inflation_test.dart
+        name: the picked country reads the newest month of the bundled series

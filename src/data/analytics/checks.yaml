@@ -25,6 +25,19 @@ groups:
         text: Salary booked on the 1st of last month and this month · on the 2nd → *This month* income shows no change (not +1000 %) · *Last month* compares the whole month before · month start 25 → periods run 25 → 24 on both sides
       - id: C-ANL-013
         text: "iPhone: Analytics → switch to *Spending* → the first drag scrolls the tab, not only the second (IOS-15-4)"
+  - id: price-changes
+    title: Price changes (built 2026-11-14)
+    items:
+      - id: C-ANL-014
+        text: "LIDL receipt with *0,49 x 2* on the item row → save → open it again later: the price card's product sheet shows 0,49 per piece"
+      - id: C-ANL-015
+        text: ADEG or BILLA receipt with *2 x 3,99* above an item and a weighed fruit (*1,079 kg x 2,49 EUR/kg*) → the item reads 3,99 per piece, the fruit 2,49 /kg · the item before the multiplier row keeps 1 piece
+      - id: C-ANL-016
+        text: SPAR receipt with *4 x 1,19* between name and price and a drink with PFAND → 1,19 per piece · the deposit not in it
+      - id: C-ANL-017
+        text: "Edit the price of a line with *2 x* in the review → save → that purchase counts as 1 piece · *Merge by category* → the products still show on the card"
+      - id: C-ANL-018
+        text: "Book with 5 products scanned 3 times over 2 months → *Price changes* leaves *Unlocks as you record* · ⋮ → Germany → the official line names Germany and its month · *No comparison* hides it · phone region AT shows Austria without asking"
   - id: release-2-0-0
     title: 2.0.0 · 2026-11-08
     items:

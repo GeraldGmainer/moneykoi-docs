@@ -331,9 +331,11 @@
   name: Price changes of what was bought
   area: viewing
   tier: pro
-  status: planned
   docs: analytics
-  note: from receipt items · own basket vs. a year ago · food inflation beside it · `plan_later/PERSONAL_INFLATION_PLAN.md`
+  note: from receipt items · own basket vs. a year ago · food inflation beside it (R-ANL-41 – R-ANL-43) · phase 5 (shrinkflation, *cheaper at*) not built · `plan_later/PERSONAL_INFLATION_PLAN.md`
+  since: built 2026-11-14 · not released yet
+  web: missing
+  webNote: the web shows no price card in v1
 
 # Receipt scanner
 - id: receipt-scanner

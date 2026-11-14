@@ -187,3 +187,50 @@ items:
     tests:
       - file: test/features/analytics/ui/widgets/forecast_card_test.dart
         name: '"grow by" / "shrink by" state the direction, so the change carries no sign, only the colour (I5-5)'
+  - id: E-ANL-20
+    group: Price changes
+    title: A receipt merged before saving
+    when: review › *Merge all* or *Merge by category*, then save
+    then: the bookings are merged as before · the products are kept inside the receipt and still count for prices (D-ANL-7)
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/receipt/use_cases/save_receipt_use_case_test.dart
+        name: a merged line keeps the product lines it replaced as parts
+  - id: E-ANL-21
+    group: Price changes
+    title: Receipts scanned before quantities were kept
+    when: receipts saved before the scanner kept quantities
+    then: each line read as one piece · in a product's history with **≈** · never in the index · 1 kg of bananas and 2 kg look like a price change there
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/analytics/domain/prices/price_point_collector_test.dart
+        name: a receipt saved before quantities reads as one piece, marked approximate
+  - id: E-ANL-22
+    group: Price changes
+    title: Weighed and counted
+    when: bananas bought by weight one time, as a bunch the next
+    then: two separate histories (per kg, per piece) · never one price change
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/analytics/domain/prices/product_history_test.dart
+        name: a weighed and a counted reading of one name are two histories
+  - id: E-ANL-23
+    group: Price changes
+    title: Promotions and deposits
+    when: a product bought on *Aktion* / *jö* / *Lidl Plus* · a drink with *PFAND*
+    then: the price paid counts, promotions included · medians soften a one-off · the deposit is never part of the unit price
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/receipt/use_cases/save_receipt_use_case_test.dart
+        name: a folded deposit is not in the unit price
+  - id: E-ANL-24
+    group: Price changes
+    title: A misread name splits a product
+    when: OCR reads a name two ways (*VOLLMILCH* / *VOLLM1LCH* is repaired, others are not) · a chain renames its till text
+    then: two products with fewer purchases · the index loses coverage, it does not get wrong
+    status: known-issue
+    risk: low

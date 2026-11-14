@@ -339,3 +339,24 @@ items:
         name: a one-cent gap is judged the same at every amount
       - file: test/features/booking/ui/widgets/add_receipt/review_metrics_test.dart
         name: a two-cent gap is a mismatch at every amount
+
+  - id: R-SCN-32
+    group: Review & save
+    title: How much was bought is kept
+    text: |
+      - *2 x 1,29*, *0,59 x 3*, *1,079 kg x 2,49 EUR/kg*, *6,000 ST a 9,08* → saved with the item: amount, unit, price per unit
+      - only when it multiplies out to the line total · a pack size (*6x0,5L*) is not a quantity
+      - LIDL on the item row · ADEG and BILLA the row above · SPAR between name and price · LIDL's weight row below
+      - the deposit is not in the price per unit · a discount is
+      - a new price typed in the review → the line counts as **1 piece** (D-ANL-12) · a renamed line keeps it
+      - *Merge* keeps the products inside the receipt; the bookings merge as before (D-ANL-7)
+      - a count the photo lost (*X 3,99 7,98*, *5,99 11,98* under the name) is read off the total when it is an exact multiple
+      - for everyone, Free too · read by *Price changes* (Pro, R-ANL-41)
+      - measured 2026-11-14 on ADEG, BILLA, LIDL, SPAR: **92 %** right on the app's OCR (emulator scales), 62 % on the Mac stand-in · the 85 % bar of D-ANL-13 is met
+    source: SCANNER §4.13f
+    related: [R-ANL-41, D-ANL-12, D-ANL-13]
+    tests:
+      - file: test/features/receipt/domain/parsers/quantity_reader_test.dart
+        name: "ADEG: the row above the item, never the item before it"
+      - file: test/features/receipt/use_cases/save_receipt_use_case_test.dart
+        name: a counted line saves quantity, unit and the unit price as decimal strings

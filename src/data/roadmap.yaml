@@ -99,7 +99,7 @@
     - ref: auto-capture
       why: second · starts with a device go / no-go
     - ref: personal-inflation
-      why: third · phase 0 stays here too (decided)
+      why: phases 0–4 built 2026-11-14 in a worktree · waits for merge and the device checks C-ANL-014 – 018
     - ref: koi-pond
       why: after the koi illustrations
     - ref: D-PRIV-8
