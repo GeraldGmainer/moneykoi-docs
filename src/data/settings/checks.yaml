@@ -37,3 +37,15 @@ groups:
         text: "Review card (R-SET-47): internal-track build, not a debug one · an account with ≥ 20 bookings on ≥ 7 days signed in on a phone that did not run setup · save a booking → Home, then Play's card · a second save in the same launch → nothing · Settings → *Rate Money Koi* → the Play page · iOS: TestFlight shows no card, only the row"
       - id: C-SET-017
         text: "Release build: *Quick Start* → *Create budget book* → Home shows the starting balance and the *Getting started* card at once, no *0,00 €* for seconds (AND-1-5)"
+      - id: C-SET-018
+        text: "Settings → *Appearance* → *Light* → Settings, the drawer and the page behind repaint at once, back goes where it went before · every tab (Home, Budget Book incl. calendar, Analytics charts + heatmap + treemap, Shopping, Investments) readable · bottom sheets, dialogs, snackbars, the keypad · restart keeps *Light* · same in *Dark* · de + ja copy"
+      - id: C-SET-019
+        text: "*Appearance* → *System* · switch the phone's dark mode with the app open → the app follows without a restart · Android quick tile + iOS Control Center"
+      - id: C-SET-020
+        text: "Light, cold start → dark launch screen, then the light app, no white flash · status-bar icons dark on light pages, light over the koi header on Home, light again once the header collapses · Android navigation bar follows"
+      - id: C-SET-021
+        text: "Light → scanner: camera frame + koi corners as in dark · panels, buttons, review pages and sheets light and readable · Profile → change photo → cropper toolbar readable"
+      - id: C-SET-022
+        text: "Light → home-screen widgets unchanged (their own *Appearance*) · widget config preview shows the widget's plate, not the app's · PDF export identical to one made in dark"
+      - id: C-SET-023
+        text: "Light → categories with pale user colors (yellow, light green, light blue): icon readable on its disc in the picker, ledger and analytics · app lock + hide-amounts blur readable"

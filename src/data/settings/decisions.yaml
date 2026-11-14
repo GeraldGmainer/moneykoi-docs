@@ -32,3 +32,11 @@ items:
     answer: |
       - **keep the link** · the Apple ID is reserved, the page works the day iOS 1.0 is live
       - until then only the simulator and TestFlight testers reach an empty page (F-24)
+  - id: D-SET-5
+    question: Scanner camera in light mode · pin the whole camera screen dark?
+    status: open
+    answer: |
+      - built: only what is drawn on the camera feed stays dark (frame, koi corners, row ticks) · panels and buttons follow the theme
+      - why: the same panels are the review pages' save bar and sheets · pinning them would put dark panels on light review pages
+      - 1: keep it · 2: pin the live camera screen dark (needs a dark-only subtree, the theme has none yet)
+    related: [R-SET-49, C-SET-021]

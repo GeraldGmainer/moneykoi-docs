@@ -294,3 +294,46 @@ items:
         name: reads AppDateFormat.system as the locale
       - file: test/shared/utils/number_format_test.dart
         name: follows each locale
+  - id: R-SET-48
+    group: Settings
+    title: Appearance — System, Light or Dark
+    text: |
+      - Settings → *Personalize* → *Appearance* · *System* · *Light* · *Dark*
+      - **default *System***: follows the phone's light / dark setting, live while the app is open
+      - *Light* / *Dark* ignore the phone
+      - switches at once · no restart · the open page and the back stack stay
+      - **this phone only**: never synced, each device its own · kept through sign-out and leaving the demo
+      - free in every plan
+    source: THEME_AI_CONTEXT.md §1 · LIGHT_THEME_PLAN.md §6
+    tests:
+      - file: test/features/settings/domain/theme_controller_test.dart
+        name: follows the system until a mode is chosen
+      - file: test/features/settings/domain/theme_controller_test.dart
+        name: a chosen mode ignores the system and is stored on the device
+      - file: test/features/settings/domain/theme_controller_test.dart
+        name: a stored mode is restored
+      - file: test/features/settings/domain/theme_controller_test.dart
+        name: an unknown stored value falls back to the system
+    checks: [C-SET-018, C-SET-019]
+    related: [R-SET-49, J-SET-06]
+  - id: R-SET-49
+    group: Settings
+    title: What keeps its own colors in light mode
+    text: |
+      - **dark in both**: launch screen (paints before the choice is read) · koi header on Home, with light status-bar icons over it · privacy shield · brand banners (active book, page info)
+      - **follows the theme**: the total-balance card inside the koi header (white in light) · the scanner's panels, buttons and review pages
+      - **drawn on the camera feed** (viewfinder frame, koi corners, row ticks) stays as in dark (D-SET-5)
+      - **home-screen widgets** keep their own *Appearance* (light / dark plate) · never follow the app
+      - **PDF export** looks the same in both
+      - category and account colors are the user's own · light mode only folds them darker so the icon reads on white
+      - every text color ≥ 4.5:1, every icon ≥ 3:1 on its ground, in both themes
+    source: THEME_AI_CONTEXT.md §4, §5
+    tests:
+      - file: test/core/constants/app_palette_contrast_test.dart
+        name: every drawer tint reads as a glyph on the drawer
+      - file: test/core/constants/app_palette_contrast_test.dart
+        name: a hairline is visible on its ground
+      - file: test/core/constants/app_palette_dark_test.dart
+        name: the dark palette is the palette the app shipped before it had two
+    checks: [C-SET-020, C-SET-021, C-SET-022, C-SET-023]
+    related: [R-SET-48, D-SET-5]

@@ -592,8 +592,11 @@
   name: Light mode
   area: app
   tier: free
-  status: planned
-  note: readability, not decoration
+  note: System · Light · Dark · per device · launch screen, koi header and camera frame stay dark (R-SET-48, R-SET-49)
+  since: built 2026-11-14 · not released yet
+  web: missing
+  webNote: the web dashboard is dark only
+  docs: settings
 - id: accessibility
   name: Accessibility
   area: app

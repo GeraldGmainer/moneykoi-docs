@@ -73,7 +73,7 @@
   items:
     - ref: light-mode
       size: M
-      why: its palette comes before accent colors
+      why: app built 2026-11-14 · release not dated · its palette comes before accent colors
     - ref: accent-colors
       why: needs the light-mode palette
     - ref: budget-rollover
