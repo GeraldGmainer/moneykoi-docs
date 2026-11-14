@@ -88,14 +88,14 @@ items:
     from: the booking form (new or existing)
     steps:
       - amount = the total · pick the first category
-      - "*Split across categories* → part one holds the total"
+      - "*Split across categories* (own button under the form) → part one holds the total"
       - "tap part one → lower its amount → *Apply*"
       - "*Add part* → sheet opens with the rest filled in → category → *Apply*"
       - "*Parts match the total* → *Save*"
     result: one booking per part · one group in the ledger
     tests:
       - file: test/features/booking/ui/pages/booking_save_page_test.dart
-        name: Split across categories swaps the category row for the parts; one part is not saveable, merge puts the row back
+        name: Split in the action bar swaps the category row for the parts; one part is not saveable, merge puts the row back
       - file: test/features/booking/use_cases/split_booking_use_case_test.dart
         name: a new split writes one booking per part under one group id and rounds up once
     checks: [C-BKG-052, C-BKG-053]

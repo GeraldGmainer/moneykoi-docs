@@ -345,7 +345,7 @@ items:
     group: Split
     title: One purchase, several categories
     text: |
-      - booking form → *Split across categories* under the category · not on a transfer
+      - booking form → *Split across categories*, its own button under the form (below *Add receipt*) · not on a transfer · gone while split
       - each part: category, amount, own description (else the purchase's)
       - date, account, receipt, tags = the purchase's, on every part
       - the amount on top stays the total · *Save* only when the parts match it exactly · line under the parts: *left to assign* / *over the total* / *Parts match the total*

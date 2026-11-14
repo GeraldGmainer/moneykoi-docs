@@ -535,6 +535,17 @@ items:
     tests:
       - file: test/features/backup/backup_remapper_test.dart
         name: the parts of a split purchase stay one group under a new id
+  - id: E-BKG-75
+    group: Split
+    title: Add part closed before an amount
+    when: parts already match the total · *Add part* → keypad opens empty → back or tap outside
+    then: "fixed 2026-11-14 · the sheet closes without *Unsaved changes* · with an amount typed it still asks · was: asked every time on a new part"
+    status: fixed
+    risk: low
+    related: [R-BKG-55]
+    tests:
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: a new part closed before an amount is typed leaves without asking; with an amount it asks
   - id: E-BKG-74
     group: Quick booking
     title: A store for everything guessed as Groceries
