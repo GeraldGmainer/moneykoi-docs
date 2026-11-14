@@ -55,3 +55,5 @@ groups:
         text: "Budget, goal, shopping + category widget in book A → switch to B → A's figures stay · back to A → refreshed · record deleted in A → placeholder · sign out → all blank"
       - id: C-HOM-024
         text: "*Personalize* with bank 2000 + card 150 owed, one 10 € expense → Home *Cash flow · This month* income 0, expenses 10 · breakdown sheet has no *Initial balances* row"
+      - id: C-HOM-025
+        text: Every release · shopping widget with items placed on the previous version → update over it (Play or `adb install -r`) → rows show the items · none stuck on *Loading…* / *読み込んでいます…*
