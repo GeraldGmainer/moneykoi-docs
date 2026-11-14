@@ -46,7 +46,8 @@ items:
       - regional prices → [Pricing](/monetization/pricing/) · euro rows all the same price
       - real-time notifications → `Play-Store-Notifications` → RevenueCat
       - license testing + internal testers set up · the license test passed (T-MON-07)
-      - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library) · T-MON-28 (15 % fee tier)
+      - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library)
+      - 15 % service fee tier enrolled · checked 2026-11-14 (T-MON-28)
   - id: T-MON-04
     title: RevenueCat · project and webhook
     owner: gerald
@@ -155,8 +156,10 @@ items:
   - id: T-MON-28
     title: "Check: Play 15 % service fee tier"
     owner: gerald
+    status: done
     detail: |
-      - Apple's Small Business Program is in since 2026-11-14 (T-MON-02) · Play probably too, not confirmed
+      - **done 2026-11-14** · enrolled: *15% service fee* ✓ · account group = this one account, primary
+      - Apple's Small Business Program is in since 2026-11-14 (T-MON-02)
       - Play Console › Settings › *Associated developer accounts* · enrollment status at the bottom of the page
       - not enrolled → create the account group there (this one account), then enroll from the banner
       - without it one-time products pay 30 %; subscriptions pay 15 % either way
