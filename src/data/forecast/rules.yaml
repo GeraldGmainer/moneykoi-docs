@@ -231,8 +231,9 @@ items:
     text: |
       - Home card · only with recurring bookings or planned payments
       - Analytics card · Pro
-      - drawer *Forecast*, after *Recurring* · always there
+      - drawer *Forecast*, after *Recurring* · then *Forecast calendar* · while not in the bar
       - Free: dimmed in the drawer's Pro group → paywall at Forecast
+      - **bottom-bar tabs** (D-HOM-15): *Forecast* and *Forecast calendar*, picked in Settings › Navigation · a Home or Analytics card then switches to the tab
     source: FORECAST §9, NAVIGATION §8
     tests:
       - file: test/shared/ui/drawer/app_drawer_test.dart
@@ -327,6 +328,7 @@ items:
     title: The forecast as a year calendar (app)
     text: |
       - the web's calendar (R-FC-42) on a phone · Forecast → *Overview · Calendar* tabs under the title switch the page · the top bar keeps only the pencil and the sliders (2026-11-14, the calendar icon was easy to miss) · opens on *Overview*
+      - **its own page too** (D-HOM-15): *Forecast calendar* in the drawer or as a bar tab · the calendar alone, title *Forecast calendar*, pencil and sliders, no *Overview · Calendar* row
       - one month under the other · each a header (month, *Closing balance*, ⚠ when a day dips below zero) over a row per day
       - a row: day (today in an orange circle) · **dots** · **balance at the day's end** · what it was (the biggest item, *+2* for more) · zebra rows · whole amounts, no currency sign
       - **up to today what was booked** (walked back from today's balance) · **from today the forecast** (up to 24 months, the overview's toggles) · booked rows dimmer
@@ -362,3 +364,5 @@ items:
         name: an expected row closes the day sheet and opens the event sheet
       - file: test/features/forecast/ui/forecast_pages_test.dart
         name: the top bar keeps the pencil and the sliders; the Calendar tab swaps the page for the year calendar
+      - file: test/features/forecast/ui/forecast_pages_test.dart
+        name: "the calendar destination: the year calendar alone, the pencil and the sliders; as a tab the drawer button leads"

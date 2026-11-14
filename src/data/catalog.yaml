@@ -300,7 +300,7 @@
   name: Configurable bottom bar
   area: viewing
   feature: navBar
-  note: purchase → 4-tab bar at once
+  note: purchase → 4-tab bar at once · Investments, Forecast and Forecast calendar can be tabs since 2026-11-14 (D-HOM-15)
   web: app-only
   docs: home
 - id: accent-colors

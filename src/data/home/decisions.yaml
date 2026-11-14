@@ -114,3 +114,17 @@ items:
       - Home now matches Stats and the Budget Book · the breakdown sheet has no *Initial balances* row
       - was: setup with bank 2,000 + card 150 owed showed income 2,000 and expenses 160 on day one (F-55)
     related: [D-HOM-11]
+
+  - id: D-HOM-15
+    question: "Forecast, its calendar and Investments as bottom-bar tabs?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **two forecast tabs** (Gerald): *Forecast* (Overview · Calendar under the title, as before) and *Forecast calendar* (the year calendar alone, no tabs under the title) · either or both in the bar
+      - *Investments* can be a tab too
+      - all three are Pro like their pages · picked in Settings › Navigation (editing the bar is Pro)
+      - the drawer lists them like every page not in the bar · new row *Forecast calendar* after *Forecast* · Free: in the Pro group
+      - **default bar unchanged** (Gerald): Pro still starts on Home · Book · + · Stats · Goals
+      - plan ends with one in the bar: the page read-only with its records, the paywall without (as from the drawer)
+      - why: the calendar shows the forecast and the bookings in one place (Gerald, 2026-11-14)
+    related: [R-HOM-10, R-HOM-13, R-FC-50, R-FC-51]

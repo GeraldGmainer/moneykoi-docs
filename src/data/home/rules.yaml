@@ -66,8 +66,11 @@ items:
       - bar: 1, 2 or 4 tabs · + needs the middle
       - rest in the drawer · deep links always work
       - 1 tab = no bar
+      - can be a tab: Home · Book · Stats · Goals · Shopping · Accounts · Categories · Recurring · Investments · Forecast · Forecast calendar (the last three since 2026-11-14, D-HOM-15)
     source: NAVIGATION §1–§2
     tests:
+      - file: test/core/navigation/app_destination_test.dart
+        name: investments, the forecast and the forecast calendar can be tabs of a saved bar
       - file: test/core/navigation/nav_layout_test.dart
         name: drops the last tab of a 3-tab list
       - file: test/core/navigation/nav_layout_test.dart
@@ -91,7 +94,7 @@ items:
     group: Bottom bar & drawer
     title: Locked pages form a Pro group
     text: |
-      - Free: Analytics, Shopping list, Investments, Forecast leave the page list
+      - Free: Analytics, Shopping list, Investments, Forecast, Forecast calendar leave the page list
       - Pro group at the **very end**, after Settings, Tips, Feedback
       - header: crown, *Pro features*, *Get Pro* · rows dimmed, no padlock
       - tap → that feature's paywall · read-only page with records
