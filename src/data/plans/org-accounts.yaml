@@ -34,7 +34,7 @@ gerald:
   - text: "Legal name + address exactly as on the D-U-N-S record"
   - text: "Wait for Google's verification"
   - text: "Set the public developer name"
-  - text: "After: check products · launch price (T-MON-09) · payouts · RevenueCat"
+  - text: "After: check products · launch price (T-MON-09) · payouts · RevenueCat · 15 % tier (T-MON-28)"
 agents:
   - text: "After the switch: new seller + developer name in listings, imprint, `STORE_LISTING_AI_CONTEXT.md`"
   - text: "After the switch: T-PLAT-10 step 2 · DSA trader lines name the individual membership"

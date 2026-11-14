@@ -10,6 +10,7 @@ gerald:
   - ref: T-MON-10
   - ref: T-MON-27
   - ref: T-MON-26
+  - ref: T-MON-28
   - section: "Listing"
   - ref: T-PLAT-24
   - ref: T-PRIV-03

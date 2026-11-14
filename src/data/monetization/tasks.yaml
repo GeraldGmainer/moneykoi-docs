@@ -27,7 +27,8 @@ items:
     title: Apple · agreements and products
     owner: gerald
     detail: |
-      - Paid Applications agreement + bank/tax · apply for Small Business Program
+      - Paid Applications agreement + bank/tax
+      - ✓ 2026-11-14: Small Business Program · 15 % on paid apps + in-app purchases · over 1M USD proceeds in a calendar year → 30 % for the rest of that year
       - non-consumables: `pro.lifetime` · `cloud.lifetime` · `cloud.lifetime.upgrade`
       - group *Money Koi Cloud*: `cloud.yearly` (1-month trial) · `cloud.monthly`
       - prices per Pricing · family sharing **Pro on, Cloud off** (one-way)
@@ -45,7 +46,7 @@ items:
       - regional prices → [Pricing](/monetization/pricing/) · euro rows all the same price
       - real-time notifications → `Play-Store-Notifications` → RevenueCat
       - license testing + internal testers set up · the license test passed (T-MON-07)
-      - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library)
+      - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library) · T-MON-28 (15 % fee tier)
   - id: T-MON-04
     title: RevenueCat · project and webhook
     owner: gerald
@@ -151,6 +152,16 @@ items:
       psql "$PROD_DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/manual/admin_sales.sql
       # 3 admin: commit, push (Vercel deploys)
     related: [T-SCN-03, R-PRIV-25]
+  - id: T-MON-28
+    title: "Check: Play 15 % service fee tier"
+    owner: gerald
+    detail: |
+      - Apple's Small Business Program is in since 2026-11-14 (T-MON-02) · Play probably too, not confirmed
+      - Play Console › Settings › *Associated developer accounts* · enrollment status at the bottom of the page
+      - not enrolled → create the account group there (this one account), then enroll from the banner
+      - without it one-time products pay 30 %; subscriptions pay 15 % either way
+      - menu names from Google's 2021 help pages · may read differently now
+    related: [T-MON-02, T-MON-03]
   - id: T-MON-09
     title: Google · launch discount from Nov 8
     owner: gerald
