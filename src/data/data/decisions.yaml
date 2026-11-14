@@ -145,7 +145,8 @@ items:
       - import stays free (D-DATA-12) · Pro is the monthly convenience
       - record: `BOOKING_IMPORT_AI_CONTEXT.md` §16a D-BANK-1
       - **built 2026-11-10** · R-DATA-74
-    related: [D-DATA-12, D-DATA-11]
+      - **one wizard and no second entry replaced by D-DATA-52 (2026-11-14)**: a simple import and a bank import
+    related: [D-DATA-12, D-DATA-11, D-DATA-52]
   - id: D-DATA-20
     question: Saved import formats · whose, where, when?
     status: decided
@@ -458,3 +459,17 @@ items:
       - not chosen: capitalise the key on screen (*Netflix Com*, not the real name) · leave as is
       - found 2026-11-13 (A5-5)
     related: [R-DATA-85]
+  - id: D-DATA-52
+    question: "CSV import · one free *Import bookings* and a Pro *Import bank file* — where, and what does each do?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **two entries, one engine** (Gerald): *Import bookings* = the simple import, free · *Import bank file* = the bank import, Pro, reads any CSV too
+      - simple import: Settings › Backup & restore and the book card ⋮ · **always simple, with Pro too** · no saved formats, learned payees, row editing, transfer suggestion or reminder · no lock, no Pro line
+      - safety stays in both: re-import key · ±3-day check · *Deleted earlier* · pending rows · balance compare
+      - bank import: Budget Book ⋮ › *Import bank file* · without Pro the lock → paywall *Bank import with saved formats* → after buying it opens
+      - a `.csv` opened with Money Koi: **by plan** · Pro → bank import · Free → simple import
+      - the import reminder opens the bank import
+      - web: **app now, web later** · the web keeps one import with every Pro part (every web book is Cloud)
+      - built 2026-11-14 · R-DATA-74 · replaces the *one wizard, no second entry* part of D-DATA-19
+    related: [D-DATA-19, R-DATA-74, R-MON-59]

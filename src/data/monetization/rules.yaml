@@ -191,6 +191,7 @@ items:
     title: Bank import · comfort is Pro
     text: |
       - `Feature.statementImport` live since 2026-11-10 · paywall *Bank import with saved formats*
+      - entry: Budget Book ⋮ › *Import bank file* · the free *Import bookings* never shows a Pro part (D-DATA-52)
       - the import itself + everything that protects the book stays free (R-DATA-74)
       - paywall page: *The first file of a bank is mapped once. Every later file goes straight to Review, with its account and categories set.*
       - its points: *Payees remember their category* · *Every row can be edited before the import* · *A monthly reminder for the next file*

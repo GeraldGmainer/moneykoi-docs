@@ -391,15 +391,26 @@ items:
     text: |
       - free: the import · re-import key · ±3-day check · *Deleted earlier* · pending rows · balance compare · open-with
       - **Pro**: saved formats · learned payees · row editing · transfer suggestion · import reminder
-      - one wizard · Pro parts wear the lock → paywall *Bank import with saved formats*
-      - Free result screen: one line *With Pro, the next file from this bank goes straight to Review*
+      - **two entries** (D-DATA-52): *Import bookings* = simple, Settings › Backup & restore and the book card ⋮ · *Import bank file* = Pro, Budget Book ⋮
+      - simple import: no Pro part, with Pro too · no lock, no Pro line
+      - *Import bank file* without Pro: the lock → paywall *Bank import with saved formats* → opens after buying
+      - a `.csv` opened with Money Koi: Pro → bank import · Free → simple import
+      - Pro lapsed during a bank import: its Pro parts wear the lock · the result says *With Pro, the next file from this bank goes straight to Review*
     source: BOOKING_IMPORT §1, §9b, §17 · feature.dart `statementImport`
     tests:
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: "with Pro too: no recognition, no learned payees, no format, no row edit, nothing learned"
+      - file: test/features/data_import/ui/bank_import_ui_test.dart
+        name: "the simple import shows no Pro part: no Save this format, no lock, a row tap ticks"
+      - file: test/features/budget_book/ui/screens/budget_book_tab_test.dart
+        name: import bank file without Pro wears the lock and opens the paywall
+      - file: test/features/backup/ui/backup_open_listener_test.dart
+        name: a CSV opens the bank import with Pro, the simple one without
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
         name: no recognition, no learned payees, no format saved, no row edit
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
         name: a purchase made mid-wizard counts for the import
-    related: [R-MON-21, R-MON-59, D-DATA-19, D-DATA-12]
+    related: [R-MON-21, R-MON-59, D-DATA-19, D-DATA-12, D-DATA-52]
   - id: R-DATA-75
     group: Bank import
     title: Description = the payee
@@ -765,7 +776,7 @@ items:
       - **Pro** · per book · 30 days after the last import into it · off by default
       - switched on: *Remind in a month* on the result · Settings › Notifications › *Import reminder*
       - overdue → once per 30 days, never daily · another phone's import moves it
-      - tap → the import for that book
+      - tap → the bank import for that book
     source: BOOKING_IMPORT §19
     tests:
       - file: test/features/data_import/use_cases/import_extras_test.dart

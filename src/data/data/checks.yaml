@@ -143,7 +143,7 @@ groups:
       - id: C-DATA-064
         text: "Review → tap a row → *Edit row* → amount on the app keypad · phone + tablet → *Apply* → the row shows the new amount · *Reset to the file* puts it back"
       - id: C-DATA-065
-        text: "Simulator *Free* → Review: *Save this format* locked → paywall *Bank import with saved formats* · row tap → paywall · tick boxes + category pill work · result shows the Pro hint line"
+        text: "Simulator *Free* → Review: *Save this format* locked → paywall *Bank import with saved formats* · row tap → paywall · tick boxes + category pill work · result shows the Pro hint line · up to the tag `v2.1.0`: on `main` a Free user reaches no locked part, see C-DATA-078"
       - id: C-DATA-066
         text: "After the migration: format + learned payee saved on phone A → phone B and the web recognize the next file, rows show *Learned*"
       - id: C-DATA-067
@@ -152,3 +152,5 @@ groups:
         text: "Backup & restore → *Saved import formats*: rename, delete · *Learned payees*: *Change category*, delete · a member reads only · simulator *Free* → both locked, entries kept"
       - id: C-DATA-077
         text: "Bank file with a long payee (*Hausverwaltung Müller GmbH*) → Review and the saved booking say *Hausverwaltung* · same on the web (A5-1)"
+      - id: C-DATA-078
+        text: "Simulator *Free* → Budget Book ⋮ › *Import bank file* wears the lock → paywall → buy Pro → the bank import opens · Settings › Backup & restore › *Import bookings* with Pro → no *Save this format*, no lock on the rows, no reminder switch on the result · a `.csv` from Files: Pro → *Recognized* for a saved bank, Free → the simple import (D-DATA-52)"

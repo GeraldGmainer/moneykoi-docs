@@ -69,6 +69,8 @@ gerald:
   - ref: T-BOOK-06
     note: "all 7 pending migrations in one push · before the web deploy and the Play rollout"
   - text: "Decide D-PLAT-23 first: build from tag `v2.1.0` or `main` (split inside)"
+    sub:
+      - text: "`main` also has the import split (D-DATA-52) · device check C-DATA-078"
   - text: "`./publish.sh internal` → device pass on the internal build → `./publish.sh promote`"
   - text: "Push `20261115090000_release_notes_app_2_1_0_web_1_9_0` with the Play rollout"
   - text: "Then push moneykoi-web `main` (T-DATA-08) · 7 commits ahead"
