@@ -41,6 +41,8 @@ groups:
         text: "Round-up goal on, unit 1 · split 3.40 + 2.30 → one round-up of 0.30 · scan a receipt of 3 items → one round-up on the total, not three · server migration `20261114100000_booking_split_group` applied first, else the save stays *not synced*"
       - id: C-BKG-056
         text: "Quick add → `Galaxus 49`, `Amazon 20`, `Sparen 50` → no category guessed, the picker asks · `Interspar 12` → Groceries (A5-2)"
+      - id: C-BKG-057
+        text: "*New booking* → `42` → ✓ → picker opens → scroll to the end → *Split across categories* below *New category* → picker closes, part one's sheet shows 42 → category → *Apply* → split section with one part · same from the category row · type in the search → row gone · recurring, budget and filter pickers → no such row"
   - id: fixing
     title: Fixing
     items:

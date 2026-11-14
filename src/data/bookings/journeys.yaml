@@ -89,6 +89,7 @@ items:
     steps:
       - amount = the total · pick the first category
       - "*Split across categories* (own button under the form) → part one holds the total"
+      - "or: category picker → last row *Split across categories* → part one's sheet opens with the total"
       - "tap part one → lower its amount → *Apply*"
       - "*Add part* → sheet opens with the rest filled in → category → *Apply*"
       - "*Parts match the total* → *Save*"
@@ -96,9 +97,11 @@ items:
     tests:
       - file: test/features/booking/ui/pages/booking_save_page_test.dart
         name: Split in the action bar swaps the category row for the parts; one part is not saveable, merge puts the row back
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: Split in the category picker after Done starts the split and opens part one, whose pick lands on the draft
       - file: test/features/booking/use_cases/split_booking_use_case_test.dart
         name: a new split writes one booking per part under one group id and rounds up once
-    checks: [C-BKG-052, C-BKG-053]
+    checks: [C-BKG-052, C-BKG-053, C-BKG-057]
   - id: J-BKG-32
     group: Entering
     title: Splits by the receipt's items

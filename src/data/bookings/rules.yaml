@@ -346,6 +346,7 @@ items:
     title: One purchase, several categories
     text: |
       - booking form → *Split across categories*, its own button under the form (below *Add receipt*) · not on a transfer · gone while split
+      - also the last row of the category picker, only when the picker is opened from the booking form · part one's sheet opens at once · not in recurring, budget, filter, quick add, import or scanner pickers
       - each part: category, amount, own description (else the purchase's)
       - date, account, receipt, tags = the purchase's, on every part
       - the amount on top stays the total · *Save* only when the parts match it exactly · line under the parts: *left to assign* / *over the total* / *Parts match the total*
@@ -354,6 +355,8 @@ items:
     source: BOOKING_SPLIT §1, §4
     related: [J-BKG-31, E-BKG-71, D-BKG-37]
     tests:
+      - file: test/features/booking/ui/modal/category_picker_modal_test.dart
+        name: is not offered unless the caller asks for it
       - file: test/features/booking/domain/booking_draft_split_test.dart
         name: "three thirds and a cent validate: the sum is Decimal, never double"
       - file: test/features/booking/domain/booking_draft_split_test.dart
