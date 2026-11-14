@@ -32,6 +32,26 @@ items:
     title: Multi-currency · renumber the local migration if split lands first
     owner: ai
     detail: |
-      - the branch takes `migration_v28.sql` · split transactions was pencilled in at v28
+      - the branch takes `migration_v28.sql` · **split took v28 on 2026-11-14** → the branch's file becomes `migration_v29.sql`, `_databaseVersion` 29
+      - server: `internal.rewind_columns` and `restore_book_apply` now carry `split_group_id` (T-BKG-05) → re-copy both
       - whichever merges second takes the next number and bumps `_databaseVersion` · the multi-currency file is plain re-runnable `ADD COLUMN`s
       - on merge: link the branch's tests to E-BKG-44 … E-BKG-59 (`npm run check` reads tests from the main checkout, so they cannot be linked before)
+  - id: T-BKG-05
+    title: Split transactions · apply the server migration
+    owner: gerald
+    detail: |
+      - written 2026-11-14: `moneykoi-supabase/supabase/migrations/20261114100000_booking_split_group.sql`
+      - adds `booking.split_group_id` · redefines `internal.rewind_columns` and `restore_book_apply` (bank-import bodies + the column)
+      - **before** an app build with split ships: without the column the server refuses every booking push (PGRST204)
+      - local: `supabase migration up` · prod: merge to `main` (CI pushes)
+      - then run the read-only checks at the end of the file
+      - multi-currency (T-BKG-01) redefines the same two functions: at its move, re-copy them from this file
+  - id: T-BKG-06
+    title: Split transactions · the web shows the group
+    owner: ai
+    waitsFor: [T-BKG-05]
+    detail: |
+      - today the web lists each part as its own booking · totals are right
+      - ledger: group rows by `split_group_id`, header with total, as the app
+      - `/add-receipt`: send one group id for the items of a receipt (`receipt_create_with_bookings` needs the column in `p_items` or a parameter)
+      - editing a part on the web must keep `split_group_id` (check the update payload)

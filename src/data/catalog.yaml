@@ -126,7 +126,10 @@
   name: Split transactions
   area: money
   tier: free
-  status: planned
+  web: app-only
+  webNote: the web lists the parts as separate bookings
+  docs: bookings
+  note: one purchase in several categories · built 2026-11-14, not released
 - id: booking-templates
   name: Repeat booking / templates
   area: money

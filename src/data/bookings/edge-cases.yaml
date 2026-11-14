@@ -505,3 +505,33 @@ items:
     tests:
       - file: test/shared/ui/form/code_point_limit_formatter_test.dart
         name: text an input method is still composing is left alone until it is committed
+  - id: E-BKG-71
+    group: Split
+    title: Parts do not add up
+    when: parts 4 + 5 on a total of 10 · or 6 + 5
+    then: "*Save* stays off · the line says how much is left or over · nothing is spread or rounded for the user"
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/booking/domain/booking_draft_split_test.dart
+        name: a remainder, an overshoot, a missing category and a zero part are all invalid
+  - id: E-BKG-72
+    group: Split
+    title: Only some parts on this phone
+    when: another phone split a booking · sync has brought 1 of 3 parts so far
+    then: the part shows as a plain booking with a split mark and opens as one · the group appears once the others land · no total is stored, so nothing is ever wrong in between
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/booking/domain/booking_draft_split_test.dart
+        name: a group that synced only one part opens as a plain booking
+  - id: E-BKG-73
+    group: Split
+    title: Backup restored beside its book
+    when: a backup with split purchases restored into a new book of the same account
+    then: the parts stay grouped under new group ids · the two books' purchases never merge
+    status: by-design
+    risk: medium
+    tests:
+      - file: test/features/backup/backup_remapper_test.dart
+        name: the parts of a split purchase stay one group under a new id

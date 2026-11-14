@@ -117,6 +117,7 @@ items:
     title: Round-ups → one goal
     text: |
       - new expense rounds up · units 1, 5, 10…
+      - a split or a scanned receipt = one purchase → one round-up on its total
       - only the creating device · never on edit → no doubles
     source: BUDGET_GOALS §7a
     tests:

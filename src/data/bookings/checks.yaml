@@ -31,6 +31,14 @@ groups:
         text: "Save a booking → **+** at once → no *Booking created* / *Make recurring* bar over the keypad · ✓ and 0 take taps"
       - id: C-BKG-047
         text: "Keyboard: Search → `shell` → drag the results → keyboard closes · *New account* → name keyboard starts upper-case → *Type* → pick → keyboard stays down · same after *Initial balance* · quick booking → category chip → pick → keyboard back on the line"
+      - id: C-BKG-052
+        text: "*New booking* → `42` → category → *Split across categories* → part one 42 → tap it → `30` → *Apply* → *12 left to assign*, *Save* off → *Add part* → sheet shows 12 → category → *Apply* → *Parts match the total* → *Save* → ledger: one header with *2 parts* and 42, two rows under it · each category's total moved by its part"
+      - id: C-BKG-053
+        text: "Open a part → whole split opens · change the total to 50 → *8 left to assign* · merge icon → one category row, amount 50 → *Save* → one booking · split again, *Delete* → *Delete split booking?* → both parts gone → *Undo* → both back"
+      - id: C-BKG-054
+        text: "Booking with one receipt of several categories (scan → *Skip items*, or attach a receipt) → *Split by receipt items* → one part per category · a discount shows as *left to assign* · itemized scan (one booking per line) → no such button · new itemized scan → its lines sit under one header in the ledger"
+      - id: C-BKG-055
+        text: "Round-up goal on, unit 1 · split 3.40 + 2.30 → one round-up of 0.30 · scan a receipt of 3 items → one round-up on the total, not three · server migration `20261114100000_booking_split_group` applied first, else the save stays *not synced*"
   - id: fixing
     title: Fixing
     items:

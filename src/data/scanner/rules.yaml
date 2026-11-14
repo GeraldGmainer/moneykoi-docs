@@ -190,7 +190,8 @@ items:
     title: One booking per line
     text: |
       - description = item · merged line = merchant
-      - + receipt record · round-ups · trip tag
+      - + receipt record · one round-up on the total · trip tag
+      - 2+ lines → one group in the ledger (header + lines), since 2026-11-14
       - total editable · mismatch blocks Save
     source: SCANNER §4.17, §4.18, §4.27
     related: [R-SCN-31]

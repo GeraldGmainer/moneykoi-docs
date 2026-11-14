@@ -230,3 +230,24 @@ items:
     date: 2026-11-10
     answer: |
       - **new native balance columns** · current_balance keeps its meaning (booked value in the book currency)
+  - id: D-BKG-37
+    question: Split · parts typed with a remainder line, or part one always takes the rest?
+    status: open
+    answer: |
+      - built: every part is typed · a line shows what is left or over · *Save* only on an exact match (the plan's §3.2)
+      - the bank import does it the other way since 2026-11-11: part one is always the rest, never typed
+      - the remainder line was kept because *Split by receipt items* must show a discount instead of hiding it in part one
+      - to decide: leave both, or move one to the other's way
+    related: [R-BKG-55]
+  - id: D-BKG-38
+    question: Split · the plan's open points, built as recommended. Keep?
+    status: open
+    answer: |
+      - **Free** (catalog) · no lock
+      - **round-up once per purchase**, on the total · this also changed scanned receipts: before, one round-up per line
+      - **new itemized scans group in the ledger** under one header · old scans stay as they are · split bank rows group too
+      - **delete on a split deletes every part** · one part is removed in its sheet
+      - a recurring booking that is split: the original row stays the rule's occurrence
+      - rules that split, a split in quick booking, purchase-level "biggest expense": not built
+      - German: *aufteilen* / *Teil* (as the bank import), not *Splitbuchung*
+    related: [R-BKG-57, R-SCN-07, R-BUD-41]

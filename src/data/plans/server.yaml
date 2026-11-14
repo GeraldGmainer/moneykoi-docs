@@ -20,6 +20,7 @@ gerald:
   - ref: T-SET-01
   - ref: T-SET-02
   - ref: T-BOOK-04
+  - ref: T-BKG-05
   - text: "5 web migrations wait without a task (`02_FEATURES.md:136`)"
     sub:
       - text: "`20261008120000_budget_month_anchor`"
