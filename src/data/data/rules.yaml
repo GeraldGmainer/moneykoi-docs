@@ -509,10 +509,10 @@ items:
         name: possible duplicates, the rows a recurring payment booked and the rows already in the book sit in three closed groups below the new rows
       - file: test/features/data_import/domain/import_review_bank_test.dart
         name: a hand-typed booking two days off is a possible duplicate, in its own group
-      - file: src/app/(main)/bookings/import/components/review-step.test.tsx
+      - file: src/app/(main)/bookings/import/components/rows-editor.test.tsx
         repo: web
         name: possible duplicates wait in a closed group below the new rows, counted in its header (D-DATA-53)
-      - file: src/app/(main)/bookings/import/components/review-step.test.tsx
+      - file: src/app/(main)/bookings/import/components/rows-editor.test.tsx
         repo: web
         name: rows a recurring payment booked wait in a closed group of their own, below the possible duplicates
     related: [D-DATA-34, D-DATA-53, R-DATA-34, R-DATA-79, R-DATA-102]
@@ -1002,8 +1002,8 @@ items:
       - not on a line: a row with a file category, a transfer, a split
       - a row still without a category: *Review* is reached anyway · the row stays unticked · nothing imports without a category
       - **a recognized file stops at *Categories*** while a row has no category · *Only without a category* on · from *Accounts* too
-      - free · app + web the same · web: a table row from 1536 px, stacked below
-    source: BOOKING_IMPORT §8b, IMPORT_WEB §4.4
+      - free · **app only since 2026-11-15** · the web dropped the payee lines for the rows themselves on *Categories* (D-DATA-55, R-DATA-106)
+    source: BOOKING_IMPORT §8b
     tests:
       - file: test/features/data_import/domain/import_payee_lines_test.dart
         name: a pick goes to the rows without a category, or to every row once none is left
@@ -1015,17 +1015,8 @@ items:
         name: rows still without a category stop it at Categories, also on the way from Accounts (D-DATA-54)
       - file: test/features/data_import/ui/booking_import_flows_test.dart
         name: a payee line opens the picker, and the pick goes to all of its open rows; the rest in one pick (D-DATA-54)
-      - file: src/app/(main)/bookings/import/components/payee-lines.test.tsx
-        repo: web
-        name: the remaining pick of a side takes every open row of that side
-      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
-        repo: web
-        name: a payee-line pick sets the category without ticking, before Review exists; Review then ticks the fresh booked rows
-      - file: e2e/import.spec.ts
-        repo: web
-        name: 'a bank file: one category per payee on the Categories step fills all of its bookings (D-DATA-54)'
     checks: [C-DATA-080]
-    related: [D-DATA-54, R-DATA-40, R-DATA-100, E-DATA-102, J-DATA-22, J-DATA-23]
+    related: [D-DATA-54, D-DATA-55, R-DATA-40, R-DATA-100, R-DATA-106, E-DATA-102, J-DATA-22, J-DATA-23]
   - id: R-DATA-104
     group: CSV import
     title: A file read with confidence skips Columns
@@ -1033,7 +1024,7 @@ items:
       - after *Choose a CSV file* the import opens on **Accounts** · *Columns* ticked in the stepper, one step back
       - read with confidence: a header row · the date and the amount (or income + expense, type) named by their header · day or month first not in doubt · 95 % of the dates and amounts read
       - stays on *Columns*: no header (Mein ELBA) · a column found only by its content · *01/02/2026* · a total line in a short sheet · app: a currency column naming another currency, its warning is there
-      - without a category column *Columns* shows one plain line: *Categories* sets one category per payee · was: a red box that read as an error
+      - without a category column *Columns* shows one plain line: *Categories* sets one category per payee (web: *each row gets its category on the Categories step*, D-DATA-55) · was: a red box that read as an error
       - free · simple and bank import · a saved format still goes straight to *Review* (Pro, R-DATA-81)
       - app + web the same · the invented DKB, ING, N26, Revolut and Sparkasse files skip it
     source: BOOKING_IMPORT §4, IMPORT_WEB §5
@@ -1052,10 +1043,10 @@ items:
         name: 'a file read with confidence skips Columns: the bank exports with a header, not headerless Mein ELBA or the hand-made sheets (D-DATA-54)'
       - file: src/app/(main)/bookings/import/page.test.tsx
         repo: web
-        name: a bank file read with confidence skips Columns, which stays one step back (D-DATA-54); Review asks for the categories it cannot guess
+        name: a bank file read with confidence skips Columns, which stays one step back (D-DATA-54); Categories asks for the categories it cannot guess
       - file: e2e/import.spec.ts
         repo: web
-        name: 'a bank file: one category per payee on the Categories step fills all of its bookings (D-DATA-54)'
+        name: 'a bank file: a pick on a row is offered for the rest of its payee, branch numbers aside (D-DATA-54)'
     checks: [C-DATA-081]
     related: [D-DATA-54, R-DATA-40, R-DATA-103, J-DATA-22]
   - id: R-DATA-105
@@ -1136,7 +1127,7 @@ items:
         name: 'both legs of a transfer count: out of this account for an expense row, into it for an income row'
       - file: src/app/(main)/bookings/import/page.test.tsx
         repo: web
-        name: a recognized file stops only for the payees without a category, then Review has its account, its already imported rows collapsed, and Change back to Columns
+        name: a recognized file stops at Categories only for its rows without a category, with its account, its already imported rows collapsed, and Change back to Columns
     related: [R-DATA-74, R-DATA-77, R-DATA-78, E-DATA-84, D-DATA-25]
   - id: R-DATA-96
     group: On the web
@@ -1149,7 +1140,7 @@ items:
     tests:
       - file: src/app/(main)/bookings/import/page.test.tsx
         repo: web
-        name: a bank file read with confidence skips Columns, which stays one step back (D-DATA-54); Review asks for the categories it cannot guess
+        name: a bank file read with confidence skips Columns, which stays one step back (D-DATA-54); Categories asks for the categories it cannot guess
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: a row without a category cannot be selected, whatever the selection says
@@ -1177,6 +1168,39 @@ items:
         repo: web
         name: 'takes everything back: a new format, a created and a changed rule, a moved opening (D-BANK-30)'
     related: [R-DATA-86, R-DATA-89, R-DATA-90, R-DATA-88, E-DATA-91]
+  - id: R-DATA-106
+    group: On the web
+    title: "Web import: rows on Categories, Review read-only"
+    text: |
+      - since 2026-11-15 (D-DATA-55) · the app still has payee lines and an editable *Review*
+      - *Categories*: the file's names · *Transfers, cash and card* · then **every row**, checked against the book on the way in: tick, *Choose a category* per row, the pencil, filters *All · Without a category · Selected · Skipped*, a search, the closed groups (R-DATA-78)
+      - no payee lines, no *remaining* pick · a pick on a row offers *Apply to all* for the rest of that payee (same payee key, same side) · *Apply to all* never ticks · a possible duplicate stays unticked
+      - *Next* needs a ticked row · a recognized file stops here while a row is open, the list on *Without a category* · one whose rows are all in the book stops here too
+      - *Review*: read-only · *n bookings to import* · dates, new accounts / categories / labels, rows not selected · one line per booking, a split row one per part (*Part 1 of 2*) · *Save this format* · *Import bookings (n)*
+    source: IMPORT_WEB §4.4, §5, §6
+    tests:
+      - file: src/app/(main)/bookings/import/components/review-step.test.tsx
+        repo: web
+        name: 'lists read-only the bookings Import writes: the ticked rows, never the unticked ones'
+      - file: src/app/(main)/bookings/import/components/review-step.test.tsx
+        repo: web
+        name: a split row is one line per part, each with its own description, category and amount
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: 'the same pick offered for the rest of a payee never ticks a possible duplicate: only a pick on the row itself does'
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: the rows are checked against the book on the way into Categories, which needs a ticked row to go on; Review only shows them
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: a recognized file whose rows are all in the book already stops at Categories instead of an empty Review
+      - file: src/app/(main)/bookings/import/components/rows-editor.test.tsx
+        repo: web
+        name: the rows without a category are a filter of their own, and the summary line opens it
+      - file: e2e/import.spec.ts
+        repo: web
+        name: 'a bank file: a pick on a row is offered for the rest of its payee, branch numbers aside (D-DATA-54)'
+    related: [D-DATA-55, R-DATA-103, R-DATA-78, R-DATA-95, J-DATA-22, J-DATA-23]
   - id: R-DATA-73
     group: On the web
     title: "Web booking export: ledger CSV"

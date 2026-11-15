@@ -191,7 +191,7 @@ items:
       - "*Save this format* ticked · *Format name*"
       - "*Import bookings (n)*"
     result: "bookings in · *Format saved: {name}*"
-    note: "Free: *Import bank file* wears the lock → paywall · *Import bookings* takes the same steps without saving a format"
+    note: "Free: *Import bank file* wears the lock → paywall · *Import bookings* takes the same steps without saving a format · web (D-DATA-55): *Categories* lists the rows themselves, no payee lines, a category per row with *Apply to all* for the payee · *Review* only shows what is imported"
     tests:
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
         name: 'read with confidence, it skips only Columns; on Review the format is offered under the account name (D-BANK-38, D-DATA-54)'
@@ -211,6 +211,7 @@ items:
       - "new rows ticked · *n possible duplicates* and *n already imported* closed below"
       - "*Import bookings (n)*"
     result: "*Matches the bank: {amount}* · or *Bank: … · Book: …*"
+    note: "web (D-DATA-55): the stop at *Categories* opens the row list on *Without a category* · the groups live on *Categories*, *Review* is read-only · every row already in the book: it stops at *Categories*"
     tests:
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
         name: lands on Review with the saved mapping, the format and the file facts

@@ -510,3 +510,16 @@ items:
       - defaults taken: a row still without a category stays unticked (no automatic *Sonstiges*) · Amazon learns nothing · transfer lines Pro (web: always) · skipping Columns free
       - replaces D-DATA-33 (web guess without the tables)
     related: [D-DATA-15, D-DATA-33, R-DATA-40, R-DATA-96, R-DATA-103, R-DATA-104, R-DATA-105, E-DATA-101, E-DATA-102, E-DATA-103]
+  - id: D-DATA-55
+    question: "CSV and bank import · the payee lines on *Categories* and the editable *Review* — where are rows picked, ticked and checked?"
+    status: decided
+    date: 2026-11-15
+    answer: |
+      - **web, built 2026-11-15** (Gerald, from screenshots of the web: "i dont like tab4 and tab5")
+      - *Categories* (step 4): **no payee lines** · the file's names and the transfer, cash and card lines stay · below them **the rows themselves**, as *Review* had them: tick, category per row, edit, *Without a category* filter, and the possible duplicates, recurring payments and already imported in their closed groups · the check against the book runs on the way in
+      - *Review* (step 5): **read-only** · the bookings Import writes (a split row one line per part) · summary: how many, dates, new accounts / categories / labels, rows not selected · *Save this format*
+      - a pick on a row ticks it · *Apply to all* for the rest of the payee (same payee key, so *Spar Dankt 3013* = *Spar Dankt 3616*) **never ticks** · a possible duplicate stays unticked
+      - *Review* is never reached without a ticked row · a recognized file whose rows are all in the book stops at *Categories*
+      - **app: not built yet** · Gerald asked for a similar workflow there; the port was stopped before any app file changed — the app still has the payee lines and the editable *Review*
+      - replaces step 2 of D-DATA-54 on the web (R-DATA-103 stays the app's)
+    related: [D-DATA-53, D-DATA-54, R-DATA-103, R-DATA-106, R-DATA-78, J-DATA-22, J-DATA-23]

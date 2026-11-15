@@ -367,7 +367,7 @@
   tier: free
   note: the door in · re-import key, ±3-day duplicate check, pending rows unticked since 2026-11-10 · rows a recurring payment booked unticked since 2026-11-12 · possible duplicates in a closed group with the matched booking's category, recurring-booked rows in one of their own, since 2026-11-15
   web: parity
-  webNote: since 2026-11-11 · no *Deleted earlier* (no trash on the web) · no usage event · the category guess has no keyword map (R-DATA-96)
+  webNote: since 2026-11-11 · no *Deleted earlier* (no trash on the web) · no usage event · the category guess has no keyword map (R-DATA-96) · rows ticked and edited on *Categories*, *Review* read-only, no payee lines (D-DATA-55, R-DATA-106; the app keeps both)
   docs: data
 - id: import-balance-compare
   name: Balance compare after an import
