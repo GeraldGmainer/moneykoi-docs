@@ -66,6 +66,6 @@ items:
     area: data
     what: |
       - long payee → cut at the last whole word, as the app
-      - ships only with the web's open bank-import edit (`text.ts`, not committed yet)
+      - web commit `97f1804` (`text.ts` · `cutAtWord`)
     checks: [C-DATA-077]
     screens: [bookings/import]
