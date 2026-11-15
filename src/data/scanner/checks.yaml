@@ -20,7 +20,7 @@ groups:
       - id: C-SCN-008
         text: Fresh install → one *BETA* page, 8 shops, no *Skip* · *Got it, scan a receipt* → camera · *How it works* replays all steps
       - id: C-SCN-009
-        text: First scan on a fresh phone → review opens with the scan, no tutorial · *Tap any field* tip under the receipt card · *Every item needs a category* above the items until all are set, then *Save, and each item…* above the bar · second scan → no tips · ? still replays the intro
+        text: First scan on a fresh phone → review opens with the scan, no tutorial · *Tap any field* tip under the receipt card · *Every item needs a category* above the items until all are set, then *Save, and each item…* above the bar · × on any tip → no further tip, not even on the next scan · second scan → no tips · ? still replays the intro
       - id: C-SCN-010
         text: "iPhone, fresh install → scanner → *Not now* → card *Allow camera* (no *Open Settings*) → tap → the iOS camera prompt · *Don't Allow* → card turns to *Open Settings* → lands on Money Koi's page with a Camera switch · Android: first *Deny* keeps *Allow camera*, the second → *Open Settings*"
       - id: C-SCN-011
@@ -64,3 +64,21 @@ groups:
         text: "Web *Add receipt* → merchant typed, 3 items of 3.333 against 10 → *0.01 left* shown · fix → saved · phone after a sync shows the receipt card with merchant and items (needs T-BOOK-06)"
       - id: C-SCN-030
         text: "Release APK on a real Android phone (`flutter build apk --release --flavor dev`) → hover a receipt → rows tick, the pass ends by itself · the debug build alone proves nothing here (E-SCN-64)"
+      - id: C-SCN-031
+        text: "Hover a long receipt, moving the hand at normal speed → ticks stay close to their rows instead of trailing ~0.4 s behind · no preview lag · all items read → shop line gives way to *All items read, total matches · final check…* + a green bar · hold still → ends when the bar is full (~1.2 s) · move → the bar starts over"
+      - id: C-SCN-032
+        text: "First scan → review → tip card: × in the top-right corner on the first line, the action right-aligned under it · × → no tip follows · Home book-switch, Budget Book calendar and booking-form scan hints look the same"
+      - id: C-SCN-033
+        text: "Hover held close, a few rows at a time, the receipt wider than the frame · start by moving in or out · work down in steps → no item twice, the sum meets the total without zooming out"
+      - id: C-SCN-034
+        text: "Release build · long receipt (40+ items), one slow pass top to bottom, the phone held as it comes, not flat → every item ticked on the way · sum meets the total when the total is read · ends by itself · review: nothing missing, nothing twice (E-SCN-67) · debug build: done by Gerald 2026-11-15, 54 of 54"
+      - id: C-SCN-035
+        text: "Ticks sit on items, shop, date and total only · none on address, tax table or footer · no tick before a row was read (R-SCN-33)"
+      - id: C-SCN-036
+        text: "Hint pill ends in a small ring that turns once per reading · held close and moved quickly → *Slower* · Reduce motion on → the ring stands still (R-SCN-34)"
+      - id: C-SCN-037
+        text: "Start at the total, then go to the store name and hover down → items stand above the total · one receipt, sum matches, nothing twice (E-SCN-70)"
+      - id: C-SCN-038
+        text: "iPhone · long receipt by hover, phone slightly turned → as C-SCN-034 · the levelling there reads the text's corners and has never run on a device"
+      - id: C-SCN-039
+        text: "Release build, long receipt · seconds from opening the scanner to the first tick · seconds for one pass · readings per second (`ocrMedian` in the pass log) → the numbers T-SCN-11 starts from"

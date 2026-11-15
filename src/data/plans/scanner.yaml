@@ -1,6 +1,6 @@
 # Sources: SCANNER_ACCURACY_PLAN.md §0, §7, §9, §13, moneykoi-receipts/OPEN_QUESTIONS.md:11-44 + README.md:175-223, scanner/tasks.yaml.
 title: "Scanner accuracy"
-goal: "80 % book-ready on stills: met · left: hover scanner checked on a phone"
+goal: "80 % book-ready on stills: met · hover reads long receipts on a phone (debug build) · left: release build, iPhone, a fast pass"
 gerald:
   - ref: T-SCN-02
     note: "HOFER + PENNY still at zero"
@@ -23,6 +23,8 @@ gerald:
     done: 2026-11-13
   - ref: T-SCN-06
   - ref: T-SCN-07
+  - text: "Decide D-SCN-22 · end a matched scan after a fixed time?"
+  - text: "Decide D-SCN-23 · say where rows are still unread?"
   - section: "Fix round 2026-11-13 evening"
   - ref: T-SCN-10
     note: "ran 2026-11-13 · 4 regressions fixed, baselines promoted"
@@ -79,6 +81,10 @@ agents:
       - text: "merged into SCANNER_ACCURACY_PLAN.md · open items §13, decisions + log §14"
         done: 2026-11-13
   - text: "Re-parse interval from phone timings (C-SCN-014) · max(300 ms, 2× parse)"
+  - text: "Hover on a real phone 2026-11-14/15 · long receipts read in one slow pass (§4.50)"
+    done: 2026-11-15
+  - ref: T-SCN-11
+    note: "starts from release-build timings · C-SCN-039"
   - text: "PDF scale for digital receipts once T-SCN-08 delivers files"
   - text: "SPAR missing rows + discount attribution · chosen 2026-11-13, not started"
     done: 2026-11-13

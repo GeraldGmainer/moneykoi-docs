@@ -77,12 +77,17 @@ items:
     title: The scan waits for the receipt's end
     text: |
       - date, shop name and QR often print **below** the total
-      - rest = no new row + no movement for 1.2 s
-      - 2.5 s while date or shop are still unread
+      - rest = no movement along the receipt for 1.2 s · once date and shop are read, a line confirmed while the phone is held still no longer starts the pause over (D-SCN-17)
+      - 2.5 s while date or shop are still unread · then a new row starts it over too
       - hint until then · *Keep going to the end of the receipt*
+      - while it waits, shop and amounts give way to *All items read, total matches · final check…* (*Total read · …* for one-line receipts) and a green bar that fills over the pause · it starts over when the phone moves
     source: SCANNER §4.38
-    related: [R-SCN-25, R-SCN-28, E-SCN-32]
+    related: [R-SCN-25, R-SCN-28, E-SCN-32, E-SCN-65, D-SCN-17]
     tests:
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: once date and shop are read, rows confirmed at rest are stragglers and do not keep it open
+      - file: test/features/receipt/ui/widgets/camera/live_scan_panel_test.dart
+        name: an armed pass trades the shop, the amounts and the sum bar for the final check and its bar
       - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: the date printed below the total is read when the pan goes on, and the hint asks for it
       - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
@@ -90,6 +95,42 @@ items:
       - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
         name: "frames that show no receipt count as rest: lifting the phone away ends it"
     checks: [C-SCN-018, C-SCN-019]
+  - id: R-SCN-33
+    group: The flow
+    title: A tick = a row the scan read
+    text: |
+      - a row gets its tick once the scan made something of it · an item, the shop, the date, the total
+      - text that was only seen · address, footer, a row still being read · no tick (D-SCN-20)
+      - ticks keep up with the hand · drawn ahead by the pan speed (D-SCN-18)
+    source: SCANNER §4.50
+    related: [D-SCN-20, D-SCN-18, E-SCN-60]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: a confirmed row is not ticked until a parse made something of it
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: only the rows under what the parse read are ticked, at once and on the frames after
+    checks: [C-SCN-035]
+  - id: R-SCN-34
+    group: The flow
+    title: "Pace · a ring per reading, *Slower* when too fast"
+    text: |
+      - the hint at the top ends in a small ring · one turn per reading of the camera picture · stands still where animations are off
+      - a reading of a long receipt: about half a second to a second (debug build · release not measured, C-SCN-039)
+      - "*Slower*: the receipt moved more than a third of the picture between two readings, or faster than 12 rows a second"
+      - no *too slow* hint · a slow pass loses nothing (D-SCN-21)
+      - safe today: about a tenth of the picture per reading · a faster pass is open work (T-SCN-11)
+    source: SCANNER §4.50
+    related: [D-SCN-21, T-SCN-11]
+    tests:
+      - file: test/features/receipt/domain/services/read_pace_test.dart
+        name: "a reading takes as long as the middle of the last gaps: one slow frame does not stretch it"
+      - file: test/features/receipt/ui/widgets/camera/live_read_ring_test.dart
+        name: each reading that comes in starts it over; a rebuild without one does not
+      - file: test/features/receipt/ui/widgets/live_scan_view_test.dart
+        name: the pill carries the reading ring from the first reading on, and none before
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: "how far the print moved is told as a share of the frame: the same step is more of a close frame"
+    checks: [C-SCN-036]
   - id: R-SCN-26
     group: The flow
     title: Camera and photo size
@@ -236,14 +277,16 @@ items:
     title: First review · three tips, no carousel
     text: |
       - the first review shows one-line tips in place: *Tap any field to fix it* · *Every item needs a category* (while one is missing) · *Save, and each item becomes a booking* (once all are set)
-      - one at a time, in that order · the next appears once the shown one is closed (×) or acted on · the save tip sits under the items, not over them (since 2026-11-06, AND-7-3)
+      - one at a time, in that order · the next appears once the shown one is acted on · × closes **all** of them, for good (D-SCN-19) · the save tip sits under the items, not over them (since 2026-11-06, AND-7-3)
       - the save tip shows only while *Save* is on · a tap on it saves like the button, **never** more (E-SCN-49)
       - each once, per phone · the help button still replays the full intro, Edit & Merge included
       - whoever saw the old 4-page tutorial sees no tips
     source: SCANNER §4.15g
     tests:
       - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
-        name: "one tip at a time: hero first, the category tip once the hero is closed"
+        name: "one tip at a time: hero first, the category and save tips wait behind it"
+      - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
+        name: "× closes every tip for good: none follows, and all are written as shown"
       - file: test/features/receipt/service/scanner_onboarding_progress_test.dart
         name: whoever saw the old carousel is shown nothing
     related: [R-SCN-13, R-SCN-03, E-SCN-49]

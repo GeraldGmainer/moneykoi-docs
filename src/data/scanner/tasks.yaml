@@ -46,6 +46,7 @@ items:
       - + the new end of a scan: C-SCN-018, C-SCN-019 · five minutes · **still open**
       - + the 2026-11-13 evening fixes: C-SCN-023 to C-SCN-028 · ten minutes
       - a receipt that will not finish → keep its photo for the corpus inbox
+      - **2026-11-14/15, debug build**: a 57-position and a 14-item SPAR receipt by hover → both read in one pass after the fixes of SCANNER §4.50 (20 passes recorded, `moneykoi-receipts/live/`) · open: a release build (C-SCN-034, C-SCN-039), other chains, an iPhone (C-SCN-038)
   - id: T-SCN-06
     title: Hover videos + whole-receipt photos for the corpus
     owner: gerald
@@ -90,3 +91,12 @@ items:
         SCORECARD_SCALE=$s .fvm/flutter_sdk/bin/flutter test test/features/receipt/scorecard_test.dart
       done
       .fvm/flutter_sdk/bin/flutter test test/features/receipt/corpus/category_oracle_test.dart
+  - id: T-SCN-11
+    title: A fast hover pass
+    owner: ai
+    detail: |
+      - Gerald 2026-11-15: a slow pass reads everything now · he wants to hover fast
+      - today a row needs two readings and a reading takes 0.5–0.9 s on a long receipt (debug build) · safe speed ≈ a tenth of the picture per reading (3–7 rows a second) · faster, frames blur and come back empty
+      - first: the numbers of a release build (C-SCN-039) · every pass so far was a debug build
+      - then, measured on recorded passes (`moneykoi-receipts/live/`, replay test): read only the band of the picture that is new · a smaller picture · exposure against blur
+      - done when: a pass twice as fast reads the 57-position receipt as surely as the slow one

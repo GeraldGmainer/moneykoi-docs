@@ -126,3 +126,68 @@ items:
       - on the corpus the guesser always names something, sometimes junk (*ELR*, *EUR*, a discount line) · so the lookup never fills anything (0 of 155)
       - a) **a VIES name replaces a guessed one**, never a name the shop's own rules found · recommended
       - b) keep it: fills only an empty merchant
+  - id: D-SCN-17
+    question: "Scanner: should lines confirmed while the phone is held still keep a finished scan open?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **no**, once date and shop are read: only movement keeps it open, the 1.2 s pause stays (Gerald)
+      - found on the first real phone: held still, faint print kept confirming about once a second and each line restarted the pause · one receipt waited 9 s with the phone motionless
+      - corpus (steady hover, 146 receipts): nothing lost where the scan now ends
+      - a) **ignore those lines** · recommended
+      - b) the same, and a 0.8 s pause
+      - c) keep the rule, only show the wait
+  - id: D-SCN-18
+    question: "Scanner: how should the row ticks keep up with a moving hand?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **predict from the pan speed** (Gerald, after trying a): the ticks are drawn ahead by how fast the receipt moved through the last frames × how old the read frame is, capped below a second
+      - the ticks were drawn where the rows were ~0.4 s earlier (the reading takes that long)
+      - a) track the motion on every camera frame · recommended first, built and dropped the same day: the preview lagged and the measured shift was mostly empty
+      - b) **predict from the pan speed**
+      - c) fade the ticks while moving
+  - id: D-SCN-19
+    question: "Scanner review: what should × on a tip do?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **× ends all three review tips, for good** (Gerald) · acting on a tip still lets the next follow
+      - a) **× ends all tips** · recommended
+      - b) × closes only that tip (before)
+      - c) no review tips at all
+  - id: D-SCN-20
+    question: "Scanner: which rows get a tick?"
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **only rows the scan made something of**: items, shop, date, total (Gerald: not a tick on every row)
+      - a) every row seen twice (before)
+      - b) **rows read as an item or a header field**
+    related: [R-SCN-33]
+  - id: D-SCN-21
+    question: "Scanner: how does the pace show while hovering?"
+    status: decided
+    date: 2026-11-15
+    answer: |
+      - **a ring at the end of the hint, one turn per reading** · *Slower* judged by how far the receipt moved between two readings (Gerald asked for a ring or a speed text · both built · tried on the phone the same night, left as is)
+      - no *too slow* text: a slow pass loses nothing, and how fast is safe is not measured yet (T-SCN-11)
+    related: [R-SCN-34, T-SCN-11]
+  - id: D-SCN-22
+    question: "Scanner: end a matched scan after a fixed time, even while the phone still moves?"
+    status: open
+    answer: |
+      - today: items = total, then the phone has to rest 1.2 s (2.5 s while date or shop are unread) · a pass waited 5.7 s after the match because the hand moved on past the total
+      - a) keep: only rest ends it · date, shop and QR print below the total (R-SCN-27)
+      - b) once date and shop are read too: end 2 s after the match, moving or not · recommended
+      - c) end the moment items = total and date and shop are read
+    related: [R-SCN-25, R-SCN-27]
+  - id: D-SCN-23
+    question: "Scanner: rows never shown between two read stretches — say where?"
+    status: open
+    answer: |
+      - today: the hint names the amount missing (*… still missing*), not the place · a pass held the top third for 17 s while 25 rows further down were unread (E-SCN-73)
+      - a) keep the amount
+      - b) say the direction: *Move on down · rows before the total are unread* · recommended
+      - c) show it on screen: an arrow at the edge the unread rows lie beyond
+    related: [E-SCN-73]

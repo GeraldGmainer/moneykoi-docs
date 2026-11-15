@@ -639,14 +639,14 @@ items:
     group: Reading
     title: Parser error froze the live view
     when: the parser fails on a page during the hover
-    then: "ticks, last line and hints keep moving · *Done* still opens the review · fixed 2026-11-13"
+    then: "last line and hints keep moving, ticks stay on the rows already read (R-SCN-33) · *Done* still opens the review · fixed 2026-11-13"
     status: fixed
     risk: medium
     tests:
       - file: test/features/receipt/domain/services/live_scan_engine_test.dart
         name: a parse that fails on a frame still places the frame and says so
       - file: test/features/receipt/bloc/scanner_cubit_lifecycle_test.dart
-        name: the frames are still placed and shown, and the parse is not asked for again on every frame
+        name: the frames are still placed and the last line shown, and the parse is not asked for again on every frame
   - id: E-SCN-61
     group: Review
     title: Back on an edited scan
@@ -692,3 +692,104 @@ items:
     tests:
       - file: test/android/android_build_test.dart
         name: R8 keeps the no-arg constructors ML Kit instantiates by reflection
+  - id: E-SCN-65
+    group: Camera
+    title: Held still, the scan did not end
+    when: all items read, date and shop read · phone held still over the receipt
+    then: "ends ~1.2 s later, a green bar shows the wait · fixed 2026-11-14 (D-SCN-17) · before, faint lines confirming one by one kept it open up to 9 s"
+    status: fixed
+    risk: medium
+    related: [R-SCN-27, D-SCN-17]
+    tests:
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: once date and shop are read, rows confirmed at rest are stragglers and do not keep it open
+  - id: E-SCN-66
+    group: Camera
+    title: Held close, the items were counted twice
+    when: hover held close (the receipt wider than the frame) · the phone moved closer or away while it started · the names cut at the frame's edge
+    then: "the two stretches read join into one receipt · a line the frame's side edge cuts is not read · fixed 2026-11-14 · before, the first half stayed in twice (45.58 against 33,66) and scanning on never fixed it"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
+        name: "two parts whose names do not match still join on their prices: the overlap is counted in rows"
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: left edge cuts is not read; the same line clear of the edge is
+  - id: E-SCN-67
+    group: Reading
+    title: Long receipt · items missing or twice
+    when: hover down a long receipt · the phone held a few degrees off the paper, as a hand holds it (rows run up at one end of the picture, down at the other)
+    then: "every item once, each amount on its own row · the sum meets the total the moment the total is read · fixed 2026-11-15: each row is levelled by the angle read at its own height, near or far · before, amounts landed on the neighbouring row and a second look never repaired it (68 items, 198,10 against 162,41)"
+    status: fixed
+    risk: high
+    related: [C-SCN-034, T-SCN-05, E-SCN-68, E-SCN-69]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/frame_lines_test.dart
+        name: "every row is levelled by the angle at its own height: top and bottom prices back on their articles"
+      - file: test/features/receipt/domain/services/assembly/frame_lines_test.dart
+        name: "a frame read from far off is turned as well: its lines are long for their height, though none spans a fifth of the frame"
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: every price stays on the row of its article, frame after frame
+  - id: E-SCN-68
+    group: Reading
+    title: A row lost its amount, or blinked
+    when: the camera reads one row sometimes as one line (*NAME 3,99 A*), sometimes as name and amount apart · slow pass, many readings per row
+    then: "the row keeps its amount in every frame · fixed 2026-11-15: every reading of a row is kept and the one read most is shown, an amount never makes way for a bare name · before, the readings replaced each other, the item count flickered (54 → 53) and one item lost its amount"
+    status: fixed
+    risk: high
+    related: [E-SCN-67]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/receipt_segment_test.dart
+        name: however the cuts take turns over a long pass, the row shows its price once in every frame
+      - file: test/features/receipt/domain/services/assembly/receipt_segment_test.dart
+        name: a name read in every frame does not outvote the amount that only came joined to it
+      - file: test/features/receipt/domain/services/assembly/receipt_segment_test.dart
+        name: a price misread as two scraps in frame after frame does not take the price off the row
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: the row keeps its price in every frame of a long hold, whichever cut the frames bring
+  - id: E-SCN-69
+    group: Reading
+    title: An amount stood twice, a row apart
+    when: one frame read an amount a row too low · a later frame landed between the two and confirmed the wrong one
+    then: "the amount stays once · fixed 2026-11-15: a line is matched by the lines around it, not by the overall fit alone · before, the sum ran over the total after the scan had already matched (168,71 against 162,41)"
+    status: fixed
+    risk: medium
+    related: [E-SCN-67]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
+        name: the line goes to the reading its neighbours point at, not to the one the overall fit lands nearer
+  - id: E-SCN-70
+    group: Camera
+    title: Total first, then the top
+    when: the pass starts at the total · then jumps to the store name and goes down
+    then: "the top is read from its second frame on and stands above the total · one receipt once the stretch between is hovered · fixed 2026-11-14 · before, nothing was read for seconds, and a shop name printed in header and footer hung the top below the foot"
+    status: fixed
+    risk: medium
+    related: [E-SCN-73, C-SCN-037]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: "from the total to the top: the top is read from its second frame on, and comes before the foot on the page"
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: the stretch between, once hovered, makes one receipt of both
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: "one line both places print does not join them: a shop name in header and footer"
+  - id: E-SCN-71
+    group: Reading
+    title: Print under or beside the receipt read as rows
+    when: the receipt lies on printed paper (a map, a newspaper) · words show beside the amounts, or before the receipt is in view
+    then: "no item from them · fixed 2026-11-14: a word right of the amount column is no row, a stretch without amounts stays off the receipt"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/receipt/domain/services/receipt_column_filter_test.dart
+        name: drops a word that starts just past the price column, where only a VAT letter belongs
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: a first frame that showed something else gives way to the receipt
+  - id: E-SCN-73
+    group: Camera
+    title: A pass that skips the middle
+    when: top and foot of a long receipt read · the rows between never in view
+    then: "the hint names the amount still missing, not where · *Done* opens the review with the mismatch banner · no scan reads a row the camera did not see · a hint that says where is open (D-SCN-23)"
+    status: known-issue
+    risk: medium
+    related: [D-SCN-23, E-SCN-70]
