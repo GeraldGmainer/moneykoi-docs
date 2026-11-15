@@ -110,7 +110,8 @@ items:
       - rows without a guess are picked by hand in *Review*
       - built 2026-11-03 · R-DATA-40 · *Empfänger/Auftraggeber* read as the payee
       - source: iOS simulator round, IOS-11-1
-    related: [R-DATA-40, D-DATA-8]
+      - the guess reworked 2026-11-15 for bank text, no longer the quick-booking engine → D-DATA-54
+    related: [R-DATA-40, D-DATA-8, D-DATA-54]
   - id: D-DATA-17
     question: A CSV with older bookings on top of a starting balance — which balance is right?
     status: decided
@@ -281,7 +282,8 @@ items:
       - **payee rules → booking history (exact, then word) → category names** · the rest picked by hand
       - plan D-BANK-22
       - **built 2026-11-11** · R-DATA-96
-    related: [D-DATA-25]
+      - **replaced 2026-11-15** → D-DATA-54 · app and web run one guess made for bank text
+    related: [D-DATA-25, D-DATA-54]
   - id: D-DATA-34
     question: Bank import · rows already in the book, and rows deleted after an import
     status: decided
@@ -486,3 +488,21 @@ items:
       - why (Gerald): "more focus on stuff that is not already in app" · many duplicates next to *Choose a category* rows were confusing
       - app + web · built 2026-11-15 · the web's *Possible duplicates* filter is gone, the group replaces it
     related: [R-DATA-78, R-DATA-34, R-DATA-102, D-DATA-34, D-DATA-47]
+  - id: D-DATA-54
+    question: "Bank CSV import · a DKB file has no category column, most rows end up as *Choose a category* — how should a bank file import?"
+    status: decided
+    date: 2026-11-15
+    answer: |
+      - **categorize by payee, not by row** (Gerald approved the plan) · a bank file goes File → Accounts → Categories (one line per payee, mostly prefilled) → Review → Import
+      - measured on the real DKB file: 771 rows · the old guess named 77 · about 700 picks, one per row · 78 payees, 25 of them cover 90 % of the rows
+      - **1. the guess, made for bank text** · built 2026-11-15 · app + web the same (shared vector file) · R-DATA-40, R-DATA-96
+        - a booking with exactly this text → the book's category names as whole words → a payee table (*SPAR*, *BILLA*, *OMV*, *ORF*, *LIWEST*, *Energie AG* …) and the category words (*Miete*, *Gehalt*, *Kindergarten*) as whole words → a word of an earlier booking
+        - never the quick-booking keyword map, never part of a word · was: *SPAR → Sparen & Investieren*, own transfer *"geld" → Kindergeld*
+        - Amazon and other general stores guess nothing · one pick per import
+        - DKB 191 of 771 rows guessed (Amazon alone 433) · ELBA 67 of 110 · no known wrong guess
+      - **2. payee lines** in the *Categories* step · one pick fills every row of a payee · *remaining → one category* · planned, next
+      - **3. transfers, cash, card** as lines with an account target · own name / own IBAN, *SB-BEHEBUNG*, *KREDITKARTENABRECHNUNG* · planned
+      - **4. a recognized file skips *Columns*** · the red *Ohne Kategoriespalte* box becomes one plain line · planned
+      - defaults taken: a row still without a category stays unticked (no automatic *Sonstiges*) · Amazon learns nothing · transfer lines Pro (web: always) · skipping Columns free
+      - replaces D-DATA-33 (web guess without the tables)
+    related: [D-DATA-15, D-DATA-33, R-DATA-40, R-DATA-96, E-DATA-101, E-DATA-102]

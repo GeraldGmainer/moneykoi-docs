@@ -750,3 +750,35 @@ items:
     tests:
       - file: test/features/data_import/domain/import_models_test.dart
         name: a description too long for the server is cut at the last whole word within 20 characters
+  - id: E-DATA-101
+    group: Bank import
+    title: The guess read words inside words
+    when: a bank file without a category column · app or web
+    then: |
+      - fixed 2026-11-15 (D-DATA-54) · bank text is matched as whole words, never with the quick-booking keyword map
+      - was, on the real DKB/ELBA files: *SPAR → Sparen & Investieren* · own transfer *"geld" → Kindergeld* · *Pfarrcaritas Kindergarten → Wohnen* (keyword *Garten*) · *LIWEST Kabel → Strom* · *ELBA-INTERNET* (the online-banking channel) → *Internet & Telefon*
+      - now: *SPAR → Lebensmittel* · *Kindergarten → Schule & Betreuung* · *LIWEST → Internet & Telefon* · the own transfer no guess
+      - a card text with the branch number glued on (*MCDONALDS120*) is still found
+    status: fixed
+    risk: medium
+    related: [D-DATA-54, R-DATA-40]
+    tests:
+      - file: test/features/data_import/domain/import_category_guesser_test.dart
+        name: the tables are the shared vector file (moneykoi-web loads it)
+      - file: test/features/data_import/domain/import_category_guesser_test.dart
+        name: a vague name is never read from bank text
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: then the bank tables, resolved to the category with the starter name
+  - id: E-DATA-102
+    group: Bank import
+    title: One pick per row on a big bank file
+    when: a bank file of hundreds of rows · most payees unguessed (Amazon, people, insurers)
+    then: |
+      - a category picked in *Review* fills only that row · *SPAR* ×31 = 31 picks · a 771-row DKB file ≈ 700 picks
+      - only a general store (Amazon) offers *same category for the other rows*
+      - fix planned: payee lines in the *Categories* step, one pick per payee (D-DATA-54 step 2)
+    status: known-issue
+    risk: high
+    related: [D-DATA-54, R-DATA-40]
+

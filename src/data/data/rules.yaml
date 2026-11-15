@@ -283,7 +283,13 @@ items:
     title: No category → guessed, else picked in Review
     text: |
       - category column optional · a bank CSV imports (D-DATA-15, replaces D11)
-      - guess from payee, then description · same engine as quick booking · only existing categories, same side
+      - guess since 2026-11-15 (D-DATA-54) · only existing categories, same side · first hit wins:
+        - a booking of the book with exactly this payee or purpose
+        - a category name of the book as whole words · *Miete November* → *Miete*
+        - the bank tables · chains and providers (*SPAR*, *OMV*, *ORF*, *LIWEST* …) · then category words (*Miete*, *Gehalt*, *Kindergarten*) · whole words only
+        - a word of an earlier booking
+      - never part of a word (*SPAR* is not *Sparen*) · never the quick-booking keyword map · Amazon guesses nothing
+      - app and web guess the same (shared vector file)
       - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* …
       - the payee also **names the booking** since 2026-11-10 → R-DATA-75 · before: only a clue
       - Pro: a learned payee answers before the guess → R-DATA-85
@@ -292,12 +298,16 @@ items:
     source: BOOKING_IMPORT §4, §8a
     tests:
       - file: test/features/data_import/use_cases/prepare_import_use_case_test.dart
-        name: asks the engine with the payee first, then the description, within the row's side, once per text
+        name: "a booking with exactly this text, the book's names, the bank tables, then a word of an earlier booking; once per text"
+      - file: test/features/data_import/use_cases/prepare_import_use_case_test.dart
+        name: "a guess stays on the row side: a salary word on an expense finds nothing"
+      - file: test/features/data_import/domain/import_category_guesser_test.dart
+        name: the tables are the shared vector file (moneykoi-web loads it)
       - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
         name: without a guess it is never selected, by a tap or by Select all
       - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
         name: a category picked in Review selects it and stays with the draft
-    related: [D-DATA-15, R-DATA-75, R-DATA-85]
+    related: [D-DATA-15, R-DATA-75, R-DATA-85, D-DATA-54]
   - id: R-DATA-34
     group: CSV import
     title: Duplicates start unticked
@@ -1018,10 +1028,10 @@ items:
     related: [R-DATA-74, R-DATA-77, R-DATA-78, E-DATA-84, D-DATA-25]
   - id: R-DATA-96
     group: On the web
-    title: "Web category guess: history, then names"
+    title: "Web category guess = the app's"
     text: |
-      - order: learned payee → the book's bookings (same description, then a shared word) → category names
-      - **no** keyword map or merchant registry → app may guess where the web says *Choose a category*
+      - since 2026-11-15 (D-DATA-54) the same guess as the app, step for step → R-DATA-40
+      - the same tables: one vector file, byte-identical in both repos · was: no tables on the web, the app guessed where the web said *Choose a category*
       - category column optional on the web too · a row without a category can't be ticked
     source: IMPORT_WEB §4.4
     tests:
@@ -1031,7 +1041,10 @@ items:
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: a row without a category cannot be selected, whatever the selection says
-    related: [R-DATA-40, D-DATA-33, D-DATA-15]
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: then the bank tables, resolved to the category with the starter name
+    related: [R-DATA-40, D-DATA-33, D-DATA-15, D-DATA-54]
   - id: R-DATA-97
     group: On the web
     title: "Web: editing, managing, balance, undo"
