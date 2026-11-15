@@ -82,3 +82,5 @@ groups:
         text: "iPhone · long receipt by hover, phone slightly turned → as C-SCN-034 · the levelling there reads the text's corners and has never run on a device"
       - id: C-SCN-039
         text: "Release build, long receipt · seconds from opening the scanner to the first tick · seconds for one pass · readings per second (`ocrMedian` in the pass log) → the numbers T-SCN-11 starts from"
+      - id: C-SCN-040
+        text: "Book with a cash and a checking account · SPAR paid cash (*ZAHLUNG BAR*) → review shows the cash account · save · new manual booking → still the last used account, not cash · card receipt (*Visa Debit*) → checking · receipt without a payment line → last used (R-SCN-35)"

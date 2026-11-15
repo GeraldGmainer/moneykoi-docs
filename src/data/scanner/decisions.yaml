@@ -191,3 +191,15 @@ items:
       - b) say the direction: *Move on down · rows before the total are unread* · recommended
       - c) show it on screen: an arrow at the edge the unread rows lie beyond
     related: [E-SCN-73]
+  - id: D-SCN-24
+    question: "Scanner: pick the account from the payment printed on the receipt?"
+    status: decided
+    date: 2026-11-15
+    answer: |
+      - **yes** · cash → cash account · card → checking or credit card · nothing sure → last used, as before
+      - a debit card → checking · a brand without *Debit* → credit card account if there is one, else checking
+      - a bank named on the slip → the account named after it, first
+      - several fitting → the one with the latest booking
+      - vouchers ignored · cash and card on one receipt → not sure
+      - the picked account is never saved as last used
+    related: [R-SCN-35, E-SCN-74]

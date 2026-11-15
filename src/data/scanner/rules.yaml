@@ -403,3 +403,28 @@ items:
         name: "ADEG: the row above the item, never the item before it"
       - file: test/features/receipt/use_cases/save_receipt_use_case_test.dart
         name: a counted line saves quantity, unit and the unit price as decimal strings
+  - id: R-SCN-35
+    group: Review & save
+    title: Account from the payment on the receipt
+    text: |
+      - paper says cash (*ZAHLUNG BAR*, *Gegeben Bar*, *Bar*) → a **cash** account
+      - debit card (*Visa Debit*, *Debit Mastercard*, *E-Cash*, *EC-Karte*, *Maestro*, *Bankomat*) → a **checking** account
+      - card brand without *Debit* (*Visa*, *Mastercard*, *Kreditkarte*) → a **credit card** account · none → checking
+      - card without a brand (*Kartenzahlung*, *Karte*, *kontaktlos*) → checking while the book has no credit card account · else not sure
+      - bank printed on the slip (*Erste Visa Debit*) → the account with that word in its name, first
+      - several fit → the one with the latest booking (either side of a transfer) · never booked → last used, else the first · hidden accounts never
+      - not sure, cash **and** card, nothing printed, or no fitting account → last used account, as before
+      - a picked account is **not** remembered as last used · the user's own pick still is, and survives *Scan more*
+      - ignored: vouchers, loyalty cards (*PAYBACK*, *OBI-Karte*), *Rückgeld* alone (card slips print *0,00*)
+      - corpus 2026-11-15, 155 receipts: 72 cash · 56 debit · 4 credit (a bare *Visa*) · 23 nothing printed or read
+    source: SCANNER §4.51
+    related: [D-SCN-24, E-SCN-74]
+    tests:
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: ZAHLUNG BAR opens the review on the cash account and leaves the last used one alone
+      - file: test/features/receipt/bloc/scanner_cubit_import_test.dart
+        name: an account the user picked stays through Scan more
+      - file: test/features/receipt/domain/services/payment_account_resolver_test.dart
+        name: of several, the one with the latest booking
+      - file: test/features/receipt/domain/services/payment_method_detector_test.dart
+        name: "change given back alone says nothing: card slips print RÜCKGELD 0,00 too"

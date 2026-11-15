@@ -793,3 +793,25 @@ items:
     status: known-issue
     risk: medium
     related: [D-SCN-23, E-SCN-70]
+  - id: E-SCN-74
+    group: Review
+    title: A debit card read as a credit card
+    when: only *ZAHLUNG VISA* or *Visa* read · the slip's *Debit* line out of view, or never printed (pharmacy slips) · the book has a credit card account
+    then: "the credit card account is picked · by design: a brand without *Debit* counts as credit (D-SCN-24) · the account row changes it"
+    status: by-design
+    risk: low
+    related: [R-SCN-35, D-SCN-24]
+    tests:
+      - file: test/features/receipt/domain/services/payment_method_detector_test.dart
+        name: a brand without the word Debit is read as a credit card
+  - id: E-SCN-75
+    group: Reading
+    title: Pharmacy articles in the wrong category
+    when: "*Hustensaft* on a receipt (ended in *SAFT* → drink) · *Ozempic* (no keyword → uncategorized)"
+    then: "fixed 2026-11-15: both → *Health* → the book's pharmacy category · ~85 more pharmacy words: cough, throat, cold, fever, dressings, tests, common OTC and prescription names · a ja book finds 薬局 too · quick booking and the shopping list share the words"
+    status: fixed
+    risk: low
+    related: [R-SCN-03]
+    tests:
+      - file: test/features/receipt/domain/services/category_chain_test.dart
+        name: pharmacy articles are Health, not the drink their name ends in
