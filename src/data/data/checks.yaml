@@ -143,7 +143,7 @@ groups:
       - id: C-DATA-064
         text: "Review → tap a row → *Edit row* → amount on the app keypad · phone + tablet → *Apply* → the row shows the new amount · *Reset to the file* puts it back"
       - id: C-DATA-065
-        text: "Simulator *Free* → Review: *Save this format* locked → paywall *Bank import with saved formats* · row tap → paywall · tick boxes + category pill work · result shows the Pro hint line · up to the tag `v2.1.0`: on `main` a Free user reaches no locked part, see C-DATA-078"
+        text: "Simulator *Free* → Review: *Save this format* locked → paywall *Bank import with saved formats* · row tap → paywall · tick boxes + category pill work · result shows the Pro hint line · a Free user meets these locks only when Pro lapsed during a bank import (R-DATA-74) · the entry lock is C-DATA-078"
       - id: C-DATA-066
         text: "After the migration: format + learned payee saved on phone A → phone B and the web recognize the next file, rows show *Learned*"
       - id: C-DATA-067

@@ -1,11 +1,12 @@
-# App 2.1.0 and web 1.9.0, prepared 2026-11-13 from the release notes
-# (moneykoi-supabase 20261115090000_release_notes_app_2_1_0_web_1_9_0.sql). One item per note,
-# app first (1–8), web after (9–12). The bank import is the roadmap bucket nov-15; the scanner
-# rework (merged in 546fb0a1e) ships with it.
+# App 2.1.0 and web 1.9.1, prepared 2026-11-13 from the release notes
+# (moneykoi-supabase 20261115090000_release_notes_app_2_1_0_web_1_9_1.sql). One item per note,
+# app first (1–10), web after (11–14). The bank import is the roadmap bucket nov-15; the scanner
+# rework (merged in 546fb0a1e) ships with it. 2.2.0 folded in on 2026-11-15 (items 2, 5 and the
+# additions to 1, 3, 4, 9, 10, 11): production was still on 2.0.0, the build is 2.1.0+41.
 # Every test step is a check in its area (ticks are shared with the area's *What to test* page).
 version: 2.1.0
 status: testing
-source: From the release notes (2026-11-13) · app 2.1.0 items 1–8, web 1.9.0 items 9–12 · ticks shared with each area's *What to test*
+source: From the release notes (2026-11-13, 2.2.0 folded in 2026-11-15) · app 2.1.0 items 1–10, web 1.9.1 items 11–14 · ticks shared with each area's *What to test*
 items:
   - n: 1
     title: Bank import · every month, formats, payees
@@ -14,30 +15,58 @@ items:
       - free: re-import key skips rows seen before · pending rows unticked · balance compare · open a `.csv` from Files or mail
       - recurring payment already booked → row unticked
       - **Pro**: saved format → straight to *Review* · learned payees · *Edit row*, *Split*, Amazon order link · transfer suggestion · reminder in a month
+      - two entries (D-DATA-52): Budget Book ⋮ › *Import bank file* = Pro · *Import bookings* simple for everyone · `.csv` opened → by plan
+      - long payee → cut at the last whole word
       - needs `20261110160000_bank_import` on prod first (T-DATA-07)
-    checks: [C-DATA-057, C-DATA-060, C-DATA-061, C-DATA-062, C-DATA-063, C-DATA-064, C-DATA-065, C-DATA-066, C-DATA-067, C-DATA-068, C-DATA-074, C-DATA-075, C-DATA-076]
-    related: [T-DATA-05, T-DATA-07, D-DATA-42, D-DATA-43]
-    screens: [import wizard, review step, edit row sheet, result screen]
+    checks: [C-DATA-057, C-DATA-060, C-DATA-061, C-DATA-062, C-DATA-063, C-DATA-064, C-DATA-065, C-DATA-066, C-DATA-067, C-DATA-068, C-DATA-074, C-DATA-075, C-DATA-076, C-DATA-077, C-DATA-078]
+    related: [T-DATA-05, T-DATA-07, D-DATA-42, D-DATA-43, D-DATA-52, R-DATA-74]
+    screens: [Budget Book menu, import wizard, review step, edit row sheet, result screen]
   - n: 2
+    title: Split bookings · by hand, by receipt
+    area: bookings
+    what: |
+      - *Split across categories* under the form + last row of the category picker
+      - parts must match the total · *left to assign* · merge back to one booking
+      - *Split by receipt items* → one part per category
+      - Budget Book: parts under one entry · a part opens the whole split
+      - round-up once per purchase · scanner batch too
+      - needs `20261114100000_booking_split_group` on prod **first** (T-BKG-05)
+    checks: [C-BKG-052, C-BKG-053, C-BKG-054, C-BKG-055, C-BKG-057]
+    related: [T-BKG-05, T-BKG-06]
+    screens: [booking form, split part sheet, category picker, Budget Book list]
+  - n: 3
     title: Receipt scanner · hover, end of receipt, review
     area: scanner
     what: |
       - hover from the store name down · ticks on read rows · *Slower*, *Closer*, *Back to the last line read*
+      - long receipt in one slow pass · held close or turned · nothing twice
+      - ticks keep up · only on read rows · final check bar · ring in the hint
       - waits for the end of the receipt · date below the total read · *Date not read · today* when not
       - gallery photos at full size · *Suggested fix* · *Rescan* → camera · *Scan more* keeps the photos
+      - misread name keeps its category · review tips: × in the corner, closing one ends them all
       - one cent never blocks *Save* (kept, D-SCN-14)
-    checks: [C-SCN-014, C-SCN-015, C-SCN-016, C-SCN-018, C-SCN-019, C-SCN-020, C-SCN-021, C-SCN-022, C-SCN-023, C-SCN-024, C-SCN-025, C-SCN-026, C-SCN-027, C-SCN-028]
-    related: [T-SCN-05, T-SCN-10, D-SCN-14]
+      - release build on a real phone (E-SCN-64)
+    checks: [C-SCN-014, C-SCN-015, C-SCN-016, C-SCN-018, C-SCN-019, C-SCN-020, C-SCN-021, C-SCN-022, C-SCN-023, C-SCN-024, C-SCN-025, C-SCN-026, C-SCN-027, C-SCN-028, C-SCN-030, C-SCN-031, C-SCN-032, C-SCN-033, C-SCN-034, C-SCN-035, C-SCN-036, C-SCN-037, C-SCN-038, C-SCN-039]
+    related: [T-SCN-05, T-SCN-10, T-SCN-11, D-SCN-14, R-SCN-33, R-SCN-34, E-SCN-73]
     screens: [scanner camera, photo step, receipt review]
-  - n: 3
+  - n: 4
     title: Forecast · year calendar on phones
     area: forecast
     what: |
-      - *Calendar* tab beside *Overview* → this year, today mid-screen · pinned month headers
+      - *Overview · Calendar* tabs under the title · top bar: pencil + sliders only
+      - *Calendar* → this year, today mid-screen · pinned month headers
       - *Go to date* · day sheet: booked + expected, starting balances
     checks: [C-FC-033, C-FC-034, C-FC-035, C-FC-036, C-FC-037, C-FC-039]
-    screens: [forecast calendar, day sheet]
-  - n: 4
+    screens: [forecast page, forecast calendar tab, day sheet]
+  - n: 5
+    title: Navigation · forecast and investments as tabs
+    area: home
+    what: |
+      - Settings › Navigation → *Forecast*, *Forecast calendar*, *Investments* as bottom-bar tabs
+    checks: [C-HOM-026]
+    related: [D-HOM-15]
+    screens: [Settings › Navigation, forecast calendar tab, investments]
+  - n: 6
     title: Recurring payments · missing account, Feb 29, 31st
     area: recurring
     what: |
@@ -48,7 +77,7 @@ items:
     checks: [C-REC-008, C-REC-009, C-REC-010]
     related: [T-BOOK-06]
     screens: [recurring list, recurring_booking_save_page.dart]
-  - n: 5
+  - n: 7
     title: Sync · refused changes, server deletes
     area: offline
     what: |
@@ -56,7 +85,7 @@ items:
       - deleted elsewhere → gone here · categories, recurring payments, shopping lists too
     checks: [C-OFF-007, C-OFF-011]
     screens: [Settings › Changes not synced]
-  - n: 6
+  - n: 8
     title: New users · checklist, one scanner intro
     area: home
     what: |
@@ -65,16 +94,17 @@ items:
       - scanner: one intro page
     checks: [C-HOM-010, C-SCN-008]
     screens: [Getting started card, onboarding, scanner intro]
-  - n: 7
+  - n: 9
     title: Large text and small phones
     area: platform
     what: |
       - amounts follow the font up to 130 % · read as one figure
+      - largest text → booking amount on one line beside the currency
       - paywall + Budget Book hold at large text
       - small phones and landscape: labels fit
-    checks: [C-PLAT-027, C-PLAT-029, C-FC-037]
-    screens: [Budget Book summary, paywall, Home cards]
-  - n: 8
+    checks: [C-PLAT-027, C-PLAT-029, C-PLAT-030, C-FC-037]
+    screens: [Budget Book summary, paywall, Home cards, booking form]
+  - n: 10
     title: Fixes · cash flow, owed card, rounding, EXIF, export, loans, widgets, rating
     area: platform
     what: |
@@ -85,20 +115,23 @@ items:
       - locked export continues after a purchase
       - fully repaid loan: no *Reopen* · needs `20261113120000_goal_loan_status_by_server` (T-BOOK-06)
       - widget keeps its own book · Settings › *Rate Money Koi*
-    checks: [C-HOM-024, C-LED-014, C-BKG-051, C-PRIV-042, C-MON-077, C-BUD-042, C-HOM-023, C-SET-016]
+      - shopping widget after an update → no row stuck on *Loading…*
+      - no category guess from a store that sells everything · chain name as a whole word
+    checks: [C-HOM-024, C-LED-014, C-BKG-051, C-PRIV-042, C-MON-077, C-BUD-042, C-HOM-023, C-SET-016, C-HOM-025, C-BKG-056]
     related: [D-HOM-14, D-LED-7, T-BOOK-06]
-    screens: [Home cash flow card, onboarding accounts, keypad, export sheet, loan detail]
-  - n: 9
+    screens: [Home cash flow card, onboarding accounts, keypad, export sheet, loan detail, shopping widget, quick add]
+  - n: 11
     title: "Web · bank import"
     area: data
     what: |
       - re-import key · recurring rows unticked · saved format → *Review* · learned payees · edit and split rows · balance compare
       - formats and payees shared with the app
+      - long payee → cut at the last whole word, as the app (web `97f1804`)
       - deploy only after the migration (T-DATA-08)
-    checks: [C-DATA-052, C-DATA-069, C-DATA-070, C-DATA-071, C-DATA-072, C-DATA-073]
+    checks: [C-DATA-052, C-DATA-069, C-DATA-070, C-DATA-071, C-DATA-072, C-DATA-073, C-DATA-077]
     related: [T-DATA-07, T-DATA-08]
     screens: [bookings/import]
-  - n: 10
+  - n: 12
     title: "Web · receipts saved as receipts"
     area: scanner
     what: |
@@ -108,7 +141,7 @@ items:
     checks: [C-SCN-029]
     related: [T-BOOK-06]
     screens: [add-receipt/page.tsx]
-  - n: 11
+  - n: 13
     title: "Web · accounts in three groups"
     area: ledger
     what: |
@@ -116,7 +149,7 @@ items:
       - credit subtotal = what is owed
     checks: [C-LED-015]
     screens: [accounts/page.tsx]
-  - n: 12
+  - n: 14
     title: "Web · fixes"
     area: platform
     what: |
