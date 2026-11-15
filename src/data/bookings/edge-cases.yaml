@@ -575,6 +575,17 @@ items:
     status: known-issue
     risk: low
     related: [E-BKG-76, D-BKG-39]
+  - id: E-BKG-78
+    group: Split
+    title: Split opened from one part shows that part on top
+    when: ledger → tap a split purchase (or one of its parts)
+    then: "fixed 2026-11-15 · the amount on top = the purchase total · *Save* stays off until something changes · was: the amount of the tapped part (e.g. $1.84 of $6.90) while the parts line said *Parts match the total* · found on the Android emulator"
+    status: fixed
+    risk: medium
+    related: [R-BKG-55, E-BKG-76]
+    tests:
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: opening one part of a split shows the purchase total on top, not the part
   - id: E-BKG-74
     group: Quick booking
     title: A store for everything guessed as Groceries
