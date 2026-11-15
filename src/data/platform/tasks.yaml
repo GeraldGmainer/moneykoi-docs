@@ -431,7 +431,10 @@ items:
     title: Ask Play support about the closed test for new apps
     owner: gerald
     detail: |
-      - **sent 2026-11-14** · waiting for Google's answer · paste it to an agent when it comes
+      - **2026-11-14 · Play's AI answered before the ticket** · not a human · "may make mistakes"
+      - AI: 1 · closed test per new app · 2 · a converted account is free of it · 3 · products, subscriptions, merchant account, payouts, 15 % tier unaffected · new payments profile · 72 h before a new app
+      - next: *No, create support ticket* → a human confirms 2 + 3 in writing · the switch has no way back
+      - waiting for the human answer · paste it to an agent when it comes
       - the answer decides plan *Organization accounts* · goal: new apps without the 12-tester closed test
       - Play Console › Help › Contact support · paste the text below
       - no closed test for a new app on this account → no organization account · close the plan

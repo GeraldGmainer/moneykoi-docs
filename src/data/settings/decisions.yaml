@@ -32,6 +32,15 @@ items:
     answer: |
       - **keep the link** · the Apple ID is reserved, the page works the day iOS 1.0 is live
       - until then only the simulator and TestFlight testers reach an empty page (F-24)
+  - id: D-SET-6
+    question: Review card · when is the first ask?
+    status: decided
+    date: 2026-11-14
+    answer: |
+      - **3 bookings on ≥ 2 different days** · was 20 on 7 · the first booking is often only a test of the book
+      - **the first 14 days after setup no longer block it** · a launch that showed a getting-started hint does
+      - unchanged: ≤ 3 asks per install, 120 days apart, never next to an update, the paywall or the usage-statistics ask
+    related: [R-SET-47, C-SET-016]
   - id: D-SET-5
     question: Scanner camera in light mode · pin the whole camera screen dark?
     status: open

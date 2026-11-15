@@ -34,7 +34,7 @@ groups:
       - id: C-SET-015
         text: About → *Price data sources* → metal, crypto, exchange-rate rows · each opens its provider's site · German + Japanese titles
       - id: C-SET-016
-        text: "Review card (R-SET-47): internal-track build, not a debug one · an account with ≥ 20 bookings on ≥ 7 days signed in on a phone that did not run setup · save a booking → Home, then Play's card · a second save in the same launch → nothing · Settings → *Rate Money Koi* → the Play page · iOS: TestFlight shows no card, only the row"
+        text: "Review card (R-SET-47): internal-track build, not a debug one · a fresh install · 1 booking today, 2 more on another day (or the device date moved) · restart the app, so no getting-started hint showed in this launch · save a booking → Home, then Play's card · a second save in the same launch → nothing · Settings → *Rate Money Koi* → the Play page · iOS: TestFlight shows no card, only the row"
       - id: C-SET-017
         text: "Release build: *Quick Start* → *Create budget book* → Home shows the starting balance and the *Getting started* card at once, no *0,00 €* for seconds (AND-1-5)"
       - id: C-SET-018

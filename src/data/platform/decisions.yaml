@@ -236,3 +236,16 @@ items:
       - b) from `main` · T-BKG-05 on prod first · split + 3 fixes into the release notes and `releases/2.1.0` · split device pass C-BKG-052…055 · D-BKG-37/38 still open
       - web: A5-1 is uncommitted · either way harmless, it changes descriptions only
     related: [T-BKG-05, D-BKG-37, D-BKG-38]
+  - id: D-PLAT-24
+    question: Build an RKSV QR checker on moneykoi.com?
+    status: open
+    date: 2026-11-14
+    answer: |
+      - idea 2026-11-14 · a page that reads an Austrian receipt's RKSV QR code in the browser · camera or pasted text
+      - shows what the code holds: date, receipt number, totals per VAT rate · no shop name, the code carries only the register id
+      - runs in the browser only · nothing sent · fits the privacy hook
+      - why: no such tool found · Austrian sites link to tools, not posts · pairs with the parked RKSV post (T-PLAT-27, site S-34)
+      - an agent builds it in `moneykoi-site` · Gerald reviews + pushes
+      - no signature check · the format facts get the same fact check as the RKSV post
+      - recommended: yes, live together with the RKSV post · before December, indexing takes weeks
+    related: [T-PLAT-27]

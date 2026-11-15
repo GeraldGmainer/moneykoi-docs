@@ -152,3 +152,25 @@ items:
     tests:
       - file: test/features/booking/ui/pages/add_receipt_page_flow_test.dart
         name: a saved scan counts once for the checklist, Tips & features and the scan nudge (I5-4)
+  - id: E-HOM-18
+    group: Bar
+    title: Tabs dead beside the read-only button
+    when: read-only book (deleted on the server, or the owner's Cloud ended) · the + is the grey crossed-out cloud · tap *Home* or *Book* in the bar
+    then: the tab opens · only the round button opens the notice · fixed 2026-11-14 · before, the button's long-press hint covered the whole bar width and swallowed every tab tap
+    status: fixed
+    risk: medium
+    related: [E-MON-23]
+    tests:
+      - file: test/main/ui/main_bottom_navigation_bar_test.dart
+        name: on a read-only book the notice button takes only its own circle, the tabs beside it still switch
+  - id: E-HOM-19
+    group: Widgets
+    title: Shopping widget rows stuck after an update
+    when: shopping widget placed · app updated over it
+    then: rows show the items · fixed 2026-11-14 · before, the launcher could keep its old row list and every row stayed on *Loading…* (*読み込んでいます…* on a Japanese phone) while title and count were right · a phone still showing it heals on a reboot, or remove and re-add the widget
+    status: fixed
+    risk: low
+    related: [C-HOM-025]
+    tests:
+      - file: android/app/src/test/kotlin/com/psyren/moneykoi/widget/ShoppingListWidgetProviderTest.kt
+        name: the adapter intent carries the row layout id

@@ -26,6 +26,7 @@ gerald:
   - ref: T-PLAT-25
   - ref: T-PLAT-18
   - text: "Hallway test: 3 strangers · Welcome → first booking in under 2 min"
+  - text: "Decide D-PLAT-24 · RKSV QR checker on moneykoi.com"
   - section: "Legal"
   - ref: T-MON-05
   - ref: T-PRIV-04

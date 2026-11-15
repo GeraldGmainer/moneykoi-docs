@@ -14,7 +14,7 @@ gerald:
   - text: "Use the record's address everywhere: `Am Platzl 3/Wohnhaus, Tür 3 · 4451 Garsten`"
   - section: "Ask first"
   - ref: T-PLAT-31
-    note: "sent 2026-11-14 · waiting for Google"
+    note: "AI pre-answer 2026-11-14: switch works · waiting for a human to confirm"
   - text: "Apple stays individual · a sole proprietor must join as one"
     done: 2026-11-14
   - text: "No GmbH soon · it would bring a new D-U-N-S and another switch"
