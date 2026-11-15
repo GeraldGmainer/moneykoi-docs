@@ -28,6 +28,7 @@ items:
     owner: gerald
     detail: |
       - Paid Applications agreement + bank/tax
+      - ✓ checked 2026-11-15: Paid Apps agreement *Active* (to 2027-10-31) · bank account *Active* · W-8BEN *Active* · DSA trader *Active* · DAC7 *Active* (answered: no personal services)
       - ✓ 2026-11-14: Small Business Program · 15 % on paid apps + in-app purchases · over 1M USD proceeds in a calendar year → 30 % for the rest of that year
       - non-consumables: `pro.lifetime` · `cloud.lifetime` · `cloud.lifetime.upgrade`
       - group *Money Koi Cloud*: `cloud.yearly` (1-month trial) · `cloud.monthly`
@@ -48,6 +49,7 @@ items:
       - license testing + internal testers set up · the license test passed (T-MON-07)
       - left for later: T-MON-09 (launch discount, Nov 8) · T-MON-10 (Family Library)
       - 15 % service fee tier enrolled · checked 2026-11-14 (T-MON-28)
+      - ✓ 2026-11-15: trader status *Trader* (Account details) · US tax info W-8BEN submitted in the payments profile, treaty Austria, 0 % · an individual profile has no field for a VAT ID
   - id: T-MON-04
     title: RevenueCat · project and webhook
     owner: gerald
@@ -186,9 +188,23 @@ items:
     detail: |
       - *freies Gewerbe* "Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik" · GISA with ID Austria · free
       - before the paywall release: license-test purchases are €0
-      - ask WKO Gründerservice or a tax advisor: UID number (invoices to Google Ireland) · SVS small-business exemption
+      - UID number: needed — store income is a B2B service to Google's and Apple's Irish companies (reverse charge), and per WKO a Kleinunternehmer needs a UID + ZM for that · requested 2026-11-15 · the quarterly ZM is T-MON-29
+      - SVS: small-business exemption from health + pension insurance filed 2026-11-01 · accident insurance only · lapses for the whole year if that year's profit passes the insurance limit
       - **done**: filed 2026-11-01 at BH Steyr-Land · GISA **40309453**, *aufrecht* since 01.11.2026, Standort Garsten
-      - imprint carries it since 2026-11-07 (site S-27) · open still: the UID / SVS question above
+      - imprint carries it since 2026-11-07 (site S-27)
+      - personal tax details live in `~/Projects/gerald-tax`, never in this repo
+  - id: T-MON-29
+    title: Quarterly ZM for store income
+    owner: gerald
+    waitsFor: [T-MON-11]
+    detail: |
+      - *Zusammenfassende Meldung* in FinanzOnline (form U13) for every quarter with store sales · due the last day of the following month
+      - first one only if Play or the App Store sold anything in Nov–Dec 2026 → **due 2027-01-31** · no sales by 2026-11-15 · check Play apps order management in early January
+      - needs the UID number (requested 2026-11-15, arrives in the Databox)
+      - one line per recipient: Google's / Apple's Irish company · their VAT id from the monthly statement, checked in VIES · amount = the payouts for the quarter's sales
+      - the monthly statements are the receipts: save each PDF · no own invoice to Google or Apple
+      - non-EU clients (e.g. Japan) never go into the ZM
+    related: [T-MON-02, T-MON-03]
 
   - id: T-MON-20
     title: Open the claim to everyone

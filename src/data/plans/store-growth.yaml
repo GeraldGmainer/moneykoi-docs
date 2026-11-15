@@ -31,6 +31,7 @@ gerald:
   - ref: T-MON-05
   - ref: T-PRIV-04
   - ref: T-INV-09
+  - ref: T-MON-29
   - text: "Check DPF/SCC for Supabase, Cloudflare, Resend"
   - text: "Confirm WKO Fachgruppe UBIT · firmen.wko.at or the welcome letter"
   - text: "Steuerberater: income tax + SVS on store income"
