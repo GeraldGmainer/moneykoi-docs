@@ -503,7 +503,8 @@ items:
       - **2. payee lines** in the *Categories* step · one pick fills every row of a payee · *remaining → one category* · built 2026-11-15 · app + web · R-DATA-103
         - a pick never ticks a row (a possible duplicate stays unticked) · a recognized file stops at *Categories* while a row has no category · *same category for the rest* in *Review* for every payee
       - **3. transfers, cash, card** as lines with an account target · own name / own IBAN, *SB-BEHEBUNG*, *KREDITKARTENABRECHNUNG* · planned
-      - **4. a recognized file skips *Columns*** · the red *Ohne Kategoriespalte* box becomes one plain line · planned
+      - **4. a file read with confidence skips *Columns*** · the red *Ohne Kategoriespalte* box is one plain line · built 2026-11-15 · app + web · free · R-DATA-104
+        - DKB opens on *Accounts* · Mein ELBA has no header row, so it still shows *Columns*
       - defaults taken: a row still without a category stays unticked (no automatic *Sonstiges*) · Amazon learns nothing · transfer lines Pro (web: always) · skipping Columns free
       - replaces D-DATA-33 (web guess without the tables)
-    related: [D-DATA-15, D-DATA-33, R-DATA-40, R-DATA-96, R-DATA-103, E-DATA-101, E-DATA-102]
+    related: [D-DATA-15, D-DATA-33, R-DATA-40, R-DATA-96, R-DATA-103, R-DATA-104, E-DATA-101, E-DATA-102]

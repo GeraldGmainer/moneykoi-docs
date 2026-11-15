@@ -185,7 +185,7 @@ items:
     from: Pro, owner or admin
     steps:
       - "Budget Book ⋮ › *Import bank file* → *Choose a CSV file*"
-      - "Columns → Accounts → Categories → *Review*"
+      - "Accounts → Categories → *Review* · *Columns* only for a file not read with confidence (R-DATA-104)"
       - "*Categories*: one line per payee · a category per line · *All other expenses without a category* for the rest (R-DATA-103)"
       - "*Save this format* ticked · *Format name*"
       - "*Import bookings (n)*"
@@ -193,7 +193,7 @@ items:
     note: "Free: *Import bank file* wears the lock → paywall · *Import bookings* takes the same steps without saving a format"
     tests:
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
-        name: takes every step; on Review the format is offered under the account name (D-BANK-38)
+        name: 'read with confidence, it skips only Columns; on Review the format is offered under the account name (D-BANK-38, D-DATA-54)'
       - file: test/features/data_import/ui/bank_import_ui_test.dart
         name: Save this format sits ticked right above the Import button, with the name it will get
       - file: test/features/data_import/ui/bank_import_ui_test.dart

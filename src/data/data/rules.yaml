@@ -637,7 +637,7 @@ items:
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
         name: the import hands the commit the format to keep current, ticked by default (D-BANK-15)
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
-        name: takes every step; on Review the format is offered under the account name (D-BANK-38)
+        name: 'read with confidence, it skips only Columns; on Review the format is offered under the account name (D-BANK-38, D-DATA-54)'
       - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
         name: 'the bank changed its export: the same entry gets the new fingerprint and columns (D-BANK-20)'
       - file: test/features/data_import/use_cases/bank_import_use_cases_test.dart
@@ -939,7 +939,7 @@ items:
     group: On the web
     title: "Web CSV import: same wizard"
     text: |
-      - Columns → Accounts → Categories → Review
+      - Columns → Accounts → Categories → Review · *Columns* skipped for a file read with confidence (R-DATA-104)
       - writes straight to the server
       - duplicates: ±3 days since 2026-11-11 · before: the exact day
       - bank layer → R-DATA-95
@@ -1026,6 +1026,38 @@ items:
         name: 'a bank file: one category per payee on the Categories step fills all of its bookings (D-DATA-54)'
     checks: [C-DATA-080]
     related: [D-DATA-54, R-DATA-40, R-DATA-100, E-DATA-102, J-DATA-22, J-DATA-23]
+  - id: R-DATA-104
+    group: CSV import
+    title: A file read with confidence skips Columns
+    text: |
+      - after *Choose a CSV file* the import opens on **Accounts** · *Columns* ticked in the stepper, one step back
+      - read with confidence: a header row · the date and the amount (or income + expense, type) named by their header · day or month first not in doubt · 95 % of the dates and amounts read
+      - stays on *Columns*: no header (Mein ELBA) · a column found only by its content · *01/02/2026* · a total line in a short sheet · app: a currency column naming another currency, its warning is there
+      - without a category column *Columns* shows one plain line: *Categories* sets one category per payee · was: a red box that read as an error
+      - free · simple and bank import · a saved format still goes straight to *Review* (Pro, R-DATA-81)
+      - app + web the same · the invented DKB, ING, N26, Revolut and Sparkasse files skip it
+    source: BOOKING_IMPORT §4, IMPORT_WEB §5
+    tests:
+      - file: test/features/data_import/domain/import_column_detector_test.dart
+        name: a bank export whose required columns are named and whose dates and amounts all read
+      - file: test/features/data_import/domain/import_column_detector_test.dart
+        name: no header, an ambiguous date, a column found by content only or no amount keep the step
+      - file: test/features/data_import/domain/import_column_detector_test.dart
+        name: 'more than one value in twenty that does not read keeps the step: a total line in a short file'
+      - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
+        name: 'skips Columns: it opens on Accounts, and Back returns to Columns'
+      - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
+        name: a currency column naming another currency keeps it on Columns, where that is said
+      - file: test/features/data_import/fixtures/import_fixtures_test.dart
+        name: 'a file read with confidence skips Columns: the bank exports with a header, not headerless Mein ELBA or the hand-made sheets (D-DATA-54)'
+      - file: src/app/(main)/bookings/import/page.test.tsx
+        repo: web
+        name: a bank file read with confidence skips Columns, which stays one step back (D-DATA-54); Review asks for the categories it cannot guess
+      - file: e2e/import.spec.ts
+        repo: web
+        name: 'a bank file: one category per payee on the Categories step fills all of its bookings (D-DATA-54)'
+    checks: [C-DATA-081]
+    related: [D-DATA-54, R-DATA-40, R-DATA-103, J-DATA-22]
   - id: R-DATA-100
     group: Bank import
     title: Same category for the rest
@@ -1075,7 +1107,7 @@ items:
     tests:
       - file: src/app/(main)/bookings/import/page.test.tsx
         repo: web
-        name: a bank file without a category column goes on; Review asks for the categories it cannot guess
+        name: a bank file read with confidence skips Columns, which stays one step back (D-DATA-54); Review asks for the categories it cannot guess
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: a row without a category cannot be selected, whatever the selection says
