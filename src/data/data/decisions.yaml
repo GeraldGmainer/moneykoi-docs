@@ -481,8 +481,8 @@ items:
       - **one closed group below the new rows** (Gerald) · header counts it · *{n} possible duplicates*
       - closed by default · a tap opens it · rows unticked, each tickable · *Select all* leaves them alone
       - each row takes **what the booking it matched books**: its category, or the transfer to the other account · a category the file names, a learned payee, a pick or an edit wins · never learned as a payee rule
-      - rows a recurring payment booked already join the group: *· {n} booked by a recurring payment* (build session · they are in the book too)
-      - the *Already imported* group stays below it
+      - rows a recurring payment booked get **a closed group of their own** below it · *{n} booked by recurring payments* (Gerald, same day · first built inside the duplicates group · rent, salary and subscriptions come back every month and buried the few rows worth a look)
+      - the *Already imported* group stays last · order: possible duplicates, recurring, already imported · a group without rows has no header
       - why (Gerald): "more focus on stuff that is not already in app" · many duplicates next to *Choose a category* rows were confusing
       - app + web · built 2026-11-15 · the web's *Possible duplicates* filter is gone, the group replaces it
     related: [R-DATA-78, R-DATA-34, R-DATA-102, D-DATA-34, D-DATA-47]
