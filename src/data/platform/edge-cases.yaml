@@ -27,7 +27,7 @@ items:
     title: iOS build lags the Android release
     when: Android 1.x is out, the same iOS version still in review, the App Store id set
     then: |
-      - the changelog on iOS shows *update available* with the store page still on the old build
+      - *About* and the changelog on iOS show *update available* with the store page still on the old build
       - the `upgrader` prompt stays quiet (it reads the store's version)
     status: known-issue
     risk: low

@@ -17,7 +17,7 @@ groups:
       - id: C-PLAT-011
         text: Reminders off → first launch shows no notification prompt · turning reminders on in Settings asks
       - id: C-PLAT-012
-        text: Settings › About › Changelog with a newer version listed → the update row opens Money Koi in the App Store (R-SET-43)
+        text: Settings › About and › Changelog with a newer version listed → the update row opens Money Koi in the App Store, on both pages (R-SET-43)
       - id: C-PLAT-013
         text: Delete the app, reinstall → still signed in · app lock off · setting a new PIN works (E-PLAT-02)
       - id: C-PLAT-014

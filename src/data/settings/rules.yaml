@@ -231,15 +231,21 @@ items:
     related: [R-PLAT-24, R-PLAT-25]
   - id: R-SET-43
     group: Settings
-    title: Changelog's update row opens this platform's store
+    title: The update row opens this platform's store
     text: |
+      - shown when the changelog lists a newer app version than this one · on top of *Changelog* and under the logo on *About* (since 2026-11-15)
+      - *About* stays quiet when the changelog can't load: no row, no error
       - Android → the Play page · iOS → the App Store page (Apple ID `6829288599`, set 2026-10-31)
       - the paywall's *Update app* button opens the same page
-    source: AppUrls.storeListing, 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target
+    source: AppUrls.storeListing, UpdateAvailableBanner, 03_TECHNICAL_ARCHITECTURE.md › Flavors, bundle ids and the iOS target
     tests:
       - file: test/core/constants/app_urls_test.dart
       - file: test/features/settings/ui/pages/changelog_page_test.dart
         name: on iOS the update row opens the App Store page
+      - file: test/features/settings/ui/pages/about_page_test.dart
+        name: a newer version shows the update message, which opens this platform's store
+      - file: test/features/settings/ui/pages/about_page_test.dart
+        name: a failed changelog load keeps the page quiet
     related: [E-PLAT-03, T-PLAT-10]
   - id: R-SET-47
     group: Support
