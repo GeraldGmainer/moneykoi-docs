@@ -770,6 +770,23 @@ items:
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: then the bank tables, resolved to the category with the starter name
+  - id: E-DATA-103
+    group: Bank import
+    title: Own transfers, cash and card settlements counted as spending
+    when: a bank file with money moved to the own savings, an ATM withdrawal or the monthly credit card bill
+    then: |
+      - fixed 2026-11-15 (D-DATA-54 step 3) · app Pro, web always · the *Categories* step books them as transfers between own accounts (R-DATA-105)
+      - was: every such row needed an expense category · the card bill counted twice (each card payment, then the bill) · on Gerald's files: DKB 24 rows to the own name + 12 card bills, ELBA 13 ATM withdrawals
+      - a one-word name (*Erika*) or a card payment from the card's own bank stays a normal row
+    status: fixed
+    risk: high
+    related: [D-DATA-54, R-DATA-105]
+    tests:
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: the row from and to the holder is an own transfer; a card payment from ISSUER is not (D-DATA-54)
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: 'the fixtures: the DKB row from and to the holder is an own transfer, the ELBA ATM withdrawal a cash row'
   - id: E-DATA-102
     group: Bank import
     title: One pick per row on a big bank file

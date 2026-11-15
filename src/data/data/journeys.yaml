@@ -186,7 +186,8 @@ items:
     steps:
       - "Budget Book ⋮ › *Import bank file* → *Choose a CSV file*"
       - "Accounts → Categories → *Review* · *Columns* only for a file not read with confidence (R-DATA-104)"
-      - "*Categories*: one line per payee · a category per line · *All other expenses without a category* for the rest (R-DATA-103)"
+      - "*Categories*: own transfers, cash withdrawals and card settlements first, an account per line (R-DATA-105)"
+      - "then one line per payee · a category per line · *All other expenses without a category* for the rest (R-DATA-103)"
       - "*Save this format* ticked · *Format name*"
       - "*Import bookings (n)*"
     result: "bookings in · *Format saved: {name}*"

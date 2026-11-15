@@ -1058,6 +1058,48 @@ items:
         name: 'a bank file: one category per payee on the Categories step fills all of its bookings (D-DATA-54)'
     checks: [C-DATA-081]
     related: [D-DATA-54, R-DATA-40, R-DATA-103, J-DATA-22]
+  - id: R-DATA-105
+    group: Bank import
+    title: Transfers, cash and card as transfers
+    text: |
+      - *Categories* step · card *Transfers, cash and card* above the payees · only when a row is one of them
+      - **own account:** the other side's name = the account holder's name in the file (the payer column on an expense, the payee column on an income) · word order and case don't matter · two words at least: *Erika* alone is not enough · or the other side's IBAN is an own account's in a saved format (R-DATA-89)
+      - **cash withdrawal:** *SB-Behebung*, *Bargeldauszahlung*, *Bargeldabhebung*, *Geldautomat*, *GAA*, *ATM*, *Cash withdrawal*, *現金引出* … as a whole word · *Atmos Energie* is not
+      - **card settlement:** *Kreditkartenabrechnung*, *Kreditkarte Abrechnung*, *Visa Abrechnung*, *Credit card payment* … · a card payment from the card's bank is not
+      - a line: kind · *Suggested* · *n bookings* · name · total · *To account* / *From account* · the account
+      - suggested: cash → the book's **only** cash account · card → the **only** credit card account · two of them, or none → *Choose an account* · an own transfer always asks
+      - the list: the book's accounts, never the file's own · last: *No transfer: book with a category* → the rows go back to the payee lines (R-DATA-103)
+      - a pick sets every row of the line · **never ticks** a row · a row without an account counts as open · a recognized file stops at *Categories* for it
+      - untouched: a row with a category from the file · a learned payee
+      - imported as a transfer between the two accounts · no category · no expense in analytics
+      - app: Pro (bank import) · web: always · the words are one shared list
+    source: BOOKING_IMPORT §8c, IMPORT_WEB §4.4
+    tests:
+      - file: test/features/data_import/domain/import_transfer_lines_test.dart
+        name: 'each shared case: own, cash, card or none'
+      - file: test/features/data_import/domain/import_transfer_lines_test.dart
+        name: a cash or card row gets the book's only account of that kind; an own transfer waits for a pick
+      - file: test/features/data_import/domain/import_transfer_lines_test.dart
+        name: a pick sets the account for every row; null books them with a category, back on the payee lines
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a transfer line sets the account of its rows or turns them into category rows, never ticking one; Pro only (D-DATA-54)
+      - file: test/features/data_import/ui/booking_import_flows_test.dart
+        name: a transfer line offers the accounts but never the file's own, or a category instead (D-DATA-54)
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: the row from and to the holder is an own transfer; a card payment from ISSUER is not (D-DATA-54)
+      - file: test/features/data_import/fixtures/bank_fixtures_test.dart
+        name: the ATM withdrawal is a cash row; nothing else is (D-DATA-54)
+      - file: src/app/(main)/bookings/import/components/transfer-lines.test.tsx
+        repo: web
+        name: one account for the whole line, never the file's own; or no transfer, back to a category
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: a cash or card row gets the book's only account of that kind; an own transfer waits for a pick
+      - file: e2e/import.spec.ts
+        repo: web
+        name: 'a bank file: the card settlement goes to the only credit card, a transfer to own name gets its account, both as transfers (D-DATA-54)'
+    checks: [C-DATA-082]
+    related: [D-DATA-54, R-DATA-103, R-DATA-89, E-DATA-103, J-DATA-22]
   - id: R-DATA-100
     group: Bank import
     title: Same category for the rest
