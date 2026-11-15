@@ -361,6 +361,20 @@ items:
       - Android now · iPhone people at the iOS launch
       - plus the people already on the app · 9–11 devices in Austria
       - target: 10–20 ratings in 2 weeks · 10 by Dec 31
+      - **2026-11-15: 3 friends' ratings removed by Google** · Google never says why
+      - likely 1 · still testers → a tester's rating stays private feedback
+      - check: Play Console › Testing › Closed + Internal › Testers
+      - tester → opt-in link → *Leave the program* → install from Play → rate
+      - likely 2 · spam filter · several ratings from people linked to the developer, short window
+      - removed review → Google emails the reviewer the reason + an appeal · ask the 3
+      - friends are allowed · Play's comment policy bans owner, employee, reward, several accounts, fake
+      - next asks: **not** a tester · a week of real use first
+      - own phone + home network · a few days apart · one sentence on what was used
+      - one retry per person at most · repeated posts can block the reviewer
+      - in-app review card live since 2.1.0 · 3 bookings on 2 days · R-SET-47
+      - → people already on the app get asked without a message
+      - iOS: App Store ratings start at **0** · Play ratings don't carry over
+      - TestFlight testers rate only from the App Store version
   - id: T-PLAT-26
     title: Get onto the "best Haushaltsbuch apps" pages
     owner: gerald

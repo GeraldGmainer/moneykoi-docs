@@ -180,7 +180,7 @@ items:
 
   # Growth research 2026-11-11: moneykoi-app/.agents/reports/growth-research-2026-11.md
   - id: D-PLAT-19
-    question: Spend the €50 test budget?
+    question: Spend a €50 or €100 test budget?
     status: open
     date: 2026-11-11
     answer: |
@@ -191,6 +191,18 @@ items:
       - ~€6–11 AI voice with a commercial license · or text-only videos, €0
       - rest: template design · or a 2nd Apple Ads week if an install costs < €2
       - not: Google App Campaigns · Meta · TikTok · Reddit ads
+      - **recheck 2026-11-15** · an install brings ~€0.35 · €17.70 net Pro × ~2 %
+      - an ad install costs ~€1.50–5 · Germany ~$1.11 per tap, all categories
+      - finance: ~$3.55 per tap in the US · ~$4.75 per install in Europe
+      - €50 → ~10–33 installs · ~€4–12 back
+      - €100 → ~20–65 installs · ~€7–24 back
+      - Android has **no** small-budget channel · Google App wants ~50× target CPI a day
+      - Meta wants ~50 installs a week · Reddit $5/day minimum, $0.20–4 a click
+      - gate: iOS live + ≥ 10 **App Store** ratings · Play ratings don't carry over
+      - €100 = the €50 · plus a 2nd Apple Ads month if an install costs < €2
+      - or one Austrian budgeting creator · ~€50–75 · a reel of the scan
+      - creator: utm link · labeled *Anzeige* · paid fixed, never per rating
+      - the real return: keywords that convert → listing text, free after
     related: [T-PLAT-28, T-PLAT-30]
   - id: D-PLAT-20
     question: Name rivals on moneykoi.com or in videos?
