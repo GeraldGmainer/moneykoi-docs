@@ -665,6 +665,18 @@ items:
       - file: test/features/data_import/domain/import_review_bank_test.dart
         name: a possible duplicate of a transfer becomes that transfer, from the other account on the receiving side
     related: [R-DATA-34, R-DATA-79, D-DATA-53]
+  - id: E-DATA-100
+    group: Bank import
+    title: Web import cut off on a laptop, half empty on a wide screen
+    when: web · *Columns* step of a bank file with many columns · a 13" laptop or a monitor over 1600px
+    then: |
+      - fixed 2026-11-15 · the field list scrolls with the page, the file preview stays beside it and ends above *Back / Next* · a short file leaves no empty grid
+      - wide screens: the import uses the full width · every column of the file in view
+      - Review: the table fills the screen height · *Choose a category* fits its pill at 1440px
+      - was: the field list scrolled on its own and ran under *Back / Next*, its last fields out of reach · the page stopped at 1440px · white scrollbars with *always show scrollbars* on
+    status: fixed
+    risk: low
+    related: [J-DATA-23, D-DATA-53]
   - id: E-DATA-95
     group: Bank import
     title: Recurring payment without its booking
