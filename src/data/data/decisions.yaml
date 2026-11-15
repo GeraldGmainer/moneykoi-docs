@@ -500,9 +500,10 @@ items:
         - never the quick-booking keyword map, never part of a word · was: *SPAR → Sparen & Investieren*, own transfer *"geld" → Kindergeld*
         - Amazon and other general stores guess nothing · one pick per import
         - DKB 191 of 771 rows guessed (Amazon alone 433) · ELBA 67 of 110 · no known wrong guess
-      - **2. payee lines** in the *Categories* step · one pick fills every row of a payee · *remaining → one category* · planned, next
+      - **2. payee lines** in the *Categories* step · one pick fills every row of a payee · *remaining → one category* · built 2026-11-15 · app + web · R-DATA-103
+        - a pick never ticks a row (a possible duplicate stays unticked) · a recognized file stops at *Categories* while a row has no category · *same category for the rest* in *Review* for every payee
       - **3. transfers, cash, card** as lines with an account target · own name / own IBAN, *SB-BEHEBUNG*, *KREDITKARTENABRECHNUNG* · planned
       - **4. a recognized file skips *Columns*** · the red *Ohne Kategoriespalte* box becomes one plain line · planned
       - defaults taken: a row still without a category stays unticked (no automatic *Sonstiges*) · Amazon learns nothing · transfer lines Pro (web: always) · skipping Columns free
       - replaces D-DATA-33 (web guess without the tables)
-    related: [D-DATA-15, D-DATA-33, R-DATA-40, R-DATA-96, E-DATA-101, E-DATA-102]
+    related: [D-DATA-15, D-DATA-33, R-DATA-40, R-DATA-96, R-DATA-103, E-DATA-101, E-DATA-102]

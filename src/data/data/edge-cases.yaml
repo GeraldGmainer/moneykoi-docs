@@ -775,10 +775,16 @@ items:
     title: One pick per row on a big bank file
     when: a bank file of hundreds of rows · most payees unguessed (Amazon, people, insurers)
     then: |
-      - a category picked in *Review* fills only that row · *SPAR* ×31 = 31 picks · a 771-row DKB file ≈ 700 picks
-      - only a general store (Amazon) offers *same category for the other rows*
-      - fix planned: payee lines in the *Categories* step, one pick per payee (D-DATA-54 step 2)
-    status: known-issue
+      - fixed 2026-11-15 (D-DATA-54 step 2) · app + web · the *Categories* step lists one line per payee · one pick fills its rows · *All other expenses without a category* takes the rest in one pick (R-DATA-103)
+      - was: a category picked in *Review* filled only that row · *SPAR* ×31 = 31 picks · a 771-row DKB file ≈ 700 picks · only a general store (Amazon) offered *same category for the other rows*
+      - now: about 25 picks for the DKB year · *same category for the other rows* in *Review* for every payee
+    status: fixed
     risk: high
-    related: [D-DATA-54, R-DATA-40]
+    related: [D-DATA-54, R-DATA-40, R-DATA-103]
+    tests:
+      - file: test/features/data_import/domain/import_payee_lines_test.dart
+        name: 'one line per payee key and side: branch numbers and legal forms join, the sides stay apart'
+      - file: src/app/(main)/bookings/import/components/payee-lines.test.tsx
+        repo: web
+        name: one pick on a line fills every open row of that payee, without ticking
 

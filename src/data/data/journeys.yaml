@@ -186,6 +186,7 @@ items:
     steps:
       - "Budget Book ⋮ › *Import bank file* → *Choose a CSV file*"
       - "Columns → Accounts → Categories → *Review*"
+      - "*Categories*: one line per payee · a category per line · *All other expenses without a category* for the rest (R-DATA-103)"
       - "*Save this format* ticked · *Format name*"
       - "*Import bookings (n)*"
     result: "bookings in · *Format saved: {name}*"
@@ -205,7 +206,7 @@ items:
     from: Pro, a saved format
     steps:
       - "choose the new file"
-      - "*Recognized: {name}* → straight to *Review*"
+      - "*Recognized: {name}* → straight to *Review* · a payee still without a category stops at *Categories* first, *Only without a category* on"
       - "new rows ticked · *n possible duplicates* and *n already imported* closed below"
       - "*Import bookings (n)*"
     result: "*Matches the bank: {amount}* · or *Bank: … · Book: …*"

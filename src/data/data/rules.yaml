@@ -280,7 +280,7 @@ items:
     related: [R-DATA-40, R-DATA-87]
   - id: R-DATA-40
     group: CSV import
-    title: No category → guessed, else picked in Review
+    title: No category → guessed, else picked per payee
     text: |
       - category column optional · a bank CSV imports (D-DATA-15, replaces D11)
       - guess since 2026-11-15 (D-DATA-54) · only existing categories, same side · first hit wins:
@@ -293,6 +293,7 @@ items:
       - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* …
       - the payee also **names the booking** since 2026-11-10 → R-DATA-75 · before: only a clue
       - Pro: a learned payee answers before the guess → R-DATA-85
+      - what the guess leaves open → *Categories* step, one pick per payee → R-DATA-103
       - Review: the category is a pill, tap → change it · no guess → *Choose a category*, unticked, can't be ticked
       - nothing imports without a category
     source: BOOKING_IMPORT §4, §8a
@@ -307,7 +308,7 @@ items:
         name: without a guess it is never selected, by a tap or by Select all
       - file: test/features/data_import/bloc/import_wizard_cubit_test.dart
         name: a category picked in Review selects it and stays with the draft
-    related: [D-DATA-15, R-DATA-75, R-DATA-85, D-DATA-54]
+    related: [D-DATA-15, R-DATA-75, R-DATA-85, D-DATA-54, R-DATA-103]
   - id: R-DATA-34
     group: CSV import
     title: Duplicates start unticked
@@ -591,7 +592,7 @@ items:
     text: |
       - **Pro** · the user's, not a book's · usable in any book
       - recognized by header names + delimiter + column count · no values
-      - recognized → *Review* with banner *Recognized: {name}* + account pill
+      - recognized → *Review* with banner *Recognized: {name}* + account pill · a payee still without a category stops at *Categories* first (R-DATA-103)
       - *Change* or back → every step again
     source: BOOKING_IMPORT §17
     tests:
@@ -988,18 +989,55 @@ items:
         name: 'the Import button counts bookings: a split row once per part'
     checks: [C-DATA-075]
     related: [R-DATA-98, J-DATA-28, E-DATA-93]
+  - id: R-DATA-103
+    group: Bank import
+    title: One category per payee
+    text: |
+      - *Categories* step, rows the file names no category for · **one line per payee and side** · *SPAR DANKT 3013* and *Spar Dankt 3616* are one line · a row without a payee groups by its text
+      - a line: name · *n bookings* · total · one purpose · *Learned* / *Suggested* · the pill *Choose a category* · *Choose for n bookings* while some rows have none · else the category
+      - a pick fills the line's rows **without a category** · once none is left, all of them · a guess on another row of the same payee stays (rent and heating from one landlord)
+      - a line opens to its rows · one pick per row
+      - **remaining:** *All other expenses without a category (n)* · *All other income without a category (n)* · one pick for the rest
+      - a pick **never ticks** a row · a possible duplicate stays unticked · a pick teaches the payee (Pro) like a pick in *Review* · Amazon one line, learns nothing (D-BANK-21)
+      - not on a line: a row with a file category, a transfer, a split
+      - a row still without a category: *Review* is reached anyway · the row stays unticked · nothing imports without a category
+      - **a recognized file stops at *Categories*** while a row has no category · *Only without a category* on · from *Accounts* too
+      - free · app + web the same · web: a table row from 1536 px, stacked below
+    source: BOOKING_IMPORT §8b, IMPORT_WEB §4.4
+    tests:
+      - file: test/features/data_import/domain/import_payee_lines_test.dart
+        name: a pick goes to the rows without a category, or to every row once none is left
+      - file: test/features/data_import/domain/import_payee_lines_test.dart
+        name: a row with a file category, a transfer or a split is no line row; a turned-off transfer is
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: a payee-line pick fills its rows without ticking them; Review gets no tick from it (D-DATA-54)
+      - file: test/features/data_import/bloc/import_wizard_bank_test.dart
+        name: rows still without a category stop it at Categories, also on the way from Accounts (D-DATA-54)
+      - file: test/features/data_import/ui/booking_import_flows_test.dart
+        name: a payee line opens the picker, and the pick goes to all of its open rows; the rest in one pick (D-DATA-54)
+      - file: src/app/(main)/bookings/import/components/payee-lines.test.tsx
+        repo: web
+        name: the remaining pick of a side takes every open row of that side
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: a payee-line pick sets the category without ticking, before Review exists; Review then ticks the fresh booked rows
+      - file: e2e/import.spec.ts
+        repo: web
+        name: 'a bank file: one category per payee on the Categories step fills all of its bookings (D-DATA-54)'
+    checks: [C-DATA-080]
+    related: [D-DATA-54, R-DATA-40, R-DATA-100, E-DATA-102, J-DATA-22, J-DATA-23]
   - id: R-DATA-100
     group: Bank import
     title: Same category for the rest
     text: |
-      - category pill on an Amazon or PayPal row → message *n more bookings from Amazon need a category* · *Apply to all*
+      - category pill on a row → message *n more bookings from {payee} need a category* · *Apply to all* · every payee since 2026-11-15 (D-DATA-54) · before: only Amazon, PayPal and other general stores
       - only the rows of that name and side still without a category · never split rows, transfers, rows already in the book
       - never by itself · only on the tap
       - edit sheet: description first, with a one-tap clear · empty = booking without description
     source: BOOKING_IMPORT §9b
     tests:
       - file: test/features/data_import/ui/import_row_edit_test.dart
-        name: 'same category: the other open rows of a payee that learns nothing, same side only'
+        name: 'same category: the other open rows of the payee, same side only; a payee that learns a rule too (D-DATA-54)'
       - file: test/features/data_import/bloc/import_wizard_rows_test.dart
         name: the shortcut gives the named rows the same category, ticks them and keeps it on the drafts
       - file: test/features/data_import/ui/import_row_edit_test.dart
@@ -1024,7 +1062,7 @@ items:
         name: 'both legs of a transfer count: out of this account for an expense row, into it for an income row'
       - file: src/app/(main)/bookings/import/page.test.tsx
         repo: web
-        name: a recognized file goes straight to Review, with its account, its already imported rows collapsed, and Change back to Columns
+        name: a recognized file stops only for the payees without a category, then Review has its account, its already imported rows collapsed, and Change back to Columns
     related: [R-DATA-74, R-DATA-77, R-DATA-78, E-DATA-84, D-DATA-25]
   - id: R-DATA-96
     group: On the web
