@@ -5,7 +5,7 @@ gerald:
   - ref: T-MON-02
   - ref: T-PLAT-13
   - ref: T-MON-04
-    note: "left: the iOS app in RevenueCat"
+    note: "iOS app in ✓ · left: entitlements + packages for the 5 App Store products"
   - ref: T-PLAT-05
   - text: "Decide D-PLAT-8 · iPad"
   - text: "Decide D-PLAT-5 · Cupertino look"

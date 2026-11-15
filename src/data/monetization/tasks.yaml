@@ -36,6 +36,10 @@ items:
       - launch price = scheduled price change with a real end date
       - en/de/ja · Server Notifications V2 → RevenueCat · sandbox testers · review note: how to reach the paywall
       - ✓ 2026-10-31: app record, Apple ID `6829288599` in the app (E-MON-15) · the 3 one-time products · group *Money Koi Cloud* with both subscriptions
+      - 2026-11-15: all 5 products *Ready to Submit* · `cloud.lifetime` €49.99 = launch price
+      - first products go **with an app version**: version page › *In-App Purchases and Subscriptions* › tick all 5
+      - version already in review → *Remove from Review* · tick the 5 · resubmit
+      - schedule from Jan 17 2027: `cloud.lifetime` €69.99 · `cloud.lifetime.upgrade` €44.99
   - id: T-MON-03
     title: Google · payments and products
     owner: gerald
@@ -55,7 +59,11 @@ items:
     owner: gerald
     waitsFor: [T-MON-01, T-MON-02, T-MON-03]
     detail: |
-      - **Android done 2026-10-18** · own service account `id-revenuecat-play@…` · webhook test 200 on prod · left: the iOS app
+      - **Android done 2026-10-18** · own service account `id-revenuecat-play@…` · webhook test 200 on prod
+      - iOS app in RevenueCat ✓ 2026-11-15 · its 5 products show **no entitlement** yet
+      - left: attach `pro.lifetime` → `pro` · each `cloud.*` → `pro` + `cloud` · same as Android
+      - left: each App Store product into its package of the offering · else the paywall lists nothing
+      - left: In-App Purchase key (.p8) on the App Store app · Server Notifications V2 URL in App Store Connect
       - project + both apps · entitlements `pro` / `cloud` · each Cloud product → both · one offering
       - `pro.lifetime`, `cloud.lifetime`, `cloud.lifetime.upgrade` → **Non-consumable**, or a restore finds nothing
       - **Restore Behavior = keep original App User ID**
@@ -168,13 +176,16 @@ items:
       - menu names from Google's 2021 help pages · may read differently now
     related: [T-MON-02, T-MON-03]
   - id: T-MON-09
-    title: Google · launch discount from Nov 8
+    title: Google · launch price from Nov 8
     owner: gerald
     detail: |
-      - Nov 8: *Add offer* on `cloud.lifetime` (€49.99) and `cloud.lifetime.upgrade` (€24.99) · last day Jan 16 2027 (D4)
+      - ⚠️ 2026-11-15: a Play *offer* never reaches the paywall · RevenueCat reads no one-time offers yet (purchases-android #3440)
+      - so Android charges the **base** price: €69.99 since Nov 8 · App Store €49.99
+      - fix: lower the base itself · `cloud.lifetime` €49.99 · `cloud.lifetime.upgrade` €24.99 · last day Jan 16 2027 (D4)
       - Play adds VAT to a bulk price: base = target ÷ 1.20 · then the euro rows by hand
-      - same day: RevenueCat offering metadata `launch_until` + `regular_prices` for EUR, USD, GBP, CHF, JPY (R-MON-48 area)
-      - **Jan 17 2027**: the Play offer runs out by itself · remove `launch_until` + `regular_prices` from the RevenueCat offering
+      - an offer added earlier → deactivate it
+      - RevenueCat offering metadata `launch_until` + `regular_prices` for EUR, USD, GBP, CHF, JPY (R-MON-48 area)
+      - **Jan 17 2027**: base back to €69.99 / €44.99 by hand · remove `launch_until` + `regular_prices`
       - no build needed
   - id: T-MON-10
     title: "Check: does Play Family Library cover Pro?"
