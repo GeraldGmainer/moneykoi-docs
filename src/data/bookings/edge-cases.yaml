@@ -546,6 +546,35 @@ items:
     tests:
       - file: test/features/booking/ui/pages/booking_save_page_test.dart
         name: a new part closed before an amount is typed leaves without asking; with an amount it asks
+  - id: E-BKG-76
+    group: Split
+    title: Scan whose parts each have their own name
+    when: itemized scan · 3 lines, 3 different names (one renamed on the review page) · opened later
+    then: |
+      - fixed 2026-11-15 · the header and the form's description = the receipt's shop · every part keeps its own name, in its row and its sheet
+      - editing a part's description, amount or category changes that part only
+      - the purchase description = a description at least 2 parts share · else the shop · else the header reads *Split*
+      - was: one part's name became the purchase's · that part looked blank in its sheet, and editing the description on top renamed it
+    status: fixed
+    risk: medium
+    related: [R-BKG-56, E-BKG-77]
+    tests:
+      - file: test/features/booking/domain/booking_draft_split_test.dart
+        name: "parts that each name themselves keep their names: the purchase never borrows the opened one"
+      - file: test/shared/ui/budget_book/split_group_entry_test.dart
+        name: "parts that each name themselves have no title: one part never names the purchase"
+      - file: test/features/booking/use_cases/split_booking_use_case_test.dart
+        name: description, amount and category of one part change that row only
+      - file: test/features/booking/bloc/booking_save_bloc_test.dart
+        name: a scanned group whose parts each name their line opens on the receipt merchant
+  - id: E-BKG-77
+    group: Split
+    title: Description on top when every part has its own
+    when: split where no part reads the purchase description (each scanned line named · or 2 parts with 2 different names) · the description on top changed · *Save*
+    then: no part takes it, so it is not stored · the header keeps the shop or *Split* · rename the shop in the receipt section instead · no purchase row exists to hold it (decision D-BKG-39)
+    status: known-issue
+    risk: low
+    related: [E-BKG-76, D-BKG-39]
   - id: E-BKG-74
     group: Quick booking
     title: A store for everything guessed as Groceries

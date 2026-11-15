@@ -370,10 +370,11 @@ items:
       - every part counts in its own category: summary, budgets, analytics, calendar · no total changes
       - counts count parts (*n transactions*), as scanned receipts always did
       - ledger: the parts of one purchase sit under one header (description · *n parts* · total) · a filter that leaves one part shows it as a plain row with a split mark
+      - header description = one at least 2 parts share · else the receipt's shop · else *Split* · a part's own name is never the header
       - opening any part opens the whole purchase
       - *Make recurring* not offered on a split · rules stay single-category
     source: BOOKING_SPLIT §1, §6
-    related: [R-BKG-55]
+    related: [R-BKG-55, E-BKG-76]
     tests:
       - file: test/shared/ui/budget_book/split_group_entry_test.dart
         name: parts of one group collapse into one entry where the first part stood

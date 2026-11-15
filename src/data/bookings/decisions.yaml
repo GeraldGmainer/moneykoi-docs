@@ -251,3 +251,13 @@ items:
       - rules that split, a split in quick booking, purchase-level "biggest expense": not built
       - German: *aufteilen* / *Teil* (as the bank import), not *Splitbuchung*
     related: [R-BKG-57, R-SCN-07, R-BUD-41]
+  - id: D-BKG-39
+    question: Split · where does a purchase description go when every part has its own?
+    status: open
+    answer: |
+      - today: the purchase description lives only on parts without their own · no purchase row · an edit no part reads is not stored (E-BKG-77)
+      - scans: the header shows the receipt's shop, so a scan reads right without one
+      - a) leave it · rename the shop in the receipt section
+      - b) a scan stores the shop on every part not renamed on the review page · item names stay on the receipt only, not on the bookings · no lookup needed
+      - c) a stored purchase description on every part (new column, app + server migration, web)
+    related: [E-BKG-76, E-BKG-77, R-BKG-56]
