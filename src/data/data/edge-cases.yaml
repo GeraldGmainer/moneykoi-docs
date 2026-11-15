@@ -652,6 +652,19 @@ items:
       - file: test/features/data_import/domain/import_review_bank_test.dart
         name: a part without a category keeps the row unticked; parts that leave the first nothing are no split
     related: [R-DATA-99]
+  - id: E-DATA-99
+    group: Bank import
+    title: Possible duplicate of a hand-typed transfer
+    when: a file row matches one leg of a transfer typed by hand (±3 days, same account, side, amount)
+    then: |
+      - in the duplicates group, unticked · shows *Transfer to {account}* (from it on the receiving side) instead of a category
+      - ticked anyway → it books that transfer once more · the file's own category, a learned payee, a pick or an edit still win
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a possible duplicate of a transfer becomes that transfer, from the other account on the receiving side
+    related: [R-DATA-34, R-DATA-79, D-DATA-53]
   - id: E-DATA-95
     group: Bank import
     title: Recurring payment without its booking

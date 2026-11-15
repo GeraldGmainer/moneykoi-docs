@@ -154,3 +154,5 @@ groups:
         text: "Bank file with a long payee (*Hausverwaltung Müller GmbH*) → Review and the saved booking say *Hausverwaltung* · same on the web (A5-1)"
       - id: C-DATA-078
         text: "Simulator *Free* → Budget Book ⋮ › *Import bank file* wears the lock → paywall → buy Pro → the bank import opens · Settings › Backup & restore › *Import bookings* with Pro → no *Save this format*, no lock on the rows, no reminder switch on the result · a `.csv` from Files: Pro → *Recognized* for a saved bank, Free → the simple import (D-DATA-52)"
+      - id: C-DATA-079
+        text: "Bank file with rows already typed by hand → Review lists only the new rows · *n possible duplicates · n booked by a recurring payment* closed below, *n already imported* under it · open → each row unticked, with the category of the booking it matched · *Select all* leaves the group alone · same on the web (D-DATA-53)"

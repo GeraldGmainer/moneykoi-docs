@@ -206,7 +206,7 @@ items:
     steps:
       - "choose the new file"
       - "*Recognized: {name}* → straight to *Review*"
-      - "new rows ticked · *n already imported* below"
+      - "new rows ticked · *n possible duplicates* and *n already imported* closed below"
       - "*Import bookings (n)*"
     result: "*Matches the bank: {amount}* · or *Bank: … · Book: …*"
     tests:

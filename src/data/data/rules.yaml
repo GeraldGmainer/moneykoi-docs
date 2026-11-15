@@ -306,11 +306,19 @@ items:
       - counted pairwise · description ignored
       - a row an import brought is found by its key first → R-DATA-77
       - row label: one of three states → R-DATA-78 · before: one duplicate label
+      - the row takes the **category of the booking it matched** · a transfer makes it that transfer · a file category, a learned payee, a pick or an edit wins · since 2026-11-15 (D-DATA-53)
     source: BOOKING_IMPORT §9, §9a, §16 D7
     tests:
       - file: test/features/data_import/domain/import_duplicate_matcher_test.dart
         name: a hand-typed booking within three days is a possible duplicate; four days is not
-    related: [R-DATA-77, R-DATA-78, R-DATA-79]
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a possible duplicate takes the category of the booking it paired with, a guess or none
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a possible duplicate of a transfer becomes that transfer, from the other account on the receiving side
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: a possible duplicate takes the category of the booking it paired with, a guess or none (D-DATA-53)
+    related: [R-DATA-77, R-DATA-78, R-DATA-79, D-DATA-53]
   - id: R-DATA-35
     group: CSV import
     title: Cut to server limits
@@ -471,11 +479,13 @@ items:
     group: Bank import
     title: Three duplicate states
     text: |
-      - *Already imported* · key in the book → collapsed group below, unticked, tickable
+      - *Already imported* · key in the book → closed group at the bottom, unticked, tickable
       - *Deleted earlier* · key in this phone's trash, 30 days → same group
-      - *Possible duplicate* · ±3-day match → main list, unticked
-      - *Select all* never ticks the collapsed group
-      - plus *Recurring payment, already booked* · R-DATA-102
+      - *Possible duplicate* · ±3-day match → **closed group of its own** above it, unticked, tickable · since 2026-11-15, before: main list (D-DATA-53)
+      - plus *Recurring payment, already booked* · in the duplicates group · R-DATA-102
+      - the main list holds only new rows · both groups closed by default
+      - each header counts its rows · *{n} possible duplicates · {n} booked by a recurring payment* · *{n} already imported · {n} deleted earlier*
+      - *Select all* never ticks a grouped row · before 2026-11-15 it ticked possible duplicates
     source: BOOKING_IMPORT §9, §9a
     tests:
       - file: test/features/data_import/domain/import_review_bank_test.dart
@@ -483,10 +493,15 @@ items:
       - file: test/features/data_import/domain/import_review_bank_test.dart
         name: 'a key in the trash: deleted earlier (D-BANK-28)'
       - file: test/features/data_import/bloc/import_wizard_bank_test.dart
-        name: Select all never ticks the rows that are already in the book (D-BANK-27)
+        name: Select all never ticks the rows that are or may be in the book (D-BANK-27)
       - file: test/features/data_import/ui/bank_import_ui_test.dart
-        name: the rows already in the book sit in one closed group below; open, they are rows like any other
-    related: [D-DATA-34, R-DATA-34, R-DATA-79, R-DATA-102]
+        name: possible duplicates and the rows already in the book sit in two closed groups below the new rows
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: a hand-typed booking two days off is a possible duplicate, in its own group
+      - file: src/app/(main)/bookings/import/components/review-step.test.tsx
+        repo: web
+        name: possible duplicates wait in a closed group below the new rows, counted in its header (D-DATA-53)
+    related: [D-DATA-34, D-DATA-53, R-DATA-34, R-DATA-79, R-DATA-102]
   - id: R-DATA-79
     group: Bank import
     title: Who joins the ±3-day check
@@ -512,7 +527,7 @@ items:
     title: Recurring payments in the file
     text: |
       - match: same account and side · amount **±1 %** · date **±3 days** · the text only breaks a tie
-      - the payment **booked it already** → *Recurring payment, already booked* · unticked · main list · own summary line, *already in this book from recurring payments*
+      - the payment **booked it already** → *Recurring payment, already booked* · unticked · in the closed duplicates group since 2026-11-15 (D-DATA-53), before: main list · own summary line, *already in this book from recurring payments*
       - **due but not booked** (set up later, paused, booking deleted) → stays **ticked** · grey *Recurring payment, not booked yet*
       - the row takes the **payment's category** · a recurring transfer makes it a transfer · a file category, a learned payee, a pick or an edit wins · never learned as a payee rule
       - an imported due row is a **plain booking**, not tied to the payment
@@ -522,7 +537,7 @@ items:
     source: BOOKING_IMPORT §9c, IMPORT_WEB §4
     tests:
       - file: test/features/data_import/domain/import_recurring_test.dart
-        name: 'the same amount three days later: recurring, unticked, in the main list, still tickable'
+        name: 'the same amount three days later: recurring, unticked, in the duplicates group, still tickable'
       - file: test/features/data_import/domain/import_recurring_test.dart
         name: an amount 1 % off still matches, more than 1 % does not
       - file: test/features/data_import/domain/import_recurring_test.dart
@@ -539,7 +554,7 @@ items:
         name: 'a row a recurring payment stands for says so: booked and unticked, or due and ticked'
       - file: src/app/(main)/bookings/import/lib/recurring.test.ts
         repo: web
-        name: 'the same amount three days later: recurring, unticked, in the main list, still tickable'
+        name: 'the same amount three days later: recurring, unticked, in the duplicates group, still tickable'
       - file: src/app/(main)/bookings/import/lib/recurring.test.ts
         repo: web
         name: keeps the tick and says recurring
@@ -984,7 +999,7 @@ items:
       - built 2026-11-11 · saved formats, learned payees, row editing, transfers, balance compare
       - **no** lock · every web book is Cloud, Cloud includes Pro
       - same re-import key as the app · shared vector files, a test fails on drift
-      - states: *Already imported* (collapsed card) · *Possible duplicate* (±3 days) · *Recurring payment* (R-DATA-102) · *Pending at the bank* (unticked) · transfer legs count
+      - states: *Already imported* (collapsed card) · *Possible duplicate* (±3 days) and *Recurring payment* (R-DATA-102) in a closed card of their own (D-DATA-53) · *Pending at the bank* (unticked) · transfer legs count
       - not on the web: *Deleted earlier* · open-with · import reminder · usage event
     source: IMPORT_WEB §1, §4, §7, §9
     tests:
