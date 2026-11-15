@@ -12,8 +12,11 @@ gerald:
   - text: "Device pass · import checks C-DATA-057 → C-DATA-076"
     sub:
       - text: "open-with has never run on a device"
+    done: 2026-11-15
   - text: "Device check C-SET-016 · review card on an internal-track build"
+    done: 2026-11-15
   - text: "Device check C-BKG-011 · widget quick add, cold start → keyboard up · retry changed 2026-11-11"
+    done: 2026-11-15
   - text: "F-01 + F-20 device re-check"
     done: 2026-11-13
     sub:
@@ -55,6 +58,7 @@ gerald:
   - text: "Paste the findings git block · app, 4 commits (A5-1, A5-2, I5-6, plan)"
     done: 2026-11-14
   - text: "Paste the web git block · payee cut at a whole word (A5-1)"
+    done: 2026-11-15
   - section: "Release"
   - text: "`pubspec.yaml` is still `2.0.0+38` · release notes still 2.0.0 → run prepare-release"
     done: 2026-11-13
@@ -71,9 +75,14 @@ gerald:
   - text: "Decide D-PLAT-23 first: build from tag `v2.1.0` or `main` (split inside)"
     sub:
       - text: "`main` also has the import split (D-DATA-52) · device check C-DATA-078"
+        done: 2026-11-15
+    done: 2026-11-15
   - text: "`./publish.sh internal` → device pass on the internal build → `./publish.sh promote`"
+    done: 2026-11-15
   - text: "Push `20261115090000_release_notes_app_2_1_0_web_1_9_0` with the Play rollout"
+    done: 2026-11-15
   - text: "Then push moneykoi-web `main` (T-DATA-08) · 7 commits ahead"
+    done: 2026-11-15
   - section: "Left from the device rounds (findings plan, deleted 2026-11-14)"
   - text: "iPhone: *Save to device* → *Cancel* below the clock? (F-25, C-PLAT-026)"
   - text: "iPhone: sign in → delete the app → reinstall offline → Welcome (F-47)"
@@ -91,6 +100,7 @@ gerald:
   - text: "Store listings still write カテゴリー → カテゴリ at the next listing update (F-38)"
 agents:
   - text: "2.1.1: learned payees keep the payee's name (D-DATA-51) · app + web + server"
+    done: 2026-11-15
   - text: "Corpus test + `expect.json` on the real bank files (T-DATA-05)"
     done: 2026-11-11
   - text: "`claim_entry.dart` + `read_only_feature_banner.dart` above 90 % tier coverage"
@@ -103,6 +113,7 @@ agents:
       - text: "6,234 / 6,234 pass · exit 1 from one `input-otp` timer after teardown (library, not this release)"
         done: 2026-11-13
   - text: "App: forecast 24-month benchmark on a quiet machine · 835 ms at load 96, budget 256"
+    done: 2026-11-15
   - text: "Two date-dependent investment tests fail on a clean HEAD"
     done: 2026-11-11
   - text: "Web `npm run lint` · 33 errors in code the import did not touch"
@@ -135,3 +146,4 @@ agents:
       - text: "26 findings · fixed or ruled · findings plan deleted 2026-11-14, open rows moved here"
         done: 2026-11-13
   - text: "2.1.1: store the day a balance was typed on the account (D-DATA-50) · app + web + server, then drop the warning"
+    done: 2026-11-15

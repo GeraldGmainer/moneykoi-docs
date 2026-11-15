@@ -59,6 +59,7 @@ items:
   - id: T-DATA-07
     title: Apply the bank-import migration · server first
     owner: gerald
+    status: done
     detail: |
       - `20261110160000_bank_import.sql` · written, **not applied** · local → prod · dev is paused since 2026-11-08 (by hand only)
       - **before the app build ships**: the app pushes `profile_setting.import_formats` + `booking.import_ref` · without them every settings push with a saved format fails (E-DATA-88)
@@ -76,6 +77,7 @@ items:
   - id: T-DATA-08
     title: Deploy the web after the migration
     owner: gerald
+    status: done
     waitsFor: [T-DATA-07]
     detail: |
       - the web import writes `import_ref` on every booking · without the migration it fails at the first insert
@@ -91,6 +93,7 @@ items:
   - id: T-DATA-09
     title: Play Data safety · IBAN fingerprint
     owner: gerald
+    status: done
     detail: |
       - new on the server for Cloud users: a saved format's IBAN hash + last four + the key (R-DATA-84)
       - falls under *Other financial info* · already declared, Cloud only → **review, likely no change**

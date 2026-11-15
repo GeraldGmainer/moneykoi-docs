@@ -41,6 +41,7 @@ items:
   - id: T-SCN-05
     title: "Phone check: long receipts by hover"
     owner: gerald
+    status: done
     detail: |
       - C-SCN-014, C-SCN-015, C-SCN-016 · thirty minutes
       - + the new end of a scan: C-SCN-018, C-SCN-019 · five minutes · **still open**

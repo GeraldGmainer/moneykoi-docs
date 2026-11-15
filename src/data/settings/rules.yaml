@@ -257,7 +257,7 @@ items:
       - never in a launch that showed a getting-started hint · the first 14 days after setup are allowed otherwise
       - never in a launch that showed an update, the paywall or the usage-statistics ask · at most once per launch
       - at most every 120 days, 3 times per install · the store may still show nothing (its own quota) · the app never learns whether a review was left
-      - Settings → Support → *Rate Money Koi* → the store page (Android, iOS) · never the card: a button that may open nothing is what Google forbids
+      - Settings → Support → *Rate Money Koi* → iOS: the App Store's review form straight away · Android: the Play page (Play has no direct link) · never the card: a button that may open nothing is what Google forbids
     source: STORE_REVIEW_AI_CONTEXT.md, STORE_LISTING_AI_CONTEXT.md §11
     tests:
       - file: test/features/store_review/review_prompt_test.dart
@@ -272,6 +272,8 @@ items:
         name: never in a launch that showed a getting-started hint
       - file: test/features/store_review/review_prompt_test.dart
         name: "a test booking alone is not use: the first ask needs 3 bookings on 2 days"
+      - file: test/core/constants/app_urls_test.dart
+        name: "iOS rating opens the App Store's review form, not the listing"
     related: [R-SET-43, C-SET-016, D-SET-6]
   - id: R-SET-46
     group: Settings

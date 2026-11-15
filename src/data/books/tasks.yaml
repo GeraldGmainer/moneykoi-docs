@@ -56,6 +56,7 @@ items:
   - id: T-BOOK-06
     title: Push the invite role fix
     owner: gerald
+    status: done
     waitsFor: [T-BOOK-02]
     detail: |
       - migration `20261112120000_invite_role_hole.sql` · with it `send-book-invite` (email no longer says *as owner*)
