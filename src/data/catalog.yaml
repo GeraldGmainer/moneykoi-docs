@@ -224,7 +224,7 @@
   tier: free
   note: periods · summary · transactions · filters · calendar
   web: partial
-  webNote: day headers with day totals since 2026-11-02 · no period paging · corrections + opening balances listed, counted as neither (app counts opening balances as income)
+  webNote: day headers with day totals since 2026-11-02 · no period paging · corrections + opening balances listed, counted as neither (app counts opening balances as income) · Summary groups fold, start folded (2026-11-16)
   docs: budget-book
 - id: budget-calendar
   name: Budget Book calendar

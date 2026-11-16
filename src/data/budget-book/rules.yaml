@@ -79,10 +79,14 @@ items:
     text: |
       - donut + ranked categories · grouped or flat
       - tap row → category activity · balance = the one signed figure
-    source: BUDGET_BOOK §9
+      - web: grouped parents start folded · a caret unfolds one · *Expand all* / *Collapse all* · the donut stays in view beside a long list · wide: one line per row, bars scaled to the largest (2026-11-16)
+    source: BUDGET_BOOK §9 · BOOKINGS_WEB §4.13
     tests:
       - file: test/features/budget_book/ui/summary/category_summary_tile_test.dart
         name: a sub tap hands the sub summary to onOpen, not its parent
+      - file: src/app/(main)/bookings/components/bookings-summary.test.tsx
+        repo: web
+        name: unfolds a parent to its subcategories and folds it again
   - id: R-BB-12
     group: Views
     title: "Transactions: newest first"
