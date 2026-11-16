@@ -174,3 +174,13 @@ items:
     tests:
       - file: android/app/src/test/kotlin/com/psyren/moneykoi/widget/ShoppingListWidgetProviderTest.kt
         name: the adapter intent carries the row layout id
+  - id: E-HOM-20
+    group: Home
+    title: "Empty book opened from a full one"
+    when: "switch from a book with bookings to a new or joined empty book"
+    then: "Home counts the new book and opens on its empty-book start · fixed 2026-11-16 · before, the old book's count stayed, the empty-book start never showed and later bookings did not re-resolve Home (bug hunt 39)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/home/bloc/home_layout_cubit_test.dart
+        name: "a switch to an empty book counts its bookings again instead of keeping the last book's"

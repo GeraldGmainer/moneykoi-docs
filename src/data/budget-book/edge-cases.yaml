@@ -158,3 +158,13 @@ items:
     tests:
       - file: test/features/budget_book/bloc/budget_book_bloc_test.dart
         name: "a tab switched while the first load runs ends on that tab with its own data, not the old tab's"
+  - id: E-BB-18
+    group: Filters
+    title: "Filter kept across a book switch"
+    when: "Budget Book filtered by an account, category, member or tag · another book opened"
+    then: "the filter clears, a widen it made returns to its period · fixed 2026-11-16 · before, the new book looked empty under the old book's chip (bug hunt 35)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/budget_book/bloc/budget_book_bloc_test.dart
+        name: "a book switch clears the filter of the book left behind"

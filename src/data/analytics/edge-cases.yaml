@@ -288,3 +288,23 @@ items:
     tests:
       - file: test/features/analytics/use_cases/get_insights_use_case_test.dart
         name: "a month anchored on the 25th that is still running is not counted as a complete month"
+  - id: E-ANL-30
+    group: Numbers
+    title: "Quick period changes landed out of order"
+    when: "Analytics · period chevron to *Last month* and straight back"
+    then: "every card ends on the period the band shows · fixed 2026-11-16 · before, a slow *Last month* load could land last and stay under *This month* (bug hunt 32)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/analytics/bloc/analytics_section_cubit_test.dart
+        name: "an older period that loads last does not overwrite the newer one"
+  - id: E-ANL-31
+    group: Numbers
+    title: "Category Activity missed a new subcategory"
+    when: "Category Activity open · a subcategory added and booked to meanwhile"
+    then: "the next load gives it its own slice and row, shares add up to 100 % · fixed 2026-11-16 · before, the total counted it but the breakdown did not (bug hunt 42)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/category_activity/use_cases/generate_category_activity_use_case_test.dart
+        name: "a subcategory added while the page is open gets its own slice on the next load"

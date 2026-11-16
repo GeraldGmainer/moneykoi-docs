@@ -238,3 +238,13 @@ items:
     tests:
       - file: test/features/budget_goals/ui/pages/loan_detail_page_test.dart
         name: "a loan repaid in full reads as done: no Log payment and no Early payoff, before and after Mark settled (I5-3)"
+  - id: E-BUD-52
+    group: Loans
+    title: "Due-day reminder lost on the due day"
+    when: "borrowed loan due today · app opened (or a sync re-arms reminders) before the reminder time"
+    then: "the reminder still comes today at the reminder time; after it, the next due date is armed · fixed 2026-11-16 · before, the re-arm moved it to next month (bug hunt 46)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/budget_goals/use_cases/schedule_reminders_use_case_test.dart
+        name: "a loan due today is still reminded today while the reminder time is ahead"
