@@ -256,6 +256,25 @@ items:
     tests:
       - file: test/features/booking/ui/widgets/amount_display_test.dart
         name: keeps a typed trailing zero
+  - id: E-BKG-79
+    group: Amount
+    title: Keyed zeros on a quantity or price
+    when: "keypad sheet of a number field (investment quantity, price, rate) · `0 . 0 0 0 0`, then `4`"
+    then: |
+      - readout shows *0.0000* while typing, then *0.00004* · `1 2 .` shows *12.* · a price pads to the currency's decimals (`1 .` → *1.00*)
+      - a value not typed (opened for edit, a g → oz t switch, **=**) still reads trimmed: *0.3215 oz t*
+      - money fields (goal, loan, account) unchanged: always the currency's decimals
+      - before 2026-11-16 *0* until the first non-zero digit
+    status: fixed
+    risk: low
+    related: [E-BKG-42, C-INV-066]
+    tests:
+      - file: test/shared/ui/calculator/calculator_amount_display_test.dart
+        name: a quantity reads every keyed zero before the digit that ends it
+      - file: test/shared/ui/calculator/calculator_amount_display_test.dart
+        name: a weight reads its keyed digits; a converted value still reads at displayDigits
+      - file: test/shared/ui/calculator/calculator_amount_display_test.dart
+        name: a price keeps keyed zeros past the currency precision and pads below it
   - id: E-BKG-44
     group: Multi-currency
     title: No exchange rate for the chosen currency

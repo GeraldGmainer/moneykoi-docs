@@ -11,6 +11,8 @@ groups:
         text: "Member: all visible, nothing editable"
       - id: C-INV-065
         text: "Prod: a Gold position → detail → *1M* → a market line, no *Drawn from the trade prices…* note · fresh install, prices not yet downloaded → trade-price steps with the note, then the market line (IOS-19-3)"
+      - id: C-INV-066
+        text: "Buy → *Quantity* → `0 , 0 0 0 0` → readout *0,0000* · `4` → *0,00004* · *Price* → `0 , 0 0 0` → *0,000* · gold in g → `0,00004` → *0,00004 g* · switch to oz t → 4 decimals"
   - id: currencies
     title: Currency positions
     setup: Needs `currency_assets.sql` pushed + `is_active` on (T-INV-01)
