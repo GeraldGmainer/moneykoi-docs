@@ -1191,6 +1191,7 @@ items:
       - no payee lines, no *remaining* pick · a pick on a row offers *Apply to all* for the rest of that payee (same payee key, same side) · *Apply to all* never ticks · a possible duplicate stays unticked
       - *Next* needs a ticked row · a recognized file stops here while a row is open, the list on *Without a category* · one whose rows are all in the book stops here too
       - *Review*: read-only · *n bookings to import* · dates, new accounts / categories / labels, rows not selected · one line per booking, a split row one per part (*Part 1 of 2*) · *Save this format* · *Import bookings (n)*
+      - *Save this format* says the next file **skips Columns and Accounts** · it stops at *Categories* while a row is open · was: "goes straight to Review", wrong on the web since D-DATA-55 (Gerald, 2026-11-16) · Settings › Import formats says the same
     source: IMPORT_WEB §4.4, §5, §6
     tests:
       - file: src/app/(main)/bookings/import/components/review-step.test.tsx
@@ -1217,18 +1218,26 @@ items:
     related: [D-DATA-55, R-DATA-103, R-DATA-78, R-DATA-95, J-DATA-22, J-DATA-23]
   - id: R-DATA-107
     group: On the web
-    title: "Web import: the edit dialog and its split"
+    title: "Web import: the edit panel and its split"
     text: |
       - since 2026-11-16 · the pencil on a row of *Categories* · the app keeps its sheet (R-DATA-99)
-      - wide, but never under the sidebar · the bank's text and the order on top · then date · amount · *Income or expense* · account in one line · then description and category (or the parts) · *Make it a transfer* · labels
+      - a **panel from the right**, full height, as wide as the sidebar leaves (up to 1024 px) · header with the row's name and amount, footer with *Reset to the file* · the parts' sum · *Cancel* · *Apply* always in view · was: a centred dialog, too cramped (Gerald)
+      - left: the bank's text and the order · description · category · *Split* (or the parts) · right column: date · amount · *Income or expense* · account · *Make it a transfer* · labels · one column on a phone
+      - category: **the add page's picker** (parents open their subcategories, search, icons) with the recent and favourite categories above it · the list's *Choose a category* pill uses it too · was: one long flat list
       - nothing focused on open · a missing amount, category or transfer account shows red only after *Apply*
       - date: the calendar, opened by a click on the field · amount: the user's money format
       - labels: chips · the book's labels and those of this file suggested while typing · Enter takes one, a comma takes the typed name · a new name becomes a label at *Import*, not before
-      - **Split** beside the category · the rule as in the app (R-DATA-99): part 1 the whole amount, every part its own, a warning when they do not add up, never a block · the wand sits inside a part's amount field · parts as a table: amount, description, category
+      - **Split** under the category · the rule as in the app (R-DATA-99): part 1 the whole amount, every part its own, a warning when they do not add up, never a block · each part a card: amount with the wand, description, category
       - Amazon and shop-less PayPal get no guess (R-DATA-40) · group rows without their badge (R-DATA-78) · both as in the app
       - the app keeps its own sheet: keypad, date tile, tag picker sheet, errors shown at once
     source: IMPORT_WEB §4.4, §4.14, §6
     tests:
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'picks with the add page picker: a parent opens its subcategories, and Enter in its search picks without applying'
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: offers the recent categories above the picker; a parent there is never picked
       - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
         repo: web
         name: 'splits a row: part one starts with the whole amount, a part without an amount or a category shows once Apply is pressed'
