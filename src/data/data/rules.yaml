@@ -1225,6 +1225,7 @@ items:
       - left: the bank's text and the order · description · category · *Split* (or the parts) · right column: date · amount · *Income or expense* · account · *Make it a transfer* · labels · one column on a phone
       - category: **the add page's picker** (parents open their subcategories, search, icons) with the recent and favourite categories above it · the list's *Choose a category* pill uses it too · was: one long flat list
       - nothing focused on open · a missing amount, category or transfer account shows red only after *Apply*
+      - **closing never applies** · with a change, *Cancel*, the ×, Esc or a click beside the panel asks *Discard changes?* (*Keep editing* / *Discard*) · nothing changed, or changed back → closes at once · as the app's sheet · was: a click beside it threw the change away (Gerald, 2026-11-16)
       - date: the calendar, opened by a click on the field · amount: the user's money format
       - labels: chips · the book's labels and those of this file suggested while typing · Enter takes one, a comma takes the typed name · a new name becomes a label at *Import*, not before
       - **Split** under the category · the rule as in the app (R-DATA-99): part 1 the whole amount, every part its own, a warning when they do not add up, never a block · each part a card: amount with the wand, description, category
@@ -1256,6 +1257,15 @@ items:
       - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
         repo: web
         name: suggests the labels of the book as they are typed; Enter takes one, a new name is offered, Backspace takes the last off
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'asks first: Keep editing stays, Discard closes and applies nothing'
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: an untouched panel closes at once, by Cancel or Escape, without a question
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'a change undone again is no change: a retyped description and a split taken back close without a question'
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: 'guesses nothing for a marketplace row: what was bought changes with every row'
