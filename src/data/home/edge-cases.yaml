@@ -184,3 +184,23 @@ items:
     tests:
       - file: test/features/home/bloc/home_layout_cubit_test.dart
         name: "a switch to an empty book counts its bookings again instead of keeping the last book's"
+  - id: E-HOM-21
+    group: Android widgets
+    title: "Widget tap on the Welcome screen"
+    when: "signed out, app open on Welcome or local setup · *New booking*, *Quick booking* or *Scan* widget tapped"
+    then: "nothing opens, the app stays where it is · a finished local book still opens the form · fixed 2026-11-16 · before, a booking form with no session, whose save failed (bug hunt 52)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/app/ui/supabase_container_widget_launch_test.dart
+        name: "signed out on the welcome page, a tap while the app is open is dropped instead of opening a form"
+  - id: E-HOM-22
+    group: Android widgets
+    title: "Widget category with only archived subcategories"
+    when: "category widget picker · a parent whose subcategories are all archived"
+    then: "not offered, like everywhere a booking is made · fixed 2026-11-16 · before, it could be picked and the widget fell back to *tap to set up* on every refresh (bug hunt 53)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home_widget/widget_config_list_test.dart
+        name: "a parent whose subcategories are all archived is not offered, as it is not bookable"

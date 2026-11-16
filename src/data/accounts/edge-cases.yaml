@@ -375,3 +375,23 @@ items:
       - file: src/components/widgets/AvatarUploader.test.tsx
         repo: web
         name: opens the file picker from the Change picture button
+  - id: E-ACC-78
+    group: Sign-in
+    title: "Email with a trailing space"
+    when: "email sign-in · autofill leaves a space before or after the address"
+    then: "link, code and password sign-in use the trimmed address · fixed 2026-11-16 · before, *unknown error* or *incorrect credentials* (bug hunt 51)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/auth/ui/pages/email_signin_page_test.dart
+        name: "the link goes to the trimmed address"
+  - id: E-ACC-79
+    group: Local books
+    title: "Back stuck after a failed setup"
+    when: "setup · *Quick Start* fails (offline) · back pressed several times"
+    then: "back returns to the setup choice, then to step 1 · fixed 2026-11-16 · before, every back after the first did nothing (bug hunt 55)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/onboarding/ui/pages/onboarding_page_test.dart
+        name: "after an error, back keeps stepping back once it reached the method choice"

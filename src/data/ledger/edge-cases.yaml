@@ -197,3 +197,23 @@ items:
     tests:
       - file: test/features/category/ui/pages/category_sub_save_page_test.dart
         name: "a name another parent's subcategory already has is refused"
+  - id: E-LED-23
+    group: Accounts
+    title: "Error repeated on every edit"
+    when: "account form · delete refused (account still used) or save failed · then any field edited"
+    then: "the error shows once; editing is an ordinary edit, Save and the discard prompt follow the changes · fixed 2026-11-16 · before, the error came back on each keystroke and the form always read as changed (bug hunt 56)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/account/bloc/account_save_bloc_test.dart
+        name: "an edit after a failed delete is an ordinary edit again, compared with the opened draft"
+  - id: E-LED-24
+    group: Categories
+    title: "Error repeated on every edit"
+    when: "category form · delete refused (category has bookings) or save failed · then any field edited"
+    then: "the error shows once; editing is an ordinary edit, Save and the discard prompt follow the changes · fixed 2026-11-16 · before, the error came back on each keystroke (bug hunt 58) · the booking form has the same bug until the multi-currency merge (bug hunt 57)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/category/bloc/category_save_bloc_test.dart
+        name: "an edit after a failed delete is an ordinary edit again, compared with the opened draft"
