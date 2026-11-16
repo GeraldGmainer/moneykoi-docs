@@ -49,3 +49,12 @@ items:
       - why: the same panels are the review pages' save bar and sheets · pinning them would put dark panels on light review pages
       - 1: keep it · 2: pin the live camera screen dark (needs a dark-only subtree, the theme has none yet)
     related: [R-SET-49, C-SET-021]
+  - id: D-SET-7
+    question: "Default appearance: *System* or *Dark*?"
+    status: decided
+    date: 2026-11-16
+    answer: |
+      - **Dark** (Gerald) · *System* was the default from the light-mode release (2026-11-14), so a phone in light mode opened the app light
+      - a phone that already picked *System*, *Light* or *Dark* keeps it
+      - German label *Design*, the Android term (*Dunkles Design*), not *Erscheinungsbild* (Gerald)
+    related: [R-SET-48]

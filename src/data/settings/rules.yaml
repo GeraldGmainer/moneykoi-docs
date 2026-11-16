@@ -310,33 +310,37 @@ items:
     title: Appearance — System, Light or Dark
     text: |
       - Settings → *Personalize* → *Appearance* · *System* · *Light* · *Dark*
-      - **default *System***: follows the phone's light / dark setting, live while the app is open
-      - *Light* / *Dark* ignore the phone
+      - **default *Dark*** (since 2026-11-16, D-SET-7) · a light phone still opens the app dark until *Light* or *System* is picked
+      - *System* follows the phone's light / dark setting, live while the app is open · *Light* / *Dark* ignore the phone
+      - German label *Design* (was *Erscheinungsbild*)
       - switches at once · no restart · the open page and the back stack stay
       - **this phone only**: never synced, each device its own · kept through sign-out and leaving the demo
       - free in every plan
     source: THEME_AI_CONTEXT.md §1 · LIGHT_THEME_PLAN.md §6
     tests:
       - file: test/features/settings/domain/theme_controller_test.dart
-        name: follows the system until a mode is chosen
+        name: starts dark until a mode is chosen, even on a light phone
+      - file: test/features/settings/domain/theme_controller_test.dart
+        name: System follows the phone, live
       - file: test/features/settings/domain/theme_controller_test.dart
         name: a chosen mode ignores the system and is stored on the device
       - file: test/features/settings/domain/theme_controller_test.dart
         name: a stored mode is restored
       - file: test/features/settings/domain/theme_controller_test.dart
-        name: an unknown stored value falls back to the system
+        name: an unknown stored value falls back to dark
     checks: [C-SET-018, C-SET-019]
     related: [R-SET-49, J-SET-06]
   - id: R-SET-49
     group: Settings
     title: What keeps its own colors in light mode
     text: |
+      - **light is warm koi paper** (2026-11-16): sand page ground, cream cards, bars and sheets, warm ink · no pure white, no cool grey
       - **dark in both**: launch screen (paints before the choice is read) · koi header on Home, with light status-bar icons over it · privacy shield · brand banners (active book, page info)
-      - **follows the theme**: the total-balance card inside the koi header (white in light) · the scanner's panels, buttons and review pages
+      - **follows the theme**: the total-balance card inside the koi header (cream in light) · the scanner's panels, buttons and review pages
       - **drawn on the camera feed** (viewfinder frame, koi corners, row ticks) stays as in dark (D-SET-5)
       - **home-screen widgets** keep their own *Appearance* (light / dark plate) · never follow the app
       - **PDF export** looks the same in both
-      - category and account colors are the user's own · light mode only folds them darker so the icon reads on white
+      - category and account colors are the user's own · light mode only folds them darker so the icon reads on the light ground
       - every text color ≥ 4.5:1, every icon ≥ 3:1 on its ground, in both themes
     source: THEME_AI_CONTEXT.md §4, §5
     tests:

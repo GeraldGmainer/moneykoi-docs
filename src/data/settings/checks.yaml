@@ -39,6 +39,8 @@ groups:
         text: "Release build: *Quick Start* → *Create budget book* → Home shows the starting balance and the *Getting started* card at once, no *0,00 €* for seconds (AND-1-5)"
       - id: C-SET-018
         text: "Settings → *Appearance* → *Light* → Settings, the drawer and the page behind repaint at once, back goes where it went before · every tab (Home, Budget Book incl. calendar, Analytics charts + heatmap + treemap, Shopping, Investments) readable · bottom sheets, dialogs, snackbars, the keypad · restart keeps *Light* · same in *Dark* · de + ja copy"
+      - id: C-SET-026
+        text: "Fresh install on a phone in light mode → app opens dark · Settings → *Design* (de) shows *Dunkel* · pick *System* → turns light · reinstall → dark again"
       - id: C-SET-019
         text: "*Appearance* → *System* · switch the phone's dark mode with the app open → the app follows without a restart · Android quick tile + iOS Control Center"
       - id: C-SET-020
