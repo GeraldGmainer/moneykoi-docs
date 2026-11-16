@@ -62,7 +62,7 @@ items:
   - id: E-HOM-09
     group: Bar
     title: Bottom bar under the quick-booking sheet on an Android tablet
-    when: Android tablet (10", 800 dp) · long-press + · the quick-booking sheet is open
+    when: Android tablet (10", 800 dp) · hold + → *Quick entry* · the quick-booking sheet is open
     then: the bottom bar overflows by 3.5–13 px behind the sheet · clipped in a release build · iPad and phones fine · found by the Play tablet screenshot run 2026-11-01 · open
     status: known-issue
     risk: low

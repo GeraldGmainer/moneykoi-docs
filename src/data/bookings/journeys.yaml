@@ -26,7 +26,7 @@ items:
   - id: J-BKG-03
     group: Entering
     title: Quick booking
-    from: long-press the centre **+**
+    from: hold the centre **+** → *Quick entry*
     steps:
       - "type `kebap 5,90 gestern #trip cash`"
       - check chips · tap to fix

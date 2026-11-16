@@ -107,7 +107,7 @@ items:
     group: Quick booking
     title: One line → live chips
     text: |
-      - long-press centre **+** · web: long press +, sidebar, ⌘K, key **Q**
+      - hold centre **+** → *Quick entry* (the create menu, R-HOM-15) · web: long press +, sidebar, ⌘K, key **Q**
       - `kebap 5,90 gestern #trip cash` → amount · category · account · date · tags
       - tap + → full form
     source: QUICK_BOOKING §1–§2, BOOKING_ENTRY_WEB §4.16

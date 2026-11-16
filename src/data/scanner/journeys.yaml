@@ -2,7 +2,7 @@ items:
   - id: J-SCN-01
     group: Scanning
     title: Scans a supermarket receipt
-    from: Home quick action *Scan receipt* (or the booking form)
+    from: hold **+** → *Scan receipt* · Home quick action *Scan receipt* · the booking form
     steps:
       - start at the store name, move the phone slowly down · rows the scan read get a tick, drawn ahead by the pan speed so it keeps up with the hand · the hint's ring turns once per reading (R-SCN-33, R-SCN-34)
       - the panel counts items and the sum · the hint says what is still needed

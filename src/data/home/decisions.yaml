@@ -128,3 +128,14 @@ items:
       - plan ends with one in the bar: the page read-only with its records, the paywall without (as from the drawer)
       - why: the calendar shows the forecast and the bookings in one place (Gerald, 2026-11-14)
     related: [R-HOM-10, R-HOM-13, R-FC-50, R-FC-51]
+
+  - id: D-HOM-16
+    question: "What does holding the **+** open?"
+    status: decided
+    date: 2026-11-16
+    answer: |
+      - **a menu card anchored above the +** (Gerald) · not a speed dial of separate pills, not a bottom sheet
+      - rows: *New booking* · *Add receipt* · *Scan receipt* · *Quick entry* · quick entry nearest the thumb
+      - *New booking* stays in the menu (Gerald) · a slow tap turns into a hold, the form is then one tap away
+      - hold → slide → lift picks a row, like a phone's context menu
+    related: [R-HOM-15, D-BKG-1]

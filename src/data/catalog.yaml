@@ -44,7 +44,7 @@
   area: money
   tier: free
   web: parity
-  webNote: no learned scanner fixes
+  webNote: no learned scanner fixes · long press + opens quick entry, the app a create menu (R-HOM-15)
   docs: bookings
   note: one-line entry
 - id: bulk-edit

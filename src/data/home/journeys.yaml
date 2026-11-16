@@ -21,6 +21,22 @@ items:
       - Shopping slot → pin a list
     result: this book's bar · others keep theirs
     checks: [C-HOM-002]
+  - id: J-HOM-06
+    group: Bar
+    title: Adds through the create menu
+    from: hold the **+** in the bottom bar
+    steps:
+      - card above the + · page dimmed · + turns into ×
+      - slide onto *Scan receipt* and lift · or lift, then tap a row
+    result: the scanner opens · *New booking*, *Add receipt*, *Quick entry* open theirs the same way
+    note: |
+      - a plain tap on + still opens the full form
+      - tap the dimmed page, the × or back → nothing opens
+    tests:
+      - file: test/main/ui/widgets/shell_create_button_test.dart
+        name: scan receipt opens the scanner
+    checks: [C-HOM-027]
+    related: [R-HOM-15]
   - id: J-HOM-03
     group: Widgets
     title: Places a category widget
@@ -51,7 +67,7 @@ items:
     title: First week hints
     from: setup done · entries typed by hand
     steps:
-      - 3rd entry saved → bubble above **+** · *Try it* opens quick entry
+      - "3rd entry saved → bubble above **+** · *Try it* opens quick entry · it says hold + → *Quick entry*"
       - rent booked → *Does this repeat every month?* → *Make recurring*
       - 5th typed entry, never scanned → scan line on the next form
       - 3rd Budget Book open with 7 entries → *See the month day by day*

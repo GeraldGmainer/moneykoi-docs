@@ -124,6 +124,27 @@ items:
       - file: test/main/ui/pages/main_page_test.dart
         name: reaches a page that scrolls with its own controller
     related: [D-HOM-7]
+  - id: R-HOM-15
+    group: Bottom bar & drawer
+    title: Hold + → the create menu
+    text: |
+      - tap **+** → the full booking form, as before
+      - hold **+** → a card above it, page dimmed, + turns into × · top to bottom: *New booking* · *Add receipt* (typed by hand) · *Scan receipt* · *Quick entry*
+      - *Quick entry* nearest the thumb · it was what holding + did before
+      - hold, slide onto a row, lift → opens it · lift elsewhere → the menu stays for a tap
+      - tap the dimmed page, the × or Android back → closes, nothing opens
+      - bottom bar and the floating + (1 tab) · the tablet rail's *New booking* has no menu
+    source: NAVIGATION §5a (decided 2026-11-16)
+    tests:
+      - file: test/main/ui/widgets/create_menu_test.dart
+        name: holding, sliding onto a row and lifting picks that row
+      - file: test/main/ui/widgets/create_menu_test.dart
+        name: lifting off the rows keeps the menu open for a tap
+      - file: test/main/ui/widgets/shell_create_button_test.dart
+        name: lists the four ways to add, quick entry nearest the +
+      - file: test/main/ui/widgets/double_back_to_close_test.dart
+        name: with the create menu open, back closes the menu instead
+    related: [D-HOM-16, R-BKG-10]
 
   # Android widgets
   - id: R-HOM-20
@@ -165,7 +186,7 @@ items:
       - sidebar footer: *Add Booking* full width · *Quick entry* · *Enter Receipt*
       - window ≤ 900px tall: the three in one row · *Quick entry* and *Enter Receipt* as icons, label and key in the tooltip
       - keys **N** · **Q** · **R**, shown on the buttons and in ⌘K · not while typing
-      - long press the phone bar's **+** → quick entry
+      - long press the phone bar's **+** → quick entry · the app opens its create menu instead (R-HOM-15)
       - dark only · no offline
     source: APP_SHELL_WEB §1, §4.7, web 02_FEATURES
     tests:
@@ -243,7 +264,7 @@ items:
     title: Just-in-time hints
     text: |
       - one sentence + one action · shown once, never twice · each retired by using the feature
-      - quick add: after the 3rd form entry, a bubble above **+** · hold + = quick entry
+      - quick add: after the 3rd form entry, a bubble above **+** · hold + → *Quick entry*
       - make recurring: a saved entry in a fixed-cost category (rent, insurance) → snackbar *Make recurring*
       - scan: 5 form entries and no scan → one line under the amount of a new entry
       - calendar: 3rd Budget Book open with ≥ 7 entries → chip above the tabs

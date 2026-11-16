@@ -10,9 +10,9 @@ groups:
       - id: C-BKG-048
         text: "*New booking* → `25` → *Transfer* → keypad down, From and To visible · *New booking* → *Transfer* first → keypad stays, no camera key → *Expense* → camera back · same on the recurring form"
       - id: C-BKG-049
-        text: "iPhone, English-only keyboard: long-press **+** → type `kebap 5,90 gestern` → the words stay as typed, date chip *yesterday* · suggestions bar still there (IOS-4-4)"
+        text: "iPhone, English-only keyboard: hold **+** → *Quick entry* → type `kebap 5,90 gestern` → the words stay as typed, date chip *yesterday* · suggestions bar still there (IOS-4-4)"
       - id: C-BKG-010
-        text: "Long-press +: `kebap 5,90 gestern` · `kaffee 3.20 cash` · `miete 1.500 monatsanfang` · `apfel 2,5 vor 2 tagen` → chips right · fixed chip stays"
+        text: "Hold + → *Quick entry*: `kebap 5,90 gestern` · `kaffee 3.20 cash` · `miete 1.500 monatsanfang` · `apfel 2,5 vor 2 tagen` → chips right · fixed chip stays"
       - id: C-BKG-011
         text: Quick booking widget → keyboard comes up
       - id: C-BKG-012
