@@ -4,7 +4,7 @@ items:
     title: Adds a position
     from: Investments → + (Pro)
     steps:
-      - "Step 1: asset · > 9 → 8 + *Show more*"
+      - "Step 1: asset · > 10 → 9 + *Alle 23 anzeigen*"
       - opening buy · price prefilled for that day
       - details → *Save*
     result: position at today's price

@@ -10,6 +10,26 @@ items:
       - metals · 23 cryptos · 29 currencies · custom asset with manual price
       - no name · the asset is the identity
     source: INVESTMENTS §1 (D6), §3.1
+  - id: R-INV-43
+    group: What you hold
+    title: Long asset groups fold to nine
+    text: |
+      - header names the group + its size · *Krypto · 23*
+      - > 10 assets → first 9 · catalog order
+      - text toggle under the grid · *Alle 23 anzeigen* ▾ / *Weniger anzeigen* ▴
+      - ≤ 10 → whole group · **never** a toggle for one asset
+      - search → every match · no toggle
+      - picked asset in the hidden tail → group opens whole · no toggle
+      - app + web
+    source: INVESTMENTS §3.5
+    related: [D-INV-11]
+    tests:
+      - file: test/features/investment/ui/screens/asset_pick_step_test.dart
+        name: a group of more than ten shows its first nine and a show-all toggle
+      - file: test/features/investment/ui/screens/asset_pick_step_test.dart
+        name: show less folds the group back to nine
+      - file: test/features/investment/ui/screens/asset_pick_step_test.dart
+        name: a selected asset in the hidden tail opens its group expanded, with no toggle to hide it
   - id: R-INV-11
     group: What you hold
     title: Average cost, not lots
@@ -169,7 +189,7 @@ items:
       - list: hero · *Holdings* / *Performance* / *Allocation* tabs · *Returns* card (realized, ROI, invested, income, fees)
       - *Movers*: own period, opens on 1M · 1M–5Y = the asset's move · *All* from the position's first day held
       - detail: 1M chart · period row 1M…All net of money in/out, over the whole holding
-      - new position: pick an asset or *Custom asset* first · *Show all* past 8 · glyph follows the asset until picked
+      - new position: pick an asset or *Custom asset* first · same fold as the app (R-INV-43) · glyph follows the asset until picked
       - unit fixed after create · metals g/kg/oz only · fineness for metals · manual price only where no feed prices
       - transaction: total ↔ unit price · g/oz/kg entry, saved in the position's unit · gift *Value when received*
       - no Pro gate: the web opens only Cloud books

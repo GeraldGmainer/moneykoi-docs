@@ -58,3 +58,12 @@ items:
       - no · Coinranking's values served as they are
       - mean gap to exchange closes < 0.45 % · recent closes match
       - known off days: XLM 2018-09-21 −15 % · XMR 2018-02-03 −10 % · USDC 2020-08-20 at 1.08
+  - id: D-INV-11
+    question: How does the asset picker show a long group?
+    status: decided
+    date: 2026-11-16
+    answer: |
+      - 9 tiles · 3 × 3 · count in the header
+      - text toggle under the grid · *Alle 23 anzeigen* / *Weniger anzeigen*
+      - the old 9th *Show more* tile read as one more coin · missed on the phone
+      - app + web

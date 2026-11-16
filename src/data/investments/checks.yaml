@@ -27,10 +27,12 @@ groups:
         text: Buy/Sell + Transfer use the ISO code
 
   - id: grid
-    title: Asset grid *Show more*
+    title: Asset grid *Show all*
     items:
       - id: C-INV-010
-        text: "> 9 assets → 8 + *Show more · N more* · search shows all"
+        text: "Header *Krypto · 23* · > 10 assets → 9 tiles + *Alle 23 anzeigen* ▾ under the grid · search shows all, no toggle"
+      - id: C-INV-067
+        text: "*Alle 23 anzeigen* → all 23 · *Weniger anzeigen* ▴ → back to 9 · *Währungen · 28* the same · en/de/ja"
       - id: C-INV-011
         text: Pick from the hidden tail → back → group still expanded
 
@@ -42,7 +44,7 @@ groups:
       - id: C-INV-041
         text: 'Detail: chart opens on 1M · row 1M 3M 1Y 5Y All · a 2nd buy at a flat price reads 0 %'
       - id: C-INV-042
-        text: 'New position: nothing picked, Save off · *Show all* in a long class · pick a glyph, switch asset → glyph kept'
+        text: 'New position: nothing picked, Save off · class headers with counts · *Show all 23* / *Show less* in a long class · pick a glyph, switch asset → glyph kept'
       - id: C-INV-043
         text: 'Gold: g/oz/kg chips convert the typed amount · Bitcoin: no chips, no fineness · edit: no unit chips'
       - id: C-INV-044
