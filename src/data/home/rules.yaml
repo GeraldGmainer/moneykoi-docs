@@ -203,8 +203,12 @@ items:
       - summary tiles open *Balance* · *Analytics* for that month · all time
       - default = the app's without quick add · add it from *Customize* · it sits in a column
       - no cash-flow sheet · 3 cards need a server migration
+      - *Balance timeline* stops at today: this week / month and the last N months keep their first day and end today, no scheduled future (2026-11-16) · the app still draws to the range's end
     source: web 02_FEATURES (DASHBOARD §1, §4.11, §4.20)
     tests:
+      - file: src/app/(main)/balance/lib/balance-walk.test.ts
+        repo: web
+        name: stops a range that ends later at today, with a scheduled booking backed out
       - file: src/app/(main)/dashboard/components/card-pill-menu.test.tsx
         repo: web
         name: drops the ranges from the pill and writes the pick into the card's config

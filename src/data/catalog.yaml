@@ -265,7 +265,7 @@
   tier: free
   note: picked at onboarding · free cards only
   web: partial
-  webNote: own layout · no quick add by default · range from the card's pill, settings in the editor
+  webNote: own layout · no quick add by default · range from the card's pill, settings in the editor · balance timeline ends today (2026-11-16)
   docs: home
 - id: bottom-bar-default
   name: Bottom bar Home · Budget Book
