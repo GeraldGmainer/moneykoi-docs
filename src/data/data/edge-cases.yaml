@@ -646,16 +646,16 @@ items:
   - id: E-DATA-93
     group: Bank import
     title: Amount edited below a split's parts
-    when: a split row's amount is edited so nothing is left for part 1
+    when: a split row's amount is edited after its parts were typed
     then: |
-      - the sheet says so on part 1 · *Apply* stays off
-      - an edit that already left nothing → Review shows the row unsplit
-      - web since 2026-11-16: the parts keep their amounts · the dialog says by how much they differ → E-DATA-104
+      - the parts keep their amounts · the sheet says by how much they differ → E-DATA-104 · since 2026-11-16
+      - was: part 1 took the rest, an amount edited down left it nothing · *Apply* stayed off · Review showed the row unsplit
+      - a part at or below zero → Review shows the row unsplit
     status: by-design
     risk: low
     tests:
       - file: test/features/data_import/domain/import_review_bank_test.dart
-        name: a part without a category keeps the row unticked; parts that leave the first nothing are no split
+        name: a part without a category keeps the row unticked; a part without an amount is no split
     related: [R-DATA-99]
   - id: E-DATA-99
     group: Bank import
@@ -776,12 +776,12 @@ items:
         repo: web
         name: then the bank tables, resolved to the category with the starter name
   - id: E-DATA-104
-    group: On the web
-    title: "Web: split parts that do not add up"
+    group: Bank import
+    title: Split parts that do not add up
     when: a split row's parts add up to more or less than the bank's amount (a fee, a refund, a typo)
     then: |
       - amber line under the parts · *{n} not in a part yet* / *Parts are {n} more than the amount* · the wand fills one part with the difference
-      - not a block (Gerald, 2026-11-16) · *Apply* and *Import* book the parts as typed
+      - not a block (Gerald, 2026-11-16) · *Apply* and *Import* book the parts as typed · app and web
       - the account then ends that much off the bank's figure · the balance compare on the result shows it
       - next month's file still finds the row by its key: the amounts do not matter there
     status: by-design
@@ -793,7 +793,11 @@ items:
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: parts that do not add up are booked as typed, and a transfer is never split
-    related: [R-DATA-107, R-DATA-99, E-DATA-93]
+      - file: test/features/data_import/domain/import_review_bank_test.dart
+        name: parts that do not add up are booked as typed, and a transfer is never split
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: 'parts that do not add up only warn: Apply books them as typed'
+    related: [R-DATA-99, R-DATA-107, E-DATA-93]
   - id: E-DATA-103
     group: Bank import
     title: Own transfers, cash and card settlements counted as spending

@@ -116,7 +116,7 @@ groups:
       - id: C-DATA-076
         text: "Recurring payment *Netflix* 12.99 on the 5th, booked → bank file with Netflix 12.99 on the 7th → Review: *Recurring payment, already booked*, unticked, category *Streaming Service* · summary *1 booking is already in this book from a recurring payment* · tick it → the line goes · a deleted booking's date → row ticked, *not booked yet* · Android + iPhone + web"
       - id: C-DATA-075
-        text: "Amazon row → *Split* → part 2 amount on the app keypad, description, category → part 1 shows the rest → *Apply* → row lists both parts · import → two bookings · the same file again → row under *already imported*"
+        text: "Amazon row → *Split* → part 1 shows the whole amount · part 2 amount on the app keypad, description, category → amber *more than the amount* → wand on part 1 → *Parts add up* → *Apply* → row lists both parts · import → two bookings · a split left short also applies and imports as typed · the same file again → row under *already imported*, no badge beside it · Amazon rows start without a category"
   - id: release-2-0-0
     title: 2.0.0 · 2026-11-08
     items:

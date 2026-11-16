@@ -289,7 +289,8 @@ items:
         - the bank tables · chains and providers (*SPAR*, *OMV*, *ORF*, *LIWEST* …) · then category words (*Miete*, *Gehalt*, *Kindergarten*) · whole words only
         - a word of an earlier booking
       - never part of a word (*SPAR* is not *Sparen*) · never the quick-booking keyword map · Amazon guesses nothing
-      - app and web guess the same (shared vector file) · except: on the web since 2026-11-16 Amazon and shop-less PayPal get **no guess at all**, not from earlier bookings either (a book with *Amazon → Other* guessed *Other* for every order) · the app still asks earlier bookings → R-DATA-107
+      - app and web guess the same (shared vector file)
+      - Amazon and shop-less PayPal get **no guess at all** since 2026-11-16, not from earlier bookings either · before: a book with one *Amazon → Other* put *Other* on every order · a paired duplicate or recurring payment still brings its category
       - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* …
       - the payee also **names the booking** since 2026-11-10 → R-DATA-75 · before: only a clue
       - Pro: a learned payee answers before the guess → R-DATA-85
@@ -298,6 +299,11 @@ items:
       - nothing imports without a category
     source: BOOKING_IMPORT §4, §8a
     tests:
+      - file: test/features/data_import/use_cases/prepare_import_use_case_test.dart
+        name: a marketplace row is never guessed, not even from an earlier booking of the same text
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: 'guesses nothing for a marketplace row: what was bought changes with every row'
       - file: test/features/data_import/use_cases/prepare_import_use_case_test.dart
         name: "a booking with exactly this text, the book's names, the bank tables, then a word of an earlier booking; once per text"
       - file: test/features/data_import/use_cases/prepare_import_use_case_test.dart
@@ -445,7 +451,7 @@ items:
       - file: test/features/data_import/domain/import_bank_row_test.dart
         name: a trailing legal form goes when something is left
       - file: test/features/data_import/ui/bank_import_ui_test.dart
-        name: 'every row says what it is: purpose, pending, possible duplicate, learned, transfer'
+        name: 'every row says what it is: purpose, pending, learned, transfer; a possible duplicate by its group header'
     related: [D-DATA-21, D-DATA-30, R-DATA-35]
   - id: R-DATA-76
     group: Bank import
@@ -497,8 +503,11 @@ items:
       - the main list holds only new rows · all three groups closed by default · a group without rows has no header
       - each header counts its rows · *{n} possible duplicates* · *{n} booked by recurring payments* · *{n} already imported · {n} deleted earlier*
       - *Select all* never ticks a grouped row · before 2026-11-15 it ticked possible duplicates
+      - a grouped row carries no badge of its own: the header says it · *Deleted earlier* stays in the third group, which holds both kinds (app) · since 2026-11-16, before: the long *Recurring payment, already booked* squeezed the name away
     source: BOOKING_IMPORT §9, §9a
     tests:
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: a row in a group card leaves out the badge its header already says
       - file: test/features/data_import/domain/import_review_bank_test.dart
         name: 'a row whose key is in the book is already imported: collapsed, unticked, still tickable'
       - file: test/features/data_import/domain/import_review_bank_test.dart
@@ -970,22 +979,26 @@ items:
     title: One row, several bookings
     text: |
       - Pro · edit sheet › *Split* → *Add part*
-      - part 1 = **the rest** of the row's amount · never typed · every other part: amount, description, category
+      - part 1 starts with the row's **whole amount** · every part: its own amount, description, category · since 2026-11-16, before: part 1 = the rest, never typed
+      - parts that do not add up: *{n} not in a part yet* / *Parts are {n} more than the amount* · a warning, **never a block** · *Import* books the parts as typed → E-DATA-104
+      - the **wand** on a part fills it with what the others leave · only where that is above zero
       - each part = its own booking · same date, account, tags
       - a part without a category → the row stays unticked · no category pill on a split row
-      - *Remove part* down to one → a normal row again
+      - *Remove part* on any part, part 1 too · down to one → a normal row again
       - next month's file: the row counts as imported once · the parts never show as duplicates
       - a transfer cannot be split · a split row learns no payee
       - the *Import n bookings* button counts the parts
-      - web since 2026-11-16: every part has its own amount, part 1 too · parts that do not add up only warn → R-DATA-107
+      - web: the same, in its edit dialog → R-DATA-107
     source: BOOKING_IMPORT §9a, §9b
     tests:
       - file: test/features/data_import/domain/import_review_bank_test.dart
-        name: 'becomes one booking per part: the first takes the rest and the row key, the others a key no file row has'
+        name: 'becomes one booking per part, each with its own amount: the first takes the row key, the others a key no file row has'
       - file: test/features/data_import/domain/import_review_bank_test.dart
         name: next month the file row is in the book once, whatever happened to the other parts
       - file: test/features/data_import/ui/import_row_edit_test.dart
-        name: 'a split in two: the first part takes the rest, the parts add up'
+        name: 'a split in two: part one starts with the whole amount, the wand fills it with what part two leaves'
+      - file: test/features/data_import/ui/import_row_edit_test.dart
+        name: 'parts that do not add up only warn: Apply books them as typed'
       - file: test/features/data_import/ui/import_row_edit_test.dart
         name: 'the Import button counts bookings: a split row once per part'
     checks: [C-DATA-075]
@@ -1211,12 +1224,9 @@ items:
       - nothing focused on open · a missing amount, category or transfer account shows red only after *Apply*
       - date: the calendar, opened by a click on the field · amount: the user's money format
       - labels: chips · the book's labels and those of this file suggested while typing · Enter takes one, a comma takes the typed name · a new name becomes a label at *Import*, not before
-      - **Split** (beside the category): part 1 starts with the row's whole amount · every part its own amount, description, category · any part can go, part 1 too · one part left → a normal row
-      - parts that do not add up: amber line *{n} not in a part yet* or *Parts are {n} more than the amount* · **never a block**: *Apply* and *Import* book the parts as typed
-      - the wand in a part's amount fills it with what the others leave · only where that is above zero · gone once the parts add up
-      - Amazon and shop-less PayPal rows get no guessed category: what was bought changes with every order (R-DATA-40)
-      - the closed groups (*possible duplicates*, *booked by recurring payments*, *already imported*): their rows carry no badge of their own, the header says it
-      - the app: part 1 is the rest, never typed · Amazon guessed from earlier bookings · not ported yet
+      - **Split** beside the category · the rule as in the app (R-DATA-99): part 1 the whole amount, every part its own, a warning when they do not add up, never a block · the wand sits inside a part's amount field · parts as a table: amount, description, category
+      - Amazon and shop-less PayPal get no guess (R-DATA-40) · group rows without their badge (R-DATA-78) · both as in the app
+      - the app keeps its own sheet: keypad, date tile, tag picker sheet, errors shown at once
     source: IMPORT_WEB §4.4, §4.14, §6
     tests:
       - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx

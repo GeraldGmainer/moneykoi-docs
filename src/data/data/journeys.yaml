@@ -304,7 +304,7 @@ items:
       - "just a category: the pill → pick → *Apply to all* for the other Amazon rows"
       - "or tap the row → the order number on top → tap: the order on amazon.de"
       - "back in the app: description · category"
-      - "several items: *Split* → part 2: amount, description, category · part 1 = the rest"
+      - "several items: *Split* → part 1 holds the whole amount · part 2: amount, description, category · the wand on part 1 → what part 2 leaves"
       - "*Apply* → the row lists its parts"
     result: "one booking per part · next month's file knows the row"
     tests:
