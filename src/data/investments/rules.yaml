@@ -148,8 +148,10 @@ items:
         name: a weaker currency is quoted per one book unit, and the label says so
   - id: R-INV-03
     group: Currency positions
-    title: Hidden until the server is ready
-    text: 29 rows seeded inactive → visible after the migration **and** Gerald switches them on
+    title: Switched on by the server
+    text: |
+      - 29 rows seeded inactive → shown once `is_active` is on · no app release needed
+      - prod switched on 2026-11-16
     source: INVESTMENTS §14
     related: [T-INV-01]
   - id: R-INV-04

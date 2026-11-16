@@ -15,7 +15,7 @@ groups:
         text: "Buy → *Quantity* → `0 , 0 0 0 0` → readout *0,0000* · `4` → *0,00004* · *Price* → `0 , 0 0 0` → *0,000* · gold in g → `0,00004` → *0,00004 g* · switch to oz t → 4 decimals"
   - id: currencies
     title: Currency positions
-    setup: Needs `currency_assets.sql` pushed + `is_active` on (T-INV-01)
+    setup: Prod switched on 2026-11-16 · app ≥ 1.17.1 (T-INV-01)
     items:
       - id: C-INV-001
         text: Add → *Currencies* group · book currency hidden · search by localized name

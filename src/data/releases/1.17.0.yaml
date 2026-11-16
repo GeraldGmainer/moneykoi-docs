@@ -177,8 +177,8 @@ items:
     screens: [asset_pick_step.dart, opening_buy_card.dart, exchange_rate_tile.dart, investment_detail_header.dart, investment_price_stats.dart, transaction_save_page.dart, transfer_sheet.dart, price_sources_footer.dart]
     notes:
       - text: Needs `currency_assets.sql` pushed + `is_active` on · hidden until both
-        status: open
-        now: T-INV-01
+        status: fixed
+        now: T-INV-01 · prod switched on 2026-11-16
       - text: Currency → non-currency transfer (JPY → BTC)? Allowed today
         status: open
         now: D-INV-1

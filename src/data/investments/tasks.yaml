@@ -139,9 +139,8 @@ items:
   - id: T-INV-01
     title: Turn currency positions on
     owner: gerald
+    status: done
     detail: |
       - **done 2026-11-16** · prod mirror check: 29 rows · USD = 1 · EUR 1.1014 · all `ecb`
-      - left: switch the catalog on → currencies on the asset grid
-      - app ≥ 1.17.1 + web with currencies first · older builds list them under "other"
-    command: |
-      update public.asset set is_active = true where asset_class = 'currency';
+      - **done 2026-11-16** · catalog switched on · `is_active = true`
+      - apps pick it up on the next sync · no account: within 6 h

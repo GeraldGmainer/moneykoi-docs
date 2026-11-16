@@ -29,8 +29,7 @@ items:
       - pick JPY · book currency hidden
       - amount + rate, prefilled
     result: '"100,000 JPY" · "1 EUR = 175.42 JPY"'
-    status: waiting
-    note: Hidden until migration + switch-on (T-INV-01)
+    note: Switched on in prod 2026-11-16 · app ≥ 1.17.1 (T-INV-01)
     checks: [C-INV-001, C-INV-003]
   - id: J-INV-04
     group: Portfolio
