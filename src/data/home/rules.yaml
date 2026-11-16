@@ -65,6 +65,7 @@ items:
     text: |
       - bar: 1, 2 or 4 tabs · + needs the middle
       - rest in the drawer · deep links always work
+      - except *Forecast calendar*: never in the drawer, only a bar tab · the drawer's *Forecast* has the same calendar as its *Calendar* tab (D-HOM-17)
       - 1 tab = no bar
       - can be a tab: Home · Book · Stats · Goals · Shopping · Accounts · Categories · Recurring · Investments · Forecast · Forecast calendar (the last three since 2026-11-14, D-HOM-15)
     source: NAVIGATION §1–§2
@@ -94,7 +95,7 @@ items:
     group: Bottom bar & drawer
     title: Locked pages form a Pro group
     text: |
-      - Free: Analytics, Shopping list, Investments, Forecast, Forecast calendar leave the page list
+      - Free: Analytics, Shopping list, Investments, Forecast leave the page list
       - Pro group at the **very end**, after Settings, Tips, Feedback
       - header: crown, *Pro features*, *Get Pro* · rows dimmed, no padlock
       - tap → that feature's paywall · read-only page with records

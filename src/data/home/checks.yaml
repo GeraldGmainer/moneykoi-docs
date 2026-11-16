@@ -56,7 +56,7 @@ groups:
       - id: C-HOM-024
         text: "*Personalize* with bank 2000 + card 150 owed, one 10 € expense → Home *Cash flow · This month* income 0, expenses 10 · breakdown sheet has no *Initial balances* row"
       - id: C-HOM-026
-        text: "Pro → Settings › Navigation → 4 tabs → *Forecast calendar* and *Investments* in the bar → each opens with the drawer button, no back arrow · *Forecast calendar*: year calendar, no *Overview · Calendar* row · drawer lists neither · Home forecast card → switches to the tab · simulator *Free* with planned payments → the calendar tab opens read-only (D-HOM-15)"
+        text: "Pro → Settings › Navigation → 4 tabs → *Forecast calendar* and *Investments* in the bar → each opens with the drawer button, no back arrow · *Forecast calendar*: year calendar, no *Overview · Calendar* row · drawer lists neither · bar without them → drawer has *Forecast*, never *Forecast calendar* (D-HOM-17) · Home forecast card → switches to the tab · simulator *Free* with planned payments → the calendar tab opens read-only (D-HOM-15)"
       - id: C-HOM-027
         text: "Hold **+** → strong buzz, card above, page dimmed, + turns × · slide up to *Quick entry* and lift → quick-entry sheet · hold, lift without sliding → menu stays → *Add receipt* → by-hand receipt page · *Scan receipt* → camera · *New booking* → form · tap dimmed page, ×, Android back → closes, no *Press back again* · light + dark · German + Japanese labels fit · TalkBack: + says *double-tap and hold to show more ways to add* (R-HOM-15)"
       - id: C-HOM-025

@@ -138,4 +138,14 @@ items:
       - rows: *New booking* · *Add receipt* · *Scan receipt* · *Quick entry* · quick entry nearest the thumb
       - *New booking* stays in the menu (Gerald) · a slow tap turns into a hold, the form is then one tap away
       - hold → slide → lift picks a row, like a phone's context menu
-    related: [R-HOM-15, D-BKG-1]
+    related: [R-HOM-15, D-HOM-17, D-BKG-1]
+
+  - id: D-HOM-17
+    question: "*Forecast calendar* in the drawer?"
+    status: decided
+    date: 2026-11-16
+    answer: |
+      - **no** (Gerald) · a bar tab only
+      - the drawer's *Forecast* already has it, as its *Calendar* tab · two rows for one calendar
+      - replaces the drawer half of D-HOM-15
+    related: [D-HOM-15, R-HOM-10]
