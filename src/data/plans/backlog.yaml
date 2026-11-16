@@ -83,7 +83,7 @@ agents:
     done: 2026-11-12
   - text: "Bug hunt: 14 data-loss + wrong-money findings fixed"
     done: 2026-11-12
-  - text: "Bug hunt: 48 still open · mostly medium + low (`bug-hunt-2026-09.md` › Status)"
+  - text: "Bug hunt: 43 still open · mostly medium + low (`bug-hunt-2026-09.md` › Status)"
   - text: "Security report 2026-09: only H2 + M7 marked fixed"
     done: 2026-11-12
   - text: "Performance report 2026-09: all but §1.1–§1.3 open"

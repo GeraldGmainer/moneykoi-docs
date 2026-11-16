@@ -268,3 +268,23 @@ items:
     tests:
       - file: test/features/receipt/domain/parsers/quantity_reader_test.dart
         name: a weighed line is priced at the printed price per kilo, not total / weight
+  - id: E-ANL-28
+    group: Numbers
+    title: "Commitments too high on a due day"
+    when: "Analytics · recurring commitments · a rule falls due today"
+    then: "twelve months of occurrences ÷ 12: a monthly 100 shows 100 · fixed 2026-11-16 · before, 108.33, and a yearly rule twice its share (bug hunt 29)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/analytics/use_cases/get_recurring_commitments_use_case_test.dart
+        name: "a rule due today counts twelve months of occurrences, not the same day a year later as well"
+  - id: E-ANL-29
+    group: Numbers
+    title: "Running anchored month read as complete"
+    when: "Insights · month anchor after today's day (anchor 25, Sep 10)"
+    then: "the Aug 25 – Sep 24 month is left out of streak, trend and best month until Sep 25 · fixed 2026-11-16 · before, counted as a finished month (bug hunt 30)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/analytics/use_cases/get_insights_use_case_test.dart
+        name: "a month anchored on the 25th that is still running is not counted as a complete month"

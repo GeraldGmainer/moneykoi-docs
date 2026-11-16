@@ -219,3 +219,13 @@ items:
       - file: src/app/(main)/investments/components/price-sparkline.test.tsx
         repo: web
         name: draws a flat series down the middle, not on the bottom edge
+  - id: E-INV-23
+    group: Prices
+    title: "Manual price on the wrong day near midnight"
+    when: "position form · manual price changed in the hour or two after midnight (Vienna), or in the evening west of UTC"
+    then: "the point is dated today, the phone's day · fixed 2026-11-16 · before, the UTC day: yesterday in Vienna, tomorrow in New York, where it hid a newer value (bug hunt 43)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/investment/use_cases/save_investment_use_case_test.dart
+        name: "a manual price saved just after local midnight is dated with the local day, not the UTC one"

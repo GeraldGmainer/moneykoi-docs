@@ -148,3 +148,13 @@ items:
     tests:
       - file: test/features/budget_book/ui/widgets/budget_book_export_options_test.dart
         name: the period line counts the rows its file holds, opening balances included, as the all-time line does (I5-1)
+  - id: E-BB-17
+    group: Periods
+    title: "Tab switched during the first load"
+    when: "Budget Book opens · *Transactions* tapped before the first load lands, or a sync reload overlaps a period tap"
+    then: "the chosen tab shows its own rows · fixed 2026-11-16 · before, skeletons or a summary page under the Transactions tab until the next load (bug hunt 34)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/budget_book/bloc/budget_book_bloc_test.dart
+        name: "a tab switched while the first load runs ends on that tab with its own data, not the old tab's"

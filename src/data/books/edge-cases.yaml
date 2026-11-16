@@ -295,3 +295,13 @@ items:
     tests:
       - file: test/features/booking/service/booking_save_initial_state_factory_test.dart
         name: "an account remembered from another book is not pre-filled"
+  - id: E-BOOK-51
+    group: Switching & sync
+    title: "Share converted the book swiped away from"
+    when: "Books page · quick swipe A → B → A · *Share this book* on A"
+    then: "A becomes the shared book · fixed 2026-11-16 · before, the preview could still name B, and B was shared and opened (bug hunt 27)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/book/ui/pages/book_page_test.dart
+        name: "share converts the book under the pager, even while the preview still names the one before"
