@@ -431,7 +431,7 @@
   note: saved formats → straight to Review · learned payees · row editing · transfer suggestion · import reminder · CSV only, CAMT.053 / MT940 stay parked
   since: built 2026-11-10 on synthetic bank files
   web: parity
-  webNote: since 2026-11-11 · no paywall (every web book is Cloud) · no *Deleted earlier*, open-with, import reminder or usage event · managed in Settings › Data Management (R-DATA-95) · one import, no separate simple *Import bookings* (D-DATA-52, app only)
+  webNote: since 2026-11-11 · no paywall (every web book is Cloud) · no *Deleted earlier*, open-with, import reminder or usage event · managed in Settings › Data Management (R-DATA-95) · one import, no separate simple *Import bookings* (D-DATA-52, app only) · since 2026-11-16 split parts each have their own amount (a warning, never a block) and Amazon gets no guess (R-DATA-107, app not yet)
   docs: data
 
 # Sync & sharing

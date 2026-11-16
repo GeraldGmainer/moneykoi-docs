@@ -289,7 +289,7 @@ items:
         - the bank tables · chains and providers (*SPAR*, *OMV*, *ORF*, *LIWEST* …) · then category words (*Miete*, *Gehalt*, *Kindergarten*) · whole words only
         - a word of an earlier booking
       - never part of a word (*SPAR* is not *Sparen*) · never the quick-booking keyword map · Amazon guesses nothing
-      - app and web guess the same (shared vector file)
+      - app and web guess the same (shared vector file) · except: on the web since 2026-11-16 Amazon and shop-less PayPal get **no guess at all**, not from earlier bookings either (a book with *Amazon → Other* guessed *Other* for every order) · the app still asks earlier bookings → R-DATA-107
       - payee column = *Empfänger/Auftraggeber*, *Payee*, *Merchant*, *支払先*, *取引先* …
       - the payee also **names the booking** since 2026-11-10 → R-DATA-75 · before: only a clue
       - Pro: a learned payee answers before the guess → R-DATA-85
@@ -977,6 +977,7 @@ items:
       - next month's file: the row counts as imported once · the parts never show as duplicates
       - a transfer cannot be split · a split row learns no payee
       - the *Import n bookings* button counts the parts
+      - web since 2026-11-16: every part has its own amount, part 1 too · parts that do not add up only warn → R-DATA-107
     source: BOOKING_IMPORT §9a, §9b
     tests:
       - file: test/features/data_import/domain/import_review_bank_test.dart
@@ -1201,6 +1202,52 @@ items:
         repo: web
         name: 'a bank file: a pick on a row is offered for the rest of its payee, branch numbers aside (D-DATA-54)'
     related: [D-DATA-55, R-DATA-103, R-DATA-78, R-DATA-95, J-DATA-22, J-DATA-23]
+  - id: R-DATA-107
+    group: On the web
+    title: "Web import: the edit dialog and its split"
+    text: |
+      - since 2026-11-16 · the pencil on a row of *Categories* · the app keeps its sheet (R-DATA-99)
+      - wide, but never under the sidebar · the bank's text and the order on top · then date · amount · *Income or expense* · account in one line · then description and category (or the parts) · *Make it a transfer* · labels
+      - nothing focused on open · a missing amount, category or transfer account shows red only after *Apply*
+      - date: the calendar, opened by a click on the field · amount: the user's money format
+      - labels: chips · the book's labels and those of this file suggested while typing · Enter takes one, a comma takes the typed name · a new name becomes a label at *Import*, not before
+      - **Split** (beside the category): part 1 starts with the row's whole amount · every part its own amount, description, category · any part can go, part 1 too · one part left → a normal row
+      - parts that do not add up: amber line *{n} not in a part yet* or *Parts are {n} more than the amount* · **never a block**: *Apply* and *Import* book the parts as typed
+      - the wand in a part's amount fills it with what the others leave · only where that is above zero · gone once the parts add up
+      - Amazon and shop-less PayPal rows get no guessed category: what was bought changes with every order (R-DATA-40)
+      - the closed groups (*possible duplicates*, *booked by recurring payments*, *already imported*): their rows carry no badge of their own, the header says it
+      - the app: part 1 is the rest, never typed · Amazon guessed from earlier bookings · not ported yet
+    source: IMPORT_WEB §4.4, §4.14, §6
+    tests:
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'splits a row: part one starts with the whole amount, a part without an amount or a category shows once Apply is pressed'
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'parts that do not add up only warn: Apply books them as typed'
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: a new part takes what is missing with one click on its wand
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'takes no focus on open: no field is focused, the dialog is'
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: picks the date in a calendar that opens with a click on the field
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: suggests the labels of the book as they are typed; Enter takes one, a new name is offered, Backspace takes the last off
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: 'guesses nothing for a marketplace row: what was bought changes with every row'
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: says what the parts leave of the row, and the wand fills one part with exactly that
+      - file: src/app/(main)/bookings/import/components/rows-editor.test.tsx
+        repo: web
+        name: opened, the group shows its rows with the category of the booking each one paired with
+    checks: [C-DATA-083]
+    related: [R-DATA-99, R-DATA-106, R-DATA-40, R-DATA-78, E-DATA-91, E-DATA-104]
   - id: R-DATA-73
     group: On the web
     title: "Web booking export: ledger CSV"

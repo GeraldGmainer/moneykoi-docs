@@ -458,11 +458,15 @@ items:
     title: "Web: edit dialog ignores the money format"
     when: a row's amount is edited in the web import dialog
     then: |
-      - plain text field · dot or comma = decimal mark · not the user's money format
-      - labels typed comma-separated, not picked
-    status: known-issue
+      - fixed 2026-11-16 · the amounts read and show the user's money format · labels are chips with the book's labels suggested (R-DATA-107)
+      - was: a plain text field, dot or comma as the decimal mark · labels typed comma-separated, not picked
+    status: fixed
     risk: low
-    related: [R-DATA-97]
+    tests:
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: suggests the labels of the book as they are typed; Enter takes one, a new name is offered, Backspace takes the last off
+    related: [R-DATA-97, R-DATA-107]
   - id: E-DATA-85
     group: Bank import
     title: A second CSV while one is open
@@ -646,6 +650,7 @@ items:
     then: |
       - the sheet says so on part 1 · *Apply* stays off
       - an edit that already left nothing → Review shows the row unsplit
+      - web since 2026-11-16: the parts keep their amounts · the dialog says by how much they differ → E-DATA-104
     status: by-design
     risk: low
     tests:
@@ -770,6 +775,25 @@ items:
       - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
         repo: web
         name: then the bank tables, resolved to the category with the starter name
+  - id: E-DATA-104
+    group: On the web
+    title: "Web: split parts that do not add up"
+    when: a split row's parts add up to more or less than the bank's amount (a fee, a refund, a typo)
+    then: |
+      - amber line under the parts · *{n} not in a part yet* / *Parts are {n} more than the amount* · the wand fills one part with the difference
+      - not a block (Gerald, 2026-11-16) · *Apply* and *Import* book the parts as typed
+      - the account then ends that much off the bank's figure · the balance compare on the result shows it
+      - next month's file still finds the row by its key: the amounts do not matter there
+    status: by-design
+    risk: medium
+    tests:
+      - file: src/app/(main)/bookings/import/components/row-edit-dialog.test.tsx
+        repo: web
+        name: 'parts that do not add up only warn: Apply books them as typed'
+      - file: src/app/(main)/bookings/import/lib/bank-import.test.ts
+        repo: web
+        name: parts that do not add up are booked as typed, and a transfer is never split
+    related: [R-DATA-107, R-DATA-99, E-DATA-93]
   - id: E-DATA-103
     group: Bank import
     title: Own transfers, cash and card settlements counted as spending
