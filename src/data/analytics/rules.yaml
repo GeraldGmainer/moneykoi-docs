@@ -208,10 +208,12 @@ items:
       - shows a product bought **3 times over 60 days** · change = its first 30 days vs. its latest 30 days
       - up to 3 rising and 3 falling · a change under ½ % is neither · tap → every purchase, shop, date, a price line
       - the card opens once **5 products** have such a history · until then it waits in *Unlocks as you record*
-      - receipts scanned before quantities were kept: in the history as one piece, marked **≈**
+      - receipts scanned before quantities were kept: in the history as one piece, marked **≈** · once a product has exact readings, only those set its change (D-ANL-15)
     source: ANALYTICS › Price changes
-    related: [R-ANL-42, R-ANL-43, R-SCN-32, D-ANL-6]
+    related: [R-ANL-42, R-ANL-43, R-SCN-32, D-ANL-6, D-ANL-15]
     tests:
+      - file: test/features/analytics/domain/prices/product_history_test.dart
+        name: exact readings win over approximate ones
       - file: test/features/analytics/use_cases/get_price_changes_use_case_test.dart
         name: risers and fallers, largest change first, unchanged and young products left out
       - file: test/features/analytics/domain/prices/product_key_test.dart
@@ -233,6 +235,8 @@ items:
         name: an even rise across the basket is the index
       - file: test/features/analytics/domain/prices/personal_index_test.dart
         name: approximate points never count
+      - file: test/features/analytics/domain/prices/personal_index_test.dart
+        name: the window is 90 calendar days, also across the clock change
       - file: test/features/analytics/insight_builder_test.dart
         name: a rise and a fall, rounded to whole percent
   - id: R-ANL-43

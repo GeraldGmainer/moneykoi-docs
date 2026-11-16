@@ -117,3 +117,12 @@ items:
     answer: |
       - a **row** on *Price changes* in v1
       - own card / Home card only if people open it
+  - id: D-ANL-15
+    question: Price changes · a product with ≈ and exact readings?
+    status: decided
+    date: 2026-11-16
+    answer: |
+      - **exact readings win**: once a product has them, only they set its change, its span and its ≈ mark
+      - the ≈ readings stay listed in the product sheet
+      - a product with only ≈ readings still shows, marked ≈
+      - why: an old line read as one piece (*JOGHURT 2.97* = 3 × 0.99) showed as −67 %

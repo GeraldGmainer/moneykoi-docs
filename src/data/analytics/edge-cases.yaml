@@ -201,12 +201,14 @@ items:
     group: Price changes
     title: Receipts scanned before quantities were kept
     when: receipts saved before the scanner kept quantities
-    then: each line read as one piece · in a product's history with **≈** · never in the index · 1 kg of bananas and 2 kg look like a price change there
+    then: each line read as one piece · in a product's history with **≈** · never in the index · 1 kg of bananas and 2 kg look like a price change there · once the product has exact readings, only those set its change (D-ANL-15)
     status: by-design
     risk: medium
     tests:
       - file: test/features/analytics/domain/prices/price_point_collector_test.dart
         name: a receipt saved before quantities reads as one piece, marked approximate
+      - file: test/features/analytics/domain/prices/product_history_test.dart
+        name: exact readings win over approximate ones
   - id: E-ANL-22
     group: Price changes
     title: Weighed and counted
@@ -221,12 +223,14 @@ items:
     group: Price changes
     title: Promotions and deposits
     when: a product bought on *Aktion* / *jö* / *Lidl Plus* · a drink with *PFAND*
-    then: the price paid counts, promotions included · medians soften a one-off · the deposit is never part of the unit price
+    then: the price paid counts, promotions included · medians soften a one-off · the deposit is never part of the unit price · a *Mengenvorteil* after the *PFAND* row still lowers it (fixed 2026-11-16) · *Einweghandschuhe* is a product, not a deposit
     status: by-design
     risk: low
     tests:
       - file: test/features/receipt/use_cases/save_receipt_use_case_test.dart
         name: a folded deposit is not in the unit price
+      - file: test/features/receipt/domain/parsers/quantity_reader_test.dart
+        name: a discount after a folded deposit still lowers the unit price
   - id: E-ANL-24
     group: Price changes
     title: A misread name splits a product
@@ -234,3 +238,33 @@ items:
     then: two products with fewer purchases · the index loses coverage, it does not get wrong
     status: known-issue
     risk: low
+  - id: E-ANL-25
+    group: Price changes
+    title: A receipt scanned onto an existing booking
+    when: a booking › attach a receipt › scan
+    then: saved with quantities and products like a new scan · before 2026-11-16 it was saved bare and read as **≈** for good
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/use_cases/attach_receipt_use_case_test.dart
+        name: saves the quantities and the parts like a new receipt
+  - id: E-ANL-26
+    group: Price changes
+    title: A merged line renamed in review
+    when: review › *Merge by category*, then the merged line renamed (*Lebensmittel* → *Wocheneinkauf*), then save
+    then: the products inside still count for prices · before 2026-11-16 the rename dropped them
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/receipt/use_cases/save_receipt_use_case_test.dart
+        name: a renamed merged line still keeps its parts
+  - id: E-ANL-27
+    group: Price changes
+    title: A light weighed item
+    when: "*0,183 kg x 1,99 EUR/kg* · the paper rounds the total to 0,36"
+    then: priced at the printed 1,99 €/kg, not 0,36 ÷ 0,183 = 1,97 · before 2026-11-16 the rounding showed as a price change of 1 % or more
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/receipt/domain/parsers/quantity_reader_test.dart
+        name: a weighed line is priced at the printed price per kilo, not total / weight

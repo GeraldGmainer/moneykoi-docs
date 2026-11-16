@@ -390,7 +390,7 @@ items:
       - *2 x 1,29*, *0,59 x 3*, *1,079 kg x 2,49 EUR/kg*, *6,000 ST a 9,08* → saved with the item: amount, unit, price per unit
       - only when it multiplies out to the line total · a pack size (*6x0,5L*) is not a quantity
       - LIDL on the item row · ADEG and BILLA the row above · SPAR between name and price · LIDL's weight row below
-      - the deposit is not in the price per unit · a discount is
+      - the deposit is not in the price per unit · a discount is · a weighed item keeps the printed price per kg
       - a new price typed in the review → the line counts as **1 piece** (D-ANL-12) · a renamed line keeps it
       - *Merge* keeps the products inside the receipt; the bookings merge as before (D-ANL-7)
       - a count the photo lost (*X 3,99 7,98*, *5,99 11,98* under the name) is read off the total when it is an exact multiple

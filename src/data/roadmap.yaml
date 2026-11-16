@@ -73,7 +73,7 @@
   items:
     - ref: light-mode
       size: M
-      why: app built 2026-11-14 · release not dated · its palette comes before accent colors
+      why: app merged 2026-11-16 · release not dated · its palette comes before accent colors
     - ref: accent-colors
       why: needs the light-mode palette
     - ref: budget-rollover
@@ -99,7 +99,7 @@
     - ref: auto-capture
       why: second · starts with a device go / no-go
     - ref: personal-inflation
-      why: phases 0–4 built 2026-11-14 in a worktree · waits for merge and the device checks C-ANL-014 – 018
+      why: phases 0–4 merged 2026-11-16 · waits for the device checks C-ANL-014 – 018
     - ref: koi-pond
       why: after the koi illustrations
     - ref: D-PRIV-8

@@ -9,7 +9,6 @@ gerald:
   - ref: T-DEMO-01
   - ref: T-DEMO-02
   - ref: T-DATA-02
-  - text: "Land the light-mode worktree · docs check fails on R-SET-48/49 until then"
   - section: "Device re-tests"
   - text: "Re-test B2, B3, B6 · fixed 2026-10-28, never re-tested (`2026-10-19_offline_tier_device_test.md:104`)"
   - text: "Lost session · *Sign back in* after a delete · delete next to another account's books"
