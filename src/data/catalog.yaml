@@ -294,7 +294,7 @@
   area: viewing
   feature: homeEditor
   web: partial
-  webNote: all 17 card types · no cash-flow sheet
+  webNote: all 17 card types · no cash-flow sheet · a two-pane dialog with drag to reorder (2026-11-16)
   docs: home
 - id: nav-bar
   name: Configurable bottom bar

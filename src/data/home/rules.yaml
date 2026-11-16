@@ -199,6 +199,7 @@ items:
     title: "Web dashboard: 17 card types"
     text: |
       - own layout · *Customize* · every card's settings in the editor
+      - *Customize* = one wide dialog (2026-11-16): cards on Home on the left (drag to reorder · arrows on hover · gear · remove) · only the cards still addable on the right · presets under *Start over* · phone: full screen, one side at a time
       - a card's pill (its range · the forecast's horizon) opens a menu under it, no dialog · each range shows its dates · a pick is saved at once
       - the pill menu's *More settings* → that card's settings · cards without a pill: the editor only
       - summary tiles open *Balance* · *Analytics* for that month · all time
@@ -210,6 +211,9 @@ items:
       - file: src/app/(main)/balance/lib/balance-walk.test.ts
         repo: web
         name: stops a range that ends later at today, with a scheduled booking backed out
+      - file: e2e/dashboard.spec.ts
+        repo: web
+        name: Customize reorders the cards on Home by dragging
       - file: src/app/(main)/dashboard/components/card-pill-menu.test.tsx
         repo: web
         name: drops the ranges from the pill and writes the pick into the card's config
