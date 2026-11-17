@@ -234,3 +234,20 @@ items:
     tests:
       - file: test/features/home/bloc/cash_flow_cubit_test.dart
         name: "a sync load still running when another range is applied does not land over it"
+  - id: E-HOM-26
+    group: Bar
+    title: "Bottom bar labels at a very large font"
+    when: "system font size 200 % · the tab bar, or the bulk-selection action bar"
+    then: "labels grow up to 130 % and stay inside the bar, clear of the gesture handle · fixed 2026-11-17 · before, they ran onto the handle (device test U4)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/main/ui/main_bottom_navigation_bar_test.dart
+        name: "at a large system text size the tab labels stop growing at the bar cap, clear of the home indicator"
+  - id: E-HOM-27
+    group: Bar
+    title: "Create menu invisible to TalkBack"
+    when: "Android · hold **+** · the menu is open"
+    then: "the four entries and the × are on screen but missing from the accessibility tree · a screen reader finds nothing to focus · a widget test of the same menu does see them, cause not found yet · open (device test A2, 2026-11-17)"
+    status: known-issue
+    risk: medium
