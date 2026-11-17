@@ -842,4 +842,15 @@ items:
     tests:
       - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
         name: a name printed once is its own row wherever the fit puts it, and each amount stays on the row of its name
+  - id: E-SCN-78
+    group: Reading
+    title: "Action: the quantity row read as an item"
+    when: "an article bought twice at Action · under it the row *= 2X 0,99*"
+    then: "fixed 2026-11-17: the row was a fourth item of 0,99 → *Items exceed the total* → the scan never ended (43 s, then *Done*) · it is a quantity now · the same pass ends by itself after 3 s"
+    status: fixed
+    risk: medium
+    related: [R-SCN-25, R-SCN-32]
+    tests:
+      - file: test/features/receipt/domain/parsers/generic_parser_strategy_test.dart
+        name: the same row with an equals sign in front, as Action prints it, is no item either (a phone pass, 2026-11-17)
 

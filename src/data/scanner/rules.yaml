@@ -63,6 +63,7 @@ items:
       - ends at once: QR read · *Capture* still · total + date confirmed in review
       - ends at once, hand still moving: the same match on two readings in a row · date and shop read, shop not a guess · 4 printed rows read below the total (D-SCN-22)
       - why the rows below: SPAR prints a basket discount and a second *SUMME* under the first · the items add up to either (E-SCN-76)
+      - one-category receipts end the same way · a restaurant bill does not: its subtotal is printed first
       - anything less sure: once the phone rests (R-SCN-27) → buzz → photo step or review
       - *Done*: ends early · mismatch → review banner · no total → review at 0
     source: SCANNER §4.37, §4.38, §4.52
@@ -72,6 +73,8 @@ items:
         name: items that add up twice in a row, date and shop read, rows read below the total
       - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
         name: "not while fewer rows are read below the total: a basket discount and the real total may follow"
+      - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
+        name: "a one-category receipt ends the same way: its total, date and shop read, rows read below the total"
       - file: test/features/receipt/bloc/scanner_cubit_live_test.dart
         name: Done ends the pass early; a total never read opens the review at 0
       - file: test/features/receipt/domain/services/scan_finish_rule_test.dart
