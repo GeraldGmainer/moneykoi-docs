@@ -63,17 +63,17 @@ groups:
       - id: C-SCN-029
         text: "Web *Add receipt* → merchant typed, 3 items of 3.333 against 10 → *0.01 left* shown · fix → saved · phone after a sync shows the receipt card with merchant and items (needs T-BOOK-06)"
       - id: C-SCN-030
-        text: "Release APK on a real Android phone (`flutter build apk --release --flavor dev`) → hover a receipt → rows tick, the pass ends by itself · the debug build alone proves nothing here (E-SCN-64)"
+        text: "Release APK on a real Android phone (`flutter build apk --release --flavor dev`) → hover a receipt → the strip at the edge turns green, the pass ends by itself · the debug build alone proves nothing here (E-SCN-64)"
       - id: C-SCN-031
-        text: "Hover a long receipt, moving the hand at normal speed → ticks stay close to their rows instead of trailing ~0.4 s behind · no preview lag · all items read → shop line gives way to *All items read, total matches · final check…* + a green bar · hold still → ends when the bar is full (~1.2 s) · move → the bar starts over"
+        text: "Retired 2026-11-17 · ticks that keep up with the hand · the receipt strip replaced them (C-SCN-041)"
       - id: C-SCN-032
         text: "First scan → review → tip card: × in the top-right corner on the first line, the action right-aligned under it · × → no tip follows · Home book-switch, Budget Book calendar and booking-form scan hints look the same"
       - id: C-SCN-033
         text: "Hover held close, a few rows at a time, the receipt wider than the frame · start by moving in or out · work down in steps → no item twice, the sum meets the total without zooming out"
       - id: C-SCN-034
-        text: "Release build · long receipt (40+ items), one slow pass top to bottom, the phone held as it comes, not flat → every item ticked on the way · sum meets the total when the total is read · ends by itself · review: nothing missing, nothing twice (E-SCN-67) · debug build: done by Gerald 2026-11-15, 54 of 54"
+        text: "Release build · long receipt (40+ items), one slow pass top to bottom, the phone held as it comes, not flat → the strip green all the way · sum meets the total when the total is read · ends by itself · review: nothing missing, nothing twice (E-SCN-67) · debug build: done by Gerald 2026-11-15, 54 of 54"
       - id: C-SCN-035
-        text: "Ticks sit on items, shop, date and total only · none on address, tax table or footer · no tick before a row was read (R-SCN-33)"
+        text: "Retired 2026-11-17 · the ticks gave way to the receipt strip (C-SCN-041)"
       - id: C-SCN-036
         text: "Hint pill ends in a small ring that turns once per reading · held close and moved quickly → *Slower* · Reduce motion on → the ring stands still (R-SCN-34)"
       - id: C-SCN-037
@@ -81,6 +81,12 @@ groups:
       - id: C-SCN-038
         text: "iPhone · long receipt by hover, phone slightly turned → as C-SCN-034 · the levelling there reads the text's corners and has never run on a device"
       - id: C-SCN-039
-        text: "Release build, long receipt · seconds from opening the scanner to the first tick · seconds for one pass · readings per second (`ocrMedian` in the pass log) → the numbers T-SCN-11 starts from"
+        text: "Measured 2026-11-17 (Nothing 3a, profile build, 70-position SPAR receipt) · a reading every 0.8 s before, 0.5–0.6 s after · one pass 11–18 s, ends by itself · short receipt 3.2 s"
       - id: C-SCN-040
         text: "Book with a cash and a checking account · SPAR paid cash (*ZAHLUNG BAR*) → review shows the cash account · save · new manual booking → still the last used account, not cash · card receipt (*Visa Debit*) → checking · receipt without a payment line → last used (R-SCN-35)"
+      - id: C-SCN-041
+        text: "Hover a long receipt fast → strip at the right edge fills green behind the white frame · a stretch passed too fast stays yellow · hint *… still missing · back to the yellow mark* · hover there → green → the scan ends by itself (R-SCN-33)"
+      - id: C-SCN-042
+        text: "Move so fast that the picture jumps by more than a third → *Slower* at once, large on the warning colour, one vibration · the other hints (start, down to the total, all items read) look as before (R-SCN-34)"
+      - id: C-SCN-043
+        text: "Another phone and an iPhone · long receipt, brisk pass → reading pace (the ring), strip and the end by itself as on the Nothing 3a · the timings of C-SCN-039 are one phone's"

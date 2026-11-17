@@ -95,7 +95,13 @@ items:
   - id: T-SCN-11
     title: A fast hover pass
     owner: ai
+    status: done
     detail: |
+      - **done 2026-11-17** on the phone (Nothing 3a, 70-position SPAR receipt, 13 recorded rounds): 22 s with *Done* and no match → 11–18 s, ends by itself · short receipt 12.9 s → 3.2 s
+      - what it took: the scan ends when sure (D-SCN-22) · the next picture is read while the last is assembled (a reading every 0.5–0.6 s, before 0.8 s) · a squeezed picture no longer lands a row off (E-SCN-77) · the basket discount below the first sum (E-SCN-76) · the receipt strip (D-SCN-25) · *Slower* at once (D-SCN-26)
+      - found: a release build reads no faster than a debug build · the pictures stay sharp at 20+ rows a second, the limit is readings per second
+      - left: the reader itself takes ~0.5 s for a picture of 90 lines · beyond a third of the picture per reading rows are read once and the strip asks back · other phones and an iPhone (C-SCN-043)
+      - as planned on 2026-11-15:
       - Gerald 2026-11-15: a slow pass reads everything now · he wants to hover fast
       - today a row needs two readings and a reading takes 0.5–0.9 s on a long receipt (debug build) · safe speed ≈ a tenth of the picture per reading (3–7 rows a second) · faster, frames blur and come back empty
       - first: the numbers of a release build (C-SCN-039) · every pass so far was a debug build

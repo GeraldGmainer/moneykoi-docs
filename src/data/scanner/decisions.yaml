@@ -142,6 +142,7 @@ items:
     status: decided
     date: 2026-11-14
     answer: |
+      - superseded 2026-11-17: the ticks are gone, the receipt strip shows progress (D-SCN-25)
       - **predict from the pan speed** (Gerald, after trying a): the ticks are drawn ahead by how fast the receipt moved through the last frames × how old the read frame is, capped below a second
       - the ticks were drawn where the rows were ~0.4 s earlier (the reading takes that long)
       - a) track the motion on every camera frame · recommended first, built and dropped the same day: the preview lagged and the measured shift was mostly empty
@@ -161,6 +162,7 @@ items:
     status: decided
     date: 2026-11-14
     answer: |
+      - superseded 2026-11-17: the ticks are gone, the receipt strip shows progress (D-SCN-25)
       - **only rows the scan made something of**: items, shop, date, total (Gerald: not a tick on every row)
       - a) every row seen twice (before)
       - b) **rows read as an item or a header field**
@@ -175,8 +177,13 @@ items:
     related: [R-SCN-34, T-SCN-11]
   - id: D-SCN-22
     question: "Scanner: end a matched scan after a fixed time, even while the phone still moves?"
-    status: open
+    status: decided
+    date: 2026-11-17
     answer: |
+      - **no timer · end when the scan is sure** (Gerald: *when the scanner logic is confident enough*)
+      - sure = the same match on two readings in a row · date and shop read, shop not a guess · 4 printed rows read below the total
+      - measured on 146 corpus receipts: 0 wrong endings · ending on the first match alone cut 8 short (a first *SUMME* before a basket discount, a shop name still a guess)
+      - phone, short receipt: 12.9 s → 3.2 s · the options as they stood:
       - today: items = total, then the phone has to rest 1.2 s (2.5 s while date or shop are unread) · a pass waited 5.7 s after the match because the hand moved on past the total
       - a) keep: only rest ends it · date, shop and QR print below the total (R-SCN-27)
       - b) once date and shop are read too: end 2 s after the match, moving or not · recommended
@@ -184,8 +191,10 @@ items:
     related: [R-SCN-25, R-SCN-27]
   - id: D-SCN-23
     question: "Scanner: rows never shown between two read stretches — say where?"
-    status: open
+    status: decided
+    date: 2026-11-17
     answer: |
+      - **show it on screen: the receipt strip** (D-SCN-25) · the unread stretch is yellow, the hint says *back to the yellow mark* · the options as they stood:
       - today: the hint names the amount missing (*… still missing*), not the place · a pass held the top third for 17 s while 25 rows further down were unread (E-SCN-73)
       - a) keep the amount
       - b) say the direction: *Move on down · rows before the total are unread* · recommended
@@ -203,3 +212,23 @@ items:
       - vouchers ignored · cash and card on one receipt → not sure
       - the picked account is never saved as last used
     related: [R-SCN-35, E-SCN-74]
+  - id: D-SCN-25
+    question: "Scanner: what shows reading progress while the hand moves?"
+    status: decided
+    date: 2026-11-17
+    answer: |
+      - **a receipt strip at the edge, no marks on the text** (Gerald, after the ticks never sat on the rows of a moving picture)
+      - the ticks were drawn where a row was half a second earlier, pushed ahead by a guess of the hand's speed · a hand that changes speed breaks the guess
+      - a) **receipt strip**: green read · yellow not sure · a frame for the camera
+      - b) the strip plus a soft band over the picture
+      - c) counter only
+      - d) keep the ticks, tune them
+    related: [R-SCN-33, D-SCN-18, D-SCN-20, D-SCN-23]
+  - id: D-SCN-26
+    question: "Scanner: when does *Slower* show?"
+    status: decided
+    date: 2026-11-17
+    answer: |
+      - **at once, with a vibration** · it used to wait a second, and by then the stretch was behind the hand
+      - only by how far the receipt moved between two readings (a third of the picture) · the fixed 12 rows a second fired on passes that lost nothing
+    related: [R-SCN-34]

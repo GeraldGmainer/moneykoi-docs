@@ -23,8 +23,10 @@ gerald:
     done: 2026-11-13
   - ref: T-SCN-06
   - ref: T-SCN-07
-  - text: "Decide D-SCN-22 · end a matched scan after a fixed time?"
-  - text: "Decide D-SCN-23 · say where rows are still unread?"
+  - text: "Decide D-SCN-22 · end a matched scan after a fixed time? → no timer, ends when sure"
+    done: 2026-11-17
+  - text: "Decide D-SCN-23 · say where rows are still unread? → the receipt strip"
+    done: 2026-11-17
   - section: "Fix round 2026-11-13 evening"
   - ref: T-SCN-10
     note: "ran 2026-11-13 · 4 regressions fixed, baselines promoted"
@@ -84,7 +86,9 @@ agents:
   - text: "Hover on a real phone 2026-11-14/15 · long receipts read in one slow pass (§4.50)"
     done: 2026-11-15
   - ref: T-SCN-11
-    note: "starts from release-build timings · C-SCN-039"
+    note: "done 2026-11-17 · 13 phone rounds · SCANNER §4.52"
+  - text: "Phone checks of the fast pass · strip, *Slower*, another phone and an iPhone (C-SCN-041 to C-SCN-043)"
+  - text: "A second text reader on alternating pictures · only if a reading has to drop below 0.5 s"
   - text: "PDF scale for digital receipts once T-SCN-08 delivers files"
   - text: "SPAR missing rows + discount attribution · chosen 2026-11-13, not started"
     done: 2026-11-13

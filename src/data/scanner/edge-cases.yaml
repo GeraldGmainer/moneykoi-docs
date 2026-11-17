@@ -789,10 +789,13 @@ items:
     group: Camera
     title: A pass that skips the middle
     when: top and foot of a long receipt read · the rows between never in view
-    then: "the hint names the amount still missing, not where · *Done* opens the review with the mismatch banner · no scan reads a row the camera did not see · a hint that says where is open (D-SCN-23)"
-    status: known-issue
+    then: "fixed 2026-11-17: the receipt strip shows the unread stretch in yellow and the hint says *back to the yellow mark* · hovering there turns it green · *Done* still opens the review with the mismatch banner"
+    status: fixed
     risk: medium
-    related: [D-SCN-23, E-SCN-70]
+    related: [D-SCN-23, D-SCN-25, R-SCN-33, E-SCN-70]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: a stretch the hand passed in one reading is unsure once the camera has left it, and read after a second look
   - id: E-SCN-74
     group: Review
     title: A debit card read as a credit card
@@ -815,3 +818,28 @@ items:
     tests:
       - file: test/features/receipt/domain/services/category_chain_test.dart
         name: pharmacy articles are Health, not the drink their name ends in
+  - id: E-SCN-76
+    group: Reading
+    title: A basket discount printed below the first sum
+    when: "SPAR · *SUMME* · *Markerlrabatt 20 %* with its *(Basis: …)* · *SUMME* again · a hover pass put the final total beside the *Zwischensumme* above them"
+    then: "fixed 2026-11-17: items still end at the first row that shows the total · a basket discount below it counts when the total is printed again under it · the items then meet the total and the scan ends by itself (a 70-position receipt never finished before)"
+    status: fixed
+    risk: medium
+    related: [R-SCN-25, D-SCN-22]
+    tests:
+      - file: test/features/receipt/domain/parsers/spar_parser_strategy_test.dart
+        name: "the total read beside the Zwischensumme, above SUMME / Markerlrabatt / SUMME: the discount below still counts (a phone pass, 2026-11-17)"
+      - file: test/features/receipt/domain/parsers/spar_parser_strategy_test.dart
+        name: a Markerlrabatt below the total row with no total printed again under it is not this receipt
+  - id: E-SCN-77
+    group: Camera
+    title: A fast hand squeezes the picture
+    when: "hovering at 12 rows a second and more · one picture comes out with its rows closer together in one part than in another"
+    then: "fixed 2026-11-17: such a picture was laid a row off in one stretch · three rows twice, two lost, a price halved · a line printed only once now holds its own row, and equal amounts on neighbouring rows no longer pull a stretch up · where the read rows still miss the total, rows read once are tried and kept only if the sum then fits"
+    status: fixed
+    risk: medium
+    related: [R-SCN-34, T-SCN-11]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
+        name: a name printed once is its own row wherever the fit puts it, and each amount stays on the row of its name
+
