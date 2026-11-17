@@ -675,3 +675,33 @@ items:
     tests:
       - file: test/shared/ui/form/date_picker_sheet_test.dart
         name: "days ago count calendar days, so the day before the spring change is yesterday, not today"
+  - id: E-BKG-85
+    group: Booking form
+    title: "Income tab with an expense category"
+    when: "*New booking* · Expense · pick *Groceries* · tap *Income* · *Save*"
+    then: "the category is cleared and Save waits for an income category · a category of the picked type stays · fixed 2026-11-17 · before, the form read *New income* but saved an **expense** (device test A1)"
+    status: fixed
+    risk: high
+    tests:
+      - file: test/features/booking/ui/pages/booking_save_page_test.dart
+        name: "switching expense to income drops the expense category, so the booking cannot save as an expense"
+  - id: E-BKG-86
+    group: Quick booking
+    title: "Greyed ✓ with only the category missing"
+    when: "Quick entry · `Galaxus 49` (no category guessed) · tap the grey ✓"
+    then: "the category picker opens, as the return key does · more gaps → those chips flag and shake · fixed 2026-11-17 · before, the tap did nothing (device test U1)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/quick_add/ui/sheets/quick_booking_submit_test.dart
+        name: "the greyed check does what the return key does: a missing category opens the picker"
+  - id: E-BKG-87
+    group: Bulk edit
+    title: "Search's action bar unstyled"
+    when: "Search · a query · long-press a result"
+    then: "*Tags · Category · Date · More · Delete* in the app's style with a ripple, as in the Budget Book · fixed 2026-11-17 · before, monospace labels with yellow underlines (device test A3)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking_bulk/ui/transaction_list_selection_test.dart
+        name: "the action bar brings its own Material, so a page host without a scaffold still styles its labels, and caps their size"
