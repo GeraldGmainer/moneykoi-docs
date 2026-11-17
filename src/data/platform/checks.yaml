@@ -56,6 +56,8 @@ groups:
         text: "Android 13 and 15+, gesture nav and 3-button nav → the bottom bar, *Save* bar, sheets and keypad reach the screen edge behind the nav bar · no black strip, no darker band behind the 3 buttons · *Welcome* has no status-bar band · tabs, buttons and keys clear of it (R-PLAT-32)"
       - id: C-PLAT-025
         text: "Emulator, *run LOCAL* → *gerald* debug button signs in → seed books sync · Debug › Device › *Env file* = `.env.local` (R-PLAT-35)"
+      - id: C-PLAT-031
+        text: "Phone, release build, cold start → the koi lifts as before, never later than 3 s · debug build: add `throw StateError('x');` at the top of `_startApp` in `lib/main.dart` → *Money Koi could not start* with the error below after about 1 s · remove the throw again (R-PLAT-36)"
   - id: release-2-0-0
     title: 2.0.0 · 2026-11-08
     items:

@@ -242,3 +242,16 @@ items:
         name: at large text Delete is an icon, so Save keeps its label (A5-16)
       - file: test/features/budget_book/ui/screens/budget_book_tab_test.dart
         name: at 200 % text the view tabs stop growing at their cap, so all three stay on a narrow phone (A5-17)
+  - id: E-PLAT-21
+    group: App start
+    title: Launch splash never lifts
+    when: app start · a startup step hangs or throws (missing GetIt registration, plugin channel, translations), or the first screen never paints
+    then: the splash goes after 3 s at the latest · a throw shows *Money Koi could not start* instead · before 2026-11-17 the koi rippled forever, seen under `flutter run`, and a prod start that threw sent no crash report
+    status: fixed
+    risk: high
+    tests:
+      - file: test/main/ui/widgets/launch_splash_test.dart
+        name: lifts at the hard cap onto the splash backdrop when startup never hands the app in
+      - file: test/main/ui/pages/startup_failure_page_test.dart
+        name: lifts the launch splash after the minimum, without waiting for the hard cap
+    related: [R-PLAT-36]

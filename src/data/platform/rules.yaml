@@ -124,6 +124,23 @@ items:
       - file: test/app/env/env_config_test.dart
         name: a defined ENV wins over the flavor
     related: [D-PLAT-15, T-PLAT-14, C-PLAT-025]
+  - id: R-PLAT-36
+    group: App start
+    title: The launch splash is up 3 s at most
+    text: |
+      - normal start unchanged: the koi ripples at least 1 s, lifts once the first screen's data is in, at 1.5 s at the latest
+      - a start that stalls or never paints its first screen → both splashes (the system's and the app's) gone 3 s after start, whatever is underneath · the dark splash background if nothing is there yet
+      - a start that throws → *Money Koi could not start* · *Closing the app and opening it again usually fixes this* · debug builds show the error and its stack below · prod sends it to Sentry when crash reports are on
+      - a startup step still running after 3 s is logged every 3 s by name (*Startup still waiting on configureInjection after 3 s*)
+    source: APP_SHELL.md › Startup safety net
+    tests:
+      - file: test/main/ui/widgets/launch_splash_test.dart
+        name: lifts at the hard cap onto the splash backdrop when startup never hands the app in
+      - file: test/main/ui/widgets/launch_splash_test.dart
+        name: uncovers a handed-in app that never paints at the hard cap
+      - file: test/main/ui/pages/startup_failure_page_test.dart
+      - file: test/main/service/startup_watchdog_test.dart
+    related: [E-PLAT-21, C-PLAT-031]
   - id: R-PLAT-04
     group: Releases
     title: "iOS publishing: testflight → promote"
