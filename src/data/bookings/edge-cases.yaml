@@ -643,3 +643,15 @@ items:
     tests:
       - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
         name: a date keeps the time of day and moves a picked split part with its siblings
+  - id: E-BKG-82
+    group: Bulk edit
+    title: "Save on 100+ bookings held the screen for seconds"
+    when: "many bookings ticked · *Save* or *Delete*"
+    then: "selecting ends and the snackbar shows at once · the writes finish in the background · fixed 2026-11-17 · before, the ticked list stayed up until every row was written · the app closed within those seconds keeps the rows written so far"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/booking_bulk/ui/booking_bulk_actions_test.dart
+        name: saving ends the selection and shows the snackbar while the writes are still running
+      - file: test/features/booking_bulk/ui/booking_bulk_actions_test.dart
+        name: delete ends the selection before the rows are gone

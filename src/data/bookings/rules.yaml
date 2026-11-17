@@ -440,12 +440,14 @@ items:
       - *More* › *Account* · *Description*: transfers keep theirs
       - date, account and tags move a split booking whole, even when only one part was ticked (Search)
       - no amount
-      - only rows that change are written · snackbar *N bookings saved* · *Undo* · selecting ends
+      - only rows that change are written · *Save* ends selecting at once · snackbar *N bookings saved* · *Undo* right away, the writes finish in the background · a large batch shows its new values a moment later
     source: BOOKING_BULK §1, §4, §5
     related: [D-BKG-40]
     tests:
       - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
         name: only rows that actually change are written
+      - file: test/features/booking_bulk/ui/booking_bulk_actions_test.dart
+        name: saving ends the selection and shows the snackbar while the writes are still running
       - file: test/features/booking_bulk/domain/bulk_edit_rules_test.dart
         name: income and expenses together are blocked (D2)
       - file: test/features/booking_bulk/domain/bulk_edit_rules_test.dart
@@ -458,7 +460,7 @@ items:
     group: Bulk edit
     title: Bulk delete
     text: |
-      - *Delete* → *Delete bookings?* · N bookings to the trash for 30 days
+      - *Delete* → *Delete bookings?* · N bookings to the trash for 30 days · selecting ends at once, the rows go a moment later
       - a split booking goes whole · *Undo* brings every row back, as a single delete does
     source: BOOKING_BULK §5
     related: [R-BKG-57]
