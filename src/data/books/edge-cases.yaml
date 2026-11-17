@@ -305,3 +305,23 @@ items:
     tests:
       - file: test/features/book/ui/pages/book_page_test.dart
         name: "share converts the book under the pager, even while the preview still names the one before"
+  - id: E-BOOK-52
+    group: Invites
+    title: "Expired invites listed as pending"
+    when: "Books page · an invite older than its 7 days, never accepted"
+    then: "no longer listed · fixed 2026-11-17 · before, pending forever (bug hunt 89)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/book/data/data_sources/book_remote_source_test.dart
+        name: "getPendingInvites leaves out an invite past its expiry, which can no longer be accepted"
+  - id: E-BOOK-53
+    group: Switching & sync
+    title: "Earlier snackbars replayed"
+    when: "Books page · a switch, then a rename"
+    then: "the rename announces only itself · fixed 2026-11-17 · before, *Switched* came again with it (bug hunt 88)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/book/ui/pages/book_page_test.dart
+        name: "a second outcome announces only itself, not the one before again"

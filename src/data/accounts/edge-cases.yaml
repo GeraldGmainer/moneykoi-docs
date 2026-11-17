@@ -395,3 +395,33 @@ items:
     tests:
       - file: test/features/onboarding/ui/pages/onboarding_page_test.dart
         name: "after an error, back keeps stepping back once it reached the method choice"
+  - id: E-ACC-80
+    group: Sign-in
+    title: "Logout failed, though signed out"
+    when: "*Log out* or *Delete account* · the server errors after the phone already dropped its session"
+    then: "lands on Welcome, signed out · fixed 2026-11-17 · before, *Logout failed* while the phone was already signed out (bug hunt 90)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/auth/bloc/auth_cubit_test.dart
+        name: "a server error after the session on the phone is already gone is a finished logout, not a failed one"
+  - id: E-ACC-81
+    group: Sign-in
+    title: "Set password: double tap, silent repeat error"
+    when: "*Set password* · Save tapped twice, or the same error twice"
+    then: "spins while saving, sent once · the same error shows again · fixed 2026-11-17 · before, no spinner, two requests, a repeated error showed nothing (bug hunt 84)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/settings/bloc/set_password_cubit_test.dart
+        name: "a second failing submit clears the first error, so the same error is shown again"
+  - id: E-ACC-82
+    group: Profile
+    title: "Profile header kept the old name"
+    when: "profile renamed · a booking syncs in within a fraction of a second"
+    then: "header and stats both refresh · fixed 2026-11-17 · before, only the stats did (bug hunt 83)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/settings/bloc/profile_setting_stats_cubit_test.dart
+        name: "a profile change followed by a booking change inside the debounce refreshes both"
