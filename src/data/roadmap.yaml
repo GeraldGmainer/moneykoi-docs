@@ -93,7 +93,13 @@
     - ref: offline-books-pro
       why: after the Nov 8 paywall release · no date yet (D-BOOK-6)
     - ref: voice-input
-      why: no plan yet
+      why: research first (T-BKG-08)
+    - ref: shopping-item-photo
+      why: asked 2026-11-17 · no plan yet
+    - ref: attachments
+      why: plan parked · decide the local image store first
+    - ref: D-NTF-1
+      why: decide first · `plan_later/PUSH_INFRASTRUCTURE_PLAN.md` exists, unscheduled
     - ref: bill-qr
       why: first of the three · small · sells the forecast
     - ref: auto-capture

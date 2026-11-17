@@ -241,3 +241,13 @@ items:
     question: Account switcher
     status: dropped
     answer: Log out + *Sign back in*
+  - id: D20
+    question: Sell Pro and Cloud on the web, outside the stores?
+    status: open
+    date: 2026-11-17
+    answer: |
+      - idea: buy on `my.moneykoi.com` instead of Google Play or the App Store
+      - research first: what Google Play's and Apple's rules allow for a purchase made outside the app (using it in the app, mentioning or linking to it from the app) · rules differ by region (EU, US)
+      - price: cheaper on the web, since no store fee? · check whether a lower web price is allowed
+      - needs: a payment provider, VAT, invoices, refunds, and the purchase reaching RevenueCat so the app unlocks (`MONETIZATION_AI_CONTEXT.md` §11)
+      - source: Gerald 2026-11-17

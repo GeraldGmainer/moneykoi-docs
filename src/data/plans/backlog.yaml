@@ -25,15 +25,21 @@ gerald:
   - text: "`equipped_theme` clash: themes vs koi pond (PLUS_LOCAL §3.6 D5)"
   - text: "Subscription check-up tier: plan says Free, `feature.dart` says Pro"
   - text: "Accessibility plan counts on a lawyer hour · roadmap says no lawyer"
+  - text: "Refunds: income, or less spend in the original category? (D-BKG-41)"
+  - text: "Sell Pro and Cloud on the web? Allowed by the stores, cheaper? (D20)"
   - section: "Not on the roadmap"
-  - text: "Attachments · receipt offline images ph. 1–5 · CAMT.053 + MT940 parsers"
-  - text: "Export ph. 5–6 · forecast ph. 5–7 (D-FC-1) · runway card · push (D-NTF-1)"
+  - text: "Receipt offline images ph. 1–5 · CAMT.053 + MT940 parsers"
+  - text: "Export ph. 5–6 · forecast ph. 5–7 (D-FC-1) · runway card"
   - text: "Book invite inbox + removal ph. 2–4 (`BOOK_INVITES_AND_REMOVAL_PLAN.md`) · no status recorded"
   - section: "Cleanup"
   - text: "Three junk \"1.0.0 · asdf\" changelog rows on the dev server"
 agents:
   - ref: T-PLAT-32
     note: "prio high · build this week, by Sun Nov 22"
+  - section: "Asked 2026-11-17"
+  - ref: T-BKG-07
+  - ref: T-BKG-08
+  - ref: T-BKG-09
   - ref: T-BOOK-02
   - ref: T-MON-22
   - ref: T-MON-23

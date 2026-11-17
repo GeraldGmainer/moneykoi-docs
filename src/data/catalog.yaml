@@ -187,6 +187,13 @@
   tier: cloud
   web: web-only
   docs: shopping
+- id: shopping-item-photo
+  name: Photo on a shopping list item
+  area: money
+  tier: pro
+  status: planned
+  docs: shopping
+  note: optional · asked 2026-11-17 · no plan yet · Pro is a placeholder like the lists', tier open
 - id: contract-tracker
   name: Contracts and subscriptions
   area: money
@@ -209,7 +216,7 @@
   tier: pro
   status: planned
   docs: bookings
-  note: speak a booking · no plan yet
+  note: speak a booking · can cloud AI turn speech into a booking? research first (T-BKG-08)
 - id: auto-capture
   name: Card payments captured automatically
   area: money
@@ -217,6 +224,13 @@
   status: planned
   docs: bookings
   note: Android bank notifications · iPhone Wallet taps → drafts to confirm · never automatic (D-BKG-12) · `plan_later/AUTO_CAPTURE_PLAN.md`
+- id: attachments
+  name: Attachments on bookings (PDF invoices, warranties)
+  area: money
+  tier: pro
+  status: planned
+  docs: bookings
+  note: any file beside the receipt photos · `plan_later/ATTACHMENTS_PLAN.md`, parked · decide the local image store first (backlog › Decide) · Pro is a placeholder, tier open
 
 # Viewing
 - id: budget-book

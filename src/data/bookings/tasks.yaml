@@ -55,3 +55,29 @@ items:
       - ledger: group rows by `split_group_id`, header with total, as the app
       - `/add-receipt`: send one group id for the items of a receipt (`receipt_create_with_bookings` needs the column in `p_items` or a parameter)
       - editing a part on the web must keep `split_group_id` (check the update payload)
+  - id: T-BKG-07
+    title: Refunds · check how they count today
+    owner: ai
+    detail: |
+      - for D-BKG-41 · check before planning
+      - can a booking be a negative expense? the form and its calculator, quick-add, the bank CSV import, the scanner, the web
+      - where a refund lands today: the *Refunds* income category, a bank credit, a returned receipt line
+      - which figures it moves: budgets, savings rate, analytics, cash flow, forecast, tag totals
+      - output: what happens today, file:line, and what each option of D-BKG-41 would cost
+  - id: T-BKG-08
+    title: Voice input · can speech become a booking with cloud AI?
+    owner: ai
+    detail: |
+      - research for `voice-input` (catalog, roadmap *Later*) · asked 2026-11-17
+      - speech to text: on the device (Android, iOS) or a cloud service · de, en, ja
+      - text to booking: the quick-add line parser already turns *Coffee 3.50 yesterday* into a booking · speech could feed it, or a cloud model reads amount, category, account, date
+      - what leaves the phone, where it is processed (EU?), cost per booking, behaviour offline · the privacy line R-PRIV-40 and the store's Data safety form
+      - output: a recommendation with a plan sketch · tier open (the catalog row says Pro)
+  - id: T-BKG-09
+    title: Fewer taps to add a booking
+    owner: ai
+    detail: |
+      - asked 2026-11-17: improve adding a booking further, fewer taps
+      - count today's taps per way in: the + button, quick-add, Home quick actions, the widget, the scanner, a recurring rule's *book now*
+      - look for cuts: better defaults (last account and category), suggestions, saving straight from quick-add, fewer screens
+      - output: proposals with the tap count before and after · anything that changes what a user sees is Gerald's call
