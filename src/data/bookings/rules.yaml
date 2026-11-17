@@ -405,3 +405,63 @@ items:
         name: deleting removes every part and hands them all to the undo
       - file: test/features/budget_goals/use_cases/apply_round_up_use_case_test.dart
         name: a purchase booked as several rows rounds up once, on its total, linked to the first row
+  # Bulk edit (app)
+  - id: R-BKG-58
+    group: Bulk edit
+    title: Selecting bookings
+    text: |
+      - *Budget Book* › *Transactions* and the *Search* page's transactions
+      - hold a row → selecting · then a tap ticks, never opens · hold and drag → every row the finger passes · the list scrolls at its top and bottom edge
+      - a day's header ticks the whole day · ☑ in the bar → all · unticking the last row → done
+      - a split booking is one tick for all its parts
+      - balance corrections and opening balances can't be ticked
+      - top bar: × · count · net of the selection · bottom bar replaces the tabs: *Tags* · *Category* · *Date* · *More* · *Delete*
+      - period, view tabs and filter locked while selecting · back ends it
+      - Free · read-only members can't select
+    source: BOOKING_BULK §2, §3
+    related: [R-BKG-51, D-BKG-40]
+    tests:
+      - file: test/features/booking_bulk/bloc/booking_selection_cubit_test.dart
+        name: "a split purchase is one unit: ticking it selects every part"
+      - file: test/features/booking_bulk/bloc/booking_selection_cubit_test.dart
+        name: dragging selects the whole range between the pressed row and the finger
+      - file: test/features/booking_bulk/ui/transaction_list_selection_test.dart
+        name: while selecting a tap ticks a row instead of opening it
+      - file: test/features/booking_bulk/ui/transaction_list_selection_test.dart
+        name: dragging after the long press ticks every row the finger passes
+  - id: R-BKG-59
+    group: Bulk edit
+    title: "Bulk edit: one field, then *Save N bookings*"
+    text: |
+      - each action opens a sheet · the picker comes up first · the pick shows in the sheet · only *Save N bookings* writes · closing saves nothing
+      - *Tags*: per tag ✓ all · – some · ☐ none · a tap cycles · a new tag inline
+      - *Category*: only all income or all expenses, else greyed · split bookings and transfers keep theirs, counted in the sheet
+      - *Date*: every row, transfers too · time of day kept
+      - *More* › *Account* · *Description*: transfers keep theirs
+      - date, account and tags move a split booking whole, even when only one part was ticked (Search)
+      - no amount
+      - only rows that change are written · snackbar *N bookings saved* · *Undo* · selecting ends
+    source: BOOKING_BULK §1, §4, §5
+    related: [D-BKG-40]
+    tests:
+      - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
+        name: only rows that actually change are written
+      - file: test/features/booking_bulk/domain/bulk_edit_rules_test.dart
+        name: income and expenses together are blocked (D2)
+      - file: test/features/booking_bulk/domain/bulk_edit_rules_test.dart
+        name: split purchases and transfers are skipped and counted (D3)
+      - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
+        name: a date keeps the time of day and moves a picked split part with its siblings
+      - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
+        name: "tags: added to every row, removed only from the selected rows, and undo reverses both"
+  - id: R-BKG-60
+    group: Bulk edit
+    title: Bulk delete
+    text: |
+      - *Delete* → *Delete bookings?* · N bookings to the trash for 30 days
+      - a split booking goes whole · *Undo* brings every row back, as a single delete does
+    source: BOOKING_BULK §5
+    related: [R-BKG-57]
+    tests:
+      - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
+        name: delete takes a split purchase whole, and restore brings every row back

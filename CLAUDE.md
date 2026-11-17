@@ -91,7 +91,7 @@ A pure refactor touches only the context doc. A behavior change touches both. Ne
 | `OFFLINE_TIER` · `AUTH_PROFILE_WEB` | `accounts` (Sign-in & accounts) |
 | `DEMO` | `demo` (Demo) — the sample data files, the guards, leaving |
 | `BOOK`, `FAMILY_ACCOUNTS` · `BOOKS_WEB` | `books` |
-| `FORMS`, `QUICK_BOOKING`, `TRASH` · `BOOKING_ENTRY_WEB`, `BOOKINGS_WEB`, `TAGS_WEB` | `bookings` |
+| `FORMS`, `QUICK_BOOKING`, `TRASH`, `BOOKING_BULK` · `BOOKING_ENTRY_WEB`, `BOOKINGS_WEB`, `TAGS_WEB` | `bookings` |
 | `CATEGORY` · `CATEGORIES_WEB`, `ACCOUNTS_WEB` | `ledger` (Categories & accounts) |
 | `RECURRING_BOOKINGS` · `RECURRING_WEB` | `recurring` |
 | `BUDGET_BOOK`, `BUDGET_CALENDAR` | `budget-book` |

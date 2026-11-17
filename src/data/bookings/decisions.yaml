@@ -261,3 +261,16 @@ items:
       - b) a scan stores the shop on every part not renamed on the review page · item names stay on the receipt only, not on the bookings · no lookup needed
       - c) a stored purchase description on every part (new column, app + server migration, web)
     related: [E-BKG-76, E-BKG-77, R-BKG-56]
+  - id: D-BKG-40
+    question: Bulk edit in the app · amount, mixed sides, splits, after a save, where, plan, drag?
+    status: decided
+    date: 2026-11-17
+    answer: |
+      - amount: not offered
+      - category on income + expenses: greyed, the tap says why (web parity)
+      - category on split bookings: skipped and counted
+      - after a save: selecting ends
+      - where: *Budget Book* › *Transactions* + *Search*
+      - plan: Free
+      - drag-to-select: in the first build
+    related: [R-BKG-58, R-BKG-59]

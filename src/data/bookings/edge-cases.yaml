@@ -633,3 +633,13 @@ items:
     tests:
       - file: test/features/trash/trash_cubit_test.dart
         name: "a sweep that fails still lists the trash instead of spinning"
+  - id: E-BKG-81
+    group: Bulk edit
+    title: "One part of a split ticked in Search"
+    when: "Search shows one part of a split booking · it is ticked · *Date*, *Account*, *Tags* or *Delete*"
+    then: "the whole split booking changes · its parts share date, account and tags · *Description* touches only the ticked part · *Category* skips split bookings"
+    status: by-design
+    risk: low
+    tests:
+      - file: test/features/booking_bulk/use_cases/bulk_edit_bookings_use_case_test.dart
+        name: a date keeps the time of day and moves a picked split part with its siblings

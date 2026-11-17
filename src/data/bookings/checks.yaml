@@ -50,6 +50,8 @@ groups:
         text: Delete → *Undo* · Trash → restore · *Empty trash* asks · trash per device
       - id: C-BKG-030
         text: "Web: select across pages · *select all N* · bulk tag/edit/delete · mixed sides → no category · iPhone: no checkboxes · hold a row → ticked, bar shows, no callout menu · tap another → ticked, not opened · scrolling never selects · clear → a tap opens again"
+      - id: C-BKG-058
+        text: "App, *Transactions*: hold a row → check, tabs slide down, action bar up · hold + drag down past the screen edge → list scrolls, rows tick · day header → whole day · *Tags* → add one, remove one → *Save* → rows show it · *Undo* · mixed income + expense → *Category* greyed, tap explains · *Delete* → *Undo* · back → selection ends, no *press back again* · *Search* `AMZN` → ☑ → *More* › *Description* → *Amazon*"
   - id: search
     title: Search
     items:

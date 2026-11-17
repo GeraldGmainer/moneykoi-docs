@@ -51,7 +51,8 @@
   name: Select bookings and bulk tag, edit, delete
   area: money
   tier: free
-  web: web-only
+  web: parity
+  webNote: the web edits all fields in one dialog and has no undo · the app drags to select and changes the date of transfers too
   docs: bookings
 - id: recurring-bookings
   name: Recurring bookings

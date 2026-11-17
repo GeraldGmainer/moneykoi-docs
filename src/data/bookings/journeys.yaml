@@ -57,6 +57,16 @@ items:
       - "*Add tags* / *Edit* / *Delete*"
     result: only touched fields change
     checks: [C-BKG-030]
+  - id: J-BKG-12
+    group: Fixing
+    title: Bulk-edits in the app
+    from: "*Budget Book* › *Transactions* · or *Search*"
+    steps:
+      - hold a row · drag or tap more · or a day's header
+      - "*Tags* / *Category* / *Date* / *More* / *Delete*"
+      - pick → "*Save N bookings*"
+    result: only rows that change are written · *Undo* in the snackbar
+    checks: [C-BKG-058]
   - id: J-BKG-20
     group: Tags
     title: Tracks a trip
