@@ -286,6 +286,8 @@ items:
       - draft 4 moved to r/droidappshowcase 2026-11-12 · r/androidapps rule 2 sends self-promotion there
       - more, research 2026-11: r/FlutterDev as a technical write-up · Kuketz forum · Mastodon *#Datenschutz*
       - January: a *Monatsabschluss Jänner* post in r/FinanzenAT · plan *New Year push*
+      - draft 6, 2026-11-17: r/Austria · what the Kassabon QR code holds, field by field · image `store/press/reddit/rksv-qr.png` (made-up receipt, the QR scans) · no link in the post, one in a reply · campaign `r-austria` · not the same week as r/FinanzenAT
+      - its RKSV facts checked against the RIS text 2026-11-17 · covers most of site S-34
   - id: T-PLAT-19
     title: Ship the site and web growth round
     owner: gerald
