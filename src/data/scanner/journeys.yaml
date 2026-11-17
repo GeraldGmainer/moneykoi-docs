@@ -4,10 +4,11 @@ items:
     title: Scans a supermarket receipt
     from: hold **+** → *Scan receipt* · Home quick action *Scan receipt* · the booking form
     steps:
-      - start at the store name, move the phone slowly down · rows the scan read get a tick, drawn ahead by the pan speed so it keeps up with the hand · the hint's ring turns once per reading (R-SCN-33, R-SCN-34)
+      - start at the store name, move the phone down at a brisk pace · the strip at the right edge turns green where the receipt is read, a white frame shows where the camera is · the hint's ring turns once per reading (R-SCN-33, R-SCN-34)
       - the panel counts items and the sum · the hint says what is still needed
+      - too fast → *Slower* at once, with a vibration · a stretch that stays yellow on the strip → *… still missing · back to the yellow mark* → hover there until it is green
       - items meet the total → *Keep going to the end of the receipt* until date and shop are read
-      - QR read, or the phone rests (a green bar fills meanwhile) → buzz → optional photo or *Without photo*
+      - sure (the same result twice, date and shop read, a few rows read below the total) → ends at once, the hand still moving · QR read → at once · otherwise once the phone rests (a green bar fills meanwhile) → buzz → optional photo or *Without photo* (R-SCN-25)
       - "short receipt: one tap on *Capture* instead · *Done* ends early"
       - review → categorize, fix, merge → *Save*
     result: one booking per item, + photo when one was taken
