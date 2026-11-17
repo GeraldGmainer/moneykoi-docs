@@ -467,3 +467,27 @@ items:
       Thank you
       Gerald Gmainer
     related: [T-MON-28]
+  - id: T-PLAT-32
+    title: Add Sentry to moneykoi-web, prod only
+    owner: ai
+    detail: |
+      - **prio high · publish this week** (by Sun 2026-11-22, set 2026-11-17) · Gerald's side is T-PLAT-33
+      - today the web reports no errors anywhere · the app already reports to Sentry (R-PRIV-40)
+      - **prod only**: the SDK starts only when `NEXT_PUBLIC_SENTRY_DSN` is set, and only the deploy build (`.github/workflows/deploy.yml`) sets it · local dev, `npm run preview`, e2e and tests send nothing
+      - `@sentry/nextjs` for Next 16 · check first: the web runs on Cloudflare Workers via OpenNext (`03_TECHNICAL_ARCHITECTURE.md`) · the server side may need `@sentry/cloudflare` or stay client-only · the free plan allows 10 ms CPU per request, keep the server part out if it costs that
+      - same privacy line as the app (R-PRIV-40): EU project · `sendDefaultPii: false` · no IP, no session replay, no screenshots · scrub user content (amounts, descriptions, names, emails, book names) in `beforeSend` · no user id
+      - source maps uploaded at build time with `SENTRY_AUTH_TOKEN`, never served to the browser
+      - `release` = the web's version, `environment` = `production`
+      - tests: init skipped without a DSN · `beforeSend` scrubs a sample event · docs: a web row beside R-PRIV-40, the web context doc
+      - open for Gerald: an opt-out on the web like the app's switch? · the privacy policy names Sentry for the app only (T-PRIV-02) · the web needs a line too
+  - id: T-PLAT-33
+    title: Sentry project + deploy for the web
+    owner: gerald
+    waitsFor: [T-PLAT-32]
+    detail: |
+      - **prio high · publish this week** (by Sun 2026-11-22) · the build is T-PLAT-32
+      - Sentry, the existing EU org → new project `moneykoi-web`, platform Next.js
+      - GitHub `moneykoi-web` › Settings › Secrets and variables › Actions: variable `NEXT_PUBLIC_SENTRY_DSN` (the DSN is public by design) · secret `SENTRY_AUTH_TOKEN` (org token, source maps) · `SENTRY_ORG` / `SENTRY_PROJECT` if the build asks
+      - never in `.env.production` or `.env.development`: those build locally, and prod-only means only the deploy sends
+      - privacy policy (`moneykoi-site`, en + de): name Sentry for the web too · decide the web opt-out first (T-PLAT-32)
+      - publish: merge to `main` → `deploy.yml` deploys · then open `my.moneykoi.com`, trigger a test error, check it lands in `moneykoi-web` with a readable stack and no personal data

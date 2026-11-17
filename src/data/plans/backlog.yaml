@@ -3,6 +3,8 @@
 title: "Everything else"
 goal: "Open work outside a release or a launch"
 gerald:
+  - ref: T-PLAT-33
+    note: "prio high · publish this week, by Sun Nov 22"
   - ref: T-MON-06
     note: "stale? D1–D5 + D8 are all decided"
   - ref: T-BOOK-01
@@ -30,6 +32,8 @@ gerald:
   - section: "Cleanup"
   - text: "Three junk \"1.0.0 · asdf\" changelog rows on the dev server"
 agents:
+  - ref: T-PLAT-32
+    note: "prio high · build this week, by Sun Nov 22"
   - ref: T-BOOK-02
   - ref: T-MON-22
   - ref: T-MON-23
