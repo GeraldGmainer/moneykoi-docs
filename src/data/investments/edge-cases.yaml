@@ -250,3 +250,13 @@ items:
     tests:
       - file: test/features/investment/ui/pages/investments_page_test.dart
         name: "an edited recorded value re-reads the manual series, though the position itself is unchanged"
+  - id: E-INV-26
+    group: Prices
+    title: Server busy while price history downloads
+    when: "a held asset's older price history loading in the background · the server answers 502/503/504 (Sentry 2026-11-17, a Google Play review phone on 2.0.0)"
+    then: "the years already on the phone stay · the download pauses 2 min, then goes on from the year it stopped at · no error report, a warning in the log · fixed 2026-11-17 · before, an error in Sentry and a retry on every dashboard build"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/core/series_replica/series_replica_test.dart
+        name: a gateway 504 in the backfill keeps the saved windows, cools the key down and resumes where it stopped
