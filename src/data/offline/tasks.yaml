@@ -37,7 +37,10 @@ items:
   - id: T-OFF-03
     title: Apply the missing migrations to the local stack
     owner: gerald
+    status: done
     detail: |
+      - **done 2026-11-17** · 12 migrations applied to the local database (explicit `--db-url`, never the linked prod) · all 32 synced tables match the app
+      - debug builds now name any missing column at sign-in, with the command
       - the phone's pushes were refused: *Could not find the 'import_ref' column of 'booking'* (2026-11-17)
       - the local stack lacks `20261110160000_bank_import.sql` and probably `20261114100000_booking_split_group.sql`
       - new: `20261117120000_booking_tag_delete_many.sql` (batched tag-link deletes · an older server falls back to single deletes)
@@ -45,3 +48,10 @@ items:
       - dev and prod need `20261117120000` before the next app release
     command: |
       cd ~/Projects/moneykoi/moneykoi-supabase && supabase migration up
+  - id: T-OFF-04
+    title: Push booking_tag_delete_many to prod before the next app release
+    owner: gerald
+    detail: |
+      - `20261117120000_booking_tag_delete_many.sql` · batched tag-link deletes (R-OFF-71)
+      - without it the app still works: the batch is refused and its tag links go one by one
+      - same route as the other prod migrations
