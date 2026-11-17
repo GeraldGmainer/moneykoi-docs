@@ -34,3 +34,14 @@ items:
       - category, recurring rule, shopping list still wait for the next pull
     prompt: |
       Fix EC-SYNC-1 in moneykoi-app (.agents/reports/edge-cases-2026-09.md): when the outbox pushes an edit of a booking the server already soft-deleted, the upsert's returned row carries deleted_at, but QueueManager's markAsSynced ignores it, so the phone keeps a live ghost until a pull brings the delete. Apply the returned deleted_at locally (tombstone for a trash-enabled source, otherwise delete), keep OFFLINE_FIRST_AI_CONTEXT.md §3/§5 in sync, and unskip the three EC-SYNC-1 tests in test/edge_cases/offline_conflict_edge_cases_test.dart. Then set E-OFF-01 in ../moneykoi-docs/src/data/offline/edge-cases.yaml to fixed with the tests.
+  - id: T-OFF-03
+    title: Apply the missing migrations to the local stack
+    owner: gerald
+    detail: |
+      - the phone's pushes were refused: *Could not find the 'import_ref' column of 'booking'* (2026-11-17)
+      - the local stack lacks `20261110160000_bank_import.sql` and probably `20261114100000_booking_split_group.sql`
+      - new: `20261117120000_booking_tag_delete_many.sql` (batched tag-link deletes · an older server falls back to single deletes)
+      - then restart the app · refused changes get a fresh try on start
+      - dev and prod need `20261117120000` before the next app release
+    command: |
+      cd ~/Projects/moneykoi/moneykoi-supabase && supabase migration up

@@ -63,3 +63,5 @@ groups:
     items:
       - id: C-OFF-030
         text: Edit offline → log out → sign in online → edits reach the server
+      - id: C-OFF-031
+        text: "Cloud book · *Transactions* → tick ~100 → *Date* → *Save* → list shows the new day within a second · sync bar runs briefly · log shows `upsertManyReturning 100 rows`, not 100 upserts · airplane mode → same → back online → goes as one batch · delete 100 → one `booking_delete_many`"

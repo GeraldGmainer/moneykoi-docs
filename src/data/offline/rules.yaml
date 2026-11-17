@@ -67,7 +67,7 @@ items:
     group: Sending changes · the outbox
     title: Writes go out in order
     text: |
-      - outbox strictly one by one · deletes first
+      - outbox strictly in order · deletes first · a run of one kind goes as one batch (R-OFF-71)
       - quick edits of one record → latest wins
       - server refuses 3 times → paused, failed dot · app restart → retry
       - a change that can never pass (duplicate, broken rule) → paused at the first refusal
@@ -81,6 +81,29 @@ items:
         name: offline errors retry, pause, and resume when connectivity returns
       - file: test/core/offline_first/queue/queue_manager_test.dart
         name: non-offline errors retry up to maxAttempts then pause
+  - id: R-OFF-71
+    group: Sending changes · the outbox
+    title: Many changes at once go out in batches
+    text: |
+      - a save of many records (bulk edit, import) → one write on the phone · instant there, Free and Pro too
+      - the outbox sends up to 200 records of one kind and one book per request · 1000 bookings = 5 requests
+      - bulk delete of bookings and their tag links → one request per 200
+      - a batch the server refuses → its records go one by one · only the record at fault fails, with *Try again* / *Discard change* as always
+      - no connection → the batch waits and goes again as one
+    source: OFFLINE_FIRST §5
+    related: [R-BKG-59, R-OFF-16]
+    tests:
+      - file: test/core/offline_first/queue/queue_batch_test.dart
+        name: a run of upserts of one type and book goes up in one request and is settled in one write
+      - file: test/core/offline_first/queue/queue_batch_test.dart
+        name: "a refused batch is pushed one by one: the good rows land, only the refused row fails, with its own retry"
+      - file: test/core/offline_first/queue/queue_batch_test.dart
+        name: an offline batch keeps its rows together and goes up as one request again
+      - file: test/core/offline_first/queue/queue_batch_test.dart
+        name: deletes of a type with a many-RPC go up in one call and leave the phone in one write
+      - file: test/core/offline_first/writer_test.dart
+        name: one read, one row write and one outbox write for the whole list, then one event
+    checks: [C-OFF-031]
   - id: R-OFF-10
     group: Sending changes · the outbox
     title: The outbox survives a restart

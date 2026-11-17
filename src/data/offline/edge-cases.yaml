@@ -410,3 +410,15 @@ items:
     tests:
       - file: test/features/cloud_tier/lapse_test.dart
         name: a write between the last empty pass and the gate turning back is pushed after it
+  - id: E-OFF-43
+    group: Sending changes
+    title: "A bulk change pushed row by row"
+    when: "98 bookings change date in one go"
+    then: "fixed 2026-11-17 · one write on the phone and one request per 200 rows · before, about 6 s on the phone and 98 requests · a refused batch falls back to single rows, so per-row errors stay"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/core/offline_first/queue/queue_batch_test.dart
+        name: a batch is never larger than the configured size
+      - file: test/core/offline_first/queue/queue_batch_test.dart
+        name: an edit made while its batch is in flight keeps the row pending and its outbox row
