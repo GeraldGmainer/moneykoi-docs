@@ -853,4 +853,12 @@ items:
     tests:
       - file: test/features/receipt/domain/parsers/generic_parser_strategy_test.dart
         name: the same row with an equals sign in front, as Action prints it, is no item either (a phone pass, 2026-11-17)
+  - id: E-SCN-79
+    group: Camera
+    title: A row on a fold of the paper
+    when: "a long receipt folded in the middle · the row on the fold looks a little different from every angle"
+    then: "the strip keeps that row yellow and the scan does not end until it is read the same way twice · on the phone it took three passes over the middle (32 s) · *Done* opens the review with what is read · not traced yet"
+    status: known-issue
+    risk: low
+    related: [R-SCN-33, E-SCN-77]
 

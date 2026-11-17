@@ -111,6 +111,8 @@ items:
       - a narrow strip at the right edge of the camera picture stands for the receipt, shop name at the top
       - green: read · yellow: not sure · a row whose amount was read once, or a stretch passed unread · white frame: where the camera is · dark: still to come
       - rows under the camera are still being read · they turn yellow only once the camera has left them unsure
+      - never yellow: what is printed below the total · what stands above the shop name once shop and date are read
+      - the white frame moves on between two readings at the speed the camera had · it disappears while the scan does not know where the camera is
       - items short of the total **and** a yellow stretch → hint *… still missing · back to the yellow mark* · hover there until it turns green
       - no ticks or boxes on the text any more · they never sat on the moving rows (D-SCN-25)
     source: SCANNER §4.52
@@ -120,6 +122,10 @@ items:
         name: a stretch the hand passed in one reading is unsure once the camera has left it, and read after a second look
       - file: test/features/receipt/ui/widgets/live_scan_view_test.dart
         name: s strip, and none before a row is held
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: below the row the total was read from nothing is asked back, nor above the header once shop and date are read
+      - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
+        name: "the window is where the camera is: it carries the speed down the receipt, and is gone when a frame finds no place"
       - file: test/features/receipt/domain/services/live_guidance_test.dart
         name: items short of the total point back to the yellow mark while the strip shows one
     checks: [C-SCN-041]
