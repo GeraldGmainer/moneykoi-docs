@@ -229,3 +229,14 @@ items:
     tests:
       - file: test/features/investment/use_cases/save_investment_use_case_test.dart
         name: "a manual price saved just after local midnight is dated with the local day, not the UTC one"
+  - id: E-INV-24
+    group: New position
+    title: "Asset name cut in half on a small phone"
+    when: "asset picker · 320 px phone or a large system font · two-line name like *Chinesischer Yuan*"
+    then: "the tile grows to fit both lines · fixed 2026-11-17 · before, the second line was clipped"
+    status: fixed
+    risk: low
+    related: [R-INV-43]
+    tests:
+      - file: test/features/investment/ui/screens/asset_pick_step_test.dart
+        name: a two-line currency name keeps both lines
