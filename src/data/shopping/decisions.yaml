@@ -16,6 +16,6 @@ items:
     answer: |
       - **step it** · a fraction by whole units (`1/2` → `1 1/2`) · a range moves both ends (`2-3` → `3-4`)
       - app and web together (`quantity_stepper.dart`, `bump-quantity.ts`)
-      - not built yet
+      - built 2026-11-17 · any other number form (`0,5-1 l`, `1/0`) is left unchanged rather than half-read
       - source: bug hunt 23
     related: [E-SHP-08]

@@ -655,3 +655,13 @@ items:
         name: saving ends the selection and shows the snackbar while the writes are still running
       - file: test/features/booking_bulk/ui/booking_bulk_actions_test.dart
         name: delete ends the selection before the rows are gone
+  - id: E-BKG-83
+    group: Tags
+    title: "Tag per day cut off"
+    when: "a tag's *per day* · 200 over 3 days"
+    then: "66.67, rounded to cents · fixed 2026-11-17 · before, 66.66, and 0.625 kept three decimals (bug hunt 59)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/tag/view_models/tag_summary_test.dart
+        name: "per day is rounded to cents, never cut off or left with more decimals"

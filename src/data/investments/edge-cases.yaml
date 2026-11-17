@@ -240,3 +240,13 @@ items:
     tests:
       - file: test/features/investment/ui/screens/asset_pick_step_test.dart
         name: a two-line currency name keeps both lines
+  - id: E-INV-25
+    group: Prices
+    title: "Edited value not on the list's chart"
+    when: "a manual position · a recorded value edited on its page · back on the Investments list"
+    then: "the list's line and change use the edited value · fixed 2026-11-17 · before, the old series until the list was reloaded (bug hunt 71)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/pages/investments_page_test.dart
+        name: "an edited recorded value re-reads the manual series, though the position itself is unchanged"

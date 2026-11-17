@@ -217,3 +217,23 @@ items:
     tests:
       - file: test/features/category/bloc/category_save_bloc_test.dart
         name: "an edit after a failed delete is an ordinary edit again, compared with the opened draft"
+  - id: E-LED-25
+    group: Accounts
+    title: "Duplicate account name with a stored space"
+    when: "an account saved as `Cash ` (trailing space) · a new account named `cash`"
+    then: "refused as a duplicate · fixed 2026-11-17 · before, the two accounts read the same (bug hunt 66)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/account/ui/pages/account_save_page_test.dart
+        name: "a name another account was stored with, padded with a space, is refused too"
+  - id: E-LED-26
+    group: Categories
+    title: "Subcategory of the only parent could not be deleted"
+    when: "a book with one parent category · deleting one of its subcategories"
+    then: "deleted, the parent stays · only the very last category is kept · fixed 2026-11-17 · before, *cannot delete the last category* (bug hunt 67)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/category/domain/service/category_delete_rule_test.dart
+        name: "a subcategory of the only parent can be deleted: the parent stays"

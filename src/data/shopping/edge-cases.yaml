@@ -71,7 +71,18 @@ items:
     group: Items
     title: "Stepper on a fraction or a range"
     when: "+ on `1/2 kg`, + on `2-3`"
-    then: "today `2/2 kg` and `3-3` · decided 2026-11-17 (D-SHP-2): a fraction steps by whole units (`1/2` → `1 1/2`), a range moves both ends (`2-3` → `3-4`), app and web · not built yet (bug hunt 23)"
-    status: known-issue
+    then: "`1 1/2 kg` and `3-4` · a fraction steps by whole units, never to zero · a range moves both ends · any other number form (`0,5-1 l`) stays unchanged · app and web · fixed 2026-11-17 (D-SHP-2) · before, `2/2 kg` and `3-3` (bug hunt 23)"
+    status: fixed
     risk: low
     related: [D-SHP-2, E-SHP-06]
+    tests:
+      - file: test/features/shopping_list/ui/widgets/quantity_stepper_test.dart
+        name: steps a fraction by whole units, never to zero
+      - file: test/features/shopping_list/ui/widgets/quantity_stepper_test.dart
+        name: moves both ends of a range
+      - file: src/app/(main)/shopping/lib/bump-quantity.test.ts
+        repo: web
+        name: steps a fraction by whole units, never to zero
+      - file: src/app/(main)/shopping/lib/bump-quantity.test.ts
+        repo: web
+        name: moves both ends of a range
