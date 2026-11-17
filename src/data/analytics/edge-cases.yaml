@@ -308,3 +308,13 @@ items:
     tests:
       - file: test/features/category_activity/use_cases/generate_category_activity_use_case_test.dart
         name: "a subcategory added while the page is open gets its own slice on the next load"
+  - id: E-ANL-32
+    group: Numbers
+    title: "Category Activity spun after a failed load"
+    when: "Category Activity or a subcategory's page · the first load fails"
+    then: "the error with *Retry* · fixed 2026-11-17 · before, an endless spinner and a snackbar (bug hunt 97)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/category_activity/ui/pages/category_activity_page_test.dart
+        name: "a first load that fails shows the error with a retry, not an endless spinner"

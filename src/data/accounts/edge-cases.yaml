@@ -425,3 +425,13 @@ items:
     tests:
       - file: test/features/settings/bloc/profile_setting_stats_cubit_test.dart
         name: "a profile change followed by a booking change inside the debounce refreshes both"
+  - id: E-ACC-83
+    group: Sign-in
+    title: "Resend countdown restarted after a wrong code"
+    when: "email sign-in · a wrong or expired code entered 55 s after the link was sent"
+    then: "*Resend link* is free about 5 s later, counted from the send · fixed 2026-11-17 · before, back to 60 s after every code tried (bug hunt 92)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/auth/ui/widgets/resend_magic_link_button_test.dart
+        name: "remounted within the cooldown, it resumes the time left instead of starting over"

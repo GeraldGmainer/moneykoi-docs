@@ -81,3 +81,13 @@ items:
         name: "a reminder that comes due while the app is open lights the badge without any other write"
       - file: test/app/lifecycle/session_life_cycle_manager_test.dart
         name: "an offline resume in a Cloud book still recounts the bell badge"
+  - id: E-NTF-09
+    group: Reminders
+    title: "Swiped-away reminder came back"
+    when: "inbox · a reminder swiped away while the list was being reloaded"
+    then: "stays gone · *Undo* still brings it back · fixed 2026-11-17 · before, the reload put it back (bug hunt 96)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/notifications/bloc/notification_inbox_cubit_test.dart
+        name: "a load already running when a row is dismissed does not bring the row back"
