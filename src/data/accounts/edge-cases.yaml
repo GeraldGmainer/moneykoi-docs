@@ -435,3 +435,15 @@ items:
     tests:
       - file: test/features/auth/ui/widgets/resend_magic_link_button_test.dart
         name: "remounted within the cooldown, it resumes the time left instead of starting over"
+  - id: E-ACC-84
+    group: Sign-in
+    title: "Settings of a kept book right after sign-in"
+    when: "phone keeps a local book or a signed-out account's books · another account signs in · before its first pull"
+    then: "formats and Home layout stay at the defaults until the account's own profile arrives · fixed 2026-11-17 · before, the kept book's settings showed, and saving the Home layout failed (Sentry FLUTTER-43)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/profile/bloc/my_profile_cubit_test.dart
+        name: "signed in before the own profile is pulled: a loaded null, and the cache stays empty"
+      - file: test/features/profile/service/profile_query_service_test.dart
+        name: "leaves the settings cache empty while the own profile is not on the device yet"
