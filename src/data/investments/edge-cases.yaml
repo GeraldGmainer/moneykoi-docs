@@ -260,3 +260,23 @@ items:
     tests:
       - file: test/core/series_replica/series_replica_test.dart
         name: a gateway 504 in the backfill keeps the saved windows, cools the key down and resumes where it stopped
+  - id: E-INV-27
+    group: Manual values
+    title: "Recorded value dated tomorrow"
+    when: "Investments · a custom position · *Record value* · date *Next day*"
+    then: "today is the last day the date takes · fixed 2026-11-17 · before, tomorrow's value became the current value at once (device test B1)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/investment/ui/sheets/price_point_save_sheet_test.dart
+        name: "a recorded value cannot be dated after today, so it never becomes the current value ahead of time"
+  - id: E-INV-28
+    group: Manual values
+    title: "Quantity 1 read as *1 units*"
+    when: "New position · a counted asset · quantity 1"
+    then: "*1 unit* · 2 → *2 units* · fixed 2026-11-17 (device test B-U6)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/widgets/opening_buy_card_test.dart
+        name: "one counted unit reads as 1 unit, more as units"
