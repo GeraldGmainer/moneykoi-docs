@@ -126,11 +126,15 @@ items:
     title: Counts in the profile card
     text: |
       - the profile card shows 3 counts: *Bookings* · *Accounts* · *Days tracked* · a missing one → the next count fills in
-      - more than 3 counts → tap the row → sheet *Statistics* with every count · 3 or fewer → the row opens nothing
-      - a count shows from 1 (books from 2) · thousands grouped by the app language: *19.194* · *19,194*
-      - *Days tracked* runs from the first booking, imported ones included · *Member since* is the account's age
+      - more than 3 counts → tap the row → sheet *By the numbers* (*In Zahlen*), 3 tiles a row: icon · number · label · 3 or fewer → the row opens nothing
+      - in the sheet, in this order: bookings · days tracked · days in a row (best) · most-used category · accounts · categories · tags · recurring payments · budgets · goals · goals reached · loans · loans paid off · investments · books · shopping lists · receipts · balance checks
+      - a count shows from 1 · books and *days in a row* from 2 · thousands grouped by the app language: *19.194* · *19,194*
+      - *Days tracked* runs from the first booking, imported ones included · *Member since* is the account's age · whole calendar days, also across a clock change (fixed 2026-11-17, was one short)
+      - *Days in a row (best)*: the longest run of calendar days with a booking · bookings dated after today don't count
+      - *Most-used category*: the category with the most bookings, its name in place of the number · a tie → the one booked last · never in the card's row
+      - *Goals reached* = completed savings goals, never a budget · *Loans paid off* = status paid off · *Receipts* = every receipt kept, scanned or typed
       - since 2026-11-17 · the 2 × 5 grid before pushed *Log out* off a phone screen
-    source: profile_settings_page.dart, profile_stats_strip.dart
+    source: profile_settings_page.dart, profile_stats_strip.dart, get_profile_stats_use_case.dart
     tests:
       - file: test/features/settings/ui/pages/profile_settings_page_test.dart
         name: the header shows bookings, accounts and days tracked, in that order and grouped by the locale
@@ -142,6 +146,18 @@ items:
         name: without bookings the strip fills up with the next stats
       - file: test/features/settings/ui/pages/profile_settings_page_test.dart
         name: on a phone every stat leaves log out on screen without scrolling
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: the most-used category reads as its name in the sheet and stays out of the strip
+      - file: test/features/settings/use_cases/get_profile_stats_use_case_test.dart
+        name: reports every counted stat in enum order
+      - file: test/features/settings/use_cases/get_profile_stats_use_case_test.dart
+        name: is the longest run of calendar days with a booking
+      - file: test/features/settings/use_cases/get_profile_stats_use_case_test.dart
+        name: ignores bookings dated after today
+      - file: test/features/settings/use_cases/get_profile_stats_use_case_test.dart
+        name: tracking days stay whole across a daylight-saving change
+      - file: test/features/booking/data/booking_profile_stats_queries_test.dart
+        name: a tie goes to the category booked most recently
     checks: [C-SET-027]
   - id: R-SET-30
     group: Support

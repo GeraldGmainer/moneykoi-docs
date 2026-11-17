@@ -42,7 +42,7 @@ groups:
       - id: C-SET-026
         text: "Fresh install on a phone in light mode → app opens dark · Settings → *Design* (de) shows *Dunkel* · pick *System* → turns light · reinstall → dark again"
       - id: C-SET-027
-        text: "Phone, German: Profile → *Abmelden* on screen without scrolling · card reads *Buchungen · Konten · Tage erfasst*, numbers as *19.194* · tap → *Statistik* sheet with every count · English + Japanese, light + dark · tablet and landscape show the same card"
+        text: "Phone, German: Profile → *Abmelden* on screen without scrolling · card reads *Buchungen · Konten · Tage erfasst*, numbers as *19.194* · tap → *In Zahlen* sheet, 3 tiles a row, icons level in every row (also next to *Wiederkehrende Zahlungen*) · *Häufigste Kategorie* shows its name and own color · *Tage in Folge (Rekord)* plausible · counts match Labels, Einkaufslisten, Belege, Kontenabgleiche, erreichte Ziele, abbezahlte Kredite · English + Japanese, light + dark · tablet and landscape show the same card"
       - id: C-SET-019
         text: "*Appearance* → *System* · switch the phone's dark mode with the app open → the app follows without a restart · Android quick tile + iOS Control Center"
       - id: C-SET-020
