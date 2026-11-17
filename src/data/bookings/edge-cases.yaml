@@ -623,3 +623,13 @@ items:
         name: a store that sells everything is not guessed
       - file: test/shared/categorization/category_suggestion_engine_test.dart
         name: a chain name inside another word is not that chain
+  - id: E-BKG-80
+    group: Trash
+    title: "Trash spun forever"
+    when: "Trash opened · the clean-up of old entries fails"
+    then: "the trash is listed as it is · fixed 2026-11-17 · before, an endless spinner (bug hunt 98)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/trash/trash_cubit_test.dart
+        name: "a sweep that fails still lists the trash instead of spinning"

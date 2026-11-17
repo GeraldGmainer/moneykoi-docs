@@ -248,3 +248,24 @@ items:
     tests:
       - file: test/features/budget_goals/use_cases/schedule_reminders_use_case_test.dart
         name: "a loan due today is still reminded today while the reminder time is ahead"
+  - id: E-BUD-53
+    group: Goals
+    title: "Completed after a withdrawal"
+    when: "a reached goal · money withdrawn below the target · before the next sync"
+    then: "the pill and the Goals header read it as not reached at once · fixed 2026-11-17 · before, *Completed* stayed until the server caught up (bug hunt 61)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/budget_goals/ui/status_badge_test.dart
+        name: "a goal the server still marks completed, but back below target after a withdrawal, is not badged completed"
+  - id: E-BUD-54
+    group: Loans
+    title: "Early installment reported as missed"
+    when: "borrowed loan · installment paid a few days before its due date"
+    then: "the reminder says *due*, not *missed* · a payment counts once the installment before fell due (D-BUD-19) · fixed 2026-11-17 (bug hunt 60)"
+    status: fixed
+    risk: low
+    related: [D-BUD-19]
+    tests:
+      - file: test/features/budget_goals/use_cases/schedule_reminders_use_case_test.dart
+        name: "an installment paid a few days before its due date is not reported as missed"

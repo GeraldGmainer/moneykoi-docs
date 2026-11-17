@@ -9,3 +9,13 @@ items:
       - built 2026-11-03
       - source: iOS simulator round, IOS-18-2
     related: [R-SHP-31]
+  - id: D-SHP-2
+    question: What do + and − do on a fraction or a range quantity?
+    status: decided
+    date: 2026-11-17
+    answer: |
+      - **step it** · a fraction by whole units (`1/2` → `1 1/2`) · a range moves both ends (`2-3` → `3-4`)
+      - app and web together (`quantity_stepper.dart`, `bump-quantity.ts`)
+      - not built yet
+      - source: bug hunt 23
+    related: [E-SHP-08]

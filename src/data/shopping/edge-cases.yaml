@@ -57,3 +57,21 @@ items:
       - file: src/app/(main)/shopping/lib/bump-quantity.test.ts
         repo: web
         name: moves a decimal quantity with its decimals and its mark, never to zero
+  - id: E-SHP-07
+    group: Items
+    title: "Save tapped twice in the item sheet"
+    when: "edit item sheet · *Save* tapped again while the first save runs"
+    then: "saved once, only the sheet closes · fixed 2026-11-17 · before, the list page closed with it (bug hunt 86)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/shopping_list/ui/widgets/shopping_sheets_test.dart
+        name: "a second Save while the first one writes saves once and closes only the sheet"
+  - id: E-SHP-08
+    group: Items
+    title: "Stepper on a fraction or a range"
+    when: "+ on `1/2 kg`, + on `2-3`"
+    then: "today `2/2 kg` and `3-3` · decided 2026-11-17 (D-SHP-2): a fraction steps by whole units (`1/2` → `1 1/2`), a range moves both ends (`2-3` → `3-4`), app and web · not built yet (bug hunt 23)"
+    status: known-issue
+    risk: low
+    related: [D-SHP-2, E-SHP-06]

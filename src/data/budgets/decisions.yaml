@@ -42,3 +42,13 @@ items:
       - web not changed
       - source: new-user re-test on the iPhone simulator, 2026-11-11
     related: [D-REC-2]
+  - id: D-BUD-19
+    question: Which payments count toward a loan installment?
+    status: decided
+    date: 2026-11-17
+    answer: |
+      - **every payment since the installment before fell due** · paying early is paying
+      - a payment on that earlier due date belongs to the earlier installment
+      - built 2026-11-17 · before, only payments on or after the due date counted, so an early payer got *missed*
+      - source: bug hunt 60
+    related: [E-BUD-54]
