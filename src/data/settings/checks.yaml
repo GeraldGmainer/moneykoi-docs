@@ -41,6 +41,8 @@ groups:
         text: "Settings → *Appearance* → *Light* → Settings, the drawer and the page behind repaint at once, back goes where it went before · every tab (Home, Budget Book incl. calendar, Analytics charts + heatmap + treemap, Shopping, Investments) readable · bottom sheets, dialogs, snackbars, the keypad · restart keeps *Light* · same in *Dark* · de + ja copy"
       - id: C-SET-026
         text: "Fresh install on a phone in light mode → app opens dark · Settings → *Design* (de) shows *Dunkel* · pick *System* → turns light · reinstall → dark again"
+      - id: C-SET-027
+        text: "Phone, German: Profile → *Abmelden* on screen without scrolling · card reads *Buchungen · Konten · Tage erfasst*, numbers as *19.194* · tap → *Statistik* sheet with every count · English + Japanese, light + dark · tablet and landscape show the same card"
       - id: C-SET-019
         text: "*Appearance* → *System* · switch the phone's dark mode with the app open → the app follows without a restart · Android quick tile + iOS Control Center"
       - id: C-SET-020

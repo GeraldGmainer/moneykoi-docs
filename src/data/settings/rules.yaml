@@ -121,6 +121,28 @@ items:
     title: Set password
     text: twice · ≥ 6 characters · no current password · app + web
     source: AUTH_PROFILE_WEB §1
+  - id: R-SET-50
+    group: Profile
+    title: Counts in the profile card
+    text: |
+      - the profile card shows 3 counts: *Bookings* · *Accounts* · *Days tracked* · a missing one → the next count fills in
+      - more than 3 counts → tap the row → sheet *Statistics* with every count · 3 or fewer → the row opens nothing
+      - a count shows from 1 (books from 2) · thousands grouped by the app language: *19.194* · *19,194*
+      - *Days tracked* runs from the first booking, imported ones included · *Member since* is the account's age
+      - since 2026-11-17 · the 2 × 5 grid before pushed *Log out* off a phone screen
+    source: profile_settings_page.dart, profile_stats_strip.dart
+    tests:
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: the header shows bookings, accounts and days tracked, in that order and grouped by the locale
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: a tap on the strip opens every stat in a sheet
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: three stats fit the strip, so it opens nothing
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: without bookings the strip fills up with the next stats
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: on a phone every stat leaves log out on screen without scrolling
+    checks: [C-SET-027]
   - id: R-SET-30
     group: Support
     title: Feedback for everyone
