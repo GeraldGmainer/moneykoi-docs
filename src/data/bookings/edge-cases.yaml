@@ -665,3 +665,13 @@ items:
     tests:
       - file: test/features/tag/view_models/tag_summary_test.dart
         name: "per day is rounded to cents, never cut off or left with more decimals"
+  - id: E-BKG-84
+    group: Booking form
+    title: "Day before the spring change read as Today"
+    when: "Mar 30 (Vienna) · a date field set to Mar 29 · its relative label"
+    then: "*Yesterday* · fixed 2026-11-17 in the forms' date fields · quick-add's date chip still says *Today*, fixed after the multi-currency merge (bug hunt 79)"
+    status: known-issue
+    risk: low
+    tests:
+      - file: test/shared/ui/form/date_picker_sheet_test.dart
+        name: "days ago count calendar days, so the day before the spring change is yesterday, not today"
