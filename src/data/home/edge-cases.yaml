@@ -204,3 +204,33 @@ items:
     tests:
       - file: test/features/home_widget/widget_config_list_test.dart
         name: "a parent whose subcategories are all archived is not offered, as it is not bookable"
+  - id: E-HOM-23
+    group: Home
+    title: "Upcoming payments missed the last day"
+    when: "*Upcoming* card, 30-day horizon · a month with the autumn clock change (Oct 1 → Oct 31)"
+    then: "a payment due on the horizon's last day is listed · fixed 2026-11-17 · before, Oct 31 dropped out (bug hunt 75)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home/use_cases/get_upcoming_recurring_use_case_test.dart
+        name: "a 30-day horizon from Oct 1 still reaches Oct 31 across the autumn clock change"
+  - id: E-HOM-24
+    group: Home
+    title: "Monday read as tomorrow"
+    when: "*Upcoming* card with relative dates · Saturday before the spring clock change, a payment on Monday"
+    then: "*in 2 days* · fixed 2026-11-17 · before, *Tomorrow* (bug hunt 76)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home/ui/widgets/list_cards_test.dart
+        name: "the days to a date count calendar days, so Monday is two days away on the Saturday before the spring change"
+  - id: E-HOM-25
+    group: Home
+    title: "Cash flow or trend card back on the old range"
+    when: "a card's range changed while a sync reload of the old range was still running"
+    then: "the card stays on the range just chosen · fixed 2026-11-17 · before, the old range's figures landed last (bug hunt 77)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/home/bloc/cash_flow_cubit_test.dart
+        name: "a sync load still running when another range is applied does not land over it"

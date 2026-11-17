@@ -275,3 +275,25 @@ items:
     then: all EXIF removed · GPS + camera · the picture keeps its rotation · fixed 2026-11-13 (security M8) · a file the decoder cannot read still goes up unchanged
     status: fixed
     risk: high
+  - id: E-PRIV-52
+    group: App lock
+    title: "Clock set back skipped the lock"
+    when: "app lock on · app in the background · the phone's clock set back"
+    then: "locks once the time that really passed reaches the timeout · a phone asleep in a pocket still locks · fixed 2026-11-17 · the 30 s wrong-PIN pause still follows the clock, it survives a restart (bug hunt 72)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: "setting the clock back while away does not skip the lock: the time that really passed counts"
+      - file: test/features/app_lock/bloc/app_lock_cubit_test.dart
+        name: "time the phone slept counts too, though the monotonic clock stood still"
+  - id: E-PRIV-53
+    group: Hide amounts
+    title: "Blur too light at a large text size"
+    when: "hide amounts on · system text size raised (e.g. 200 %)"
+    then: "the blur grows with the drawn figure, amounts stay unreadable · fixed 2026-11-17 · before, charts and sentences kept the blur of the small size (bug hunt 74)"
+    status: fixed
+    risk: medium
+    tests:
+      - file: test/features/amount_privacy/ui/private_amount_test.dart
+        name: "at a larger system text size the blur covers the figure as drawn"
