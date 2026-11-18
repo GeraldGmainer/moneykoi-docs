@@ -242,4 +242,17 @@ items:
       - b) only what was paid besides the voucher (0 · 24,34) · the voucher was booked when it was bought
       - c) as today: the last sum printed (48,85 · 24,34) · wrong when several vouchers follow each other
       - found 2026-11-18, fix round on the totals · no code until decided
+  - id: D-SCN-28
+    question: "Scanner: how long is the receipt strip while the receipt's length is unknown?"
+    status: decided
+    date: 2026-11-18
+    answer: |
+      - **a + c** (Gerald, on the phone): the rest from the amount still missing · before a total is known, only what is read
+      - a) rows to come ≈ missing amount ÷ what a read row carries on average · right in the second half of a scan, up to a third too long before
+      - b) a fixed scale, the strip scrolls · no "how far still"
+      - c) no rest at all, the strip is what is read
+      - d) a bar by amount instead of a picture of the receipt
+      - not taken: a first look without zoom to measure the paper · a long receipt does not fit at 1× either, and its length would need the paper's edges, not text
+      - added the same day: the paper's ends from empty rows · parts apart after a jump
+    related: [R-SCN-33, D-SCN-25]
 

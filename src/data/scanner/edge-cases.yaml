@@ -864,4 +864,26 @@ items:
     tests:
       - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
         name: within the jump every row is matched, not only the half whose votes lie within it
+  - id: E-SCN-80
+    group: Reading
+    title: A subtotal label read as an article
+    when: "a long SPAR receipt · the reader gives *Zwi schernsumno 187,43* for the *Zwischensumme* row"
+    then: "fixed 2026-11-18: the row was an article of 187,43 → items at twice the total → *Items exceed the total*, no end after 84 s · a long total label two letters off counts as one when its row carries the total · the same recording ends by itself after 10 s"
+    status: fixed
+    risk: medium
+    related: [E-SCN-78]
+    tests:
+      - file: test/features/receipt/domain/parsers/parser_noise_test.dart
+        name: a long compound two letters off, split by the reader, counts on the row of the known total
+  - id: E-SCN-81
+    group: Camera
+    title: The scan ended two cents off
+    when: "a jumpy pass, there and back · a few amounts read twice, others missing · the items land 2 ct beside the total"
+    then: "fixed 2026-11-18: the scan ended (within 5 ct) and the review showed *Math mismatch 0,02*, *Save* off · the scan now ends by the review's rule, 1 ct at most (R-SCN-31) · such a pass keeps reading until the rows are right"
+    status: fixed
+    risk: medium
+    related: [R-SCN-31, E-SCN-79]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/total_guard_test.dart
+        name: "a sum matches a total as the review compares them: in whole cents, one cent apart at most"
 

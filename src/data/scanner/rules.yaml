@@ -113,10 +113,14 @@ items:
       - rows under the camera are still being read · they turn yellow only once the camera has left them unsure
       - never yellow: what is printed below the total · what stands above the shop name once shop and date are read
       - the white frame moves on between two readings at the speed the camera had · it disappears while the scan does not know where the camera is
+      - **which way it fills** (2026-11-18): a scan begun at the foot fills from the bottom, the dark rest above · begun at the top, from the top
+      - **how long the dark rest is**: once the total and ten items are read, from the amount still missing · never more than is read · before that only what is read shows (D-SCN-28)
+      - **the paper's ends**: a picture with four empty rows beyond its first or last line has seen the top or the foot · an end not seen yet keeps a dark stretch beyond it · both seen → no dark at the ends
+      - **a jump**: parts the hand jumped between stand apart, the dark rest between them · they close when one reading shows rows of both
       - items short of the total **and** a yellow stretch → hint *… still missing · back to the yellow mark* · hover there until it turns green
       - no ticks or boxes on the text any more · they never sat on the moving rows (D-SCN-25)
-    source: SCANNER §4.52
-    related: [D-SCN-25, D-SCN-23, E-SCN-73]
+    source: SCANNER §4.52, §4.54
+    related: [D-SCN-25, D-SCN-28, D-SCN-23, E-SCN-73]
     tests:
       - file: test/features/receipt/domain/services/assembly/hover_assembler_test.dart
         name: a stretch the hand passed in one reading is unsure once the camera has left it, and read after a second look
@@ -398,6 +402,7 @@ items:
       - items vs. total compared in whole cents
       - gap of 1 ct → no *Math mismatch*, *Save* stays on · at **any** amount
       - 2 ct or more → mismatch, *Save* off
+      - the live scan ends by the same rule since 2026-11-18 · it used to end within 5 ct and open a review that could not be saved (E-SCN-81)
       - kept on 2026-11-13 · exact match not taken (D-SCN-14)
     source: SCANNER §4.40
     related: [R-SCN-03, R-SCN-07, D-SCN-14, E-SCN-50]
