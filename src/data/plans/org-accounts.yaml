@@ -4,6 +4,7 @@
 # 2026-11-14: rechecked 16260648 (path, no way back, 72 h) + 14151465 (closed test) · Gerald: goal = new apps
 # without the closed test · Apple stays individual · no GmbH soon.
 # "not verified" = from the other AI or third-party guides only.
+# 2026-11-18: tax side checked in gerald-tax · sole proprietor = individual for the US → W-8BEN, not W-8BEN-E.
 title: "Organization accounts"
 goal: "New Play apps without the 12-tester closed test · D-U-N-S"
 gerald:
@@ -25,6 +26,7 @@ gerald:
   - text: "Manage account › Account details › About you › *Change account type*"
   - text: "New payments profile · Organization · Company/business · enter the D-U-N-S"
   - text: "Legal name + address exactly as on the D-U-N-S record"
+  - text: "Tax info again on the new profile: W-8BEN · VAT field → gerald-tax"
   - text: "Wait for Google's verification · then 72 h before a new app"
   - text: "After: check products · launch price (T-MON-09) · payouts · RevenueCat · 15 % tier (T-MON-28)"
 agents:
