@@ -280,3 +280,23 @@ items:
     tests:
       - file: test/features/investment/ui/widgets/opening_buy_card_test.dart
         name: "one counted unit reads as 1 unit, more as units"
+  - id: E-INV-29
+    group: Manual values
+    title: "Recorded value read *250 per unit*"
+    when: "a position › *Record value* / *Edit value* · a whole value"
+    then: "*€250.00 per unit* in the book's money format, like the history row below · fixed 2026-11-18 · before, a bare number without currency or decimals (device test B-U7)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/sheets/price_point_save_sheet_test.dart
+        name: "a whole value reads as money per unit, with the currency and its decimals (device test B-U7)"
+  - id: E-INV-30
+    group: New position
+    title: "Custom asset promised market data"
+    when: "New position › *Custom asset* › step 2"
+    then: "the intro says a custom asset has no market data and prices are entered by hand · fixed 2026-11-18 · before, it said the price fills in from that day's market data (device test B-U8)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/investment/ui/pages/investment_save_page_test.dart
+        name: "Continue refuses an empty symbol, then Save writes the trimmed symbol and class"
