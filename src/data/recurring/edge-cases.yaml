@@ -112,3 +112,13 @@ items:
         name: a rule that starts more than two years ahead still has a next date (A5-12)
       - file: test/features/recurring_booking/ui/pages/recurring_booking_save_page_test.dart
         name: a rule starting more than two years ahead still previews its dates (A5-12)
+  - id: E-REC-14
+    group: Editor
+    title: "Days-of-month grid jumped on the first 29–31"
+    when: "Repeats › *Days of the month* · pick 31, then quickly another day"
+    then: "the skip hint takes the general hint's place above the grid, both reserve their height, the grid does not move · fixed 2026-11-18 · before, the hint appeared below the grid and the sheet grew, so the second tap hit another day (device test A-U2)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/recurring_booking/ui/widgets/month_day_picker_sheet_test.dart
+        name: "the day grid stays put when the skip hint appears, so a quick second tap lands where aimed (device test A-U2)"
