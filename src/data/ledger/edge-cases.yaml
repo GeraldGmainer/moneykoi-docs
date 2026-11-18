@@ -237,3 +237,10 @@ items:
     tests:
       - file: test/features/category/domain/service/category_delete_rule_test.dart
         name: "a subcategory of the only parent can be deleted: the parent stays"
+  - id: E-LED-27
+    group: Categories
+    title: "Recents row cut at the sheet gutter"
+    when: "category picker › *Recents* (or *Favorites*) longer than the sheet"
+    then: "the chip row is clipped at the sheet's inner padding (*Pet Foc*), not at the screen edge · open · the list's viewport clips it; a fix moves the sheet padding into the lists (device test B-U3)"
+    status: known-issue
+    risk: low
