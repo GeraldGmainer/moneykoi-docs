@@ -260,3 +260,12 @@ items:
       - `20261023120000_early_adopter_cutover_nov_8.sql` + `supabase/tests/manual/early_adopter_cutover_nov_8.sql`
       - app `FeatureConstants.earlyAdopterCutover` / `earlyAdopterCutoverDay` · `claim_entry_test.dart`
       - left: Gerald pushes it before Nov 8 00:00 (T-MON-01) · the constant ships in a build before Nov 8
+  - id: T-MON-30
+    title: Web purchase · what the stores allow, what it needs
+    owner: ai
+    detail: |
+      - research for D20 · decide in Q1 2027 (Gerald, 2026-11-18)
+      - Google Play + App Store rules, current: unlock in the app what was bought on the web · link or mention the web price from inside the app · by region (EU, US, rest)
+      - may the web price be lower than the store price, and may the app say so?
+      - what it needs: payment provider or merchant of record (VAT, invoices, refunds), RevenueCat web purchases so the app unlocks, the store's Cloud subscription vs a web one on the same account
+      - output: the rules with sources and their date, a recommendation, a price idea · nothing built

@@ -193,7 +193,7 @@
   tier: pro
   status: planned
   docs: shopping
-  note: optional · asked 2026-11-17 · no plan yet · Pro is a placeholder like the lists', tier open
+  note: optional · asked 2026-11-17 · no plan yet · Pro, the photos sync with Cloud (decided 2026-11-18)
 - id: contract-tracker
   name: Contracts and subscriptions
   area: money
@@ -230,7 +230,7 @@
   tier: pro
   status: planned
   docs: bookings
-  note: any file beside the receipt photos · `plan_later/ATTACHMENTS_PLAN.md`, parked · decide the local image store first (backlog › Decide) · Pro is a placeholder, tier open
+  note: any file beside the receipt photos · `plan_later/ATTACHMENTS_PLAN.md`, parked · decide the local image store first (backlog › Decide) · Pro, the files sync with Cloud (decided 2026-11-18)
 
 # Viewing
 - id: budget-book

@@ -85,6 +85,9 @@
     - ref: accessibility
       size: M
       why: after light mode · both touch every screen
+    - ref: D-NTF-1
+      size: L
+      why: push for shared books · after the iOS launch (decided 2026-11-18) · `plan_later/PUSH_INFRASTRUCTURE_PLAN.md`
 
 - id: later
   title: Later
@@ -98,8 +101,6 @@
       why: asked 2026-11-17 · no plan yet
     - ref: attachments
       why: plan parked · decide the local image store first
-    - ref: D-NTF-1
-      why: decide first · `plan_later/PUSH_INFRASTRUCTURE_PLAN.md` exists, unscheduled
     - ref: bill-qr
       why: first of the three · small · sells the forecast
     - ref: auto-capture

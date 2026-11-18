@@ -1,11 +1,13 @@
 items:
   - id: D-NTF-1
     question: Push notifications
-    status: open
+    status: decided
+    date: 2026-11-18
     answer: |
+      - **decided 2026-11-18: build after the iOS launch, Q1 2027** · roadmap *Feb → Apr 2027*
       - separate, unbuilt project · `plan_later/PUSH_INFRASTRUCTURE_PLAN.md` · id block 700000 reserved
       - the case asked for (2026-11-17): someone else adds to a shared book → the other members get a push · today nothing tells them
-      - not scheduled · in the roadmap's *Later*
+      - needs Firebase + Apple push, a server function, the Data safety form and App Privacy updated
   - id: D-NTF-2
     question: Tap opens the record?
     status: decided

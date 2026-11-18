@@ -244,8 +244,9 @@ items:
   - id: D20
     question: Sell Pro and Cloud on the web, outside the stores?
     status: open
-    date: 2026-11-17
+    date: 2026-11-18
     answer: |
+      - **2026-11-18: research first (T-MON-30), decide in Q1 2027**
       - idea: buy on `my.moneykoi.com` instead of Google Play or the App Store
       - research first: what Google Play's and Apple's rules allow for a purchase made outside the app (using it in the app, mentioning or linking to it from the app) · rules differ by region (EU, US)
       - price: cheaper on the web, since no store fee? · check whether a lower web price is allowed

@@ -276,9 +276,11 @@ items:
     related: [R-BKG-58, R-BKG-59]
   - id: D-BKG-41
     question: How does a refund count?
-    status: open
-    date: 2026-11-17
+    status: decided
+    date: 2026-11-18
     answer: |
+      - **decided 2026-11-18: money back in the original expense category, lowering its spend** · budgets, savings rate and analytics show net spend · as YNAB, Monarch, Copilot
+      - not built · T-BKG-07 checks first how negative expenses behave today, then a plan
       - today, probably: a booking's direction comes from its category, so a refund goes into the income category *Refunds* (`en.json` key `retour`)
       - a returned €80 jacket then raises income instead of lowering clothing spend · skews budgets, savings rate and analytics
       - YNAB, Monarch and Copilot subtract a refund from the original category

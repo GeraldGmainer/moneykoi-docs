@@ -59,11 +59,11 @@ items:
     title: Refunds · check how they count today
     owner: ai
     detail: |
-      - for D-BKG-41 · check before planning
+      - for D-BKG-41, decided 2026-11-18: a refund lowers the original expense category · check before planning
       - can a booking be a negative expense? the form and its calculator, quick-add, the bank CSV import, the scanner, the web
       - where a refund lands today: the *Refunds* income category, a bank credit, a returned receipt line
       - which figures it moves: budgets, savings rate, analytics, cash flow, forecast, tag totals
-      - output: what happens today, file:line, and what each option of D-BKG-41 would cost
+      - output: what happens today, file:line, what blocks the decided way, and a plan sketch (app, web, server, the *Refunds* category of existing books)
   - id: T-BKG-08
     title: Voice input · can speech become a booking with cloud AI?
     owner: ai

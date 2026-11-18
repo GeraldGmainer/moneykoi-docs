@@ -26,7 +26,8 @@ gerald:
   - text: "Subscription check-up tier: plan says Free, `feature.dart` says Pro"
   - text: "Accessibility plan counts on a lawyer hour · roadmap says no lawyer"
   - text: "Refunds: income, or less spend in the original category? (D-BKG-41)"
-  - text: "Sell Pro and Cloud on the web? Allowed by the stores, cheaper? (D20)"
+    done: 2026-11-18
+  - text: "Sell Pro and Cloud on the web? Decide in Q1 after T-MON-30 (D20)"
   - section: "Not on the roadmap"
   - text: "Receipt offline images ph. 1–5 · CAMT.053 + MT940 parsers"
   - text: "Export ph. 5–6 · forecast ph. 5–7 (D-FC-1) · runway card"
@@ -40,6 +41,7 @@ agents:
   - ref: T-BKG-07
   - ref: T-BKG-08
   - ref: T-BKG-09
+  - ref: T-MON-30
   - ref: T-BOOK-02
   - ref: T-MON-22
   - ref: T-MON-23
