@@ -232,3 +232,14 @@ items:
       - **at once, with a vibration** · it used to wait a second, and by then the stretch was behind the hand
       - only by how far the receipt moved between two readings (a third of the picture) · the fixed 12 rows a second fired on passes that lost nothing
     related: [R-SCN-34]
+  - id: D-SCN-27
+    question: "Scanner: a receipt paid with a voucher · which amount is the total?"
+    status: open
+    answer: |
+      - today: the last sum on the paper · what was left to pay after the voucher
+      - two filed Bauhaus receipts disagree: 36,29 − voucher 11,95 → booked 24,34 (card) · 164,55 − four vouchers → the truth file says 164,55, the app reads 48,85
+      - a) the whole purchase (164,55 · 36,29) · a voucher is money spent now
+      - b) only what was paid besides the voucher (0 · 24,34) · the voucher was booked when it was bought
+      - c) as today: the last sum printed (48,85 · 24,34) · wrong when several vouchers follow each other
+      - found 2026-11-18, fix round on the totals · no code until decided
+
