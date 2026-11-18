@@ -255,3 +255,30 @@ items:
       - file: test/main/ui/pages/startup_failure_page_test.dart
         name: lifts the launch splash after the minimum, without waiting for the hard cap
     related: [R-PLAT-36]
+  - id: E-PLAT-22
+    group: Screen & layout
+    title: "Off switch with a black ring in light"
+    when: "light theme · any switch that is off · e.g. bank import *Only without a category*, *Remind in a month*"
+    then: "a warm mid-tone thumb and ring (3.8:1 on the page) · a disabled switch still looks disabled · dark unchanged · fixed 2026-11-18 · before, the ink colour, because the theme never set Material's outline (device test B-U12)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/app/ui/theme_test.dart
+        name: "an enabled off switch takes the off token, not the ink the unset outline falls back to (device test B-U12)"
+  - id: E-PLAT-23
+    group: Screen & layout
+    title: "Guest avatar showed *U*"
+    when: "Settings › Profile · no name (a guest, every language)"
+    then: "the person glyph, as in the drawer · fixed 2026-11-18 · before, a hard-coded *U* beside *Guest user* (device test B-U10)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/settings/ui/pages/profile_settings_page_test.dart
+        name: "a profile with neither name nor email reads as a guest and offers no photo upload"
+  - id: E-PLAT-24
+    group: Screen & layout
+    title: "Lone *す* under the move-to-account tile"
+    when: "Settings › Profile · Japanese · local book"
+    then: "shorter text *帳簿をアカウントに移して、どの端末でも使えます* fits one line on a 1080 px phone · fixed 2026-11-18 · copy only, a narrower phone can still wrap (device test B-U11)"
+    status: fixed
+    risk: low
