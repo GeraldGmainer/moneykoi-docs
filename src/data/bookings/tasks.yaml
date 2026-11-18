@@ -67,7 +67,9 @@ items:
   - id: T-BKG-08
     title: Voice input · can speech become a booking with cloud AI?
     owner: ai
+    status: done
     detail: |
+      - **done 2026-11-18 → D-BKG-44**: on the phone only, no cloud AI · two parser gaps found (E-BKG-88, E-BKG-89)
       - research for `voice-input` (catalog, roadmap *Later*) · asked 2026-11-17
       - speech to text: on the device (Android, iOS) or a cloud service · de, en, ja
       - text to booking: the quick-add line parser already turns *Coffee 3.50 yesterday* into a booking · speech could feed it, or a cloud model reads amount, category, account, date

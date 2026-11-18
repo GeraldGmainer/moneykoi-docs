@@ -303,3 +303,17 @@ items:
       - a) title only · the sheet already names the field
       - b) label only · the sheet stays titleless like the booking keypad
       - c) keep · every amount sheet reads the same
+  - id: D-BKG-44
+    question: Voice input · how does speech become a booking?
+    status: decided
+    date: 2026-11-18
+    answer: |
+      - **decided 2026-11-18: on the phone only, no cloud AI** · nothing leaves the phone, works offline, no cost per booking · Pro (catalog `voice-input`)
+      - research (T-BKG-08): the big apps have none (YNAB, Monarch, Copilot, Money Forward, Zaim, Finanzguru) · small AI apps send speech to a cloud model: moneasy (5 free a month), Finamie (hold to speak, check, save), DailyCoin (several bookings in one sentence), Rolly and らくな家計簿 (ja), SayMoney (de, called immature in a test) · every one shows the fields before saving
+      - the phone's own recogniser covers de, en, ja · Android needs the offline language pack per language · Flutter `speech_to_text` with `onDevice: true`
+      - today, without building anything: the keyboard's mic dictates into *Quick entry*
+      - plan sketch: a mic in the *Quick entry* sheet → the spoken text lands in the prompt field → the existing parser and chips → checked and saved by hand, never saved unseen
+      - the parser has to learn for speech: `12 Euro 80` (E-BKG-89) · number words (`drei Euro fünfzig`, `three fifty`, `三百五十円`) · Japanese without spaces and full-width digits (E-BKG-88) · filler words out of the description (`Ich habe gestern 12 € für Mittagessen ausgegeben` keeps *Ich habe für Mittagessen ausgegeben*)
+      - no offline pack or recogniser on a phone → a hint to the keyboard's mic · microphone and iOS speech permission texts in en/de/ja · Data safety: nothing new while it stays on the phone · device check on the Nothing 3a and an iPhone
+      - rejected: a cloud model reading the text · the audio to a cloud service (Voxtral, OpenAI: about $0.003 a minute, Data safety lists voice recordings) · AI models on the phone (iPhone 15 Pro and later, Pixel 10 only)
+    related: [T-BKG-08, E-BKG-88, E-BKG-89]

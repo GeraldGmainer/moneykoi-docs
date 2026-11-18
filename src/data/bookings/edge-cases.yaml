@@ -705,3 +705,19 @@ items:
     tests:
       - file: test/features/booking_bulk/ui/transaction_list_selection_test.dart
         name: "the action bar brings its own Material, so a page host without a scaffold still styles its labels, and caps their size"
+  - id: E-BKG-88
+    group: Quick booking
+    title: Japanese amount without a space
+    when: "`コーヒー350円` · `350円コーヒー` · `ランチ1200円 昨日` · full-width `コーヒー ３５０円`"
+    then: "no amount, the whole text stays the description · only `コーヒー 350円` with a space is read · Japanese is typed and dictated without spaces (found 2026-11-18, D-BKG-44)"
+    status: known-issue
+    risk: medium
+    related: [D-BKG-44]
+  - id: E-BKG-89
+    group: Quick booking
+    title: Euros and cents as two numbers
+    when: "`Mittagessen 12 Euro 80` · `Kaffee 3 € 50`"
+    then: "12.00 and 3.00, the cents land in the description (`Mittagessen 80`) · how dictation often writes a spoken amount (found 2026-11-18, D-BKG-44)"
+    status: known-issue
+    risk: medium
+    related: [D-BKG-44]

@@ -216,7 +216,7 @@
   tier: pro
   status: planned
   docs: bookings
-  note: speak a booking · can cloud AI turn speech into a booking? research first (T-BKG-08)
+  note: speak a booking · on the phone only, no cloud AI (decided 2026-11-18, D-BKG-44)
 - id: auto-capture
   name: Card payments captured automatically
   area: money
