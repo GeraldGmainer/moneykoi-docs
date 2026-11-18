@@ -834,3 +834,13 @@ items:
         repo: web
         name: 'one payee is one rule key: branch numbers and case join, as the payee lines did (D-DATA-54)'
 
+  - id: E-DATA-105
+    group: Backup & restore
+    title: "Koi glow cut by a straight edge"
+    when: "Settings › Backup & restore · light theme"
+    then: "the list pads itself and starts under the app bar, the glow fades into the page · fixed 2026-11-18 · before, the page padding left a band above the list where the glow ended on a line (device test B-U14)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/backup/ui/backup_restore_page_test.dart
+        name: "the list pads itself and starts under the app bar, so the koi glow is not cut inside the page (device test B-U14)"
