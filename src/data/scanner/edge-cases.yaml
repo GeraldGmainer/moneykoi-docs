@@ -857,8 +857,11 @@ items:
     group: Camera
     title: A row on a fold of the paper
     when: "a long receipt folded in the middle · the row on the fold looks a little different from every angle"
-    then: "the strip keeps that row yellow and the scan does not end until it is read the same way twice · on the phone it took three passes over the middle (32 s) · *Done* opens the review with what is read · not traced yet"
+    then: "traced 2026-11-18 · two causes, one fixed: a fast picture over the fold was matched on its lower half only and its upper rows landed a row off → fixed, the recorded scan ends at 27 s instead of 30 s · still open: such a picture is placed a little too narrow, so an amount can stand twice until it is read again · the strip keeps that row yellow · *Done* opens the review with what is read"
     status: known-issue
     risk: low
     related: [R-SCN-33, E-SCN-77]
+    tests:
+      - file: test/features/receipt/domain/services/assembly/line_registration_test.dart
+        name: within the jump every row is matched, not only the half whose votes lie within it
 
