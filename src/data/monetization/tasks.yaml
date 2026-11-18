@@ -201,7 +201,8 @@ items:
       - *freies Gewerbe* "Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik" · GISA with ID Austria · free
       - before the paywall release: license-test purchases are €0
       - UID number: needed — store income is a B2B service to Google's and Apple's Irish companies (reverse charge), and per WKO a Kleinunternehmer needs a UID + ZM for that · requested 2026-11-15 · **granted** 2026-11-17 · the quarterly ZM is T-MON-29
-      - the site imprint must show the UID now (ECG § 5) · agent step in plan store-growth
+      - imprint shows the UID since 2026-11-18 (ECG § 5) · live after the next site push
+      - not needed in Play Console or App Store Connect · personal accounts, standard in-app purchases (checked 2026-11-18)
       - SVS: small-business exemption from health + pension insurance filed 2026-11-01 · accident insurance only · lapses for the whole year if that year's profit passes the insurance limit
       - **done**: filed 2026-11-01 at BH Steyr-Land · GISA **40309453**, *aufrecht* since 01.11.2026, Standort Garsten
       - imprint carries it since 2026-11-07 (site S-27)

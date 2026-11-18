@@ -40,6 +40,7 @@ gerald:
   - text: "Decide D-PLAT-21 · growth features · build once there is traffic"
 agents:
   - text: "Site imprint: add the UID number · ECG § 5 · T-MON-11"
+    done: 2026-11-18
   - text: "Austria-captioned first frame, 1080×2400 (`store/custom-listings/at/README.md`)"
   - text: "Read the Play numbers 30 days after the first post, then monthly"
   - text: "Draft review replies when reviews arrive · Gerald posts"
