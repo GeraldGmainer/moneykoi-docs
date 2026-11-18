@@ -318,3 +318,33 @@ items:
     tests:
       - file: test/features/category_activity/ui/pages/category_activity_page_test.dart
         name: "a first load that fails shows the error with a retry, not an endless spinner"
+  - id: E-ANL-33
+    group: Numbers
+    title: "*Compared with Previous period*"
+    when: "Analytics › Spending › *Rising & falling costs*"
+    then: "*Compared with the previous period* · one sentence per baseline and locale · fixed 2026-11-18 · before, the title-case chip label was pasted mid-sentence (device test B-U1)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/analytics/ui/widgets/category_delta_card_test.dart
+        name: "the note names the baseline in sentence case, never a chip label mid-sentence (device test B-U1)"
+  - id: E-ANL-34
+    group: Numbers
+    title: "*1 bookings a month on average*"
+    when: "Analytics › Habits › *How many bookings a month* · the average rounds to 1"
+    then: "*1 booking a month on average* · fixed 2026-11-18 (device test B-U4)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/features/analytics/ui/widgets/transaction_count_card_test.dart
+        name: "an average of one reads as one booking, not one bookings (device test B-U4)"
+  - id: E-ANL-35
+    group: Numbers
+    title: "Card subtitle ran past the content edge"
+    when: "a card with a subtitle and no ⋮ · e.g. *Spending map*, *How many bookings a month*, Home cards"
+    then: "the subtitle wraps on the same right edge as the body · fixed 2026-11-18 · before, it ran 16 dp further, to the card's edge (device test B-U5)"
+    status: fixed
+    risk: low
+    tests:
+      - file: test/shared/ui/card/custom_card_with_action_test.dart
+        name: "without an option button a long subtitle wraps on the body"
