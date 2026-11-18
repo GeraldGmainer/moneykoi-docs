@@ -126,3 +126,10 @@ items:
       - the ≈ readings stay listed in the product sheet
       - a product with only ≈ readings still shows, marked ≈
       - why: an old line read as one piece (*JOGHURT 2.97* = 3 × 0.99) showed as −67 %
+  - id: D-ANL-16
+    question: Percentages · the app language's decimal mark, or the book's money format?
+    status: open
+    answer: |
+      - today: money uses the book's format (*39,99 €* for EUR), a share the app language (*3.5%* in English) · two decimal marks on one row (device test B-U2)
+      - a) keep · a percentage is not money
+      - b) shares take the book's decimal mark · `formatPercent` reads the money format · touches every percentage (~40 places)

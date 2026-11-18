@@ -523,3 +523,13 @@ items:
       - **app: not built yet** · Gerald asked for a similar workflow there; the port was stopped before any app file changed — the app still has the payee lines and the editable *Review*
       - replaces step 2 of D-DATA-54 on the web (R-DATA-103 stays the app's)
     related: [D-DATA-53, D-DATA-54, R-DATA-103, R-DATA-106, R-DATA-78, J-DATA-22, J-DATA-23]
+  - id: D-DATA-56
+    question: Import · a category or account name over 20 characters, cut hard or at a word?
+    status: open
+    answer: |
+      - today: cut hard to 20 · *Household & Utilities* becomes a new category *Household & Utilitie* (device test B-U13)
+      - kept hard on purpose (BOOKING_IMPORT_AI_CONTEXT §5): a word cut merges more names into one · *Household & Utilities* and *Household & Garden* would both become *Household*
+      - a) keep the hard cut
+      - b) cut at a word, like the description (D-BANK-9) · app and web
+      - c) a longer name limit · server column, migration, every form
+      - d) hard cut, but the Categories step marks a cut name for renaming

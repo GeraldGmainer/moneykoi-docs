@@ -287,3 +287,19 @@ items:
       - today, probably: a booking's direction comes from its category, so a refund goes into the income category *Refunds* (`en.json` key `retour`) · a returned €80 jacket raises income instead of lowering clothing spend
       - not built · T-BKG-07 checks first how negative expenses behave today, then a plan
     related: [T-BKG-07]
+  - id: D-BKG-42
+    question: Ledger · an edited booking jumps to the top of its day. Keep?
+    status: open
+    answer: |
+      - today: rows of a day sort by `updated_at` newest first · any edit, bulk edit or undo reshuffles the day (device test A-U3)
+      - a) keep · the last touched row is on top, where the eye is after saving
+      - b) `created_at` as the tie-breaker · the order inside a day never moves after an edit · recommended by the device test
+      - c) a time of day on bookings · out of scope
+  - id: D-BKG-43
+    question: Amount keypad sheet · *Total* twice (sheet title and field label). Drop one?
+    status: open
+    answer: |
+      - seen on *Add receipt* (hold +) · the shared `AmountFieldTile` sheet shows its title and the field's label (device test A-U5)
+      - a) title only · the sheet already names the field
+      - b) label only · the sheet stays titleless like the booking keypad
+      - c) keep · every amount sheet reads the same

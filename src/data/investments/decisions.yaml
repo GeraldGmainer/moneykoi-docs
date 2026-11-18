@@ -67,3 +67,10 @@ items:
       - text toggle under the grid · *Alle 23 anzeigen* / *Weniger anzeigen*
       - the old 9th *Show more* tile read as one more coin · missed on the phone
       - app + web
+  - id: D-INV-12
+    question: New position wizard · one gutter for the step titles?
+    status: open
+    answer: |
+      - today: step 1 *Asset* sits on the page gutter (above the search and list), steps 2 and 3 line up with the text inside the cards · the title moves ~16 dp between steps (device test B-U9)
+      - a) keep · each title lines up with its own step's content
+      - b) one inset for all three · the title stops moving, step 1's no longer lines up with the search field
