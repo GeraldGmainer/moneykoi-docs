@@ -139,15 +139,23 @@ items:
     text: |
       - the hint at the top ends in a small ring · one turn per reading of the camera picture · stands still where animations are off
       - a reading of a long receipt: about half a second (Nothing 3a, release speed, 2026-11-17 · debug is no slower)
-      - "*Slower*: the receipt moved more than a third of the picture between two readings · shown on that reading, with a vibration, in the warning style (D-SCN-26)"
-      - *Slower*, *Closer to the receipt*, *Back to the last line* and *back to the yellow mark* are drawn large on the warning colour · the other hints as before
+      - "*Slower*: the receipt moved more than a third of the picture between two readings · shown on that reading, in the warning style (D-SCN-26) · gone with the next reading at normal speed (2026-11-18)"
+      - too fast is felt: three taps on every reading that was too fast, and on one that lost its place right after one that had it (2026-11-18)
+      - the frame on the strip shows the speed: white · amber from three quarters of the limit · red past it
+      - an arrow beside the frame shows the way: on to the end of the paper first · once that end is seen, yellow to the nearest yellow mark, white to where two parts never met · none when nothing is asked
+      - warnings and errors are written large on the warning colour: *Slower*, *Closer to the receipt*, *Back to the last line*, *back to the yellow mark*, *Items exceed the total*
+      - plain guidance has no text any more, the arrow says it: *Keep going down to the total*, *… still missing* · the ring stays · screen readers hear every hint (D-SCN-29)
+      - *back to the yellow mark* only once the end of the paper is seen on the side the scan is heading to · before that the missing items may simply not be read yet (E-SCN-83)
+      - shop and date still missing after the items add up: *Keep going to the end of the receipt* · on a scan begun at the foot *Keep going up to the store name*
       - no *too slow* hint · a slow pass loses nothing (D-SCN-21)
       - safe today: about a fifth of the picture per reading · 12–16 rows a second on a long receipt (T-SCN-11)
-    source: SCANNER §4.50, §4.52
-    related: [D-SCN-21, D-SCN-26, T-SCN-11]
+    source: SCANNER §4.50, §4.52, §4.55
+    related: [D-SCN-21, D-SCN-26, D-SCN-29, E-SCN-83, T-SCN-11]
     tests:
       - file: test/features/receipt/domain/services/live_guidance_test.dart
-        name: Slower shows on the reading that was too fast, and stays for a hold
+        name: Slower shows on the reading that was too fast, and is gone with the next one that was not
+      - file: test/features/receipt/domain/services/strip_rest_test.dart
+        name: on to the end of the paper first, whatever is yellow behind the hand
       - file: test/features/receipt/ui/widgets/live_scan_view_test.dart
         name: a hint that asks for something now is drawn as an alert, the others are not
       - file: test/features/receipt/domain/services/read_pace_test.dart
@@ -457,3 +465,20 @@ items:
         name: of several, the one with the latest booking
       - file: test/features/receipt/domain/services/payment_method_detector_test.dart
         name: "change given back alone says nothing: card slips print RÜCKGELD 0,00 too"
+  - id: R-SCN-36
+    group: Review & save
+    title: A discount on the whole purchase is named in the review
+    text: |
+      - SPAR's *Markerlrabatt* is spread over every item in proportion to its price, so the items add up to the total
+      - an item printed at 1,80 then reads 1,52 · the review says why, in a note above the items
+      - "*Markerlrabatt 20 % of 39,34 is included in the item prices* · the name comes from the rule, never from the row as read"
+      - no readable name, or several such discounts: *A discount of … on the whole purchase is included in the item prices*
+      - not shown when a receipt is only attached to a booking
+    source: SCANNER §4.35, §4.55
+    related: [R-SCN-31]
+    tests:
+      - file: test/features/booking/ui/widgets/add_receipt/review_banners_test.dart
+        name: one discount the receipt names is called by its name
+      - file: test/features/receipt/domain/services/receipt_pipeline_test.dart
+        name: a discount on the whole purchase goes to the review with its name
+

@@ -234,14 +234,15 @@ items:
     related: [R-SCN-34]
   - id: D-SCN-27
     question: "Scanner: a receipt paid with a voucher · which amount is the total?"
-    status: open
+    status: decided
+    date: 2026-11-18
     answer: |
-      - today: the last sum on the paper · what was left to pay after the voucher
-      - two filed Bauhaus receipts disagree: 36,29 − voucher 11,95 → booked 24,34 (card) · 164,55 − four vouchers → the truth file says 164,55, the app reads 48,85
-      - a) the whole purchase (164,55 · 36,29) · a voucher is money spent now
-      - b) only what was paid besides the voucher (0 · 24,34) · the voucher was booked when it was bought
-      - c) as today: the last sum printed (48,85 · 24,34) · wrong when several vouchers follow each other
-      - found 2026-11-18, fix round on the totals · no code until decided
+      - **a) the whole purchase** · a voucher is a way of paying, the money is spent now (164,55 · 36,29)
+      - the sum printed before the first voucher counts · the smaller sums printed after each voucher do not
+      - b) only what was paid besides the voucher (0 · 24,34)
+      - c) the last sum printed (48,85 · 24,34) · what the app did until then
+      - found 2026-11-18 on two Bauhaus receipts whose truth files disagreed
+    related: [E-SCN-82]
   - id: D-SCN-28
     question: "Scanner: how long is the receipt strip while the receipt's length is unknown?"
     status: decided
@@ -255,4 +256,17 @@ items:
       - not taken: a first look without zoom to measure the paper · a long receipt does not fit at 1× either, and its length would need the paper's edges, not text
       - added the same day: the paper's ends from empty rows · parts apart after a jump
     related: [R-SCN-33, D-SCN-25]
+  - id: D-SCN-29
+    question: "Scanner: how does the scan say *faster / slower / where to go* without a line of text?"
+    status: decided
+    date: 2026-11-18
+    answer: |
+      - **a + c + d, with the orange pill kept for warnings** (Gerald, on the phone)
+      - a) the frame on the strip takes the speed's colour · white, amber, red
+      - c) an arrow beside the frame shows the way
+      - d) no text for plain guidance · warnings and errors stay written, large, on the warning colour
+      - too fast is also felt: three taps per reading · one long vibration was tried and is not played by the Nothing 3a during the camera
+      - *Slower* goes with the next reading at normal speed (D-SCN-26 said only when it comes)
+      - not taken: b) a speed bar · e) a tick per good reading
+    related: [R-SCN-34, D-SCN-26, D-SCN-25]
 

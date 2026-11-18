@@ -600,7 +600,7 @@ items:
       - file: test/features/receipt/domain/services/live_guidance_test.dart
         name: two hints taking turns still replace a hint that is no longer wanted, the more urgent one
       - file: test/features/receipt/domain/services/live_guidance_test.dart
-        name: a hint shown for two taking turns stays while it is one of them
+        name: "fast and normal readings taking turns: Slower is on screen for the fast ones only"
   - id: E-SCN-57
     group: Reading
     title: Still of a web-link QR ended too early
@@ -886,4 +886,34 @@ items:
     tests:
       - file: test/features/receipt/domain/services/assembly/total_guard_test.dart
         name: "a sum matches a total as the review compares them: in whole cents, one cent apart at most"
+  - id: E-SCN-82
+    group: Reading
+    title: Vouchers and a smaller sum under each
+    when: "Bauhaus · *Summe in EUR 164,55*, then four *OSCAR-GUTSCHEIN* rows, each followed by a smaller *Summe in EUR*"
+    then: "fixed 2026-11-18 (D-SCN-27): the total was the last sum, 48,85 · it is the sum before the first voucher, 164,55 · only where the figures say so: later sum = earlier sum − vouchers · a discount between two sums changes nothing"
+    status: fixed
+    risk: medium
+    related: [D-SCN-27]
+    tests:
+      - file: test/features/receipt/domain/services/receipt_data_extractor_test.dart
+        name: a turnover line and an interim sum never make a total
+  - id: E-SCN-83
+    group: Camera
+    title: Sent back to a yellow mark with the top still unread
+    when: "a scan from the foot upwards · one yellow mark behind the hand · the top third not read yet, 14 items missing"
+    then: "fixed 2026-11-18: *back to the yellow mark* and the arrow sent the hand 50 rows back for 15 s · the missing items were above · now the arrow points on until the paper's end is seen on that side, and only then back"
+    status: fixed
+    risk: medium
+    related: [R-SCN-34, R-SCN-33]
+    tests:
+      - file: test/features/receipt/domain/services/strip_rest_test.dart
+        name: on to the end of the paper first, whatever is yellow behind the hand
+  - id: E-SCN-84
+    group: Camera
+    title: Items exceed the total and the scan cannot heal
+    when: "several sweeps far too fast (60–130 % of the picture per reading), there and back · amounts land on a neighbouring row and are read there twice"
+    then: "*Items exceed the total* stays, however long the hand hovers on the rows: the scan adds rows, it never takes one back · 72 s on the phone, then *Done* · the review shows *Math mismatch* · a rule that drops such rows was built and taken out again the same day (it also dropped true rows where an amount is printed twice close together)"
+    status: known-issue
+    risk: medium
+    related: [E-SCN-79, R-SCN-34]
 
