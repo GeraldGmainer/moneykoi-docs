@@ -300,3 +300,17 @@ items:
     tests:
       - file: test/features/investment/ui/pages/investment_save_page_test.dart
         name: "Continue refuses an empty symbol, then Save writes the trimmed symbol and class"
+  - id: E-INV-31
+    group: Valuation
+    title: "Annualized return of a one-day-old position"
+    when: "a position bought yesterday, valued 50 % above cost · its page › *Annualized return (XIRR)*"
+    then: "+50 % over one day annualizes to about 10^64 % · the row prints *+9,223,372,036,854,775,807,000…%* (int64 max), runs off the card and squeezes its label to one letter per line · open, D-INV-13 (device re-check 2026-11-18)"
+    status: known-issue
+    risk: medium
+  - id: E-INV-32
+    group: Valuation
+    title: "Flat value line labels its axis 301 / 300 / 300"
+    when: "a position or the Home investments card whose value has not moved"
+    then: "the y-axis rounds to whole numbers and repeats *300* · open (device re-check 2026-11-18)"
+    status: known-issue
+    risk: low

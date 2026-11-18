@@ -74,3 +74,12 @@ items:
       - today: step 1 *Asset* sits on the page gutter (above the search and list), steps 2 and 3 line up with the text inside the cards · the title moves ~16 dp between steps (device test B-U9)
       - a) keep · each title lines up with its own step's content
       - b) one inset for all three · the title stops moving, step 1's no longer lines up with the search field
+  - id: D-INV-13
+    question: Annualized return (XIRR) · from what holding span on?
+    status: open
+    answer: |
+      - today: shown from the second day · a short span blows a small gain up to an absurd rate (E-INV-31)
+      - a) only from one year on · below it the simple return (the usual reporting rule, GIPS)
+      - b) from 30 days on
+      - c) always, but a rate past a cap (e.g. ±1000 %) reads *—*
+      - the row also needs to survive a long figure: the label should keep its width
