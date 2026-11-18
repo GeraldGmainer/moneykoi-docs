@@ -279,11 +279,11 @@ items:
     status: decided
     date: 2026-11-18
     answer: |
-      - **decided 2026-11-18: money back in the original expense category, lowering its spend** · budgets, savings rate and analytics show net spend · as YNAB, Monarch, Copilot
+      - **decided 2026-11-18: money back in the original expense category, lowering its spend** · budgets, savings rate and analytics show net spend
+      - **the month: the refund's own date** · jacket bought Oct 28, refunded Nov 5 → November's clothing spend drops, as the bank shows it · a month may show negative spend · the date stays editable
+      - confirmed after research the same day: refund in the original category, netted against spend · YNAB (official), Copilot (official, suggests moving the date to the purchase month), PocketSmith (a per-category setting: any credit in an expense category is a refund), Monarch, Simplifi, Tiller (community)
+      - the other ways seen: Wallet by BudgetBakers books a refund as income, like Money Koi today · users complain · Fold links each refund to its purchase and lowers that purchase
+      - rejected: income *Refunds* (spend overstated by every return) · a link to the purchase (more UI, no answer for an unlinked bank credit) · the purchase's month (rewrites a closed month)
+      - today, probably: a booking's direction comes from its category, so a refund goes into the income category *Refunds* (`en.json` key `retour`) · a returned €80 jacket raises income instead of lowering clothing spend
       - not built · T-BKG-07 checks first how negative expenses behave today, then a plan
-      - today, probably: a booking's direction comes from its category, so a refund goes into the income category *Refunds* (`en.json` key `retour`)
-      - a returned €80 jacket then raises income instead of lowering clothing spend · skews budgets, savings rate and analytics
-      - YNAB, Monarch and Copilot subtract a refund from the original category
-      - not checked: whether a negative expense is blocked · T-BKG-07 checks first, before any plan
-      - options: keep income *Refunds* · or money back in the original expense category, lowering its spend
     related: [T-BKG-07]
