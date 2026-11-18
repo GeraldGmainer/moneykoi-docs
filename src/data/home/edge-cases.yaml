@@ -247,7 +247,10 @@ items:
   - id: E-HOM-27
     group: Bar
     title: "Create menu invisible to TalkBack"
-    when: "Android · hold **+** · the menu is open"
-    then: "the four entries and the × are on screen but missing from the accessibility tree · a screen reader finds nothing to focus · a widget test of the same menu does see them, cause not found yet · open (device test A2, 2026-11-17)"
-    status: known-issue
+    when: "hold **+** · the menu is open · a screen reader on"
+    then: "the four entries and the × are in the accessibility tree and can be focused · back or the × closes the menu, the scrim is not announced · fixed 2026-11-18 · before, the scrim emptied the whole tree, so TalkBack found nothing (device test A2)"
+    status: fixed
     risk: medium
+    tests:
+      - file: test/main/ui/widgets/create_menu_test.dart
+        name: "the open menu keeps its rows and the × in the semantics tree"
