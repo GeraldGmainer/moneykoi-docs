@@ -55,3 +55,13 @@ items:
       - `20261117120000_booking_tag_delete_many.sql` · batched tag-link deletes (R-OFF-71)
       - without it the app still works: the batch is refused and its tag links go one by one
       - same route as the other prod migrations
+  - id: T-OFF-05
+    title: Time a 10 000-booking book on the phone
+    owner: gerald
+    detail: |
+      - build with the load probe, open the large book, run C-OFF-040…043 (local and Cloud book)
+      - paste the `[load]` lines for an agent to compare with D-OFF-2
+      - steps: `moneykoi-app/tool/perf/README.md`
+    command: |
+      .fvm/flutter_sdk/bin/flutter run --release --flavor dev --dart-define=MK_LOAD_PROBE=true
+      adb logcat -s flutter | grep '\[load\]'

@@ -71,10 +71,10 @@ groups:
     setup: A book with 10 000+ bookings · a build with `--dart-define=MK_LOAD_PROBE=true` (`tool/perf/README.md`) · `adb logcat | grep '\[load\]'`
     items:
       - id: C-OFF-040
-        text: Cold start → Home balances, budgets and forecast filled within about a second · `[load]` shows one `account_balances` read, no `budget_progress_window`
+        text: Cold start → Home balances, budgets and forecast filled ≤ 1 s after the first frame (D-OFF-2) · `[load]` shows one `account_balances` read, no `budget_progress_window`
       - id: C-OFF-041
-        text: Home → *Budget Book* → *Analytics* → the whole book is read once (`booking/list` rows ≈ book size), not once per tab
+        text: Home → *Budget Book* (≤ 1 s) → *Analytics* → the whole book is read once (`booking/list` rows ≈ book size), not once per tab
       - id: C-OFF-042
-        text: Edit one booking → Home and *Budget Book* update · `[load]` shows a one-row read, not the whole book · scrolling never stutters while lists load
+        text: Edit one booking → Home updated ≤ 0.4 s · `[load]` shows a one-row read, not the whole book · `ui-blocked max` under 32 ms · in a Cloud book, note whether the next pull re-reads the book (D-OFF-3)
       - id: C-OFF-043
         text: Home total, the Accounts list, Analytics balances and a budget's *Spent* show the same figures as before the update

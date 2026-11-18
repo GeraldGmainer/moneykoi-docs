@@ -24,3 +24,20 @@ items:
       - *Discard change* makes the phone match the server again (new record → gone · edit → server version · delete → record back)
       - records under a discarded new record are left for the user, never dropped silently
     related: [E-OFF-34, R-OFF-16]
+  - id: D-OFF-2
+    question: How fast must a 10 000-booking book load?
+    status: decided
+    answer: |
+      - decided 2026-11-18
+      - Home cards filled ≤ 1 s after the first frame · *Budget Book* ≤ 1 s · a save shows on Home ≤ 0.4 s
+      - no frame longer than 32 ms while lists load
+      - measured with the probe build on Gerald's phone (T-OFF-05)
+    related: [C-OFF-040, C-OFF-041, C-OFF-042, C-OFF-043]
+  - id: D-OFF-3
+    question: Large books — slow index choice and the re-read after a Cloud pull?
+    status: decided
+    answer: |
+      - decided 2026-11-18 · both measured first, fixed only if they show
+      - index: if the whole-book read or a budget window costs > ~20 ms, a query hint, no migration
+      - Cloud book: if the re-read after the next pull is visible in C-OFF-042, small pulls patch the list too
+    related: [C-OFF-040, C-OFF-042]
