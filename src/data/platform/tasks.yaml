@@ -507,7 +507,8 @@ items:
       - rejected: 1.19.0 (37), reviewed on iPhone 17 Pro Max + iPad Air 11" (M3), iOS 27.2.1 · three issues
       - **2.1(b) plan details did not load** → RevenueCat finds no App Store product in the offering, so the paywall gets an error, not prices · paid-apps agreement is fine (T-MON-02 ✓ 2026-11-15) · fix = T-MON-04's left items: entitlements, each iOS product into its package, the In-App Purchase key (.p8), Server Notifications V2
       - **2.1(b) in-app purchases not submitted** → version page › *In-App Purchases and Subscriptions* › tick all 5 (each needs its review screenshot) · they only reach review with a version
-      - **5.1.1(iv) camera note** → fixed in the app: one *Continue*, no *Not now* (E-SCN-85) · needs a **new binary**, a build number above every one uploaded
+      - **5.1.1(iv) camera note** → fixed in the app: one *Continue*, no *Not now* (E-SCN-85) · needs a **new binary** with `d859412c2` · the `v2.1.0` tag lacks it → build from `main`
+      - same version page, no new app record: 1.19.0 was never released, so it becomes **2.1.0** · `promote` passes `app_version` from `pubspec.yaml` and renames the editable version · refused → edit the version number field by hand · build 41 is fine unless 41 was already uploaded as 2.1.0
       - order: T-MON-04 → build from `main` → `./publish.sh ios testflight` → on an iPhone with a sandbox account: Settings › *Get Money Koi Pro* lists 5 prices · one sandbox purchase · scanner shows *Continue* (C-SCN-010) → `./publish.sh ios promote <build>` → version page: select the new build, tick the 5 products → reply below in App Review → *Submit for Review*
     command: |
       Hello,
