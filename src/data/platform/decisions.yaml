@@ -206,10 +206,10 @@ items:
     related: [T-PLAT-28, T-PLAT-30]
   - id: D-PLAT-20
     question: Name rivals on moneykoi.com or in videos?
-    status: open
-    date: 2026-11-11
+    status: decided
+    date: 2026-11-20
     answer: |
-      - **can skip for now** · skipped = the rule stays no
+      - **no** · Gerald 2026-11-20 · asked again by the site growth plan 2026-11-19 (comparison listings) · same answer
       - today **no**: no rival in a store text, screenshot, press email or post · `STORE_LISTING_AI_CONTEXT.md` §6.4
       - research wants: *Finanzguru Alternative ohne Bank-Login* page · comparison pages · videos #4 + #10 · AlternativeTo
       - UWG allows a comparison if objective, checkable, dated
@@ -228,6 +228,7 @@ items:
       - referral: a month of Cloud for both
       - German chains in the scanner: already T-SCN-02
       - research: listing, ratings, onboarding **before** new features
+      - second research (moneykoi-site `.agents/GROWTH_PLAN_2026-11-19.md`): a 14–30-day **reverse trial** of Pro or Cloud for new installs · a referral · Gerald 2026-11-20: **later, here** · not built
     related: [T-SCN-02]
   - id: D-PLAT-22
     question: One word for a starting balance in German, one spelling in Japanese?
@@ -250,9 +251,13 @@ items:
     related: [T-BKG-05, D-BKG-37, D-BKG-38]
   - id: D-PLAT-24
     question: Build an RKSV QR checker on moneykoi.com?
-    status: open
-    date: 2026-11-14
+    status: decided
+    date: 2026-11-20
     answer: |
+      - **yes** · Gerald 2026-11-20 · **built** 2026-11-20: moneykoi-site `/resources/rksv-check` (site S-37) · Gerald reviews + pushes
+      - photo (the browser's BarcodeDetector, else `jsqr`, loaded on demand) or the pasted line · fields explained, amounts per VAT rate, training / storno / failed signature shown
+      - no signature, chain or counter check · no link opened · nothing sent · facts from moneykoi-app `store/press/reddit.md` draft 6 (RIS 2026-11-17)
+      - the parked RKSV post links it · the post still waits for Gerald (site S-34)
       - idea 2026-11-14 · a page that reads an Austrian receipt's RKSV QR code in the browser · camera or pasted text
       - shows what the code holds: date, receipt number, totals per VAT rate · no shop name, the code carries only the register id
       - runs in the browser only · nothing sent · fits the privacy hook

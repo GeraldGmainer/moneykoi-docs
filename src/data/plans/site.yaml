@@ -7,12 +7,17 @@ gerald:
   - ref: T-PLAT-02
     note: "mostly done · not confirmed: the .app 301s + Supabase Auth URLs"
   - text: "Search Console: new validation on the feeds row · request indexing · check 404 rows"
+  - section: "Growth work of 2026-11-20 (S-37)"
+  - text: "Read + push it: header, /delete-account, /press, savings challenge, RKSV reader, calculator"
+  - text: "Play Console deletion URL → `https://www.moneykoi.com/en/delete-account` · then close the Google Form (S-04)"
+  - text: "Resubmit `sitemap.xml` in Search Console · legal pages out (S-35)"
+  - text: "Play `pro.lifetime` €14.99 for Dec 26 → Jan 31, before Dec 26 · else `proOffer = null` (S-39, D19)"
+  - text: "PageSpeed /de + /en on pagespeed.web.dev · numbers into S-40"
   - section: "Decide"
   - text: "S-30 · receipts for scanner training: per receipt, a toggle, or none"
-  - text: "S-04 · keep the Google Form or build a page + `privacy@`"
   - text: "S-05 · show or hide the *Lifetime* definition on /pricing"
   - text: "S-06 · keep the public \"features only move down\" promise"
-  - text: "S-10 · *Go to App* button: keep, relabel + Cloud badge, or hide"
+  - text: "S-38 · /press: keep, narrow or drop *may be used for coverage*"
   - text: "S-11 · iOS date \"end of 2026\" in roadmap, FAQ, 24 posts"
   - text: "S-12 · investing spotlights real or drawn · delete unused mocks"
   - text: "S-23 · accept the scan-clip app labels or fix the app + re-take"
@@ -26,9 +31,21 @@ gerald:
   - text: "S-20 · footer to `.eyebrow` · delete `.label`"
   - text: "Scanner keeps a misread learned shop name until corrected · accept?"
   - text: "Look at the new video pause button + focus rings · `/features`, home"
-  - text: "RKSV post: own photo + screenshot, fact check, real date · parked at 2099 (S-34)"
+  - text: "RKSV post: own photo + screenshot, fact check, real date · parked at 2099 (S-34) · the reader it links is built"
   - text: "RKSV cover: approve the motif · card further left in the share image"
 agents:
+  - text: "S-04 · `/delete-account` replaces the Google Form · privacy §10 + §11, FAQ"
+    done: 2026-11-20
+  - text: "S-10 · header Play button + *Web login* with the Cloud badge"
+    done: 2026-11-20
+  - text: "S-35 · sitemap without imprint, privacy, terms"
+    done: 2026-11-20
+  - text: "S-36 · *Developed in Upper Austria* in footer + contact"
+    done: 2026-11-20
+  - text: "`/resources/savings-challenge` + xlsx · `/resources/rksv-check` · calculator 13th/14th salary · `/press`"
+    done: 2026-11-20
+  - text: "D19 · New Year Pro price wired, Dec 26 → Jan 31 (`proOffer`)"
+    done: 2026-11-20
   - text: "/roadmap: move *Public Android launch*, onboarding, demo off \"next\" · all live"
     done: 2026-11-12
   - text: "`OPEN_DECISIONS.md` S-25 lawyer hour → Decided · no lawyer, 2026-11-07"

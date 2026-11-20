@@ -3,15 +3,15 @@ items:
   # Open
   - id: D19
     question: A New-Year price for Pro?
-    status: open
-    date: 2026-11-11
+    status: decided
+    date: 2026-11-20
     answer: |
-      - **can skip for now** · a discount converts visitors you have · ~10 a month
-      - growth research 2026-11: Pro **€14.99** · Dec 26 → Jan 31 · then €24.99
-      - today: Pro €24.99 only (D3) · launch prices are Cloud lifetime's, until Jan 16 (D4)
-      - allowed: a real, time-limited store price · **never** a "was" price
-      - no price in a store text · the store renders it
-      - yes → Play promotional price + an App Store offer · end with D4 on Jan 16?
+      - **yes** · Pro **€14.99** · 2026-12-26 → 2027-01-31 · then €24.99 · Gerald 2026-11-20 (site growth plan 2026-11-19)
+      - no Black Friday price · this is the one discount
+      - catch, accepted: Pro €14.99 + upgrade €24.99 = Cloud lifetime for €39.98, under the €49.99 launch price (D4) · after Jan 16 €14.99 + €44.99 = €59.98, under €69.99 · the €10 off passes through
+      - Play: `pro.lifetime` €14.99 (EUR) for the window · base price or a one-time-product offer · Gerald sets it before Dec 26 · other currencies his call · App Store: not live yet
+      - allowed: a real, time-limited store price · **never** a "was" price · no price in a store text
+      - site: `proOffer` in moneykoi-site `shared/utils/plans.ts` · /pricing, home, llms.txt switch by themselves with the nightly build (site S-39) · Play not set by Dec 24 → `proOffer = null`
     related: [D3, D4, T-MON-09]
   - id: D1
     question: Restore copy + *Current plan* pill on the Free card

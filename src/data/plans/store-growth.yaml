@@ -11,6 +11,7 @@ gerald:
   - ref: T-MON-27
   - ref: T-MON-26
   - ref: T-MON-28
+  - text: "D19 · Play `pro.lifetime` €14.99 (EUR) Dec 26 → Jan 31 · set before Dec 26 · the site switches by itself (site S-39)"
   - section: "Listing"
   - ref: T-PLAT-24
   - ref: T-PRIV-03
@@ -18,7 +19,7 @@ gerald:
   - text: "`pro.lifetime` description names investments · keep or change"
   - text: "Play Console store-listing email → `support@moneykoi.com`"
   - text: "geraldgmainer.com: *MoneyKoi* → *Money Koi* (D-PLAT-1)"
-  - text: "Decide: *Made in Austria* on store + site · not in the claim register"
+  - text: "Play Console deletion URL → `https://www.moneykoi.com/en/delete-account` · close the Google Form (site S-04)"
   - ref: T-PLAT-23
   - ref: T-PLAT-16
   - ref: T-PLAT-17
@@ -26,7 +27,6 @@ gerald:
   - ref: T-PLAT-25
   - ref: T-PLAT-18
   - text: "Hallway test: 3 strangers · Welcome → first booking in under 2 min"
-  - text: "Decide D-PLAT-24 · RKSV QR checker on moneykoi.com"
   - section: "Legal"
   - ref: T-MON-05
   - ref: T-PRIV-04
@@ -36,11 +36,14 @@ gerald:
   - text: "Confirm WKO Fachgruppe UBIT · firmen.wko.at or the welcome letter"
   - text: "Steuerberater: income tax + SVS on store income"
   - section: "Can skip for now"
-  - text: "Decide D19 · Pro €14.99 in January · too little traffic for a discount"
   - text: "Decide D-PLAT-21 · growth features · build once there is traffic"
 agents:
   - text: "Site imprint: add the UID number · ECG § 5 · T-MON-11"
     done: 2026-11-18
+  - text: "*Made in Austria*: footer + contact only, no store field · Gerald 2026-11-20 (site S-36)"
+    done: 2026-11-20
+  - text: "D-PLAT-24 · RKSV QR reader on moneykoi.com · `/resources/rksv-check`"
+    done: 2026-11-20
   - text: "Austria-captioned first frame, 1080×2400 (`store/custom-listings/at/README.md`)"
   - text: "Read the Play numbers 30 days after the first post, then monthly"
   - text: "Draft review replies when reviews arrive · Gerald posts"

@@ -12,7 +12,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 | Product | Store id | Price | Net | Note |
 |---|---|---|---|---|
-| **Pro** · once | `pro.lifetime` | €24.99 | €17.70 | = one year of Cloud |
+| **Pro** · once | `pro.lifetime` | €24.99 | €17.70 | = one year of Cloud · New Year **€14.99** · Dec 26 → Jan 31 |
 | **Cloud monthly** | `cloud.monthly` | €2.99 | €2.12 | yearly saves 30 % |
 | **Cloud yearly** | `cloud.yearly` | €24.99 | €17.70 | **1-month trial** |
 | **Cloud lifetime** | `cloud.lifetime` | €69.99 | €49.56 | launch **€49.99** · Nov 8 → Jan 16 |
@@ -47,6 +47,14 @@ import { Aside } from '@astrojs/starlight/components';
 - shows *Launch price until \{date\}* + *then \{regular\}*
 - **never** strikethrough or "was" → [Legal](/monetization/legal/)
 - last day Jan 16 2027 (D4) · regular price per currency from RevenueCat offering metadata (D8): EUR, USD, GBP, CHF, JPY
+
+## New Year price
+
+- Pro **€14.99** · **Dec 26 2026** through **Jan 31 2027** · regular €24.99 from Feb 1 (D19)
+- a real store price for the window · Play base price or a one-time-product offer · Gerald sets it · App Store not live yet
+- site: *New Year price until \{date\}* + *then \{regular\}* · **never** a "was" price · switches by itself (moneykoi-site `proOffer`, S-39)
+- overlaps the launch price until Jan 16: Pro + upgrade = €39.98, under Cloud lifetime's €49.99 · accepted (D19)
+- no Black Friday price
 
 ## Early adopters
 

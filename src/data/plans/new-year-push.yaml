@@ -8,8 +8,9 @@ gerald:
   - ref: T-PLAT-10
     note: "featuring needs the approved app"
   - ref: T-PLAT-28
-  - text: "Read + push the RKSV page (T-PLAT-27) · indexing takes weeks"
+  - text: "Read + push the RKSV page (T-PLAT-27) · indexing takes weeks · the reader is built, the post waits"
   - section: "December"
+  - text: "D19 · Play `pro.lifetime` €14.99 from Dec 26 through Jan 31 · set before Dec 26 (site S-39)"
   - ref: T-PLAT-26
   - ref: T-PLAT-29
   - section: "January"
@@ -21,7 +22,6 @@ gerald:
     note: "most time, least certain · 1–2 clips for Reddit + press instead"
   - text: "Decide D-PLAT-19 · €50 or €100 · Apple Ads after iOS + App Store ratings"
   - text: "Apple Ads Jan 2–31 · only if D-PLAT-19 says yes"
-  - text: "Decide D-PLAT-20 · rivals on site + videos · skipped = stays no"
   - text: "Push the other T-PLAT-27 pages · 17 posts live, check indexing instead"
   - text: "Read the drafts in `store/press/` · fill the `[Gerald: …]` gaps"
     sub:
@@ -31,7 +31,7 @@ gerald:
       - text: "`videos.md` · 10 scripts"
 agents:
   - ref: T-PLAT-27
-    note: "RKSV draft written 2026-11-12, de + en, parked · the other three can skip"
+    note: "RKSV draft written 2026-11-12, de + en, parked · RKSV reader + savings challenge built 2026-11-20"
   - text: "Featuring pitch for T-PLAT-28 · English · claim register first"
     done: 2026-11-12
   - text: "T-PLAT-26 emails · one per outlet in `store/press/kit.md`"

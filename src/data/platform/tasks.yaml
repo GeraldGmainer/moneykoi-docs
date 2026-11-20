@@ -391,6 +391,7 @@ items:
       - how to give Pro: Play promo code? · check first
       - ~15 emails · an agent drafts each · Gerald sends from `support@moneykoi.com`
       - no rival named in the email · `STORE_LISTING_AI_CONTEXT.md` §6.4
+      - more outlets from the site growth plan 2026-11-19: Handelsblatt (app comparison) · finanzrocker.net · finanz-junkie.de · florinplus.de · mystipendium.de · deinhandy.de · t-online · Stiftung Warentest / Finanztest, for its next Haushaltsbuch-app test · ÖH (student budget pages) · Mietervereinigung · no drafts yet
   - id: T-PLAT-27
     title: Draft the site pages the research found missing
     owner: ai
@@ -404,6 +405,8 @@ items:
       - de first, en after · claim register first · no rival (D-PLAT-20)
       - Gerald adds own screenshots + experience, then pushes · before December, indexing takes weeks
       - **RKSV drafted 2026-11-12** · `content/blog/de/rksv-qr-code-kassabon.md` + en pair · `date: 2099-01-01` keeps it off the site · RKSV facts written without a source → fact check · site S-34
+      - **built 2026-11-20** (site growth plan 2026-11-19, site S-37): `/resources/rksv-check` (D-PLAT-24) · `/resources/savings-challenge` + xlsx template (52 weeks + no-spend month) · budget calculator 12 / 13 / 14 salaries · Gerald reads + pushes
+      - not built, Gerald 2026-11-20: inflation calculator · German URL paths
     prompt: |
       In moneykoi-site, draft German blog posts (then English) for the topics in docs T-PLAT-27.
       Read moneykoi-site/CLAUDE.md, the blog-cover skill, two existing posts in content/blog/de/ and
@@ -438,6 +441,7 @@ items:
     detail: |
       - scripts 2026-11-12 · `store/press/videos.md` · idea 5 rewritten to what the calculator does
       - **can skip for now** · most time, least certain · 1–2 scan clips for Reddit + press instead
+      - Gerald 2026-11-20: **skip** the weekly shorts · Pinterest and a Swiss listing skipped too (site growth plan 2026-11-19)
       - 15–30 s · German · no face · TikTok, Reels, Shorts
       - batch: 10 clips in one hour · 3–5 a week from January
       - 10 ideas: research §7 · #4 + #10 name a rival → D-PLAT-20
