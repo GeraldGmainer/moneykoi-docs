@@ -22,7 +22,7 @@ groups:
       - id: C-SCN-009
         text: First scan on a fresh phone → review opens with the scan, no tutorial · *Tap any field* tip under the receipt card · *Every item needs a category* above the items until all are set, then *Save, and each item…* above the bar · × on any tip → no further tip, not even on the next scan · second scan → no tips · ? still replays the intro
       - id: C-SCN-010
-        text: "iPhone, fresh install → scanner → *Not now* → card *Allow camera* (no *Open Settings*) → tap → the iOS camera prompt · *Don't Allow* → card turns to *Open Settings* → lands on Money Koi's page with a Camera switch · Android: first *Deny* keeps *Allow camera*, the second → *Open Settings*"
+        text: "iPhone, fresh install → scanner → camera note with one button *Continue* (no *Allow*, no *Not now*) → the iOS camera prompt · *Don't Allow* → card *Open Settings* → lands on Money Koi's page with a Camera switch · Android: back on the note opens the prompt too · first *Deny* → card *Allow camera*, the second → *Open Settings*"
       - id: C-SCN-011
         text: "Camera declined (or the simulator, no camera) → *Pick photos* on the card → the photo picker → review like from the camera · a photo without a total → snackbar, card stays"
       - id: C-SCN-012

@@ -2,6 +2,8 @@
 title: "iOS store"
 goal: "iOS app in the App Store"
 gerald:
+  - ref: T-PLAT-34
+    note: "rejected 2026-11-20 · IAPs + camera note"
   - ref: T-MON-02
   - ref: T-PLAT-13
   - ref: T-MON-04

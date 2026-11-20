@@ -185,15 +185,20 @@ items:
         name: the second is the receipt when the first misses a row and the second adds up
   - id: R-SCN-22
     group: The flow
-    title: Camera declined · ask again before Settings
+    title: Camera note always leads to the phone's prompt · Settings only after the phone refused
     text: |
-      - *Not now* in the app's own camera dialog → card *Allow camera*, which shows the phone's real prompt
+      - the app's own camera note has one button, *Continue*, and always ends in the phone's real prompt · no *Allow*, no *Not now* (App Review 5.1.1(iv), 2026-11-20)
+      - Android: back on the note opens the prompt too
       - *Open Settings* only once the phone itself refused (iOS lists the switch only after it asked once)
-      - Android: the first refusal can still be asked again, the second sends to Settings
+      - Android: the first refusal → card *Allow camera* asks again, the second sends to Settings
     source: SCANNER §4.15g
     tests:
       - file: test/features/receipt/ui/pages/scanner_page_test.dart
-        name: a decline in the app rationale offers the real request, never Settings
+        name: Continue requests the permission
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: closing it with back still leads on to the system prompt
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: a first refusal Android may ask again about offers the real request, never Settings
       - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
         name: a refusal the OS will not ask again about sends the user to Settings
     checks: [C-SCN-010]

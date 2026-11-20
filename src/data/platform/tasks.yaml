@@ -499,3 +499,27 @@ items:
       - never in `.env.production` or `.env.development`: those build locally, and prod-only means only the deploy sends
       - privacy policy (`moneykoi-site`, en + de): name Sentry for the web too · decide the web opt-out first (T-PLAT-32)
       - publish: merge to `main` → `deploy.yml` deploys · then open `my.moneykoi.com`, trigger a test error, check it lands in `moneykoi-web` with a readable stack and no personal data
+  - id: T-PLAT-34
+    title: App Review rejection 2026-11-20 · answer it
+    owner: gerald
+    waitsFor: [T-MON-04]
+    detail: |
+      - rejected: 1.19.0 (37), reviewed on iPhone 17 Pro Max + iPad Air 11" (M3), iOS 27.2.1 · three issues
+      - **2.1(b) plan details did not load** → RevenueCat finds no App Store product in the offering, so the paywall gets an error, not prices · paid-apps agreement is fine (T-MON-02 ✓ 2026-11-15) · fix = T-MON-04's left items: entitlements, each iOS product into its package, the In-App Purchase key (.p8), Server Notifications V2
+      - **2.1(b) in-app purchases not submitted** → version page › *In-App Purchases and Subscriptions* › tick all 5 (each needs its review screenshot) · they only reach review with a version
+      - **5.1.1(iv) camera note** → fixed in the app: one *Continue*, no *Not now* (E-SCN-85) · needs a **new binary**, a build number above every one uploaded
+      - order: T-MON-04 → build from `main` → `./publish.sh ios testflight` → on an iPhone with a sandbox account: Settings › *Get Money Koi Pro* lists 5 prices · one sandbox purchase · scanner shows *Continue* (C-SCN-010) → `./publish.sh ios promote <build>` → version page: select the new build, tick the 5 products → reply below in App Review → *Submit for Review*
+    command: |
+      Hello,
+
+      Thank you for the review.
+
+      Guideline 2.1(b), In-App Purchases: the iOS products were not yet linked in our purchase backend, so the plans could not load. This is fixed and tested in the sandbox. All five In-App Purchase products (pro.lifetime, cloud.lifetime, cloud.lifetime.upgrade, cloud.monthly, cloud.yearly) are now submitted with this version, each with an App Review screenshot. The Paid Apps Agreement is active.
+
+      Guideline 5.1.1(iv), camera: the message before the camera permission request now has a single "Continue" button and always leads to the system permission request. The "Not now" button was removed.
+
+      The plans open from Settings > "Get Money Koi Pro", with "Restore purchases" on the same screen. The receipt scanner is on Home > "Scan receipt".
+
+      Best regards,
+      Gerald Gmainer
+    related: [T-PLAT-10, T-MON-02, T-MON-04, E-SCN-85, C-SCN-010]

@@ -105,13 +105,13 @@ items:
     group: Camera
     title: "*Not now* led to a Settings page without a camera switch"
     when: iPhone · camera dialog → *Not now*
-    then: card *Allow camera* fires the iOS prompt · *Open Settings* only after iOS refused · before 2026-11-03 straight to Settings, where iOS shows no switch until it asked once (IOS-7-1)
+    then: card *Allow camera* fires the iOS prompt · *Open Settings* only after iOS refused · before 2026-11-03 straight to Settings, where iOS shows no switch until it asked once (IOS-7-1) · *Not now* itself removed 2026-11-20 (E-SCN-85)
     status: fixed
     risk: high
-    related: [R-SCN-22]
+    related: [R-SCN-22, E-SCN-85]
     tests:
       - file: test/features/receipt/bloc/scanner_cubit_camera_test.dart
-        name: declining the app rationale leaves the real request open
+        name: a second request after a first refusal re-emits the card, now pointing at Settings
   - id: E-SCN-13
     group: Camera
     title: No camera, no way in
@@ -916,4 +916,16 @@ items:
     status: known-issue
     risk: medium
     related: [E-SCN-79, R-SCN-34]
-
+  - id: E-SCN-85
+    group: Camera
+    title: App Review rejected the camera note
+    when: "iOS App Review, 1.19.0 (37), 2026-11-20 · guideline 5.1.1(iv)"
+    then: "the note before the iOS prompt had *Allow camera* and *Not now* · Apple wants a neutral *Continue* / *Next* and no way to put the prompt off · now one *Continue* (de *Weiter*, ja *次へ*) that always opens the iOS prompt"
+    status: fixed
+    risk: high
+    related: [R-SCN-22, E-SCN-12, T-PLAT-34]
+    tests:
+      - file: test/features/receipt/ui/widgets/scanner_onboarding_test.dart
+        name: "one Continue button closes it: no Allow, no Not now"
+      - file: test/features/receipt/ui/pages/scanner_page_test.dart
+        name: closing it with back still leads on to the system prompt
