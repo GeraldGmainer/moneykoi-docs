@@ -36,7 +36,7 @@ gerald:
 agents:
   - text: "S-04 · `/delete-account` replaces the Google Form · privacy §10 + §11, FAQ"
     done: 2026-11-20
-  - text: "S-10 · header Play button + *Web login* with the Cloud badge"
+  - text: "S-10 · header Play button (folds away over the home hero) + *Web login*"
     done: 2026-11-20
   - text: "S-35 · sitemap without imprint, privacy, terms"
     done: 2026-11-20
